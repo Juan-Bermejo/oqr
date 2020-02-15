@@ -1,5 +1,7 @@
 {
   "name": "oqr",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular"
 }

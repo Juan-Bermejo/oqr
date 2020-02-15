@@ -1,14 +1,146 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>
-      Ionic Blank
-    </ion-title>
-  </ion-toolbar>
-</ion-header>
 
-<ion-content>
-  <div class="ion-padding">
-    The world is your oyster.
-    <p>If you get lost, the <a target="_blank" rel="noopener" href="https://ionicframework.com/docs/">docs</a> will be your guide.</p>
-  </div>
+  <ion-toolbar>
+    <ion-row>
+
+
+        <ion-col size="2">
+         
+              <ion-icon size="large" color="primary" md="md-menu" (click)="presentModal()" ></ion-icon>  
+        
+         
+        </ion-col>
+          
+      
+      <ion-col size=8 >
+          <ion-input class="input-location">
+                <ion-icon style="padding-left: 10px;" color="medium" name="md-pin" ></ion-icon>
+            </ion-input>
+      </ion-col>
+
+      <ion-col size=2 >
+        <ion-icon *ngIf="notification" size="large" name="md-alert" color="danger"></ion-icon>
+              <ion-icon *ngIf="!notification" size="large" color="primary" name="md-notifications"></ion-icon>
+        
+       
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+        <ion-col size=10 offset=1>
+          
+          <ion-input class="input-search" (ionChange)="filter($event)" placeholder="¿Qué estas buscando?" color="primary" [(ngModel)]="busqeda" >
+            <span>
+                  <ion-icon style="padding-left: 10px;" size="large" name="md-search" color="primary-shade">
+                    </ion-icon>
+            </span>
+            <span class="item-right">
+              <ion-button style="
+              border-left-style: solid;
+              border-left-width: 1px;
+              border-left: 'primary';" fill="clear" (click)="searchTools()" >
+                  <ion-icon color="primary" name="md-options">
+                    </ion-icon>
+
+              </ion-button>
+
+            </span>
+    
+          </ion-input>
+        
+        </ion-col>
+      </ion-row>
+
+     
+
+          <ion-row *ngIf="search_tool" justify-content-center>
+            
+
+                <ion-button shape="round" color="primary">
+                  sub
+                </ion-button>
+           
+              
+                  <ion-button shape="round" color="primary" >
+                      sub
+                    </ion-button>
+             
+                
+                    <ion-button shape="round" color="primary">
+                        sub
+                      </ion-button>
+                 
+               
+            </ion-row>
+    
+
+      
+     
+  </ion-toolbar>
+
+
+<ion-content >
+
+  <ion-list>
+    <ion-item (click)="goToOfferDetails(item)" lines="none" *ngFor="let item of aux_offer_list ">
+     
+          <img class="img-list" src="../../assets/images/{{item.category}}.jpg">
+
+          <h4 style="color: aliceblue; left: 2px;"> {{item.title}}</h4>
+      
+    </ion-item>
+  </ion-list>
+
 </ion-content>
+
+
+
+
+<ion-fab horizontal="end" vertical="bottom" >
+    <ion-fab-button size="large" type="button" color="primary" >
+        <ion-icon name="md-add" size="large" color="light"></ion-icon>
+    </ion-fab-button>
+    <ion-fab-list side="start">
+      
+      <ion-fab-button color="primary" size="large">
+        <ion-icon size="large" color="light" name="md-person"></ion-icon>
+      </ion-fab-button>
+
+      <ion-fab-button color="primary" size="large" icon="md-person">
+          <ion-icon size="large" color="light" name="md-pin"></ion-icon>
+        </ion-fab-button>
+
+        <ion-fab-button color="primary" size="large" icon="md-person">
+            <ion-icon size="large" color="light" name="md-cart"></ion-icon>
+          </ion-fab-button>
+
+          <ion-fab-button color="primary" size="large" icon="md-person">
+              <ion-icon size="large" color="light" name="md-compass"></ion-icon>
+            </ion-fab-button>
+    </ion-fab-list>
+    
+  </ion-fab>
+<!--
+<ion-footer>
+   <ion-row>
+
+      <ion-col padding size=3>
+            <img  src="../../assets/iconos/iconos oqr-35.png" alt="">
+        </ion-col>
+    
+        <ion-col padding size=3>
+            <img style="width: 48px;" src="../../assets/iconos/iconos oqr-36.png" alt="">
+          </ion-col>
+    
+          <ion-col padding size=3>
+              <img src="../../assets/iconos/iconos oqr-37.png" alt="">
+            </ion-col>
+    
+            <ion-col padding size=3>
+                <img src="../../assets/iconos/iconos oqr-38.png" alt="">
+              </ion-col>
+
+   </ion-row>
+
+
+</ion-footer>
+-->

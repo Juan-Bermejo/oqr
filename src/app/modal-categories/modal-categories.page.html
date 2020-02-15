@@ -1,0 +1,19 @@
+
+
+<ion-content padding="true">
+
+  <ion-button fill="clear" (click)="dismissModal()"> 
+  <ion-icon name="md-close" size="large" color="primary"></ion-icon>  
+  </ion-button>
+
+
+  <ion-list padding="true">
+    <ion-item lines="none" *ngFor="let item of list_cat">
+      
+      <ion-button size="large" expand="full" color="primary" fill="clear">
+          Categoria
+      </ion-button>
+    </ion-item>
+  </ion-list>
+
+</ion-content>

@@ -6,6 +6,14 @@ export const environment = {
   production: false
 };
 
+export var offer_list = [
+  {id:1, title: "Descuento del 50% en GYM.", category: "gym", cantidad:1, description:"fgdgfdg"},
+  {id:2, title: "Descuento del 50% en corte de pelo.", category: "hair", cantidad:1, description:"fgdgfdg"},
+  {id:3, title: "1 Sesión gratis en SPA.", category: "yoga", cantidad:1, description:"fgdgfdg"},
+  {id:4, title: "1 Asesoria contable gratis. ", category: "business", cantidad:1, description:"fgdgfdg"},
+  {id:5, title: "2x1 en platos desechables. ", category: "bazar", cantidad:1, description:"fgdgfdg"},
+]
+
 /*
  * For easier debugging in development mode, you can import the following file
  * to ignore zone related error stack frames such as `zone.run`, `zoneDelegate.invokeTask`.

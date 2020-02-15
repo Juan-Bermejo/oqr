@@ -1,0 +1,20 @@
+ion-app
+{
+    ion-content
+    {
+        ::-webkit-scrollbar {
+            width: 10px;
+            }
+            ::-webkit-scrollbar-track {
+            background: #0f0f0f;
+            }
+            ::-webkit-scrollbar-thumb {
+            border-radius: 1rem;
+            background: linear-gradient(var(--ion-color-light-tint), var(--ion-color-light));
+            border: 4px solid #020202;
+            }
+            ::-webkit-scrollbar-thumb:hover {
+            }
+    }
+
+}

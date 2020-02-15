@@ -1,0 +1,58 @@
+
+*
+{
+    font-family: 'roboto-medium';
+    font-size: 13px;
+    
+}
+
+ion-content{
+    /*--padding-top:200px;*/
+    --background: rgb(41, 171, 226);
+
+
+}
+
+.cont-login
+{
+    margin-top: 50px;
+}
+
+.btn-face
+{
+    --background: rgb(5, 89, 167);
+ 
+}
+
+.logo{
+    position: relative;
+    height: 80px;
+    width: 140px;
+    margin-left:11%;
+    margin-top:25%;
+
+
+}
+
+.logo-conteiner
+{
+    
+    background-color: rgba(255, 255, 255, 0.151);
+    height: 176px;
+    width: 176px;
+    border-radius: 50%;
+    margin-left:14.5%;
+    margin-top:14.5%;
+
+}
+
+.main-conteiner-logo
+{
+    border-style: solid;
+    border-width: 1px;
+    border-color: rgba(255, 255, 255, 0.151);
+    height: 250px;
+    width: 250px;
+    border-radius: 50%;
+
+}

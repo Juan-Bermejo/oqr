@@ -1,0 +1,17 @@
+
+$primary:rgb(41, 171, 226);
+
+*{
+    font-family: 'roboto-black';
+}
+
+
+h1{
+    color: rgb(41, 171, 226);
+}
+
+ion-back-button{
+    --background:rgb(41, 171, 226);
+}
+
+agm-map { height: 300px;}

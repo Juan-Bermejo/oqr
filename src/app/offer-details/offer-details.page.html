@@ -1,0 +1,48 @@
+
+
+<ion-content padding="true">
+<ion-toolbar>
+
+            <ion-buttons slot="start" collapse="true">
+                <ion-back-button color="light" icon="md-arrow-back" defaultHref="home">
+                </ion-back-button>
+                </ion-buttons>
+            
+            <h1>
+                {{offer.title}}
+              </h1>
+  
+
+
+</ion-toolbar>
+
+<strong>DESCRIPCION DE LA PROMOCION:</strong> 
+
+<p>
+  {{offer.description}}
+</p>
+
+<agm-map [latitude]='latitude' [longitude]='longitude' 
+  [zoom]="15"
+  [mapTypeId]='mapType'>
+
+  <agm-marker
+       
+        [latitude]="latitude"
+        [longitude]="longitude"
+        [opacity]="1"
+        [visible]="true"
+       
+      >
+      </agm-marker>
+</agm-map>
+
+<ion-row justify-content-center>
+  <ion-button shape="round" expand="block" color="primary">
+Quiero esta oferta
+  </ion-button>
+</ion-row>
+
+
+
+</ion-content>
