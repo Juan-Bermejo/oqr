@@ -14,6 +14,59 @@ export var offer_list = [
   {id:5, title: "2x1 en platos desechables. ", category: "bazar", cantidad:1, description:"fgdgfdg"},
 ]
 
+export var categories = {
+  gym: "gym",
+  negocios: "negocios",
+  bazar: "bazar",
+  estetica: "estetica",
+  salud: "salud",
+  tecnologia: "tecnologia",
+  gastronomia: "gastronomia",
+  deportes :"deportes",
+  entretenimiento: "entretenimiento",
+  educacion: "educacion",
+  automotor: "automotor"
+}
+
+export const roles ={
+
+  vendedor: "vendedor",
+  comprador: "comprador"
+}
+
+export var menu_opt = [
+  {
+    "icon":"md-person",
+    "name":"Mi cuenta",
+    "redirectTo": "seller-panel",
+    
+  },
+  {
+    "icon":"md-card",
+    "name":"Ofertas",
+    "redirectTo": "offer-details",
+    
+  },
+  {
+    "icon":"md-cash",
+    "name":"Quiero hacer una oferta",
+    "redirectTo": "offer-details",
+
+  },
+  {
+    "icon":"md-megaphone",
+    "name":"Quiero promocionar una oferta",
+    "redirectTo": "offer-details",
+  },
+  {
+    "icon":"md-power",
+    "name":"Cerrar sesion",
+    "redirectTo": "offer-details",
+  },
+
+
+]
+
 /*
  * For easier debugging in development mode, you can import the following file
  * to ignore zone related error stack frames such as `zone.run`, `zoneDelegate.invokeTask`.

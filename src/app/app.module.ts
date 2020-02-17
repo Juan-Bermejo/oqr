@@ -14,6 +14,8 @@ import { AgmCoreModule, MarkerManager, GoogleMapsAPIWrapper, MapsAPILoader } fro
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { FilterPipe } from './filter.pipe';
 import { PipesModuleModule } from './pipes-module/pipes-module.module';
+import { ComponentModule } from './componentes/component/component.module';
+import { MenuService } from './services/menu.service';
 
 
 @NgModule({
@@ -22,7 +24,8 @@ import { PipesModuleModule } from './pipes-module/pipes-module.module';
   imports: [BrowserModule,
      IonicModule.forRoot(), 
      AppRoutingModule, 
-     ModalCategoriesPageModule
+     ModalCategoriesPageModule,
+     ComponentModule
      
     ],
   providers: [
@@ -31,6 +34,7 @@ import { PipesModuleModule } from './pipes-module/pipes-module.module';
     MarkerManager,
     GoogleMapsAPIWrapper,
     Geolocation,
+    
     
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],

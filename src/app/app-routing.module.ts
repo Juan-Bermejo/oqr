@@ -16,6 +16,10 @@ const routes: Routes = [
     path: 'offer-details',
     loadChildren: () => import('./offer-details/offer-details.module').then( m => m.OfferDetailsPageModule)
   },
+  {
+    path: 'seller-panel',
+    loadChildren: () => import('./seller-panel/seller-panel.module').then( m => m.SellerPanelPageModule)
+  },
 ];
 
 @NgModule({
