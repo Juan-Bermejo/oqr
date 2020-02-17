@@ -16,17 +16,60 @@
     </div>
   
     <div class="cont-login">
-  
+
         <ion-row >
-            <ion-col size="10" offset="1">
-              <ion-button class="btn-face" expand="block" shape="round" (click)="login()" > Iniciar sesión con Facebook</ion-button>
-            </ion-col>
-            </ion-row>
-            <ion-row>
-                <ion-col size="10" offset="1" class="">
-                <ion-button color="danger" expand="block" shape="round" (click)="login()" > Iniciar sesión con Google</ion-button>
-              </ion-col>
-              </ion-row>
+          
+          <ion-col size="6" offset="3">
+            <ion-button class="btn-face" expand="block" shape="round" (click)="login()" > Iniciar sesión con Facebook</ion-button>
+          </ion-col>
+        
+        </ion-row>
+        
+        <ion-row>
+        
+          <ion-col size="6" offset="3">
+            <ion-button color="danger" expand="block" shape="round" (click)="login()" > Iniciar sesión con Google</ion-button>
+          </ion-col>
+        
+        </ion-row>
+
+        <ion-row >
+            
+          <ion-col size="4" offset="4">
+              
+            <ion-input placeholder=" Username"></ion-input>
+
+          </ion-col>
+          
+        </ion-row>
+
+        <ion-row >
+          
+          <ion-col size="4" offset="4">
+            
+            <ion-input placeholder=" Password"></ion-input>
+            <a class="forgot-pass" href="https://localhost:4200/login">Forgot password?</a>
+          </ion-col>
+
+        </ion-row>
+
+        <ion-row >
+          
+          <ion-col size="4" offset="4">
+            <ion-button color="success" expand="block" shape="round" (click)="login()">Log In</ion-button>
+          </ion-col>
+
+        </ion-row>
+      
+        <ion-row >
+          
+          <ion-col class="txt-group" size="4">
+            <ion-label><h3>No tienes una cuenta?</h3></ion-label>
+            <a class="register-link" href="https://localhost:4200/login">Registrate ahora!</a>
+          </ion-col>
+
+        </ion-row>
+
   
     </div>
   

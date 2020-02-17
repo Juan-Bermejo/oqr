@@ -15,7 +15,7 @@ ion-content{
 
 .cont-login
 {
-    margin-top: 50px;
+    margin-top: 10px;
 }
 
 .btn-face
@@ -55,4 +55,25 @@ ion-content{
     width: 250px;
     border-radius: 50%;
 
+}
+
+ion-input {
+    --background: #e5e5e5;
+    border-radius: 20px;
+}
+
+.forgot-pass {
+    color: black;
+    padding-top: 5px;
+    padding-left: 15px;
+}
+
+.register-link {
+    font-size: large;
+    color: black;
+}
+
+.txt-group {
+    position: relative;
+    left: 44%;
 }
