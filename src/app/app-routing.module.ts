@@ -9,12 +9,20 @@ const routes: Routes = [
     loadChildren: () => import('./login/login.module').then( m => m.LoginPageModule)
   },
   {
+    path: 'register',
+    loadChildren: () => import('./register/register.module').then( m => m.RegisterPageModule)
+  },
+  {
     path: 'modal-categories',
     loadChildren: () => import('./modal-categories/modal-categories.module').then( m => m.ModalCategoriesPageModule)
   },
   {
     path: 'offer-details',
     loadChildren: () => import('./offer-details/offer-details.module').then( m => m.OfferDetailsPageModule)
+  },
+  {
+    path: 'register',
+    loadChildren: () => import('./register/register.module').then( m => m.RegisterPageModule)
   },
 ];
 

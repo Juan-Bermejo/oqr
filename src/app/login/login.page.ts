@@ -16,6 +16,10 @@ export class LoginPage implements OnInit {
 
   }
 
+  register() {
+    this.navCtrl.navigateRoot('register');
+  }
+
   ngOnInit() {
   }
 
