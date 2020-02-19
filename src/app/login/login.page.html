@@ -31,33 +31,47 @@
         
         </ion-row>
 
-        <ion-row >
-            
-          <ion-col size="4" offset="4">
+        <form #formLogin="ngForm" (submit)="onLogin()">
+
+          <ion-row >
               
-            <ion-input placeholder=" Username"></ion-input>
+            <ion-col size="4" offset="4">
+                
+              <ion-input [(ngModel)]="email" [ngModelOptions]="{standalone: true}" placeholder=" Usuario o Email"></ion-input>
 
-          </ion-col>
-          
-        </ion-row>
-
-        <ion-row >
-          
-          <ion-col size="4" offset="4">
+            </ion-col>
             
-            <ion-input placeholder=" Password"></ion-input>
-            <a class="forgot-pass" href="/login">Forgot password?</a>
-          </ion-col>
+          </ion-row>
 
-        </ion-row>
+          <ion-row >
+            
+            <ion-col size="4" offset="4">
+              
+              <ion-input [(ngModel)]="password" [ngModelOptions]="{standalone: true}" type="password" placeholder=" Contraseña"></ion-input>
+              <a class="forgot-pass" href="/login">Olvido su contraseña?</a>
+            </ion-col>
 
-        <ion-row >
-          
-          <ion-col size="4" offset="4">
-            <ion-button color="success" expand="block" shape="round" (click)="login()">Log In</ion-button>
-          </ion-col>
+          </ion-row>
 
-        </ion-row>
+          <ion-row >
+            
+            <ion-col size="4" offset="4">
+              <ion-button color="success" expand="block" shape="round" type="submit">Iniciar Sesion</ion-button>
+            </ion-col>
+
+          </ion-row>
+
+          <ion-row >
+            <ion-item  >
+              <ion-label text-wrap color=red color="primary" >
+        {{anyErrors}}
+        </ion-label>
+      </ion-item>
+          </ion-row>
+
+
+
+        </form>
       
         <ion-row >
           
