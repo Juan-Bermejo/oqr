@@ -14,16 +14,24 @@ import { AgmCoreModule, MarkerManager, GoogleMapsAPIWrapper, MapsAPILoader } fro
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { FilterPipe } from './filter.pipe';
 import { PipesModuleModule } from './pipes-module/pipes-module.module';
+import { environment } from '../environments/environment';
+
+import { AngularFireModule } from '@angular/fire';
+import { AngularFireDatabaseModule, AngularFireDatabase } from '@angular/fire/database';
+import { AngularFireAuth } from '@angular/fire/auth';
 
 
 @NgModule({
   declarations: [AppComponent, ScrollbarStyleDirective],
   entryComponents: [],
-  imports: [BrowserModule,
-     IonicModule.forRoot(), 
-     AppRoutingModule, 
-     ModalCategoriesPageModule
-     
+  imports: [
+    BrowserModule,
+    IonicModule.forRoot(), 
+    AppRoutingModule, 
+    ModalCategoriesPageModule,
+    AngularFireModule.initializeApp(environment.firebaseConfig),
+    AngularFireDatabaseModule
+
     ],
   providers: [
     StatusBar,
@@ -31,6 +39,7 @@ import { PipesModuleModule } from './pipes-module/pipes-module.module';
     MarkerManager,
     GoogleMapsAPIWrapper,
     Geolocation,
+    AngularFireAuth,
     
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
