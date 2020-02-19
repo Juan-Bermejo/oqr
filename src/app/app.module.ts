@@ -19,6 +19,8 @@ import { environment } from '../environments/environment';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFireDatabaseModule, AngularFireDatabase } from '@angular/fire/database';
 import { AngularFireAuth } from '@angular/fire/auth';
+import { ComponentModule } from './componentes/component/component.module';
+import { MenuService } from './services/menu.service';
 
 
 @NgModule({
@@ -30,8 +32,9 @@ import { AngularFireAuth } from '@angular/fire/auth';
     AppRoutingModule, 
     ModalCategoriesPageModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
-    AngularFireDatabaseModule
-
+    AngularFireDatabaseModule,
+    ComponentModule
+     
     ],
   providers: [
     StatusBar,
@@ -40,6 +43,7 @@ import { AngularFireAuth } from '@angular/fire/auth';
     GoogleMapsAPIWrapper,
     Geolocation,
     AngularFireAuth,
+    
     
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],

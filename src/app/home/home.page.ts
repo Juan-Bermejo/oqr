@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ModalController, NavController } from '@ionic/angular';
+import { ModalController, NavController, MenuController } from '@ionic/angular';
 import { ModalCategoriesPage } from '../modal-categories/modal-categories.page';
 import { offer_list } from '../../environments/environment'
 import { NavigationOptions } from '@ionic/angular/dist/providers/nav-controller';
@@ -27,7 +27,8 @@ export class HomePage {
      public navCtrl: NavController,
      private ParamSrv: NavParamsService,
      private afAuth: AngularFireAuth,
-     private authService: AuthService
+     private authService: AuthService,
+     private menu: MenuController,
     ) {
 
       this.search_tool=false;
@@ -80,6 +81,12 @@ export class HomePage {
   this.navCtrl.navigateForward(['offer-details']);
   
   }
+
+
+  /*openMenu() {
+    this.menu.enable(true, 'first');
+    this.menu.open('first');
+  }*/
 
 
   dismiss() {
