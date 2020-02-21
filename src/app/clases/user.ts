@@ -1,3 +1,5 @@
+import { Offer } from './offer';
+
 
 export class User {
     id:number;
@@ -7,5 +9,8 @@ export class User {
     password: string;
     phone: number;
     role: string;
+    offers: Offer[];
+    billing_information:any;
+
 
 }

@@ -1,0 +1,58 @@
+
+*
+{
+    font-family: "roboto-black"
+}
+
+h1{
+    text-align: center;
+}
+
+
+ion-back-button{
+
+    --background:rgb(41, 171, 226);
+    --border-radius: 40px;
+   
+
+  }
+
+  ion-input{
+      height: 50px;
+      width: 200px;
+      border-style: solid;
+      border-width: 2px;
+      border-color: rgb(41, 171, 226);
+      border-radius:45px;
+  }
+
+  ion-select{
+    height: 50px;
+    width: 320px;
+    border-style: solid;
+    border-width: 2px;
+    border-color: rgb(41, 171, 226);
+    border-radius:45px;
+  }
+
+  ion-slides{
+      height: 500px;
+  }
+
+  ion-textarea{
+    border-style: solid;
+    border-width: 2px;
+    border-color: rgb(41, 171, 226);
+    border-radius:25px;
+  }
+
+
+
+  .container{
+      display: block;
+  }
+
+  .nextButton
+  {
+      margin-top:250px;
+  }
