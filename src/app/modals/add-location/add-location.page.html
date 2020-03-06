@@ -1,0 +1,55 @@
+
+<ion-toolbar>
+  <ion-row justify-content-end>
+    <ion-button fill="clear" (click)="dismissModal()" ><ion-icon name="md-close" size="large" color="primary"></ion-icon> </ion-button>
+  </ion-row>
+</ion-toolbar>
+<ion-content padding="true">
+<ion-row justify-content-center>
+  <ion-col size=10>
+
+  
+    <ion-input placeholder="Ingresa una direccion." [(ngModel)]="address" >
+        <span>
+          <ion-icon name="md-pin" size="large" color="primary"></ion-icon>
+        </span>
+        <span class="item-right">
+            <ion-button fill="clear" (click)="getGeoCoderCoord()" >
+                <ion-icon color="primary" name="md-search">
+                  </ion-icon>
+
+            </ion-button>
+
+          </span>
+      </ion-input>
+    </ion-col>
+</ion-row>
+
+<div class="map-container">
+
+    <agm-map [latitude]='latitude' [longitude]='longitude' 
+  [zoom]="15"
+  [mapTypeId]='mapType'>
+
+  <agm-marker
+       
+        [latitude]="latitude"
+        [longitude]="longitude"
+        [opacity]="1"
+        [visible]="true"
+       
+      >
+      </agm-marker>
+</agm-map>
+
+</div>
+
+
+
+<ion-row justify-content-center style="background-color: white">
+    <ion-button (click)="addLocation()" fill="outline" shape="round" expand="block" color="primary" >Agregar</ion-button>
+
+</ion-row>
+</ion-content>
+
+

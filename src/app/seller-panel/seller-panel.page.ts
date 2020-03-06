@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NavController } from '@ionic/angular';
+import { user } from '../../environments/environment';
+
 
 @Component({
   selector: 'app-seller-panel',
@@ -8,9 +10,13 @@ import { NavController } from '@ionic/angular';
 })
 export class SellerPanelPage implements OnInit {
 
+  user= user;
+
   usrName:string="Usuario1";
 
-  constructor(private navCtrl: NavController) { }
+  constructor(private navCtrl: NavController) {
+    
+   }
 
   goTo(path:string)
   {

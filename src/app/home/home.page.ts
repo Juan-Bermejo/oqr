@@ -1,10 +1,14 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { ModalController, NavController, MenuController } from '@ionic/angular';
-import { ModalCategoriesPage } from '../modal-categories/modal-categories.page';
+import { StreamingMedia, StreamingVideoOptions } from '@ionic-native/streaming-media/ngx';
+
 import { offer_list } from '../../environments/environment'
 import { NavigationOptions } from '@ionic/angular/dist/providers/nav-controller';
 import { Router, NavigationExtras } from '@angular/router';
 import { NavParamsService } from '../services/nav-params.service';
+import { ModalCategoriesPage } from '../modals/modal-categories/modal-categories.page';
+import { ProductsService } from '../services/products.service';
+
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
@@ -12,29 +16,41 @@ import { NavParamsService } from '../services/nav-params.service';
 })
 export class HomePage {
 
+
+
   offer_list = offer_list;
   aux_offer_list:Array<any>;
   busqueda:string;
   notification:boolean=false;
   search_tool:boolean;
 
+   options: StreamingVideoOptions = {
+    successCallback: () => { console.log('Video played') },
+    errorCallback: (e) => { console.log('Error streaming') },
+    orientation: 'landscape',
+    shouldAutoClose: true,
+    controls: false
+  };
+  
    
 
-  constructor(private modalController: ModalController,
+  constructor(private prodSrv:ProductsService,
+    private streamingMedia: StreamingMedia,
+     private modalController: ModalController,
      public navCtrl: NavController,
      private ParamSrv: NavParamsService,
      private menu: MenuController,
     ) {
+      
       this.search_tool=false;
       this.aux_offer_list= new Array();
       this.aux_offer_list=this.offer_list;
 
-    setTimeout(() => {
-      this.notification=true;
-    }, 3000);
+ 
   }
 
    async presentModal() {
+     
     const modal = await this.modalController.create({
       component: ModalCategoriesPage,
       cssClass:"modal"
@@ -42,6 +58,12 @@ export class HomePage {
     });
     return await modal.present();
   }
+
+ /* async playVideo()
+  {
+    this.prodSrv.send();
+    //this.streamingMedia.playVideo("https://www.instagram.com/p/B9QbwI9Aqd0/", this.options);
+  }*/
 
  async filter(input)
   {

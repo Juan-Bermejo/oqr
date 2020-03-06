@@ -21,137 +21,244 @@
       
   </ion-toolbar>
 
-    
+  <ion-row justify-content-start *ngIf="index > 0">
+      
+      <ion-button  color="primary" fill="clear" (click)="back()" >
+          
+          <ion-icon slot="start" name="md-arrow-back" size="large" color="primary">
+              
+          </ion-icon>
+          Atras
+        </ion-button>
 
-    <ion-slides #slides pager="false" [options]="slideOpts" id="slide">
+  </ion-row>
 
-        <ion-slide>
+    <ion-slides #slides pager="false" [options]="slideOpts" id="slide" (ionSlideWillChange)="setIndex()" >
 
+
+        <ion-slide align-items-center>
+
+
+ 
           <div class="container">
 
-            <ion-row justify-content-center>
-              <h1>Seleccione un tipo de oferta</h1>
-            </ion-row>
 
-          <ion-row justify-content-center>
-                  <ion-select placeholder="Seleccione uno" [(ngModel)]="kind">
-                      <ion-select-option *ngFor="let kind of kind_offer" value='{{kind}}'>
-                        {{kind}}
-                      </ion-select-option>
-                    </ion-select>
 
-          </ion-row>
-          <ion-row justify-content-center *ngIf=" kind=='Descuento' ">
-            <h1>
-              Seleccione cantidad del descuento
-            </h1>
-          </ion-row>
+                    <ion-row justify-content-center>               
+                            <h4>Selecciona la categoria del producto</h4>
+                    </ion-row >
 
-            <ion-row justify-content-center *ngIf=" kind=='Descuento' ">
-                
-                    <ion-select [(ngModel)]="cuantity">
-                        <ion-select-option  *ngFor="let d of desc" value='{{d}}'>
-                          {{d}}%
-                        </ion-select-option>
-                      </ion-select>              
-            </ion-row>
+                      <ion-row justify-content-center>
+                        <ion-col size=11>
+                            <ion-input (click)="ModalCategories()" readonly placeholder="Seleccione una categoria." [(ngModel)]="category" >
+                                <span class="item-right">
+                                    <ion-icon slot="end" src="../../assets/ionicons/chevron-down-outline.svg">
+                                    </ion-icon>
+                                </span>
+                                   
+                                  </ion-input>
+                        </ion-col>
 
-            <ion-row justify-content-center *ngIf=" kind == 'Gratis' || kind == 'Regalo' ">
-                <h1>
-                  Seleccione cantidad.
-                </h1>
-              </ion-row>
-    
-                <ion-row justify-content-center *ngIf=" kind == 'Gratis' || kind == 'Regalo' ">
-                    
-                        <ion-input [(ngModel)]="cuantity" type="number" ></ion-input>             
+                      </ion-row>
+        
+
+                      <ion-row justify-content-center>               
+                          <h4>¿Qué tipo de producto quieres ofertar?</h4>
+                  </ion-row >
+
+                    <ion-row justify-content-center>
+                      <ion-radio-group [(ngModel)]="kind" >
+                        <ion-label>
+                          Producto
+                        </ion-label>
+                        <ion-radio value="Producto">
+
+                        </ion-radio>
+                        <ion-label>
+                            Servicio
+                          </ion-label>
+                          <ion-radio value="Servicio">
+  
+                          </ion-radio>
+                      </ion-radio-group>
+ 
+                    </ion-row>
+      
+
+              <ion-row justify-content-center>
+                  <h4 >Ingrese el nombre del producto</h4>
+
                 </ion-row>
-             
+      
+                  <ion-row justify-content-center>
+      
+                      <ion-col size=11 >
+                 
+                          <ion-input  type="text" [(ngModel)]="product">
+      
+                            </ion-input>
+
+
+                        </ion-col>
+
+                  </ion-row>
+      
+                  <ion-row justify-content-center>
+                      <h4>Agrega una breve descripción de tu oferta</h4>
+                    </ion-row>
+              
+              <ion-row justify-content-center>
+                <ion-col size=11 >
+                    <ion-textarea type="text"  maxlength=250 [(ngModel)]="description" ></ion-textarea> 
+                </ion-col>
+                       
+          </ion-row>
+          <ion-row justify-content-center>
+              <strong> 250 Caracteres   </strong> 
+          </ion-row>  
 
           </div>
-
-         
+ 
         </ion-slide>
+
+
 
         <!-- /////////////////                  SLIDE 2                    ///////////////// -->
 
-        <ion-slide>
-          
+        <ion-slide align-items-start>
+
           <div class="container">
 
               <ion-row justify-content-center>
-                  <h1>Seleccione categoria</h1>
+                  <h4 *ngIf="kind == 'Producto'">Ingrese el precio del producto</h4>
+                  <h4 *ngIf="kind == 'Servicio'">Ingrese el precio del servicio</h4>
+                </ion-row>
+      
+                <ion-row align-items-center>
+                    <ion-col justify-content-center offset=1 size="10">
+                        
+                        <ion-input type="number" placeholder="Ingresa el importe." [(ngModel)]="price">
+                            <span>
+                                <ion-select (ionChange)="currency_commission=prod_currency" [(ngModel)]="prod_currency" class="select-currency" placeholder="Moneda">
+                                    <ion-select-option *ngFor="let c of countries" >
+                                      {{c.currencies[0].code}}
+                                    </ion-select-option>
+                                  </ion-select>
+                               </span>
+                        </ion-input>
+                      </ion-col>
+                </ion-row>
+
+              <ion-row justify-content-center>
+                  <h4>¿Cuento quieres pagar por cada venta?</h4>
                 </ion-row>
     
-              <ion-row justify-content-center>
-                      <ion-select placeholder="Seleccione una categoria" [(ngModel)]="category">
-                          <ion-select-option *ngFor="let cat of categories" value="{{cat}}" >
-                            {{cat}}
-                          </ion-select-option>
-                        </ion-select>
-    
-              </ion-row>
+                <ion-row align-items-center>
+                    <ion-col justify-content-center offset=1 size="10">
+                        
+                        <ion-input type="number" placeholder="Ingresa el importe." [(ngModel)]="commission">
+                            <span>
+                                <ion-select disabled="true" [(ngModel)]=" currency_commission" class="select-currency" readonly placeholder="Moneda">
+                                    <ion-select-option *ngFor="let c of countries">
+                                      {{c.currencies[0].code}}
+                                    </ion-select-option>
+                                  </ion-select>
+                               </span>
+                        </ion-input>
+                      </ion-col>
+                </ion-row>
+
+                <ion-row justify-content-center>
+                    <ion-col justify-content-center size="10" >
+                        <h4>¿Cuantas unidades quieres ofertar?</h4>
+                    </ion-col>
+
+                    <ion-col size=10 >
+                        <ion-input type="number" placeholder="Ingresa la cantidad" [(ngModel)]="stock" ></ion-input>
+                    </ion-col>
+                  </ion-row>
+
+
 
           </div>
           
         </ion-slide>
 
 
-        <ion-slide>
-          
-            <div class="container">
+        <!-- /////////////////                  SLIDE 4                    ///////////////// -->
 
-                <ion-row justify-content-center>
-                    <h1>¿Qué cantidad de producto quieres vender en esta oferta?</h1>
-                  </ion-row>
-                  <ion-row justify-content-center>
-                <ion-input [(ngModel)]="stock" type="number" ></ion-input>             
-                    </ion-row>
-                  </div>
-        </ion-slide>
 
-        <ion-slide>
+<ion-slide align-items-start>
+    <div class="container">
+<ion-row justify-content-center>
+  <h4>Detalle de tu oferta</h4>
+</ion-row>
 
-            <div class="container">
-                <ion-row justify-content-center>
-                    <h1>Agrega una breve descripción de tu oferta</h1>
-                  </ion-row>
-            
-            <ion-row justify-content-center >
-                <ion-textarea [cols]=2 [rows]=5 type="text"  maxlength=250 [(ngModel)]="description" ></ion-textarea>      
-        </ion-row>
-        <ion-row justify-content-center>
-            <strong> 250 Caracteres   </strong> 
-        </ion-row>  
-            </div>
-        </ion-slide>
 
-        <ion-slide>
-          
-            <div class="container">
+          <ion-list col-10>
+            <ion-list-header style="text-align: center; font-size: large" >
+             <ion-title>
+                {{product}} por {{prod_currency}} {{price}}.
+             </ion-title>
+               
+            </ion-list-header>
+            <ion-item>
+                <ion-label>Categoria del producto</ion-label>
+                <ion-note color="primary" slot="end">{{category}}</ion-note>
+              </ion-item>
+              <ion-item>
+                  <ion-label>Cantidad de ofertas</ion-label>
+                  <ion-note color="primary" slot="end">{{stock}}</ion-note>
+                </ion-item>
+                <ion-item>
+                    <ion-label>Precio del producto / servicio:</ion-label>
+                    <ion-note color="primary" slot="end">{{prod_currency}}  {{price}} </ion-note>
+                  </ion-item>
+                <ion-item>
+                    <ion-label>Comision por venta:</ion-label>
+                    <ion-note color="primary" slot="end">{{currency_commission}}  {{commission}} </ion-note>
+                  </ion-item>
+                  <ion-item>
+               
+                        <ion-label style="font-size: large">
+                            Comision total:
+                         </ion-label>
+                         <strong>
+                            <ion-note style="font-size: large" color="primary" slot="end"> {{prod_currency}} {{commission * stock}}</ion-note>
+                         </strong>
+                            
+                     
+                    </ion-item>
+          </ion-list>
 
-                <ion-row justify-content-center>
-                    <h1>¿De cuanto será tu presupuesto?
-                      </h1>
-                  </ion-row>
-                  <ion-row justify-content-center>
-                <ion-input [(ngModel)]="comission" type="number" ></ion-input>             
-                    </ion-row>
-                  </div>
-        </ion-slide>
+          <ion-button shape="round">
+            Confirmar Oferta
+          </ion-button>
 
+
+
+
+      </div>
+
+</ion-slide>
 
       </ion-slides>
 
+
+</ion-content>
+
+
+
       <ion-row justify-content-end >
       
-          <ion-button  color="primary" fill="clear" (click)="next()" >
+          <ion-button *ngIf="index != 2"  color="primary" fill="clear" (click)="next()" >
               Siguiente
               <ion-icon slot="end" name="md-arrow-forward" size="large" color="primary">
                   
               </ion-icon>
             </ion-button>
-
+  
       </ion-row>
 
-</ion-content>
+
+

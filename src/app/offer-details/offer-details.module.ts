@@ -16,7 +16,7 @@ import { AgmCoreModule } from '@agm/core';
     IonicModule,
     OfferDetailsPageRoutingModule,
     AgmCoreModule.forRoot({
-      apiKey: 'AIzaSyAnm6ElLjK53RUyd-EVVaCbFyGuL1GEDJI'
+      apiKey: 'AIzaSyAfYTQGAvHWC7vd-1iTEQSGoDQT_xJNw2A'
     }),
     
   ],

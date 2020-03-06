@@ -6,4 +6,5 @@ export class Location {
     country: string;
     province: string;
     city: string;
+    subLocality:string;
 }

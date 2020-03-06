@@ -9,23 +9,37 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { ScrollbarStyleDirective } from './scrollbar-style.directive';
-import { ModalCategoriesPageModule } from './modal-categories/modal-categories.module';
+
 import { AgmCoreModule, MarkerManager, GoogleMapsAPIWrapper, MapsAPILoader } from '@agm/core';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { FilterPipe } from './filter.pipe';
 import { PipesModuleModule } from './pipes-module/pipes-module.module';
 import { ComponentModule } from './componentes/component/component.module';
 import { MenuService } from './services/menu.service';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
+
+import { AddLocationPageModule } from './modals/add-location/add-location.module';
+import { ModalCategoriesPageModule } from './modals/modal-categories/modal-categories.module';
+import { ModalNewRegionPageModule } from './modals/modal-new-region/modal-new-region.module';
+import { ModalSimplePageModule } from './modals/modal-simple/modal-simple.module';
+import { PopOverProductsComponent } from './componentes/pop-over-products/pop-over-products.component';
+import { NativeGeocoder } from '@ionic-native/native-geocoder/ngx';
+import { StreamingMedia } from '@ionic-native/streaming-media/ngx';
 
 
 @NgModule({
   declarations: [AppComponent, ScrollbarStyleDirective],
-  entryComponents: [],
+  entryComponents: [PopOverProductsComponent],
   imports: [BrowserModule,
      IonicModule.forRoot(), 
      AppRoutingModule, 
      ModalCategoriesPageModule,
-     ComponentModule
+     ModalNewRegionPageModule,
+     AddLocationPageModule,
+     ModalSimplePageModule,
+
+     ComponentModule,
+     HttpClientModule
      
     ],
   providers: [
@@ -34,6 +48,10 @@ import { MenuService } from './services/menu.service';
     MarkerManager,
     GoogleMapsAPIWrapper,
     Geolocation,
+    HttpClient,
+    NativeGeocoder,
+    StreamingMedia,
+    
     
     
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }

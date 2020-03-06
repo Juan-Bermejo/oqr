@@ -1,6 +1,6 @@
 <ion-menu side="start" menuId="first" contentId="main">
     <ion-header>
-      <ion-toolbar color="primary">
+      <ion-toolbar color="dark">
         <ion-title>Menu</ion-title>
       </ion-toolbar>
     </ion-header>
@@ -9,7 +9,7 @@
 
         <ion-menu-toggle *ngFor=" let opt of menu_opt">
 <ion-item routerLink="{{opt.redirectTo}}">
-    <ion-icon color="primary" slot="start" name="{{opt.icon}}"></ion-icon>
+    <ion-icon color="dark" slot="start" name="{{opt.icon}}"></ion-icon>
     <ion-label> {{opt.name}}</ion-label>
 </ion-item>
        
@@ -18,5 +18,6 @@
 
 
       </ion-list>
+
     </ion-content>
   </ion-menu>

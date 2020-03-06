@@ -1,0 +1,62 @@
+
+<ion-content padding="true" >
+    <h4>¿En que region quieres publicar tu oferta?</h4>
+          
+    <ion-row justify-content-center>
+      <ion-select [(ngModel)]="aux_country">
+        <ion-select-option *ngFor="let c of countries" value="{{c.name}}">
+          {{c.name}}
+        </ion-select-option>
+      </ion-select>
+    </ion-row>
+
+    <h4>¿Establece el precio del producto?</h4>
+    <ion-row align-items-center>
+      <ion-col justify-content-center size="5">
+          <ion-label>Moneda</ion-label>
+          <ion-select [(ngModel)]="aux_currency" class="select-currency">
+            <ion-select-option *ngFor="let c of countries" value="{{c.currencies[0].code}}" >
+              {{c.currencies[0].name}}
+            </ion-select-option>
+          </ion-select>
+      </ion-col>
+
+      <ion-col justify-content-start size="7">
+          <ion-label>Precio</ion-label>
+          <ion-input type="number" placeholder="Ingresa el precio." [(ngModel)]="aux_price">
+            <span>{{aux_currency}} </span>
+          </ion-input>
+        </ion-col>
+
+      </ion-row>
+
+      <h4>¿Cuanto queres pagar por venta?</h4>
+      <ion-row align-items-center>
+          <ion-col justify-content-center size="5">
+              <ion-label>Moneda</ion-label>
+              <ion-select [(ngModel)]="aux_commission_currency" class="select-currency">
+                <ion-select-option *ngFor="let c of countries" value="{{c.currencies[0].code}}" >
+                  {{c.currencies[0].name}}
+                </ion-select-option>
+              </ion-select>
+          </ion-col>
+          <ion-col justify-content-start size="7">
+              <ion-label>Importe</ion-label>
+              <ion-input type="number" placeholder="Ingresa el importe." [(ngModel)]="aux_commission">
+                  <span>
+                      {{aux_commission_currency}}
+                     </span>
+              </ion-input>
+            </ion-col>
+      </ion-row>
+
+      <ion-row>
+       <h4>¿Que cantidad ofertas quieres publicar?</h4>
+       <ion-input type="number" [(ngModel)]="aux_stock" >
+       </ion-input>
+      </ion-row>
+<ion-row justify-content-center>
+    <ion-button (click)="addRegion()" shape="round" expand="block" size="large" color="primary" fill="outline" >Agregar</ion-button>
+</ion-row>
+      
+</ion-content>

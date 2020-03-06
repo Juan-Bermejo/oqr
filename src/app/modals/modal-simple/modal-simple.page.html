@@ -1,0 +1,22 @@
+
+
+<ion-content padding="true">
+
+    <ion-row justify-content-end>
+        <ion-button fill="clear" (click)="dismissModal()"> 
+            <ion-icon name="md-close" size="large" color="primary"></ion-icon>  
+            </ion-button>
+    </ion-row>
+    
+    
+      <ion-list padding="true">
+        <ion-item lines="none" *ngFor="let opt of list_opt">
+          
+          <ion-button size="large" expand="full" color="primary" fill="clear" (click)="dismissModal(opt)">
+              {{opt}}
+          </ion-button>
+        </ion-item>
+      </ion-list>
+    
+    </ion-content>
+    

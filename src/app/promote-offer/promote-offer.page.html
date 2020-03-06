@@ -1,0 +1,73 @@
+
+  <ion-toolbar>
+      <ion-buttons slot="start" collapse="true">
+          <ion-back-button mode="md" type="button" color="light" icon="md-arrow-back" defaultHref="home">
+          </ion-back-button>
+        </ion-buttons>
+    <ion-title color="primary">Promover esta oferta</ion-title>
+  </ion-toolbar>
+
+
+<ion-content>
+
+  <ion-card padding>
+    <img src="../../assets/images/{{offer.category}}.jpg">
+   
+    <ion-card-title> {{offer.title}} </ion-card-title>
+    <ion-card-subtitle> {{offer.description}} </ion-card-subtitle>
+
+    <ion-list>
+      
+        <ion-item>
+            <ion-label>Fecha de publicacion</ion-label>
+            <ion-note slot="end">
+
+                  {{offer.date}} 
+    
+            </ion-note>
+        </ion-item>
+        <ion-item>
+            <ion-label>Cantidad de vendedores</ion-label>
+            <ion-note slot="end">              
+              <ion-badge>
+                {{offer.sellers}} 
+            </ion-badge>
+               </ion-note>
+        </ion-item>
+        <ion-item>
+            <ion-label>Comision por venta</ion-label>
+            <ion-note slot="end"> 
+                <ion-badge>
+                    {{offer.commission}} 
+                </ion-badge>
+               </ion-note>
+          </ion-item>
+          <ion-item>
+              <ion-label>Comision total</ion-label>
+              <ion-note slot="end"> 
+                  <ion-badge>
+                      {{offer.total_commission}} 
+                  </ion-badge>
+              </ion-note>
+            </ion-item>
+            </ion-list>
+
+            <ion-input placeholder="Ingresa el link de tu video.">
+
+            </ion-input>
+
+  </ion-card>
+
+
+      <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+        <ion-fab-button>
+          <ion-icon color="light" name="md-videocam"></ion-icon>
+        </ion-fab-button>
+      </ion-fab>
+
+</ion-content>
+
+
+
+
+
