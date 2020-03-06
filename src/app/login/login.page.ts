@@ -1,8 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { NavController } from '@ionic/angular';
 import { AngularFireAuth } from '@angular/fire/auth';
-import { auth } from 'firebase/app';
+import * as firebase from 'firebase/app';
 import { AuthService } from '../services/auth.service'; 
+import { GooglePlus } from '@ionic-native/google-plus/ngx';
+import { Platform } from '@ionic/angular';
+import { Observable } from 'rxjs';
+import { Facebook } from '@ionic-native/facebook/ngx';
 
 @Component({
   selector: 'app-login',
@@ -12,8 +16,14 @@ import { AuthService } from '../services/auth.service';
 export class LoginPage implements OnInit {
 
   logged: Boolean = false;
+  user : Observable<firebase.User>;
 
-  constructor(private navCtrl: NavController, private afAuth: AngularFireAuth, private authService: AuthService) { }
+  constructor(private navCtrl: NavController, 
+              private afAuth: AngularFireAuth, 
+              private authService: AuthService, 
+              private platform: Platform,
+              private googlePlus: GooglePlus,
+              private facebook: Facebook) { }
 
   public email: string = '';
   public password: string = '';
@@ -21,6 +31,16 @@ export class LoginPage implements OnInit {
 
   ngOnInit() {
 
+    this.platform.ready().then(() => {
+      // 'hybrid' detects both Cordova and Capacitor
+      if (this.platform.is('hybrid')) {
+
+        alert('android');
+      } 
+      else {
+        console.log('web');
+      }
+    });
   }
 
   loginRedirect()
@@ -43,22 +63,41 @@ export class LoginPage implements OnInit {
 
   onLoginGoogle(): void {
 
-    this.authService.loginGoogleUser()
-      .then( (res) => {
+    // 'hybrid' detects both Cordova and Capacitor
+    if (this.platform.is('hybrid')) {
+      this.googlePlus.login({})
+        .then(res => alert(res))
+        .catch(err => alert(err));
+    } 
 
-        this.loginRedirect();
+    else {
+      this.authService.loginGoogleUser()
+        .then( (res) => {
+          console.log(res.user.displayName,res.user.email);
+          this.loginRedirect();
 
-      }).catch (err => console.log('err', err.message));
+        }).catch (err => console.log('err', err.message));
+    }
+
   }
 
   onLoginFacebook(): void {
 
-    this.authService.loginFacebookUser()
-      .then( (res) => {
+    if (this.platform.is('hybrid')) {
+      this.facebook.login(['public_profile', 'email'])
+        .then(res => console.log(res))
+        .catch(err => console.error(err));
+    }
 
-        this.loginRedirect();
+    else{ 
+      this.authService.loginFacebookUser()
+        .then( (res) => {
 
-      }).catch(err => console.log('err', err.message));
+          this.loginRedirect();
+
+        }).catch(err => console.log('err', err.message));
+  
+    }
   }
 
   register_page() {

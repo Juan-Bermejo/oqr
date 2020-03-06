@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
+import { HttpClientModule } from '@angular/common/http';
 
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
@@ -18,7 +19,9 @@ import { environment } from '../environments/environment';
 
 import { AngularFireModule } from '@angular/fire';
 import { AngularFireDatabaseModule, AngularFireDatabase } from '@angular/fire/database';
-import { AngularFireAuth } from '@angular/fire/auth';
+import { AngularFireAuth, AngularFireAuthModule } from '@angular/fire/auth';
+import { GooglePlus } from '@ionic-native/google-plus/ngx';
+import { Facebook } from '@ionic-native/facebook/ngx';
 import { ComponentModule } from './componentes/component/component.module';
 import { MenuService } from './services/menu.service';
 
@@ -33,7 +36,9 @@ import { MenuService } from './services/menu.service';
     ModalCategoriesPageModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireDatabaseModule,
-    ComponentModule
+    AngularFireAuthModule,
+    ComponentModule,
+    HttpClientModule
      
     ],
   providers: [
@@ -43,6 +48,8 @@ import { MenuService } from './services/menu.service';
     GoogleMapsAPIWrapper,
     Geolocation,
     AngularFireAuth,
+    GooglePlus,
+    Facebook,
     
     
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
