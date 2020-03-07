@@ -46,7 +46,7 @@ export const roles ={
   comprador: "comprador"
 }
 
-export var menu_opt = [
+export var menu_opt_logged = [
   {
     "icon":"md-person",
     "name":"Mi cuenta",
@@ -73,10 +73,22 @@ export var menu_opt = [
   {
     "icon":"md-power",
     "name":"Cerrar sesion",
-    "redirectTo": "offer-details",
+    "redirectTo": "login",
   },
 
+]
 
+export var menu_opt = [
+  {
+    "icon":"key",
+    "name":"Iniciar sesion",
+    "redirectTo": "login",
+  },
+  {
+    "icon":"finger-print",
+    "name":"Registrarse",
+    "redirectTo": "register",
+  },
 ]
 
 /*

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, Input } from '@angular/core';
 import { NavController } from '@ionic/angular';
 import { AngularFireAuth } from '@angular/fire/auth';
 import * as firebase from 'firebase/app';
@@ -7,6 +7,14 @@ import { GooglePlus } from '@ionic-native/google-plus/ngx';
 import { Platform } from '@ionic/angular';
 import { Observable } from 'rxjs';
 import { Facebook } from '@ionic-native/facebook/ngx';
+
+import { DbService } from '../services/db.service';
+import { NgForm } from '@angular/forms';
+import { User, UserLogin } from '../models/users';
+import { ToastController } from '@ionic/angular';
+import { HomePage } from '../home/home.page';
+import { MenuService } from '../services/menu.service';
+
 
 @Component({
   selector: 'app-login',
@@ -23,7 +31,9 @@ export class LoginPage implements OnInit {
               private authService: AuthService, 
               private platform: Platform,
               private googlePlus: GooglePlus,
-              private facebook: Facebook) { }
+              private facebook: Facebook,
+              public dbService: DbService,
+              public menuService: MenuService) { }
 
   public email: string = '';
   public password: string = '';
@@ -33,32 +43,50 @@ export class LoginPage implements OnInit {
 
     this.platform.ready().then(() => {
       // 'hybrid' detects both Cordova and Capacitor
-      if (this.platform.is('hybrid')) {
-
-        alert('android');
-      } 
-      else {
-        console.log('web');
-      }
+      if (this.platform.is('hybrid')) { } 
+      else { }
     });
+  }
+
+  ionViewWillEnter(){
+    this.dbService.is_logged = false;
   }
 
   loginRedirect()
   {
-    this.logged = true;
     this.navCtrl.navigateRoot('home');
-
   }
 
-  onLogin(): void {
-    this.authService.loginEmailUser(this.email, this.password)
-      .then( (res) => {
+  onLogin(form_log: NgForm) {
+    this.dbService.checkLogin(this.email, this.password)
+      .subscribe((data: any) => {
+        if(data.status == 200) {
 
-        this.loginRedirect();
+          this.resetForm(form_log);
+          this.dbService.id = data.id_user;
+          this.dbService.is_logged = true;
+          this.loginRedirect();
 
-      }).catch ((err) => {
-        this.anyErrors = err;
+        }
+
+        if(data.status == 401) {
+          const toast = document.createElement('ion-toast');
+          toast.message = 'Usuario o contraseña incorrecto';
+          toast.duration = 2000;
+          document.body.appendChild(toast);
+          return toast.present(); 
+        }
       });
+
+    // this.authService.loginEmailUser(this.email, this.password)
+    //   .then( (res) => {
+
+    //     this.dbService.checkLogin(res);
+    //     this.loginRedirect();
+
+    //   }).catch ((err) => {
+    //     this.anyErrors = err;
+    //   });
   }
 
   onLoginGoogle(): void {
@@ -66,7 +94,9 @@ export class LoginPage implements OnInit {
     // 'hybrid' detects both Cordova and Capacitor
     if (this.platform.is('hybrid')) {
       this.googlePlus.login({})
-        .then(res => alert(res))
+        .then(res => {
+
+        })
         .catch(err => alert(err));
     } 
 
@@ -102,6 +132,12 @@ export class LoginPage implements OnInit {
 
   register_page() {
     this.navCtrl.navigateRoot('register');
+  }
+
+  resetForm(form?: NgForm) {
+    if (form) {
+      form.reset();
+    }
   }
 
 }

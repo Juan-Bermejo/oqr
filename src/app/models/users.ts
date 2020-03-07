@@ -16,3 +16,16 @@ export class User {
     password: string;
     mail: string;
 }
+
+export class UserLogin {
+    
+    constructor(username='', mail='', password='') {
+        this.username;
+        this.mail;
+        this.password;
+    }
+
+    username: string;
+    mail: string;
+    password: string;
+}

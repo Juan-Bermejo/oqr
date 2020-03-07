@@ -21,12 +21,12 @@ const routes: Routes = [
     loadChildren: () => import('./offer-details/offer-details.module').then( m => m.OfferDetailsPageModule)
   },
   {
-    path: 'register',
-    loadChildren: () => import('./register/register.module').then( m => m.RegisterPageModule)
-  },
-  {
     path: 'seller-panel',
     loadChildren: () => import('./seller-panel/seller-panel.module').then( m => m.SellerPanelPageModule)
+  },
+  {
+    path: 'register',
+    loadChildren: () => import('./register/register.module').then( m => m.RegisterPageModule)
   },
 ];
 

@@ -1,6 +1,8 @@
 
 <ion-content padding="true" fullscreen="true">
 
+  <ion-button color="tertiary" shape="round" (click)="loginRedirect()"><ion-icon size="large" name="arrow-back"></ion-icon></ion-button>
+
     <div class="cont-login">
   
         <ion-row justify-content-center>
@@ -34,15 +36,15 @@
         <ion-row><ion-col size="10" offset="1"><div class="line"></div></ion-col></ion-row>
         
 
-        <form #formLogin="ngForm" (submit)="onLogin()">
+        <form #formLogin="ngForm" (ngSubmit)="onLogin(formLogin)">
 
 
           <ion-row >
               
             <ion-col size="10" offset="1">
                 
-              <ion-input [(ngModel)]="email" [ngModelOptions]="{standalone: true}" placeholder=" Usuario o Email"></ion-input>
-
+              <ion-input  type="text" name="username" placeholder=" Username" [(ngModel)]="email"></ion-input>
+            
             </ion-col>
             
           </ion-row>
@@ -51,7 +53,7 @@
             
             <ion-col size="10" offset="1">
               
-              <ion-input [(ngModel)]="password" [ngModelOptions]="{standalone: true}" type="password" placeholder=" Contraseña"></ion-input>
+              <ion-input type="password" name="password" placeholder=" Password" [(ngModel)]="password"></ion-input>
               <a class="forgot-pass" href="/login">Olvido su contraseña?</a>
             </ion-col>
 

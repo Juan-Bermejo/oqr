@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, Input, AfterViewInit, OnChanges, SimpleChanges } from '@angular/core';
 import { ModalController, NavController, MenuController } from '@ionic/angular';
 import { ModalCategoriesPage } from '../modal-categories/modal-categories.page';
 import { offer_list } from '../../environments/environment'
@@ -7,6 +7,8 @@ import { Router, NavigationExtras } from '@angular/router';
 import { NavParamsService } from '../services/nav-params.service';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AuthService } from '../services/auth.service';
+import { DbService } from '../services/db.service';
+import { MenuService } from '../services/menu.service';
 
 @Component({
   selector: 'app-home',
@@ -15,13 +17,12 @@ import { AuthService } from '../services/auth.service';
 })
 export class HomePage {
 
+  user_id: string = '';
   offer_list = offer_list;
   aux_offer_list:Array<any>;
   busqueda:string;
   notification:boolean=false;
   search_tool:boolean;
-  is_logged:boolean=false;
-   
 
   constructor(private modalController: ModalController,
      public navCtrl: NavController,
@@ -29,6 +30,8 @@ export class HomePage {
      private afAuth: AngularFireAuth,
      private authService: AuthService,
      private menu: MenuController,
+     private dbService: DbService,
+     private menuService: MenuService
     ) {
 
       this.search_tool=false;
@@ -41,7 +44,11 @@ export class HomePage {
   }
 
   ngOnInit() {
-    this.getCurrentUser();
+  }
+
+  ionViewWillEnter(){
+    this.menuService.getMenuOpt(this.dbService.is_logged);
+    
   }
 
    async presentModal() {
@@ -82,7 +89,6 @@ export class HomePage {
   
   }
 
-
   /*openMenu() {
     this.menu.enable(true, 'first');
     this.menu.open('first');
@@ -97,14 +103,15 @@ export class HomePage {
   }
 
   getCurrentUser() {
-    this.authService.isAuth().subscribe( auth => {
+    
+    /*this.authService.isAuth().subscribe( auth => {
       if (auth){
         this.is_logged = true;
       }
       else {
         this.is_logged = false;
       }
-    })
+    })*/
   }
 
   goToLogIn() {
@@ -115,7 +122,6 @@ export class HomePage {
     this.afAuth.auth.signOut();
     
   }
-
 
 }
 

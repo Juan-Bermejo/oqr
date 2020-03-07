@@ -23,7 +23,7 @@ export class RegisterPage implements OnInit {
   constructor(private navCtrl: NavController, 
               private afAuth: AngularFireAuth, 
               private authService: AuthService,
-              private dbService: DbService) { }
+              public dbService: DbService) { }
 
   public email: string = '';
   public password: string = '';
@@ -33,6 +33,9 @@ export class RegisterPage implements OnInit {
 
   to_login_page() {
     this.navCtrl.navigateRoot('login');
+  }
+  to_home_page(){
+    this.navCtrl.navigateRoot('home');
   }
 
   /*onAddUser() {
@@ -56,6 +59,8 @@ export class RegisterPage implements OnInit {
           toast.duration = 2000;
           document.body.appendChild(toast);
           return toast.present();
+          this.dbService.is_logged = true;
+          this.to_home_page();
         }
         else {
           alert('error'); 

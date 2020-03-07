@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { MenuService } from '../../services/menu.service';
-
+ 
 @Component({
   selector: 'app-menu',
   templateUrl: './menu.component.html',
@@ -17,7 +17,11 @@ export class MenuComponent implements OnInit {
 
 
   ngOnInit() {
-   this.menu_opt = this.menuSrv.getMenuOpt(this.role);
+   //this.menu_opt = this.menuSrv.menu_data;
+  }
+
+  ngAfterViewChecked(): void {
+    this.menu_opt = this.menuSrv.menu_data;
   }
 
 }
