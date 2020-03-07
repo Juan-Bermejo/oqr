@@ -3,7 +3,7 @@ import { Location } from './location';
 
 
 export class User {
-    id:number;
+    id:string;
     name: string;
     last_name:string;
     email: string;
