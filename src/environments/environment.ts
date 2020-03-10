@@ -6,7 +6,19 @@ import { Location } from '../app/clases/location';
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  firebaseConfig: {
+
+    apiKey: "AIzaSyDp1Yj3P0CD3x-JuURp9jqLRi8k5XBHC3w",
+    authDomain: "oqrdb-b0ade.firebaseapp.com",
+    databaseURL: "https://oqrdb-b0ade.firebaseio.com",
+    projectId: "oqrdb-b0ade",
+    storageBucket: "oqrdb-b0ade.appspot.com",
+    messagingSenderId: "175362284009",
+    appId: "1:175362284009:web:5098a66554770747411378"
+  
+  }
+  
 };
 var l1= new Location();
 var l2= new Location();
@@ -84,7 +96,7 @@ export const roles ={
   comprador: "comprador"
 }
 
-export var menu_opt = [
+export var menu_opt_logged = [
   {
     "icon":"md-person",
     "name":"Mi cuenta",
@@ -116,10 +128,22 @@ export var menu_opt = [
   {
     "icon":"md-power",
     "name":"Cerrar sesion",
-    "redirectTo": "offer-details",
+    "redirectTo": "login",
   },
 
+]
 
+export var menu_opt = [
+  {
+    "icon":"key",
+    "name":"Iniciar sesion",
+    "redirectTo": "login",
+  },
+  {
+    "icon":"finger-print",
+    "name":"Registrarse",
+    "redirectTo": "register",
+  },
 ]
 
 export const slideOpts = {

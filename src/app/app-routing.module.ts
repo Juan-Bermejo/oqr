@@ -35,7 +35,8 @@ const routes: Routes = [
   {
     path: 'add-location',
     loadChildren: () => import('./modals/add-location/add-location.module').then( m => m.AddLocationPageModule)
-  },  {
+  },
+  {
     path: 'modal-simple',
     loadChildren: () => import('./modals/modal-simple/modal-simple.module').then( m => m.ModalSimplePageModule)
   },
@@ -52,6 +53,10 @@ const routes: Routes = [
     loadChildren: () => import('./promote-offer/promote-offer.module').then( m => m.PromoteOfferPageModule)
   },
   {
+    path: 'modal-categories',
+    loadChildren: () => import('./modal-categories/modal-categories.module').then( m => m.ModalCategoriesPageModule)
+  },
+  {
     path: 'my-locations',
     loadChildren: () => import('./my-locations/my-locations.module').then( m => m.MyLocationsPageModule)
   },
@@ -59,8 +64,10 @@ const routes: Routes = [
     path: 'related-products',
     loadChildren: () => import('./related-products/related-products.module').then( m => m.RelatedProductsPageModule)
   },
-
-
+  {
+    path: 'register',
+    loadChildren: () => import('./register/register.module').then( m => m.RegisterPageModule)
+  },
 ];
 
 @NgModule({

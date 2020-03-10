@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, OnInit, Input, AfterViewInit, OnChanges, SimpleChanges } from '@angular/core';
 import { ModalController, NavController, MenuController } from '@ionic/angular';
 import { StreamingMedia, StreamingVideoOptions } from '@ionic-native/streaming-media/ngx';
 
@@ -8,16 +8,19 @@ import { Router, NavigationExtras } from '@angular/router';
 import { NavParamsService } from '../services/nav-params.service';
 import { ModalCategoriesPage } from '../modals/modal-categories/modal-categories.page';
 import { ProductsService } from '../services/products.service';
+import { AngularFireAuth } from '@angular/fire/auth';
+import { AuthService } from '../services/auth.service';
+import { DbService } from '../services/db.service';
+import { MenuService } from '../services/menu.service';
 
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
-  styleUrls: ['home.page.scss'],
+  styleUrls: ['home.page.scss']
 })
 export class HomePage {
 
-
-
+  user_id: string = '';
   offer_list = offer_list;
   aux_offer_list:Array<any>;
   busqueda:string;
@@ -39,14 +42,26 @@ export class HomePage {
      private modalController: ModalController,
      public navCtrl: NavController,
      private ParamSrv: NavParamsService,
+     private afAuth: AngularFireAuth,
+     private authService: AuthService,
      private menu: MenuController,
-    ) {
-      
+     private dbService: DbService,
+     private menuService: MenuService
+    ) {     
+
       this.search_tool=false;
       this.aux_offer_list= new Array();
       this.aux_offer_list=this.offer_list;
 
  
+  }
+
+  ngOnInit() {
+  }
+
+  ionViewWillEnter(){
+    this.menuService.getMenuOpt(this.dbService.is_logged);
+    
   }
 
    async presentModal() {
@@ -94,7 +109,6 @@ export class HomePage {
   
   }
 
-
   /*openMenu() {
     this.menu.enable(true, 'first');
     this.menu.open('first');
@@ -108,6 +122,26 @@ export class HomePage {
     });
   }
 
+  getCurrentUser() {
+    
+    /*this.authService.isAuth().subscribe( auth => {
+      if (auth){
+        this.is_logged = true;
+      }
+      else {
+        this.is_logged = false;
+      }
+    })*/
+  }
+
+  goToLogIn() {
+    this.navCtrl.navigateRoot('login');
+  }
+
+  logOut() {
+    this.afAuth.auth.signOut();
+    
+  }
 
 }
 
