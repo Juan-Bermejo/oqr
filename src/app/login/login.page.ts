@@ -22,6 +22,7 @@ import { MenuService } from '../services/menu.service';
   templateUrl: './login.page.html',
   styleUrls: ['./login.page.scss'],
 })
+
 export class LoginPage implements OnInit {
 
   logged: Boolean = false;
@@ -57,7 +58,7 @@ export class LoginPage implements OnInit {
   {
     
     let user= new User();
-    user.id=1;
+    user.id="1";
     user.name="Ricardo";
     user.last_name="Ruben";
     user.email="richardruben@gmail.com";

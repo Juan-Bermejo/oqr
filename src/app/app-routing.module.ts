@@ -53,10 +53,6 @@ const routes: Routes = [
     loadChildren: () => import('./promote-offer/promote-offer.module').then( m => m.PromoteOfferPageModule)
   },
   {
-    path: 'modal-categories',
-    loadChildren: () => import('./modal-categories/modal-categories.module').then( m => m.ModalCategoriesPageModule)
-  },
-  {
     path: 'my-locations',
     loadChildren: () => import('./my-locations/my-locations.module').then( m => m.MyLocationsPageModule)
   },

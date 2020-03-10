@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { User, UserLogin } from '../models/users';
+import { Users, UserLogin } from '../models/users';
 import { RegisterPage } from '../register/register.page';
 import { MapsAPILoader } from '@agm/core';
 
@@ -9,8 +9,8 @@ import { MapsAPILoader } from '@agm/core';
 })
 export class DbService {
 
-  selectedUser: User;
-  users: User[];
+  selectedUser: Users;
+  users: Users[];
 
   public id: string;
   public is_logged: boolean = false;
@@ -19,10 +19,10 @@ export class DbService {
   readonly URL_SERVER_LOG = 'http://cors-anywhere.herokuapp.com/http://31.220.61.6:3000/app/users/log';
 
   constructor(private http: HttpClient) {
-    this.selectedUser = new User();
+    this.selectedUser = new Users();
    }
 
-    addUser(user: User) {
+    addUser(user: Users) {
       return this.http.post(this.URL_SERVER, user,
         {headers: new HttpHeaders({"Content-Type": "application/json"})});
     }

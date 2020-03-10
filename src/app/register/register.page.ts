@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { DbService } from '../services/db.service';
 import { NgForm } from '@angular/forms';
-import { User } from '../models/users';
+import { Users } from '../models/users';
 import { ToastController } from '@ionic/angular';
 
 import { NavController } from '@ionic/angular';
@@ -72,7 +72,7 @@ export class RegisterPage implements OnInit {
   resetForm(form?: NgForm) {
     if (form) {
       form.reset();
-      this.dbService.selectedUser = new User();
+      this.dbService.selectedUser = new Users();
     }
   }
 
