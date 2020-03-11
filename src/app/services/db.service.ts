@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { User, UserLogin } from '../clases/user';
+import { Offer } from '../clases/offer';
 import { RegisterPage } from '../register/register.page';
 import { MapsAPILoader } from '@agm/core';
 
@@ -12,7 +13,9 @@ export class DbService {
   selectedUser: User;
   users: User[];
 
-  public id: string;
+  public user_id: string;
+  public offer_id: string;
+
   public is_logged: boolean = false;
 
   readonly URL_SERVER_USER = 'http://cors-anywhere.herokuapp.com/http://31.220.61.6:3000/app/users/';
@@ -28,7 +31,7 @@ export class DbService {
         {headers: new HttpHeaders({"Content-Type": "application/json"})});
     }
 
-    checkLogin(user_name,password) {
+    checkLogin(user_name: string, password: string) {
       var data = {
         "user_name": user_name,
         "password": password
@@ -38,14 +41,23 @@ export class DbService {
 
     getUser(user_id: string) {
       if(user_id != ''){
-        this.id = user_id;
-        var GET_USER_URL = this.URL_SERVER_USER.concat(this.id.toString());
+        this.user_id = user_id;
+        var GET_USER_URL = this.URL_SERVER_USER.concat(this.user_id.toString());
         return this.http.get(GET_USER_URL);
       }
     }
 
-    createOffer() {
+    createOffer(offer: Offer) {
+      return this.http.post(this.URL_SERVER_PROD, offer,
+        {headers: new HttpHeaders({"Content-Type": "application/json"})});
+    }
 
+    getOffer(offer_id: string) {
+      if(offer_id != ''){
+        this.offer_id = offer_id;
+        var GET_OFFER_URL = this.URL_SERVER_PROD.concat(this.offer_id.toString());
+        return this.http.get(GET_OFFER_URL);
+      }
     }
   /*
 
