@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Users, UserLogin } from '../models/users';
+import { User, UserLogin } from '../clases/user';
 import { RegisterPage } from '../register/register.page';
 import { MapsAPILoader } from '@agm/core';
 
@@ -9,27 +9,28 @@ import { MapsAPILoader } from '@agm/core';
 })
 export class DbService {
 
-  selectedUser: Users;
-  users: Users[];
+  selectedUser: User;
+  users: User[];
 
   public id: string;
   public is_logged: boolean = false;
 
-  readonly URL_SERVER = 'http://cors-anywhere.herokuapp.com/http://31.220.61.6:3000/app/users/';
+  readonly URL_SERVER_USER = 'http://cors-anywhere.herokuapp.com/http://31.220.61.6:3000/app/users/';
+  readonly URL_SERVER_PROD = 'http://cors-anywhere.herokuapp.com/http://31.220.61.6:3000/app/products/';
   readonly URL_SERVER_LOG = 'http://cors-anywhere.herokuapp.com/http://31.220.61.6:3000/app/users/log';
 
   constructor(private http: HttpClient) {
-    this.selectedUser = new Users();
+    this.selectedUser = new User();
    }
 
-    addUser(user: Users) {
-      return this.http.post(this.URL_SERVER, user,
+    addUser(user: User) {
+      return this.http.post(this.URL_SERVER_USER, user,
         {headers: new HttpHeaders({"Content-Type": "application/json"})});
     }
 
-    checkLogin(email,password) {
+    checkLogin(user_name,password) {
       var data = {
-        "email": email,
+        "user_name": user_name,
         "password": password
       }
       return this.http.post(this.URL_SERVER_LOG, data);
@@ -38,9 +39,13 @@ export class DbService {
     getUser(user_id: string) {
       if(user_id != ''){
         this.id = user_id;
-        var GET_USER_URL = this.URL_SERVER.concat(this.id.toString());
+        var GET_USER_URL = this.URL_SERVER_USER.concat(this.id.toString());
         return this.http.get(GET_USER_URL);
       }
+    }
+
+    createOffer() {
+
     }
   /*
 

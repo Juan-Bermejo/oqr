@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { DbService } from '../services/db.service';
 import { NgForm } from '@angular/forms';
-import { Users } from '../models/users';
+import { User } from '../clases/user';
 import { ToastController } from '@ionic/angular';
 
 import { NavController } from '@ionic/angular';
@@ -58,9 +58,10 @@ export class RegisterPage implements OnInit {
           toast.message = 'Registro exitoso!';
           toast.duration = 2000;
           document.body.appendChild(toast);
-          return toast.present();
           this.dbService.is_logged = true;
           this.to_home_page();
+          return toast.present();
+          
         }
         else {
           alert('error'); 
@@ -72,7 +73,7 @@ export class RegisterPage implements OnInit {
   resetForm(form?: NgForm) {
     if (form) {
       form.reset();
-      this.dbService.selectedUser = new Users();
+      this.dbService.selectedUser = new User();
     }
   }
 

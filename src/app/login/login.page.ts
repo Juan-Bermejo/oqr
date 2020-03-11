@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, Input } from '@angular/core';
 import { NavController } from '@ionic/angular';
-import { User } from '../clases/user';
+import { User, UserLogin} from '../clases/user';
 import { AngularFireAuth } from '@angular/fire/auth';
 import * as firebase from 'firebase/app';
 import { AuthService } from '../services/auth.service'; 
@@ -11,7 +11,6 @@ import { Facebook } from '@ionic-native/facebook/ngx';
 
 import { DbService } from '../services/db.service';
 import { NgForm } from '@angular/forms';
-import { Users, UserLogin } from '../models/users';
 import { ToastController } from '@ionic/angular';
 import { HomePage } from '../home/home.page';
 import { MenuService } from '../services/menu.service';
@@ -37,7 +36,7 @@ export class LoginPage implements OnInit {
               public dbService: DbService,
               public menuService: MenuService) { }
 
-  public email: string = '';
+  public user_name: string = '';
   public password: string = '';
   private anyErrors: string = '';
 
@@ -57,22 +56,21 @@ export class LoginPage implements OnInit {
   loginRedirect()
   {
     
-    let user= new User();
-    user.id="1";
+    /*let user= new User();
     user.name="Ricardo";
     user.last_name="Ruben";
     user.email="richardruben@gmail.com";
     user.password="111";
     user.phone=1150648978;
     user.role="seller";
-    localStorage.setItem("user", JSON.stringify(user));
+    localStorage.setItem("user", JSON.stringify(user));*/
     
 
     this.navCtrl.navigateRoot('home');
   }
 
   onLogin(form_log: NgForm) {
-    this.dbService.checkLogin(this.email, this.password)
+    this.dbService.checkLogin(this.user_name, this.password)
       .subscribe((data: any) => {
         if(data.status == 200) {
 

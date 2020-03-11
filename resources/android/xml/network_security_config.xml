@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <network-security-config>
+    <base-config cleartextTrafficPermitted="true">
+       <trust-anchors>
+           <certificates src="system" />
+       </trust-anchors>
+    </base-config>
+
     <domain-config cleartextTrafficPermitted="true">
         <domain includeSubdomains="true">localhost</domain>
+        <domain includeSubdomains="true">31.220.61.6:3000</domain>
+        <domain includeSubdomains="true">http://cors-anywhere.herokuapp.com/http://31.220.61.6:3000/</domain>
     </domain-config>
 </network-security-config>

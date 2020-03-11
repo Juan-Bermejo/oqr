@@ -12,20 +12,29 @@
   <form #userForm="ngForm" (ngSubmit)="createUser(userForm)">
 
     <ion-row>
-      <ion-col size="10" offset="1">
+      <ion-col size="5" offset="1">
         <ion-input type="text" name="name" placeholder=" Name" #name="ngModel" [(ngModel)]="dbService.selectedUser.name"></ion-input>
       </ion-col>
-    </ion-row>
-
-    <ion-row>
-      <ion-col size="10" offset="1">
-        <ion-input type="text" name="username" placeholder=" Username" #username="ngModel" [(ngModel)]="dbService.selectedUser.username"></ion-input>
+      <ion-col size="5" offset="0">
+        <ion-input type="text" name="last_name" placeholder=" Last Name" #last_name="ngModel" [(ngModel)]="dbService.selectedUser.last_name"></ion-input>
       </ion-col>
     </ion-row>
 
     <ion-row>
       <ion-col size="10" offset="1">
-        <ion-input type="email" name="mail" placeholder=" Email" required=true #mail="ngModel" [(ngModel)]="dbService.selectedUser.mail"></ion-input>
+        <ion-input type="text" name="user_name" placeholder=" Username" #user_name="ngModel" [(ngModel)]="dbService.selectedUser.user_name"></ion-input>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col size="10" offset="1">
+        <ion-input type="email" name="email" placeholder=" Email" required=true #email="ngModel" [(ngModel)]="dbService.selectedUser.email"></ion-input>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col size="10" offset="1">
+        <ion-input type="number" name="phone" placeholder=" Phone" required="true" #phone="ngModel" [(ngModel)]="dbService.selectedUser.phone"></ion-input>
       </ion-col>
     </ion-row>
 
