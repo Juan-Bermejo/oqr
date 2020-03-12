@@ -100,18 +100,9 @@ export class AddLocationPage implements OnInit {
       l.longitude= this.longitude;
       l.province=this.location_data.administrativeArea;
       l.subLocality= this.location_data.subLocality;
-      let user:User=JSON.parse(localStorage.getItem("user"));
+     
 
-      if(user.locations[0])
-      {
-        user.locations.push(l);
-      }
-      else{
-        user.locations= new Array<Location>();
-        user.locations.push(l);
-      }
       
-      localStorage.setItem("user", JSON.stringify(user));
       this.modalCtrl.dismiss({
         "result":{
           "address":  this.address,
@@ -130,7 +121,7 @@ export class AddLocationPage implements OnInit {
         this.latitude=undefined;
         this.longitude=undefined;
         this.location_data=undefined;
-        this.markers=undefined;
+        this.markers=new Array();
       })
 
     })

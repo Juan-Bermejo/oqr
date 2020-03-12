@@ -25,6 +25,12 @@ import { ModalSimplePageModule } from './modals/modal-simple/modal-simple.module
 import { PopOverProductsComponent } from './componentes/pop-over-products/pop-over-products.component';
 import { NativeGeocoder } from '@ionic-native/native-geocoder/ngx';
 import { StreamingMedia } from '@ionic-native/streaming-media/ngx';
+import { AddProductPageModule } from './modals/add-product/add-product.module';
+import { firebaseConfig } from '../environments/environment';
+import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { AngularFirestore } from '@angular/fire/firestore';
+import { AngularFireStorageModule } from '@angular/fire/storage';
+import { AngularFireModule } from '@angular/fire';
 
 
 @NgModule({
@@ -37,7 +43,10 @@ import { StreamingMedia } from '@ionic-native/streaming-media/ngx';
      ModalNewRegionPageModule,
      AddLocationPageModule,
      ModalSimplePageModule,
-
+     AddProductPageModule,
+     AngularFireModule,
+     AngularFireModule.initializeApp(firebaseConfig),
+     AngularFirestoreModule, AngularFireStorageModule,
      ComponentModule,
      HttpClientModule
      
@@ -51,6 +60,8 @@ import { StreamingMedia } from '@ionic-native/streaming-media/ngx';
     HttpClient,
     NativeGeocoder,
     StreamingMedia,
+
+
     
     
     

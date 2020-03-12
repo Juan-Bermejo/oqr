@@ -44,3 +44,14 @@ ion-back-button{
       border-bottom-width: 0px;
 
   }
+
+  ion-card{
+      box-shadow: none;
+      border-radius: 5px;
+      border-style: solid;
+      border-width: 1px;
+      border-color: rgba(194, 192, 192, 0.548);
+      height: 60px;
+
+      padding-left: 5px;
+  }

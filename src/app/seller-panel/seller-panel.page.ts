@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NavController } from '@ionic/angular';
-import { user } from '../../environments/environment';
+import { User } from '../clases/user';
+
 
 
 @Component({
@@ -10,7 +11,7 @@ import { user } from '../../environments/environment';
 })
 export class SellerPanelPage implements OnInit {
 
-  user= user;
+  user:User;
 
   usrName:string="Usuario1";
 

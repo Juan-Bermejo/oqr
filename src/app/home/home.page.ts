@@ -1,13 +1,18 @@
-import { Component, ViewChild } from '@angular/core';
-import { ModalController, NavController, MenuController } from '@ionic/angular';
+import { Component, ViewChild, OnInit, OnDestroy, OnChanges } from '@angular/core';
+import { ModalController, NavController, MenuController, Platform } from '@ionic/angular';
 import { StreamingMedia, StreamingVideoOptions } from '@ionic-native/streaming-media/ngx';
 
-import { offer_list } from '../../environments/environment'
+
 import { NavigationOptions } from '@ionic/angular/dist/providers/nav-controller';
 import { Router, NavigationExtras } from '@angular/router';
 import { NavParamsService } from '../services/nav-params.service';
 import { ModalCategoriesPage } from '../modals/modal-categories/modal-categories.page';
 import { ProductsService } from '../services/products.service';
+
+import { PostLink } from '../clases/post-link';
+import { PostService } from '../services/post.service';
+import { Offer } from '../clases/offer';
+
 
 @Component({
   selector: 'app-home',
@@ -17,12 +22,14 @@ import { ProductsService } from '../services/products.service';
 export class HomePage {
 
 
-
-  offer_list = offer_list;
+  post: PostLink[];
+  subscription: any;
+  offer_list: Offer[];
   aux_offer_list:Array<any>;
   busqueda:string;
   notification:boolean=false;
   search_tool:boolean;
+ 
 
    options: StreamingVideoOptions = {
     successCallback: () => { console.log('Video played') },
@@ -39,11 +46,12 @@ export class HomePage {
      private modalController: ModalController,
      public navCtrl: NavController,
      private ParamSrv: NavParamsService,
-     private menu: MenuController,
-    ) {
-      
-      this.search_tool=false;
+     private menu: MenuController) {
       this.aux_offer_list= new Array();
+
+      console.log("constructor");
+      this.search_tool=false;
+      
       this.aux_offer_list=this.offer_list;
 
  
@@ -59,11 +67,7 @@ export class HomePage {
     return await modal.present();
   }
 
- /* async playVideo()
-  {
-    this.prodSrv.send();
-    //this.streamingMedia.playVideo("https://www.instagram.com/p/B9QbwI9Aqd0/", this.options);
-  }*/
+
 
  async filter(input)
   {
@@ -71,7 +75,7 @@ export class HomePage {
     
     if(key)
     {
-      this.aux_offer_list= await this.offer_list.filter(item => item.category.toLowerCase().includes(key) );
+      this.aux_offer_list= await this.offer_list.filter(item => item.product.toLowerCase().includes(key) );
     }
     else
     {
@@ -90,15 +94,9 @@ export class HomePage {
   {
     
   this.ParamSrv.param=offer
-  this.navCtrl.navigateForward(['offer-details']);
+  this.navCtrl.navigateForward(['offer-videos']);
   
   }
-
-
-  /*openMenu() {
-    this.menu.enable(true, 'first');
-    this.menu.open('first');
-  }*/
 
 
   dismiss() {
@@ -107,6 +105,9 @@ export class HomePage {
       'dismissed': true
     });
   }
+
+
+
 
 
 }

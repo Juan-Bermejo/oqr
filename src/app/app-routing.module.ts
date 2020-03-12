@@ -35,7 +35,8 @@ const routes: Routes = [
   {
     path: 'add-location',
     loadChildren: () => import('./modals/add-location/add-location.module').then( m => m.AddLocationPageModule)
-  },  {
+  },
+  {
     path: 'modal-simple',
     loadChildren: () => import('./modals/modal-simple/modal-simple.module').then( m => m.ModalSimplePageModule)
   },
@@ -58,7 +59,11 @@ const routes: Routes = [
   {
     path: 'related-products',
     loadChildren: () => import('./related-products/related-products.module').then( m => m.RelatedProductsPageModule)
+  },  {
+    path: 'offer-videos',
+    loadChildren: () => import('./offer-videos/offer-videos.module').then( m => m.OfferVideosPageModule)
   },
+
 
 
 ];

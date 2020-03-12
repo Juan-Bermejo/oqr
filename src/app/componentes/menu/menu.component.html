@@ -7,13 +7,15 @@
     <ion-content>
       <ion-list>
 
-        <ion-menu-toggle *ngFor=" let opt of menu_opt">
-<ion-item routerLink="{{opt.redirectTo}}">
+        <ion-menu-toggle>
+<ion-item *ngFor=" let opt of menu_opt" routerLink="{{opt.redirectTo}}">
     <ion-icon color="dark" slot="start" name="{{opt.icon}}"></ion-icon>
     <ion-label> {{opt.name}}</ion-label>
 </ion-item>
-       
-
+<ion-item (click)="exitApp()" >
+    <ion-icon color="dark" slot="start" name="md-power"></ion-icon>
+    <ion-label> Salir</ion-label>
+</ion-item>
         </ion-menu-toggle>
 
 

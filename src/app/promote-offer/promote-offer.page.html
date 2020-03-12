@@ -13,7 +13,7 @@
   <ion-card padding>
     <img src="../../assets/images/{{offer.category}}.jpg">
    
-    <ion-card-title> {{offer.title}} </ion-card-title>
+    <ion-card-title> {{offer.product}} a {{offer.price_currency}} {{offer.price}}  </ion-card-title>
     <ion-card-subtitle> {{offer.description}} </ion-card-subtitle>
 
     <ion-list>
@@ -30,7 +30,7 @@
             <ion-label>Cantidad de vendedores</ion-label>
             <ion-note slot="end">              
               <ion-badge>
-                {{offer.sellers}} 
+                {{offer.sellers_cuantity}} 
             </ion-badge>
                </ion-note>
         </ion-item>
@@ -46,22 +46,46 @@
               <ion-label>Comision total</ion-label>
               <ion-note slot="end"> 
                   <ion-badge>
-                      {{offer.total_commission}} 
+                        {{offer.commission * offer.sellers_cuantity * offer.stock}}
                   </ion-badge>
               </ion-note>
             </ion-item>
             </ion-list>
 
-            <ion-input placeholder="Ingresa el link de tu video.">
+            <ion-row>
+                    <ion-input type="text" placeholder="Ingresa el link de tu video." [(ngModel)]="link" >
+                            <span>
+                                <ion-icon size="large" name="logo-facebook"></ion-icon>
+                            </span>
+                        </ion-input>
 
-            </ion-input>
+                        <ion-spinner *ngIf="spinner" name="crescent" color="primary" ></ion-spinner>
+
+                        <ion-button *ngIf="!spinner" (click)="addLink()"> <ion-icon name="md-add" ></ion-icon></ion-button>
+            
+            </ion-row>
+            <p style="text-align: center; color: rgba(196, 70, 70, 0.774)"> {{messaje}} </p>
+
+            <ion-row>
+                <ion-input type="text" placeholder="Ingresa el link de tu video." [(ngModel)]="tiktok_link" >
+                        <span>
+                            <ion-icon size="large" src="../../assets/ionicons/tiktok-icon.svg"></ion-icon>
+                        </span>
+                    </ion-input>
+
+                    <ion-spinner *ngIf="spinnerTT" name="crescent" color="primary" ></ion-spinner>
+
+                    <ion-button *ngIf="!spinnerTT" (click)="addTikTokLink()"> <ion-icon name="md-add" ></ion-icon></ion-button>
+        
+        </ion-row>
+        <p style="text-align: center; color: rgba(196, 70, 70, 0.774)"> {{messajeTT}} </p>
 
   </ion-card>
-
+  
 
       <ion-fab vertical="bottom" horizontal="end" slot="fixed">
         <ion-fab-button>
-          <ion-icon color="light" name="md-videocam"></ion-icon>
+          <ion-icon size="large" color="light" name="md-videocam"></ion-icon>
         </ion-fab-button>
       </ion-fab>
 

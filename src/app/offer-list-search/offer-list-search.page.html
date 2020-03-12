@@ -61,7 +61,7 @@
 
         <img class="img-list" src="../../assets/images/{{offer.category}}.jpg">
 
-        <ion-card-title > {{offer.title}}</ion-card-title>
+        <ion-card-title > {{offer.product}} a {{offer.price_currency}} {{offer.price}} </ion-card-title>
         
             <ion-card-subtitle color="dark">{{offer.description}}</ion-card-subtitle>
           </ion-card-content>
@@ -73,7 +73,7 @@
                             <ion-icon color="primary" name="md-people">
                               </ion-icon>
                               <ion-label>
-                                  {{offer.views}}
+                                  {{offer.sellers_cuantity}}
                               </ion-label>
                             </ion-chip>
                               </ion-col>
@@ -83,7 +83,7 @@
                         <ion-icon color="primary" name="md-cash">
                           </ion-icon>
                           <ion-label>
-                              {{offer.total_commission}}
+                              {{offer.commission | currency:offer.currency_commission}}
                           </ion-label>
                         </ion-chip>
                           </ion-col>
@@ -93,7 +93,7 @@
                               <ion-icon color="primary" name="md-briefcase"></ion-icon>
                               
                                 <ion-label>
-                                    {{offer.views}}
+                                    {{offer.commission * offer.sellers_cuantity * offer.stock | currency:offer.currency_commission}}
                                 </ion-label>
                               </ion-chip>
                                 </ion-col>

@@ -3,14 +3,14 @@ import { Location } from './location';
 
 
 export class User {
-    id:number;
+    id:string;
     name: string;
     last_name:string;
     email: string;
     password: string;
     phone: number;
     role: string;
-    offers: Offer[];
+    offers: string[];
     locations: Location[];
     billing_information:any;
 

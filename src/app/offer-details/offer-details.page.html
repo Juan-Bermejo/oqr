@@ -27,20 +27,35 @@
   [mapTypeId]='mapType'>
 
   <agm-marker
-       
-        [latitude]="latitude"
-        [longitude]="longitude"
-        [opacity]="1"
-        [visible]="true"
-       
-      >
-      </agm-marker>
+  *ngFor="let marker of markers"
+  [latitude]="marker.lat"
+  [longitude]="marker.lng"
+  [opacity]="marker.alpha"
+  [markerDraggable]="true"
+  [visible]="true"
+  (markerClick)="selectMarker($event)"
+>
+</agm-marker>
 </agm-map>
 
 <ion-row justify-content-center>
   <ion-button shape="round" expand="block" color="primary">
 Quiero esta oferta
   </ion-button>
+</ion-row>
+
+<ion-row>
+  <h3>Mirá también:</h3>
+</ion-row>
+<ion-row>
+  <ion-list>
+
+      <ion-card *ngFor="let p of array_products">
+        {{p.name}}
+        {{p.price}}
+      </ion-card>
+
+  </ion-list>
 </ion-row>
 
 
