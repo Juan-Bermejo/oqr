@@ -59,13 +59,15 @@ const routes: Routes = [
   {
     path: 'related-products',
     loadChildren: () => import('./related-products/related-products.module').then( m => m.RelatedProductsPageModule)
-  },  {
+  },
+  {
     path: 'offer-videos',
     loadChildren: () => import('./offer-videos/offer-videos.module').then( m => m.OfferVideosPageModule)
   },
-
-
-
+  {
+    path: 'register',
+    loadChildren: () => import('./register/register.module').then( m => m.RegisterPageModule)
+  },
 ];
 
 @NgModule({

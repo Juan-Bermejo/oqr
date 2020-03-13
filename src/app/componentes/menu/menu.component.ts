@@ -1,10 +1,6 @@
-import { Component } from '@angular/core';
-
-import { Platform } from '@ionic/angular';
-import { Subscription } from 'rxjs';
-
-
-
+import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { MenuService } from '../../services/menu.service';
+ 
 @Component({
   selector: 'app-menu',
   templateUrl: './menu.component.html',
@@ -13,7 +9,7 @@ import { Subscription } from 'rxjs';
 export class MenuComponent{
 
  
-  subscription: Subscription;
+
   menu_opt = [
     {
       "icon":"md-person",
@@ -51,14 +47,20 @@ export class MenuComponent{
   
   role:string= "";
 
-  constructor(private platform:Platform) {
+  constructor(private menuSrv:MenuService) {
   
   }
 
   exitApp()
   { 
-    
+  }
 
+  ngOnInit() {
+   //this.menu_opt = this.menuSrv.menu_data;
+  }
+
+  ngAfterViewChecked(): void {
+    this.menu_opt = this.menuSrv.menu_data;
   }
   
 

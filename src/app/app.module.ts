@@ -14,6 +14,13 @@ import { AgmCoreModule, MarkerManager, GoogleMapsAPIWrapper, MapsAPILoader } fro
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { FilterPipe } from './filter.pipe';
 import { PipesModuleModule } from './pipes-module/pipes-module.module';
+import { environment } from '../environments/environment';
+
+import { AngularFireModule } from '@angular/fire';
+import { AngularFireDatabaseModule, AngularFireDatabase } from '@angular/fire/database';
+import { AngularFireAuth, AngularFireAuthModule } from '@angular/fire/auth';
+import { GooglePlus } from '@ionic-native/google-plus/ngx';
+import { Facebook } from '@ionic-native/facebook/ngx';
 import { ComponentModule } from './componentes/component/component.module';
 import { MenuService } from './services/menu.service';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
@@ -26,11 +33,7 @@ import { PopOverProductsComponent } from './componentes/pop-over-products/pop-ov
 import { NativeGeocoder } from '@ionic-native/native-geocoder/ngx';
 import { StreamingMedia } from '@ionic-native/streaming-media/ngx';
 import { AddProductPageModule } from './modals/add-product/add-product.module';
-import { firebaseConfig } from '../environments/environment';
-import { AngularFirestoreModule } from '@angular/fire/firestore';
-import { AngularFirestore } from '@angular/fire/firestore';
-import { AngularFireStorageModule } from '@angular/fire/storage';
-import { AngularFireModule } from '@angular/fire';
+
 
 
 @NgModule({
@@ -43,10 +46,9 @@ import { AngularFireModule } from '@angular/fire';
      ModalNewRegionPageModule,
      AddLocationPageModule,
      ModalSimplePageModule,
-     AddProductPageModule,
-     AngularFireModule,
-     AngularFireModule.initializeApp(firebaseConfig),
-     AngularFirestoreModule, AngularFireStorageModule,
+     AngularFireModule.initializeApp(environment.firebaseConfig),
+     AngularFireDatabaseModule,
+     AngularFireAuthModule,
      ComponentModule,
      HttpClientModule
      
@@ -60,9 +62,9 @@ import { AngularFireModule } from '@angular/fire';
     HttpClient,
     NativeGeocoder,
     StreamingMedia,
-
-
-    
+    AngularFireAuth,
+    GooglePlus,
+    Facebook,
     
     
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }

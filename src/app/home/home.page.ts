@@ -1,5 +1,5 @@
-import { Component, ViewChild, OnInit, OnDestroy, OnChanges } from '@angular/core';
-import { ModalController, NavController, MenuController, Platform } from '@ionic/angular';
+import { Component, ViewChild, OnInit, Input, AfterViewInit, OnChanges, SimpleChanges } from '@angular/core';
+import { ModalController, NavController, MenuController } from '@ionic/angular';
 import { StreamingMedia, StreamingVideoOptions } from '@ionic-native/streaming-media/ngx';
 
 
@@ -8,6 +8,10 @@ import { Router, NavigationExtras } from '@angular/router';
 import { NavParamsService } from '../services/nav-params.service';
 import { ModalCategoriesPage } from '../modals/modal-categories/modal-categories.page';
 import { ProductsService } from '../services/products.service';
+//import { AngularFireAuth } from '@angular/fire/auth';
+import { AuthService } from '../services/auth.service';
+import { DbService } from '../services/db.service';
+import { MenuService } from '../services/menu.service';
 
 import { PostLink } from '../clases/post-link';
 import { PostService } from '../services/post.service';
@@ -17,14 +21,12 @@ import { Offer } from '../clases/offer';
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
-  styleUrls: ['home.page.scss'],
+  styleUrls: ['home.page.scss']
 })
 export class HomePage {
 
-
-  post: PostLink[];
-  subscription: any;
-  offer_list: Offer[];
+  user_id: string = '';
+  offer_list;
   aux_offer_list:Array<any>;
   busqueda:string;
   notification:boolean=false;
@@ -46,7 +48,14 @@ export class HomePage {
      private modalController: ModalController,
      public navCtrl: NavController,
      private ParamSrv: NavParamsService,
-     private menu: MenuController) {
+     //private afAuth: AngularFireAuth,
+     private authService: AuthService,
+     private menu: MenuController,
+     private dbService: DbService,
+     private menuService: MenuService
+    ) {     
+
+      this.search_tool=false;
       this.aux_offer_list= new Array();
 
       console.log("constructor");
@@ -55,6 +64,14 @@ export class HomePage {
       this.aux_offer_list=this.offer_list;
 
  
+  }
+
+  ngOnInit() {
+  }
+
+  ionViewWillEnter(){
+    this.menuService.getMenuOpt(this.dbService.is_logged);
+    
   }
 
    async presentModal() {
@@ -98,6 +115,11 @@ export class HomePage {
   
   }
 
+  /*openMenu() {
+    this.menu.enable(true, 'first');
+    this.menu.open('first');
+  }*/
+
 
   dismiss() {
 
@@ -106,6 +128,26 @@ export class HomePage {
     });
   }
 
+  getCurrentUser() {
+    
+    /*this.authService.isAuth().subscribe( auth => {
+      if (auth){
+        this.is_logged = true;
+      }
+      else {
+        this.is_logged = false;
+      }
+    })*/
+  }
+
+  goToLogIn() {
+    this.navCtrl.navigateRoot('login');
+  }
+
+  logOut() {
+   // this.afAuth.auth.signOut();
+    
+  }
 
 
 
