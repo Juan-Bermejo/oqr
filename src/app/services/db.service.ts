@@ -47,6 +47,8 @@ export class DbService {
       }
     }
 
+    
+
     createOffer(offer: Offer) {
       return this.http.post(this.URL_SERVER_PROD, offer,
         {headers: new HttpHeaders({"Content-Type": "application/json"})});

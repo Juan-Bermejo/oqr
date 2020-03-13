@@ -10,6 +10,7 @@ import { ModalCategoriesPage } from '../modals/modal-categories/modal-categories
 import { ModalSimplePage } from '../modals/modal-simple/modal-simple.page';
 import { PopOverProductsComponent } from '../componentes/pop-over-products/pop-over-products.component';
 import { Offer } from '../clases/offer';
+import { DbService } from '../services/db.service';
 
 
 @Component({
@@ -56,7 +57,8 @@ export class NewOfferPage implements OnInit {
   constructor(private countrySrv:CountriesService,
     private modalController: ModalController,
     public navCtrl: NavController,
-    private ParamSrv: NavParamsService )
+    private ParamSrv: NavParamsService,
+    private dbService: DbService )
      {
       this.user= JSON.parse(localStorage.getItem("user"));
       this.kind="Producto";
@@ -178,6 +180,21 @@ export class NewOfferPage implements OnInit {
     offer.views=0;
     offer.sellers_cuantity= offer.sellers.length;
     
+    console.log(offer);
+
+    this.dbService.createOffer(offer)
+      .subscribe((data: any) => {
+        if(data.status == 200) {
+
+          const toast = document.createElement('ion-toast');
+          toast.message = 'Oferta creada con exito';
+          toast.duration = 2000;
+          document.body.appendChild(toast);
+          return toast.present();
+
+        }
+
+      });
 
   }
 
