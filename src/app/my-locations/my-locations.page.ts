@@ -15,8 +15,8 @@ export class MyLocationsPage implements OnInit {
   newLocation: Location;
 
   constructor(private modalController: ModalController) {
-    this.user= JSON.parse(localStorage.getItem("user"));
-    console.log(this.user);
+
+
    }
 
    async ModalNewLocation() {
@@ -29,13 +29,14 @@ export class MyLocationsPage implements OnInit {
      modal.onDidDismiss().then((data)=>{
       this.newLocation = new Location();
       this.newLocation.address=data.data.result.address;
-      this.newLocation.latitude=data.data.result.latitude;
-      this.newLocation.longitude=data.data.result.longitude;
+      this.newLocation.latitude=data.data.result.lat;
+      this.newLocation.longitude=data.data.result.lon;
       this.newLocation.country=data.data.result.country;
       this.newLocation.city=data.data.result.city;
       this.newLocation.province=data.data.result.province;
-      this.user.locations.push(this.newLocation);
-      //this.newLocation = data.data.result;
+      this.newLocation.user_id= this.user.id;
+    
+      
       
     })
   }

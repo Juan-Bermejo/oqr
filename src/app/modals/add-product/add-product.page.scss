@@ -1,0 +1,126 @@
+*
+{
+    font-family: "roboto-black"
+}
+
+h1{
+    text-align: center;
+    
+        margin-top: 1px;
+        margin-bottom: 1px;
+        font-size: 25px;
+    
+}
+
+
+ion-back-button{
+
+    --background:rgb(41, 171, 226);
+    --border-radius: 40px;
+   
+
+  }
+
+  ion-input{
+      height: 50px;
+      
+      border-style: solid;
+      border-width: 0px 0px 2px 0px;
+      border-color: rgb(41, 171, 226);
+     
+      
+  }
+
+  ion-select{
+
+    border-style: solid;
+    border-width: 0px 0px 2px 0px;
+    border-color: rgb(41, 171, 226);
+  
+  }
+
+  ion-slides{
+      height: 500px;
+      /*max-height: 400px*/
+  }
+
+  ion-textarea{
+    border-style: solid;
+    border-width: 0px 0px 2px 0px;
+    border-color: rgb(41, 171, 226);
+    
+  }
+
+
+
+  .container{
+      display: block;
+  }
+
+  .nextButton
+  {
+      margin-top:250px;
+  }
+  .pay-side
+  {
+    margin-top:20px;
+
+    h1{
+        margin-top: 1px;
+        margin-bottom: 1px;
+        font-size: 25px;
+    }
+
+  }
+
+  .budget-container
+  {
+      display: inline;
+  }
+  .total-budget-label
+  {
+    display: inline-flex;
+    height: 90px;
+    width: 140px;
+    border-style: solid;
+    border-width: 2px 2px 2px 2px;
+    border-color: rgb(41, 171, 226);
+    border-radius: 45px 0px 0px 45px;
+    background-color: rgb(41, 171, 226);
+    color: white;
+    margin-right: 0px;
+    padding: 10px 10px 10px 10px;
+  }
+
+  .total-budget
+  {
+    display: inline-flex;
+    height: 90px;
+    width: 140px;
+    border-style: solid;
+    border-width: 2px 2px 2px 2px;
+    border-color: rgb(41, 171, 226);
+    border-radius: 0px 45px 45px 0px;
+    margin-left: 0px;
+    padding: 10px 10px 10px 10px;
+    
+  }
+
+  .select-currency{
+      width: 100%;
+      border-bottom-width: 0px;
+
+  }
+
+  .item-right
+{
+    position:absolute;
+    padding: 11px;
+    right: 1px;
+ 
+}
+
+ion-note{
+    font-size: small;
+}
+

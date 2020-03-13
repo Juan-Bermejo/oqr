@@ -67,20 +67,16 @@
                   </ion-row >
 
                     <ion-row justify-content-center>
-                      <ion-radio-group [(ngModel)]="kind" >
-                        <ion-label>
-                          Producto
-                        </ion-label>
-                        <ion-radio value="Producto">
-
-                        </ion-radio>
-                        <ion-label>
-                            Servicio
-                          </ion-label>
-                          <ion-radio value="Servicio">
-  
-                          </ion-radio>
-                      </ion-radio-group>
+<ion-col size=6>
+<ion-button (click)="kind='Producto'">
+Producto
+</ion-button>
+</ion-col>
+<ion-col size=6>
+    <ion-button (click)="kind='Servicio'">
+    Servicio
+    </ion-button>
+    </ion-col>
  
                     </ion-row>
       
@@ -231,7 +227,7 @@
                     </ion-item>
           </ion-list>
 
-          <ion-button shape="round">
+          <ion-button (click)="saveOffer()" shape="round">
             Confirmar Oferta
           </ion-button>
 

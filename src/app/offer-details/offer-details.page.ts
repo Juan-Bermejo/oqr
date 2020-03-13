@@ -3,6 +3,10 @@ import { ActivatedRoute } from '@angular/router';
 import { NavController } from '@ionic/angular';
 import { NavParamsService } from '../services/nav-params.service';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
+import { Product } from '../clases/product';
+import { User } from '../clases/user';
+import { Location } from '../clases/location';
+import { Offer } from '../clases/offer';
 
 @Component({
   selector: 'app-offer-details',
@@ -11,21 +15,38 @@ import { Geolocation } from '@ionic-native/geolocation/ngx';
 })
 export class OfferDetailsPage implements OnInit {
 
-  offer: any;
+  user:User;
+  offer: Offer;
   latitude = -28.68352;
   longitude = -147.20785;
   mapType = 'roadmap';
 
   selectedMarker;
-  markers;
+  markers: Array<{}>;
   myLatLng;
   myLat;
   mylong;
+  array_products: Product[];
+  offerLocations:Location[];
+  offer_sellers:string[];
+
 
   constructor(private route: ActivatedRoute, 
     public navCtrl: NavController,
   public paramSrv: NavParamsService,
   private geolocation: Geolocation) {
+
+  this.markers= new Array<{}>();
+
+    if(this.paramSrv.param)
+    {
+      this.offer=this.paramSrv.param;
+    }
+
+    
+
+
+
 
   }
 
@@ -46,25 +67,15 @@ export class OfferDetailsPage implements OnInit {
 
 
   addMarker(lat: number, lng: number) {
-    this.markers={ latitude: lat, longitud:lng, alpha: 1};
-    console.log(lat, lng);
-    //this.addMarker(this.latitude, this.longitude);
+    this.markers.push({ lat: lat, lng: lng, alpha: 1});
   }
   
 
   ngOnInit() {
 
     this.getGeoLocation();
-    if(this.paramSrv.param)
-    {
-      this.offer=this.paramSrv.param
-    }
-    else
-    {
-      this.offer= {id:1, title: "Descuento del 50% en GYM.", category: "gym", cantidad:1, description:"consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat."}
-    }
-    //this.offer=this.paramSrv.param;
-    console.log(this.offer)
+
+ 
   }
 
 }

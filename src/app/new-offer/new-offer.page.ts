@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { kind_offer, slideOpts, categories } from '../../environments/environment';
+import { kind_offer, categories } from '../../environments/environment';
 import { IonSlides, IonSlide, ModalController, NavController, PopoverController } from '@ionic/angular';
 import { User } from '../clases/user';
 import { Location } from '../clases/location';
@@ -10,10 +10,6 @@ import { ModalCategoriesPage } from '../modals/modal-categories/modal-categories
 import { ModalSimplePage } from '../modals/modal-simple/modal-simple.page';
 import { PopOverProductsComponent } from '../componentes/pop-over-products/pop-over-products.component';
 import { Offer } from '../clases/offer';
-
-
-
-
 
 
 @Component({
@@ -30,20 +26,9 @@ export class NewOfferPage implements OnInit {
     initialSlide: 0,
     speed: 400,
   };
-
-  kind_product= ['Producto', 'Servicio'];
-  kind_offer= kind_offer;
+  
   categories = categories
 
-  /* Variables auxiliares */
-
-  aux_country;
-  aux_currency;
-  aux_price;
-  aux_currency_commission;
-  aux_commission;
-  aux_stock;
-  aux_regions: Array<any>;
 
   user:User;
   index:number=0;
@@ -66,16 +51,15 @@ export class NewOfferPage implements OnInit {
   countries;
   currencies;
   products;
-  offer:Offer;
+ 
 
   constructor(private countrySrv:CountriesService,
     private modalController: ModalController,
     public navCtrl: NavController,
-    private ParamSrv: NavParamsService,
-    public popoverController: PopoverController)
+    private ParamSrv: NavParamsService )
      {
-
-
+      this.user= JSON.parse(localStorage.getItem("user"));
+      this.kind="Producto";
       this.countrySrv.getCountries().subscribe((c)=>{
         this.countries= c;
         console.log(c);
@@ -127,10 +111,7 @@ export class NewOfferPage implements OnInit {
 
       }
 
-    
     })
-
-    
   }
 
   lockUnlockSwipe()
@@ -167,11 +148,7 @@ export class NewOfferPage implements OnInit {
   async ModalCategories() {
     const modal = await this.modalController.create({
       component: ModalCategoriesPage,
-      componentProps: {
-        'list_opt': 'Douglas',
-        'lastName': 'Adams',
-        'middleInitial': 'N'
-      },
+
       cssClass:"modal"
       
     });
@@ -187,8 +164,20 @@ export class NewOfferPage implements OnInit {
 
   saveOffer()
   {
-    let o=new Offer();
-
+    let offer = new Offer()
+    offer.category = this.category;
+    offer.kind = this.kind;
+    offer.currency_commission = this.currency_commission;
+    offer.commission = this.commission;
+    offer.price = this.price;
+    offer.price_currency = this.prod_currency;
+    offer.description = this.description;
+    offer.product = this.product;
+    offer.sellers.push(this.user.id);
+    offer.stock=this.stock;
+    offer.views=0;
+    offer.sellers_cuantity= offer.sellers.length;
+    
 
   }
 

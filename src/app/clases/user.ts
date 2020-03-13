@@ -10,7 +10,7 @@ export class User {
     password: string;
     phone: number;
     role: string;
-    offers: Offer[];
+    offers: string[];
     locations: Location[];
     billing_information:any;
 

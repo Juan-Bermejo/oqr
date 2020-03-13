@@ -20,42 +20,9 @@ export const environment = {
   }
   
 };
-var l1= new Location();
-var l2= new Location();
-var l3= new Location();
-
-l1.latitude=-34.604669;
-l1.longitude=-58.3979167;
-l1.address="Av. Corrientes 2020"
-l1.city="CABA";
-l1.country="Argentina";
-
-l2.latitude=-34.6082746;
-l2.longitude=-58.4352118;
-l2.address="Av. Díaz Vélez 4531"
-l2.city="CABA";
-l2.country="Argentina";
-
-l3.address="Av. Boedo 25";
-l3.city="CABA";
-l3.latitude=-34.6113625;
-l3.longitude=-58.4207372;
-l2.country="Argentina";
-
-export var user: User = new User();
-user.name="nombre";
-user.last_name="apellido";
-user.locations= [l1, l2, l3];
 
 
 
-export var offer_list = [
-  {id:1, title: "Descuento del 50% en GYM.", category: "gym", cantidad:1, description:"consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. ", views: 300, sellers:50, date: "2020-02-06", commission:10, total_commission: 500},
-  {id:2, title: "Descuento del 50% en corte de pelo.", category: "hair", cantidad:1, description:"consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. ", views: 150, sellers:50, date:"2020-02-03" , commission:10, total_commission: 400},
-  {id:3, title: "1 Sesión gratis en SPA.", category: "yoga", cantidad:1, description:"consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. ", views: 400, sellers:50, date:"2020-02-04" , commission:10, total_commission: 600},
-  {id:4, title: "1 Asesoria contable gratis. ", category: "business", cantidad:1, description:"consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. ", views: 100, sellers:50, date:"2020-02-10" , commission:10, total_commission: 300},
-  {id:5, title: "2x1 en platos desechables. ", category: "bazar", cantidad:1, description:"consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. ", views: 200, sellers:50, date:"2020-02-05" , commission:10, total_commission: 350},
-]
 
 export var categories = [
   {name: "Arte", icon:"md-color-palette"},

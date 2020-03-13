@@ -2,16 +2,21 @@ import { Component, ViewChild, OnInit, Input, AfterViewInit, OnChanges, SimpleCh
 import { ModalController, NavController, MenuController } from '@ionic/angular';
 import { StreamingMedia, StreamingVideoOptions } from '@ionic-native/streaming-media/ngx';
 
-import { offer_list } from '../../environments/environment'
+
 import { NavigationOptions } from '@ionic/angular/dist/providers/nav-controller';
 import { Router, NavigationExtras } from '@angular/router';
 import { NavParamsService } from '../services/nav-params.service';
 import { ModalCategoriesPage } from '../modals/modal-categories/modal-categories.page';
 import { ProductsService } from '../services/products.service';
-import { AngularFireAuth } from '@angular/fire/auth';
+//import { AngularFireAuth } from '@angular/fire/auth';
 import { AuthService } from '../services/auth.service';
 import { DbService } from '../services/db.service';
 import { MenuService } from '../services/menu.service';
+
+import { PostLink } from '../clases/post-link';
+import { PostService } from '../services/post.service';
+import { Offer } from '../clases/offer';
+
 
 @Component({
   selector: 'app-home',
@@ -21,11 +26,12 @@ import { MenuService } from '../services/menu.service';
 export class HomePage {
 
   user_id: string = '';
-  offer_list = offer_list;
+  offer_list;
   aux_offer_list:Array<any>;
   busqueda:string;
   notification:boolean=false;
   search_tool:boolean;
+ 
 
    options: StreamingVideoOptions = {
     successCallback: () => { console.log('Video played') },
@@ -42,7 +48,7 @@ export class HomePage {
      private modalController: ModalController,
      public navCtrl: NavController,
      private ParamSrv: NavParamsService,
-     private afAuth: AngularFireAuth,
+     //private afAuth: AngularFireAuth,
      private authService: AuthService,
      private menu: MenuController,
      private dbService: DbService,
@@ -51,6 +57,10 @@ export class HomePage {
 
       this.search_tool=false;
       this.aux_offer_list= new Array();
+
+      console.log("constructor");
+      this.search_tool=false;
+      
       this.aux_offer_list=this.offer_list;
 
  
@@ -74,11 +84,7 @@ export class HomePage {
     return await modal.present();
   }
 
- /* async playVideo()
-  {
-    this.prodSrv.send();
-    //this.streamingMedia.playVideo("https://www.instagram.com/p/B9QbwI9Aqd0/", this.options);
-  }*/
+
 
  async filter(input)
   {
@@ -86,7 +92,7 @@ export class HomePage {
     
     if(key)
     {
-      this.aux_offer_list= await this.offer_list.filter(item => item.category.toLowerCase().includes(key) );
+      this.aux_offer_list= await this.offer_list.filter(item => item.product.toLowerCase().includes(key) );
     }
     else
     {
@@ -105,7 +111,7 @@ export class HomePage {
   {
     
   this.ParamSrv.param=offer
-  this.navCtrl.navigateForward(['offer-details']);
+  this.navCtrl.navigateForward(['offer-videos']);
   
   }
 
@@ -139,9 +145,12 @@ export class HomePage {
   }
 
   logOut() {
-    this.afAuth.auth.signOut();
+   // this.afAuth.auth.signOut();
     
   }
+
+
+
 
 }
 

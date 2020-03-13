@@ -32,6 +32,8 @@ import { ModalSimplePageModule } from './modals/modal-simple/modal-simple.module
 import { PopOverProductsComponent } from './componentes/pop-over-products/pop-over-products.component';
 import { NativeGeocoder } from '@ionic-native/native-geocoder/ngx';
 import { StreamingMedia } from '@ionic-native/streaming-media/ngx';
+import { AddProductPageModule } from './modals/add-product/add-product.module';
+
 
 
 @NgModule({

@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { NavController } from '@ionic/angular';
-import { user } from '../../environments/environment';
+
 import { DbService } from '../services/db.service';
+import { User } from '../clases/user';
 
 @Component({
   selector: 'app-seller-panel',
@@ -11,7 +12,7 @@ import { DbService } from '../services/db.service';
 })
 export class SellerPanelPage implements OnInit {
 
-  user= user;
+  user:User;
 
   usrName:string="Usuario1";
 
