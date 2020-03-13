@@ -17,6 +17,7 @@ export class DbService {
   public offer_id: string;
 
   public is_logged: boolean = false;
+  public user_data;
 
   readonly URL_SERVER_USER = 'http://cors-anywhere.herokuapp.com/http://31.220.61.6:3000/app/users/';
   readonly URL_SERVER_PROD = 'http://cors-anywhere.herokuapp.com/http://31.220.61.6:3000/app/products/';
@@ -61,11 +62,17 @@ export class DbService {
         return this.http.get(GET_OFFER_URL);
       }
     }
-  /*
 
-  editUser(user: User) {
-    return this.http.put(this.URL_SERVER + `/${user._id}`, user);
-  }
+    updateUserOffers(user_id:string, user_data: User) {
+      var UPDATE_USER_URL = this.URL_SERVER_USER.concat(this.user_id.toString());
+      return this.http.put(UPDATE_USER_URL, user_data);
+    }
+
+    /*
+
+    editUser(user: User) {
+      return this.http.put(this.URL_SERVER_USER + `/${this.user_id}`, user);
+    }
 
   deleteUser(_id: String) {
     return this.http.delete(this.URL_SERVER + `/${_id}`);

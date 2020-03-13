@@ -56,7 +56,7 @@ export class MenuComponent{
   }
 
   ngOnInit() {
-   //this.menu_opt = this.menuSrv.menu_data;
+  
   }
 
   ngAfterViewChecked(): void {

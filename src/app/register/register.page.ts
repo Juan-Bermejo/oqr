@@ -59,7 +59,7 @@ export class RegisterPage implements OnInit {
           toast.duration = 2000;
           document.body.appendChild(toast);
           this.dbService.is_logged = true;
-          this.to_home_page();
+          this.to_login_page();
           return toast.present();
           
         }

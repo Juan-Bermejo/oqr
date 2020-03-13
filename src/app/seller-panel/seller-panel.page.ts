@@ -12,11 +12,13 @@ import { User } from '../clases/user';
 })
 export class SellerPanelPage implements OnInit {
 
-  user:User;
+  public user_data: User;
 
-  usrName:string="Usuario1";
+  public name: string = '';
+  public user_name: string = '';
 
-  constructor(private navCtrl: NavController) {
+  constructor(private navCtrl: NavController,
+              private dbService: DbService) {
     
    }
 
@@ -30,7 +32,10 @@ export class SellerPanelPage implements OnInit {
   }
 
   ionViewWillEnter(){
-    
+    this.user_data = JSON.parse(localStorage.getItem("user_data"));
+
+    this.name = this.user_data.name;
+    this.user_name = this.user_data.user_name;
   }
 
 }

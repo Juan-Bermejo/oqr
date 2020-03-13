@@ -52,6 +52,7 @@ export class LoginPage implements OnInit {
 
   ionViewWillEnter(){
     this.dbService.is_logged = false;
+    this.dbService.user_data = null;
   }
 
   loginRedirect()
@@ -76,8 +77,10 @@ export class LoginPage implements OnInit {
         if(data.status == 200) {
 
           this.resetForm(form_log);
-          this.dbService.user_id = data.id_user;
+          //this.dbService.user_id = data.id_user;
           this.dbService.is_logged = true;
+          this.dbService.user_id = data.user_data._id;
+          this.dbService.user_data = data.user_data;
           this.loginRedirect();
 
         }

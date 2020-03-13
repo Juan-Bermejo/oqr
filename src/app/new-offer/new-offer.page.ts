@@ -11,6 +11,7 @@ import { ModalSimplePage } from '../modals/modal-simple/modal-simple.page';
 import { PopOverProductsComponent } from '../componentes/pop-over-products/pop-over-products.component';
 import { Offer } from '../clases/offer';
 import { DbService } from '../services/db.service';
+import { of } from 'rxjs';
 
 
 @Component({
@@ -27,6 +28,9 @@ export class NewOfferPage implements OnInit {
     initialSlide: 0,
     speed: 400,
   };
+
+  user_id: string;
+  user_data: User;
   
   categories = categories
 
@@ -179,13 +183,12 @@ export class NewOfferPage implements OnInit {
     offer.stock=this.stock;
     offer.views=0;
     offer.sellers_cuantity= offer.sellers.length;
-    
-    console.log(offer);
 
     this.dbService.createOffer(offer)
       .subscribe((data: any) => {
         if(data.status == 200) {
 
+        
           const toast = document.createElement('ion-toast');
           toast.message = 'Oferta creada con exito';
           toast.duration = 2000;

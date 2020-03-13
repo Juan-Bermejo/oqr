@@ -70,7 +70,17 @@ export class HomePage {
   }
 
   ionViewWillEnter(){
+
+    if(this.dbService.user_data != null){
+      this.dbService.is_logged = true;
+    }
+    else {
+      this.dbService.is_logged = false;
+    }
+
     this.menuService.getMenuOpt(this.dbService.is_logged);
+
+    localStorage.setItem("user_data", JSON.stringify(this.dbService.user_data));
     
   }
 
