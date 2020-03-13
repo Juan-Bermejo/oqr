@@ -75,7 +75,7 @@ export class LoginPage implements OnInit {
         if(data.status == 200) {
 
           this.resetForm(form_log);
-          this.dbService.id = data.id_user;
+          this.dbService.user_id = data.id_user;
           this.dbService.is_logged = true;
           this.loginRedirect();
 
