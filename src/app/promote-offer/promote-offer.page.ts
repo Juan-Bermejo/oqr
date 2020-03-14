@@ -38,6 +38,7 @@ this.user= JSON.parse(localStorage.getItem("user"));
     this.spinner=false;
     this.spinnerTT=false;
     this.offer=this.paramSrv.param
+    console.log(this.offer);
    }
 
   ngOnInit() {
@@ -59,7 +60,7 @@ this.user= JSON.parse(localStorage.getItem("user"));
       let l = new PostLink();
       l.link=data.html;
       l.influencer=this.user.id;
-      l.offer_id=this.offer.id;
+      l.offer_id=this.offer._id;
     
     },
     (data:any)=>{
@@ -87,8 +88,8 @@ this.user= JSON.parse(localStorage.getItem("user"));
           let l = new PostLink();
           l.link='   <iframe src="https://www.facebook.com/plugins/video.php?href= ' +this.link + '&show_text=0&width=250" width="250" height="250" style="border:solid;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true" allowFullScreen="false"></iframe>'
           l.influencer=this.dbService.user_id;
-          //l.offer_id=this.offer.id;   no se guarda ningun id y tira error en la DB
-          l.offer_id = 's5dsf523423r1d5sDw5' // lo hardcodie para probar si se guardaban datos
+          l.offer_id=this.offer._id;   //no se guarda ningun id y tira error en la DB
+         
 
           console.log(l);
           
