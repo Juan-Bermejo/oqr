@@ -4,6 +4,7 @@ import { User, UserLogin } from '../clases/user';
 import { Offer } from '../clases/offer';
 import { RegisterPage } from '../register/register.page';
 import { MapsAPILoader } from '@agm/core';
+import { Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -15,6 +16,7 @@ export class DbService {
 
   public user_id: string;
   public offer_id: string;
+  public $products: Subject<Offer>
 
   public is_logged: boolean = false;
   public user_data;
@@ -63,7 +65,8 @@ export class DbService {
       }
     }
 
-    getAllProducts(){
+     getAllProducts(){
+      
       return this.http.get(this.URL_SERVER_PROD);
     }
 

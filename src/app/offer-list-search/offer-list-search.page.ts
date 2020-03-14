@@ -3,6 +3,7 @@ import { ModalCategoriesPage } from '../modals/modal-categories/modal-categories
 import { MenuController, NavController, ModalController } from '@ionic/angular';
 import { NavParamsService } from '../services/nav-params.service';
 import { Offer } from '../clases/offer';
+import { DbService } from '../services/db.service';
 
 @Component({
   selector: 'app-offer-list-search',
@@ -22,10 +23,18 @@ export class OfferListSearchPage implements OnInit {
   constructor(private modalController: ModalController,
      public navCtrl: NavController,
      private ParamSrv: NavParamsService,
-     private menu: MenuController) {
+     private menu: MenuController,
+    private dbServ:DbService) {
       this.search_tool=false;
       this.aux_offer_list= new Array();
-      this.aux_offer_list=this.offer_list;
+
+
+      this.dbServ.getAllProducts().subscribe((data: Offer[])=>{
+        this.offer_list=data;
+       this.aux_offer_list=this.offer_list;
+      })
+
+
 
     setTimeout(() => {
       this.notification=true;

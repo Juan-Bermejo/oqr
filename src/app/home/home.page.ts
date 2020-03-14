@@ -23,7 +23,7 @@ import { Offer } from '../clases/offer';
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss']
 })
-export class HomePage {
+export class HomePage implements OnInit {
 
   user_id: string = '';
   offer_list;
@@ -55,6 +55,7 @@ export class HomePage {
      private menuService: MenuService
     ) {     
 
+  
       this.search_tool=false;
       this.aux_offer_list= new Array();
 
@@ -66,7 +67,12 @@ export class HomePage {
  
   }
 
-  ngOnInit() {
+ async ngOnInit() {
+    this.dbService.getAllProducts().subscribe((data)=>{
+      this.offer_list=data;
+      this.aux_offer_list= this.offer_list;
+      console.log(this.offer_list);
+    })
   }
 
   ionViewWillEnter(){
@@ -158,6 +164,8 @@ export class HomePage {
    // this.afAuth.auth.signOut();
     
   }
+
+
 
 
 
