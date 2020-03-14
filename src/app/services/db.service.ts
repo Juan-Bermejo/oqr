@@ -63,6 +63,10 @@ export class DbService {
       }
     }
 
+    getAllProducts(){
+      return this.http.get(this.URL_SERVER_PROD);
+    }
+
     /*
 
     editUser(user: User) {
