@@ -7,6 +7,7 @@ import { PostLink } from '../clases/post-link';
 import { PostService } from '../services/post.service';
 import { Offer } from '../clases/offer';
 import { User } from '../clases/user';
+import { DbService } from '../services/db.service';
 
 
 @Component({
@@ -28,8 +29,9 @@ export class PromoteOfferPage implements OnInit {
 
   constructor(private route: ActivatedRoute, 
     public navCtrl: NavController,
-  public paramSrv: NavParamsService,
-private postSrv: PostService) {
+    public paramSrv: NavParamsService,
+    private postSrv: PostService,
+    private dbService: DbService) {
 
 this.user= JSON.parse(localStorage.getItem("user"));
   this.offer=new Offer();
@@ -84,8 +86,24 @@ this.user= JSON.parse(localStorage.getItem("user"));
           this.spinner=true;
           let l = new PostLink();
           l.link='   <iframe src="https://www.facebook.com/plugins/video.php?href= ' +this.link + '&show_text=0&width=250" width="250" height="250" style="border:solid;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true" allowFullScreen="false"></iframe>'
-          l.influencer=this.user.id;
-          l.offer_id=this.offer.id;
+          l.influencer=this.dbService.user_id;
+          //l.offer_id=this.offer.id;   no se guarda ningun id y tira error en la DB
+          l.offer_id = 's5dsf523423r1d5sDw5'
+
+          console.log(l);
+          
+          this.dbService.postLink(l)
+          .subscribe((data: any) => {
+            if(data.status == 200) {
+
+              const toast = document.createElement('ion-toast');
+              toast.message = 'Link agregado';
+              toast.duration = 2000;
+              document.body.appendChild(toast);
+              return toast.present();
+    
+            }
+          });
 
         }
         else{

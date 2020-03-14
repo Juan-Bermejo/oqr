@@ -21,19 +21,6 @@ export class Offer {
     posts: PostLink[];
     is_active:boolean;
 
-
-    // ESTE ES EL ESQUEMA DE LOS PRODUCTOS EN LA BASE DE DATOS 
-    /*
-    name: {type: String, required: true},
-    description: {type: String, required: true},
-    category: {type: String, required: true},
-    price: {type: Number, required: true},
-    stock: {type: Number, required: true},
-    registration_date: {type: Date, required: true},
-    supplier: [{type: Schema.Types.ObjectId, ref: 'Vendors', required: true, unique: true}],
-    publishing: [{type: Schema.Types.ObjectId, ref: 'Users', required: false, unique: true, default: null}]
-    */
-
     constructor()
     {
         this.posts= new Array<PostLink>();

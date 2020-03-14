@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { User, UserLogin } from '../clases/user';
 import { Offer } from '../clases/offer';
+import { PostLink } from '../clases/post-link'
 import { RegisterPage } from '../register/register.page';
 import { MapsAPILoader } from '@agm/core';
 import { Subject } from 'rxjs';
@@ -22,8 +23,10 @@ export class DbService {
   public user_data;
 
   readonly URL_SERVER_USER = 'http://cors-anywhere.herokuapp.com/http://31.220.61.6:3000/app/users/';
+  readonly URL_SERVER_USER_OF = 'http://cors-anywhere.herokuapp.com/http://31.220.61.6:3000/app/users/addoffer/';
   readonly URL_SERVER_PROD = 'http://cors-anywhere.herokuapp.com/http://31.220.61.6:3000/app/products/';
   readonly URL_SERVER_LOG = 'http://cors-anywhere.herokuapp.com/http://31.220.61.6:3000/app/users/log';
+  readonly URL_SERVER_SERV = 'http://cors-anywhere.herokuapp.com/http://31.220.61.6:3000/app/services/postlink';
 
   constructor(private http: HttpClient) {
     this.selectedUser = new User();
@@ -50,7 +53,16 @@ export class DbService {
       }
     }
 
-    
+    updateUser(user_id: string, offer_id){
+      var data = {
+        "id_user": user_id,
+        "id_offer": offer_id
+      }
+      var UPDATE_USER_OFFER = this.URL_SERVER_USER_OF.concat(this.user_id.toString());
+      return this.http.post(UPDATE_USER_OFFER, data,
+        {headers: new HttpHeaders({"Content-Type": "application/json"})});
+    }
+
 
     createOffer(offer: Offer) {
       return this.http.post(this.URL_SERVER_PROD, offer,
@@ -66,8 +78,12 @@ export class DbService {
     }
 
      getAllProducts(){
-      
       return this.http.get(this.URL_SERVER_PROD);
+    }
+
+    postLink(link: PostLink) {
+      return this.http.post(this.URL_SERVER_SERV, link,
+        {headers: new HttpHeaders({"Content-Type": "application/json"})});
     }
 
     /*

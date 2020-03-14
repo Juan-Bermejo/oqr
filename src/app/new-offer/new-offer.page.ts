@@ -188,12 +188,22 @@ export class NewOfferPage implements OnInit {
       .subscribe((data: any) => {
         if(data.status == 200) {
 
-        
+          this.dbService.offer_id = data.id;
           const toast = document.createElement('ion-toast');
           toast.message = 'Oferta creada con exito';
           toast.duration = 2000;
           document.body.appendChild(toast);
           return toast.present();
+
+        }
+
+      });
+
+    this.dbService.updateUser(this.dbService.user_id, this.dbService.offer_id)
+      .subscribe((data: any) => {
+        if(data.status == 200) {
+
+          console.log('ok');
 
         }
 
