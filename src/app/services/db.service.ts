@@ -86,6 +86,10 @@ export class DbService {
         {headers: new HttpHeaders({"Content-Type": "application/json"})});
     }
 
+    getLinks() {
+      return this.http.get(this.URL_SERVER_SERV);
+    }
+
     /*
 
     editUser(user: User) {
