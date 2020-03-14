@@ -63,11 +63,6 @@ export class DbService {
       }
     }
 
-    updateUserOffers(user_id:string, user_data: User) {
-      var UPDATE_USER_URL = this.URL_SERVER_USER.concat(this.user_id.toString());
-      return this.http.put(UPDATE_USER_URL, user_data);
-    }
-
     /*
 
     editUser(user: User) {

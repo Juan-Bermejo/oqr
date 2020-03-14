@@ -179,7 +179,7 @@ export class NewOfferPage implements OnInit {
     offer.price_currency = this.prod_currency;
     offer.description = this.description;
     offer.product = this.product;
-    offer.sellers.push(this.user.id);
+    offer.sellers.push(this.dbService.user_id);
     offer.stock=this.stock;
     offer.views=0;
     offer.sellers_cuantity= offer.sellers.length;
