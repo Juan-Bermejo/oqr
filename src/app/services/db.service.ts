@@ -27,6 +27,7 @@ export class DbService {
   readonly URL_SERVER_PROD = 'http://cors-anywhere.herokuapp.com/http://31.220.61.6:3000/app/products/';
   readonly URL_SERVER_LOG = 'http://cors-anywhere.herokuapp.com/http://31.220.61.6:3000/app/users/log';
   readonly URL_SERVER_SERV = 'http://cors-anywhere.herokuapp.com/http://31.220.61.6:3000/app/services/postlink';
+  readonly URL_SERVER_SERV_GET = 'http://cors-anywhere.herokuapp.com/http://31.220.61.6:3000/app/services/getlink';
 
   constructor(private http: HttpClient) {
     this.selectedUser = new User();
@@ -88,6 +89,14 @@ export class DbService {
 
     getLinks() {
       return this.http.get(this.URL_SERVER_SERV);
+    }
+
+    getLinkById(offer_id: string) {
+      if(offer_id != ''){
+        return this.http.post(this.URL_SERVER_SERV_GET, offer_id,
+          {headers: new HttpHeaders({"Content-Type": "application/json"})});
+      }
+      
     }
 
     /*
