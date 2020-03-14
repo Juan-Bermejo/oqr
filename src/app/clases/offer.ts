@@ -4,7 +4,7 @@ import { PostLink } from './post-link';
 
 export class Offer {
 
-    id:string;
+    _id:string;
     product: string;
     kind:string;
     price_currency:string;
