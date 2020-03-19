@@ -88,7 +88,7 @@ updateUser(user:User)
 
 updateOffer(offer:Offer)
 {
-  return this.db.doc(offer.id).update(JSON.parse(JSON.stringify(offer)));
+  return this.db.doc(offer._id).update(JSON.parse(JSON.stringify(offer)));
 }
 
 
@@ -96,7 +96,7 @@ setOffer(offer:Offer)
 {
   let id = this.db.createId();
     
-  offer.id = id;
+  offer._id = id;
 
   return this.db.collection<Offer>("offers").doc(id).set(JSON.parse(JSON.stringify(offer)));
 }
