@@ -11,7 +11,6 @@ import { NavController } from '@ionic/angular';
 })
 export class MenuComponent{
 
- is_logged:boolean;
 
   menu_opt = [
     {
@@ -56,9 +55,13 @@ export class MenuComponent{
   ]
   
   role:string= "";
+  is_logged:boolean;
 
   constructor(private menuSrv:MenuService, private dbService:DbService, private navCtrl: NavController) {
-  //this.is_logged=dbService.is_logged;
+  this.dbService.getLogged$().subscribe((data)=>{
+    this.is_logged=data;
+    console.log(this.is_logged);
+  })
   
   
   }
@@ -66,8 +69,9 @@ export class MenuComponent{
   closeSession()
   { 
     localStorage.removeItem("user_data");
-    this.dbService.is_logged=false;
+    this.dbService.setLogged(false);
     this.navCtrl.navigateRoot("/login");
+    
 
   }
 

@@ -156,7 +156,7 @@ export class LoginPage implements OnInit {
           this.dbService.is_logged = true;
           this.dbService.user_id = data.user_data._id;
           this.dbService.user_data = data.user_data;
-          
+          this.dbService.setLogged(true);
           this.loginRedirect();
 
         }

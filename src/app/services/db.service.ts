@@ -6,7 +6,7 @@ import { Location } from '../clases/location';
 import { PostLink } from '../clases/post-link'
 import { RegisterPage } from '../register/register.page';
 import { MapsAPILoader } from '@agm/core';
-import { Subject } from 'rxjs';
+import { Subject, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +19,7 @@ export class DbService {
   public user_id: string;
   public offer_id: string;
   public $products: Subject<Offer>
-
+  public is_logged$=new Subject<boolean>();
   public is_logged: boolean = false;
   public user_data;
 
@@ -118,6 +118,18 @@ export class DbService {
       var LOC_URL = this.URL_SERVER.concat(url.toString());
       return this.http.post(LOC_URL, data,
         {headers: new HttpHeaders({"Content-Type": "application/json"})});
+    }
+
+    getLogged$(): Observable<boolean> {
+      this.is_logged$.next(this.is_logged);
+      return this.is_logged$.asObservable();
+
+    }
+
+    setLogged(data:boolean)
+    {
+      this.is_logged=data;
+      this.is_logged$.next(this.is_logged);
     }
 
     /*
