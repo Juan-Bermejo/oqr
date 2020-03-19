@@ -93,13 +93,9 @@ export class DbService {
 
     getLinkById(offer_id) {
       if(offer_id != ''){
-<<<<<<< HEAD
-        let data = { "offer_id" : offer_id }
-=======
         console.log(offer_id);
         let data= {"offer_id": offer_id}
 
->>>>>>> origin
         return this.http.post(this.URL_SERVER_SERV_GET, data,
           {headers: new HttpHeaders({"Content-Type": "application/json"})});
       }
