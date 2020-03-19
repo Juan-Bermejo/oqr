@@ -3,6 +3,7 @@ import { User } from '../clases/user';
 import { ModalController } from '@ionic/angular';
 import { AddLocationPage } from '../modals/add-location/add-location.page';
 import { Location } from '../clases/location';
+import { DbService } from '../services/db.service';
 
 @Component({
   selector: 'app-my-locations',
@@ -12,10 +13,16 @@ import { Location } from '../clases/location';
 export class MyLocationsPage implements OnInit {
 
   public user:User;
-  newLocation: Location;
+  myLocations: Location[];
 
-  constructor(private modalController: ModalController) {
+  constructor(private modalController: ModalController, private dbService: DbService) {
 
+    this.user= JSON.parse(localStorage.getItem("user"));
+    console.log(this.user);
+    /*this.dbService.getLocation(this.user._id).subscribe((data:Location[])=>{
+      console.log(data);
+      this.myLocations=data;
+    })*/
 
    }
 

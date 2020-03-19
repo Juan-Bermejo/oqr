@@ -116,7 +116,7 @@ export class DbService {
       let url = 'services/sendlocations/';
       var LOC_URL = this.URL_SERVER.concat(url.toString());
       return this.http.post(LOC_URL, user_id,
-        {headers: new HttpHeaders({"Content-Type": "application/json"})}););
+        {headers: new HttpHeaders({"Content-Type": "application/json"})});
     }
 
     /*
