@@ -28,7 +28,7 @@ export class AddLocationPage implements OnInit {
   markers;
   location_data;
   user;
-  
+
    options: NativeGeocoderOptions = {
     useLocale: true,
     maxResults: 5
@@ -41,7 +41,7 @@ export class AddLocationPage implements OnInit {
     private nativeGeocoder: NativeGeocoder,
   private dbService: DbService) {
 
-    this.user= JSON.parse(sessionStorage.getItem('user'));
+    this.user= JSON.parse(localStorage.getItem('user'));
       this.mapType = 'roadmap';
       this.mapOn=true;
       this.getGeoLocation();
