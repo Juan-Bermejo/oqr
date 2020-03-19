@@ -13,15 +13,15 @@ import { DbService } from '../services/db.service';
 export class MyLocationsPage implements OnInit {
 
   public user:User;
-  myLocations: Location[];
+  myLocations;
 
   constructor(private modalController: ModalController, private dbService: DbService) {
 
-    this.user= JSON.parse(localStorage.getItem("user"));
+    this.user= JSON.parse(localStorage.getItem("user_data"));
     
-    this.dbService.getLocation(this.user._id).subscribe((data:Location[])=>{
+    this.dbService.getLocation(this.user._id).subscribe((data:any)=>{
       console.log(data);
-      this.myLocations=data;
+      this.myLocations=data.location_data;
     })
 
    }

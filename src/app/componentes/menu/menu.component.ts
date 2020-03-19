@@ -1,6 +1,8 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { MenuService } from '../../services/menu.service';
 import { DbService } from '../../services/db.service';
+import { NavController } from '@ionic/angular';
+
  
 @Component({
   selector: 'app-menu',
@@ -14,6 +16,12 @@ export class MenuComponent{
   menu_opt = [
     {
       "icon":"md-person",
+      "name":"Mi cuenta",
+      "redirectTo": "seller-panel",
+      
+    },
+    {
+      "icon":"md-disc",
       "name":"Punto de venta",
       "redirectTo": "seller-panel",
       
@@ -24,7 +32,7 @@ export class MenuComponent{
       "redirectTo": "influencer-panel",
     },
     {
-      "icon":"md-megaphone",
+      "icon":"md-business",
       "name":"Panel fabricante",
       "redirectTo": "",
     },
@@ -42,27 +50,34 @@ export class MenuComponent{
     },
 
 
+
   
   
   ]
   
   role:string= "";
 
-  constructor(private menuSrv:MenuService, private dbService:DbService) {
-  this.is_logged=dbService.is_logged;
+  constructor(private menuSrv:MenuService, private dbService:DbService, private navCtrl: NavController) {
+  //this.is_logged=dbService.is_logged;
+  
+  
   }
 
-  exitApp()
+  closeSession()
   { 
+    localStorage.removeItem("user_data");
+    this.dbService.is_logged=false;
+    this.navCtrl.navigateRoot("/login");
+
   }
 
   ngOnInit() {
   
   }
 
-  ngAfterViewChecked(): void {
+  /*ngAfterViewChecked(): void {
     this.menu_opt = this.menuSrv.menu_data;
-  }
+  }*/
   
 
 

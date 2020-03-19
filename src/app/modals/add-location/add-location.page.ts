@@ -41,7 +41,7 @@ export class AddLocationPage implements OnInit {
     private nativeGeocoder: NativeGeocoder,
   private dbService: DbService) {
 
-    this.user= JSON.parse(localStorage.getItem('user'));
+    this.user= JSON.parse(localStorage.getItem('user_data'));
       this.mapType = 'roadmap';
       this.mapOn=true;
       this.getGeoLocation();
