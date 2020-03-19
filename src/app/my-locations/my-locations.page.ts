@@ -27,14 +27,14 @@ export class MyLocationsPage implements OnInit {
     });
      modal.present();
      modal.onDidDismiss().then((data)=>{
-      this.newLocation = new Location();
+     /* this.newLocation = new Location();
       this.newLocation.address=data.data.result.address;
       this.newLocation.latitude=data.data.result.lat;
       this.newLocation.longitude=data.data.result.lon;
       this.newLocation.country=data.data.result.country;
       this.newLocation.city=data.data.result.city;
       this.newLocation.province=data.data.result.province;
-      this.newLocation.user_id= this.user.id;
+      //this.newLocation.user_id= this.user.id;*/
     
       
       
