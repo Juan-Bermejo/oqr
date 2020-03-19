@@ -112,10 +112,11 @@ export class DbService {
         {headers: new HttpHeaders({"Content-Type": "application/json"})});
     }
 
-    getLocations() {
-      let url = 'services/locations/';
+    getLocation(user_id: string) {
+      let url = 'services/sendlocations/';
       var LOC_URL = this.URL_SERVER.concat(url.toString());
-      return this.http.get(LOC_URL);
+      return this.http.post(LOC_URL, user_id,
+        {headers: new HttpHeaders({"Content-Type": "application/json"})}););
     }
 
     /*
