@@ -13,7 +13,7 @@ export class MenuComponent{
   menu_opt = [
     {
       "icon":"md-person",
-      "name":"Mi cuenta",
+      "name":"Punto de venta",
       "redirectTo": "seller-panel",
       
     },
@@ -23,11 +23,11 @@ export class MenuComponent{
       "redirectTo": "influencer-panel",
     },
     {
-      "icon":"md-card",
-      "name":"Ofertas",
-      "redirectTo": "offer-details",
-      
+      "icon":"md-megaphone",
+      "name":"Panel fabricante",
+      "redirectTo": "",
     },
+
     {
       "icon":"md-cash",
       "name":"Quiero hacer una oferta",
