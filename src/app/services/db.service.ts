@@ -113,9 +113,10 @@ export class DbService {
     }
 
     getLocation(user_id: string) {
-      let url = 'services/sendlocations/';
+      let url = 'services/sendlocation/';
+      let data = {"user_id": user_id}
       var LOC_URL = this.URL_SERVER.concat(url.toString());
-      return this.http.post(LOC_URL, user_id,
+      return this.http.post(LOC_URL, data,
         {headers: new HttpHeaders({"Content-Type": "application/json"})});
     }
 
