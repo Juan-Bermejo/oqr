@@ -88,7 +88,11 @@ this.user= JSON.parse(localStorage.getItem("user"));
           let l = new PostLink();
           l.link='   <iframe src="https://www.facebook.com/plugins/video.php?href= ' +this.link + '&show_text=0&width=250" width="250" height="250" style="border:solid;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true" allowFullScreen="false"></iframe>'
           l.influencer=this.dbService.user_id;
+<<<<<<< HEAD
           l.offer_id=this.offer._id;   //no se guarda ningun id y tira error en la DB
+=======
+          l.offer_id=this.offer._id; 
+>>>>>>> 5186a6ad3d05bff3665b54a9e74641d1e2102e50
          
 
           console.log(l);

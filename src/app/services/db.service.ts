@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { User, UserLogin } from '../clases/user';
 import { Offer } from '../clases/offer';
+import { Location } from '../clases/location';
 import { PostLink } from '../clases/post-link'
 import { RegisterPage } from '../register/register.page';
 import { MapsAPILoader } from '@agm/core';
@@ -21,6 +22,8 @@ export class DbService {
 
   public is_logged: boolean = false;
   public user_data;
+
+  readonly URL_SERVER = 'http://cors-anywhere.herokuapp.com/http://31.220.61.6:3000/app/';
 
   readonly URL_SERVER_USER = 'http://cors-anywhere.herokuapp.com/http://31.220.61.6:3000/app/users/';
   readonly URL_SERVER_USER_OF = 'http://cors-anywhere.herokuapp.com/http://31.220.61.6:3000/app/users/addoffer/';
@@ -100,6 +103,13 @@ export class DbService {
           {headers: new HttpHeaders({"Content-Type": "application/json"})});
       }
       
+    }
+
+    saveLocation(location_data: Location) {
+      let url = 'services/locations/';
+      var LOC_URL = this.URL_SERVER.concat(url.toString());
+      return this.http.post(LOC_URL, location_data,
+        {headers: new HttpHeaders({"Content-Type": "application/json"})});
     }
 
     /*
