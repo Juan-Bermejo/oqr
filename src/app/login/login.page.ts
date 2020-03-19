@@ -146,6 +146,29 @@ export class LoginPage implements OnInit {
     }
   }
 
+  directLogin(){
+    this.dbService.checkLogin('admin01', 'root')
+      .subscribe((data: any) => {
+        if(data.status == 200) {
+
+          //this.dbService.user_id = data.id_user;
+          this.dbService.is_logged = true;
+          this.dbService.user_id = data.user_data._id;
+          this.dbService.user_data = data.user_data;
+          this.loginRedirect();
+
+        }
+
+        if(data.status == 401) {
+          const toast = document.createElement('ion-toast');
+          toast.message = 'Usuario o contraseña incorrecto';
+          toast.duration = 2000;
+          document.body.appendChild(toast);
+          return toast.present(); 
+        }
+      });
+  }
+
   register_page() {
     this.navCtrl.navigateRoot('register');
   }
