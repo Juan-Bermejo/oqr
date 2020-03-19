@@ -112,6 +112,12 @@ export class DbService {
         {headers: new HttpHeaders({"Content-Type": "application/json"})});
     }
 
+    getLocations() {
+      let url = 'services/locations/';
+      var LOC_URL = this.URL_SERVER.concat(url.toString());
+      return this.http.get(LOC_URL);
+    }
+
     /*
 
     editUser(user: User) {
