@@ -4,6 +4,8 @@ import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { NativeGeocoder, NativeGeocoderResult, NativeGeocoderOptions } from '@ionic-native/native-geocoder/ngx';
 import { Location } from '../../clases/location';
 import { User } from '../../clases/user';
+import { DbService } from '../../services/db.service';
+
 
 @Component({
   selector: 'app-add-location',
@@ -25,6 +27,7 @@ export class AddLocationPage implements OnInit {
   selectedMarker;
   markers;
   location_data;
+  user;
 
    options: NativeGeocoderOptions = {
     useLocale: true,
@@ -35,7 +38,10 @@ export class AddLocationPage implements OnInit {
 
   constructor(private modalCtrl:ModalController,
     private geolocation: Geolocation,
-    private nativeGeocoder: NativeGeocoder) {
+    private nativeGeocoder: NativeGeocoder,
+  private dbService: DbService) {
+
+    this.user= JSON.parse(localStorage.getItem('user'));
       this.mapType = 'roadmap';
       this.mapOn=true;
       this.getGeoLocation();
@@ -100,8 +106,13 @@ export class AddLocationPage implements OnInit {
       l.longitude= this.longitude;
       l.province=this.location_data.administrativeArea;
       l.subLocality= this.location_data.subLocality;
+      l.user_id=this.user._id;
      
+     // console.log(l);
+      this.dbService.saveLocation(l).subscribe((data)=>{
 
+        console.log("Data:",data);
+      })
       
       this.modalCtrl.dismiss({
         "result":{
@@ -121,6 +132,7 @@ export class AddLocationPage implements OnInit {
         this.latitude=undefined;
         this.longitude=undefined;
         this.location_data=undefined;
+        this.getGeoLocation();
         this.markers=new Array();
       })
 

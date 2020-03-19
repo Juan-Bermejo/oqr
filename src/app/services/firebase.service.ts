@@ -60,7 +60,7 @@ setUser(user:User)
   
   let id = this.db.createId();
     
-  user.id = id;
+  user._id = id;
 
   return this.db.collection<User>("users").doc(id).set(JSON.parse(JSON.stringify(user)));
 }
@@ -80,11 +80,11 @@ setPostLink(post:PostLink)
     return this.db.collection<PostLink>("post_link", ref => ref.where("offer_id", "==", offer_id)).valueChanges();
   }
 
-updateUser(user:User)
+/*updateUser(user:User)
 {
   return this.db.collection<User>("users").doc(user.id).set(JSON.parse(JSON.stringify(user)));
  
-}
+}*/
 
 updateOffer(offer:Offer)
 {
@@ -107,7 +107,7 @@ getLocationUser(user_id)
   return this.db.collection<Location>("locations", ref => ref.where("user_id", "==", user_id)).valueChanges();
 }
 
-setLocation(location:Location)
+/*setLocation(location:Location)
 {
   let id = this.db.createId();
     
@@ -122,7 +122,7 @@ setLocation(location:Location)
   .catch(()=>{
     console.log("No se pudo guardar la locacion");
   })
-}
+}*/
 
 
 }

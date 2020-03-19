@@ -2,7 +2,7 @@ import { Offer } from './offer';
 import { Location } from './location';
 
 export class User {
-    id:string;
+    _id:string;
     name: string;
     last_name:string;
     user_name: string;

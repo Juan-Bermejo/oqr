@@ -59,7 +59,7 @@ this.user= JSON.parse(localStorage.getItem("user"));
       console.log(data.html);
       let l = new PostLink();
       l.link=data.html;
-      l.influencer=this.user.id;
+      l.influencer=this.user._id;
       l.offer_id=this.offer._id;
     
     },
