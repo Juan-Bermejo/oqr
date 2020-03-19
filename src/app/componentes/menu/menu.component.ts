@@ -1,5 +1,6 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { MenuService } from '../../services/menu.service';
+import { DbService } from '../../services/db.service';
  
 @Component({
   selector: 'app-menu',
@@ -8,7 +9,7 @@ import { MenuService } from '../../services/menu.service';
 })
 export class MenuComponent{
 
- 
+ is_logged:boolean;
 
   menu_opt = [
     {
@@ -47,8 +48,8 @@ export class MenuComponent{
   
   role:string= "";
 
-  constructor(private menuSrv:MenuService) {
-  
+  constructor(private menuSrv:MenuService, private dbService:DbService) {
+  this.is_logged=dbService.is_logged;
   }
 
   exitApp()
