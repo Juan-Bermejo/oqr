@@ -3,7 +3,7 @@
     <ion-row>
 
         <ion-col size="2">
-
+          <ion-button *ngIf="!logged" color="success" expand="block" shape="round" (click)="goToLogIn()">Log In</ion-button>
           <ion-buttons>
             <ion-menu-button color="primary" menu="first"></ion-menu-button>
           </ion-buttons> 

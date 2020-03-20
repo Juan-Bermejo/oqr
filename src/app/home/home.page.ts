@@ -31,6 +31,7 @@ export class HomePage implements OnInit {
   busqueda:string;
   notification:boolean=false;
   search_tool:boolean;
+  logged:boolean;
  
 
    options: StreamingVideoOptions = {
@@ -76,11 +77,13 @@ export class HomePage implements OnInit {
   }
 
   ionViewWillEnter(){
-
+    
     if(this.dbService.user_data != null){
       this.dbService.is_logged = true;
+      this.logged = true;
     }
     else {
+      this.logged = false;
       this.dbService.is_logged = false;
     }
 

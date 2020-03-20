@@ -41,6 +41,13 @@ export class DbService {
         {headers: new HttpHeaders({"Content-Type": "application/json"})});
     }
 
+    googleLogin(user: User) {
+      let url = 'users/google';
+      var LOG_URL = this.URL_SERVER.concat(url.toString());
+      return this.http.post(LOG_URL, user,
+        {headers: new HttpHeaders({"Content-Type": "application/json"})});
+    }
+
     checkLogin(user_name: string, password: string) {
       var data = {
         "user_name": user_name,

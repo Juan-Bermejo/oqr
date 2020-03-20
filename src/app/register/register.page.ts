@@ -31,6 +31,10 @@ export class RegisterPage implements OnInit {
   ngOnInit() {
   }
 
+  ionViewWillEnter(){
+    this.resetForm();
+  }
+
   to_login_page() {
     this.navCtrl.navigateRoot('login');
   }

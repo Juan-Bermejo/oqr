@@ -55,19 +55,7 @@ export class LoginPage implements OnInit {
     this.dbService.user_data = null;
   }
 
-  loginRedirect()
-  {
-    
-    /*let user= new User();
-    user.name="Ricardo";
-    user.last_name="Ruben";
-    user.email="richardruben@gmail.com";
-    user.password="111";
-    user.phone=1150648978;
-    user.role="seller";
-    localStorage.setItem("user", JSON.stringify(user));*/
-    
-
+  loginRedirect() {
     this.navCtrl.navigateRoot('home');
   }
 
@@ -108,6 +96,8 @@ export class LoginPage implements OnInit {
 
   onLoginGoogle(): void {
 
+    let user_reg= new User();
+
     // 'hybrid' detects both Cordova and Capacitor
     if (this.platform.is('hybrid')) {
       this.googlePlus.login({})
@@ -120,8 +110,27 @@ export class LoginPage implements OnInit {
     else {
       this.authService.loginGoogleUser()
         .then( (res) => {
-          console.log(res.user.displayName,res.user.email);
-          this.loginRedirect();
+
+          let data = res.user.displayName.split(" ");
+          user_reg.name = data[0];
+          user_reg.last_name = data[data.length - 1];
+          user_reg.user_name = res.user.email;
+          user_reg.email = res.user.email;
+          user_reg.password = ".";
+          user_reg.phone = 87;
+          
+          this.dbService.googleLogin(user_reg).subscribe((data: any) => {
+            if(data.status == 201) {
+
+              this.dbService.is_logged = true;
+              this.dbService.user_id = data.user_data._id;
+              this.dbService.user_data = data.user_data;
+
+              this.loginRedirect();
+            }
+    
+            if(data.status == 401) {}
+          });
 
         }).catch (err => console.log('err', err.message));
     }
@@ -147,8 +156,32 @@ export class LoginPage implements OnInit {
     }
   }
 
-  directLogin(){
+  directLoginOne(){
     this.dbService.checkLogin('admin01', 'root')
+      .subscribe((data: any) => {
+        if(data.status == 200) {
+
+          //this.dbService.user_id = data.id_user;
+          this.dbService.is_logged = true;
+          this.dbService.user_id = data.user_data._id;
+          this.dbService.user_data = data.user_data;
+          this.dbService.setLogged(true);
+          this.loginRedirect();
+
+        }
+
+        if(data.status == 401) {
+          const toast = document.createElement('ion-toast');
+          toast.message = 'Usuario o contraseña incorrecto';
+          toast.duration = 2000;
+          document.body.appendChild(toast);
+          return toast.present(); 
+        }
+      });
+  }
+
+  directLoginTwo(){
+    this.dbService.checkLogin('super01', '123')
       .subscribe((data: any) => {
         if(data.status == 200) {
 
