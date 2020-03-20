@@ -1,88 +1,64 @@
 
-<ion-content >
+<ion-content padding="true" >
 
-  <ion-grid>
-    <ion-row>
+   
+        <ion-toolbar>
 
+                <ion-buttons slot="start" collapse="true">
+                  <ion-back-button mode="md" type="button" color="light" icon="md-arrow-back" defaultHref="home">
+                  </ion-back-button>
+                </ion-buttons>
+                  <ion-row justify-content-center>
+                    <ion-col>
+                        <h1 style="color: rgb(41, 171, 226)">
+                            Punto de venta
+                          </h1>
+                    </ion-col> 
+                  </ion-row>
+            
+        </ion-toolbar>
 
-     <ion-col size="6">
-        <h1 class="title">¡Hola!</h1>
-        <h1 class="titleBlack">{{name}}</h1>
-        <h2>{{user_name}}</h2>
-     </ion-col>
-      
-    </ion-row>
+    <ion-row class="ion-justify-content-center">
 
-    <ion-row>
-
-      <ion-col size="7">
-              <ion-title>
-        Mi cuenta
-      </ion-title>
-      <ion-item lines="none" (click)="goTo('my-offers')" >
-          <ion-icon size="large" name="md-timer" ></ion-icon>
+      <ion-item-divider (click)="goTo('my-offers')" >
+          <ion-icon size="large" name="md-cash" color="primary"  color="primary"></ion-icon>
           <ion-label>Mis ofertas</ion-label>
-      </ion-item>
+          <ion-icon slot="end" src="../../assets/ionicons/chevron-forward-outline.svg"></ion-icon>
+      </ion-item-divider>
 
-      <ion-item lines="none" (click)="goTo('my-locations') " >
-        <ion-icon size="large" name="md-pin"></ion-icon>
+      <ion-item-divider (click)="goTo('my-locations') " >
+        <ion-icon size="large" name="md-pin" color="primary"></ion-icon>
         <ion-label>Mis locaciones</ion-label>
-    </ion-item>
-
-      <ion-item lines="none" (click)="goTo('related-products') " >
-          <ion-icon size="large" name="md-card"></ion-icon>
+        <ion-icon slot="end" src="../../assets/ionicons/chevron-forward-outline.svg"></ion-icon>
+    </ion-item-divider>
+   
+      <ion-item-divider (click)="goTo('related-products') " >
+          <ion-icon size="large" name="md-pricetags" color="primary"></ion-icon>
           <ion-label>Productos relacionados</ion-label>
-      </ion-item>
+          <ion-icon slot="end" src="../../assets/ionicons/chevron-forward-outline.svg"></ion-icon>
+      </ion-item-divider>
 
-      <ion-item lines="none" routerDirection="" >
-          <ion-icon size="large" name="md-paper"></ion-icon>
+      <ion-item-divider (click)="goTo('related-products') " >
+            <ion-icon size="large" name="md-people" color="primary"></ion-icon>
+            <ion-label>Asociarme a una oferta</ion-label>
+            <ion-icon slot="end" src="../../assets/ionicons/chevron-forward-outline.svg"></ion-icon>
+        </ion-item-divider>
+     
+      <ion-item-divider routerDirection="" >
+          <ion-icon size="large" name="md-paper" color="primary"></ion-icon>
           <ion-label>Datos de facturación</ion-label>
-      </ion-item>
+          <ion-icon slot="end" src="../../assets/ionicons/chevron-forward-outline.svg"></ion-icon>
+      </ion-item-divider>
 
-      <ion-item lines="none" routerDirection="" >
-          <ion-icon size="large" name="md-document"></ion-icon>
-          <ion-label>Datos personales</ion-label>
-      </ion-item>
-
-      <ion-item lines="none" routerDirection="" >
-          <ion-icon size="large" name="md-notifications"></ion-icon>
+      <ion-item-divider routerDirection="" >
+          <ion-icon size="large" name="md-notifications" color="primary"></ion-icon>
           <ion-label>Notificaciones</ion-label>
-      </ion-item>
-
-      </ion-col>
-
-
-      <ion-col size=5>
-        <ion-title color="primary">Saldo</ion-title>
-        <ion-input size=10 color="primary" readonly value="{{0.00 | currency}}"></ion-input>
-
-        <ion-button shape="round" color="primary"> Añadir saldo</ion-button>
-      </ion-col>
+          <ion-icon slot="end" src="../../assets/ionicons/chevron-forward-outline.svg"></ion-icon>
+      </ion-item-divider>
 
     </ion-row>
     <br>
 
-    <ion-row>
-      <ion-col size=8>
-
-          <ion-title>Información</ion-title>
-        <ion-item lines="none" routerDirection="" >
-            <img style="height: 20px; width: 32px;" src="../../assets/iconos/iconos oqr-55.png">
-            <ion-label>Quiero ser aliado OQR</ion-label>
-        </ion-item>
-
-        <ion-item lines="none" routerDirection="" >
-            <ion-icon name="md-information-circle" size="large">
-              </ion-icon>
-              <ion-label>Terminos y condiciones</ion-label>
-        </ion-item>
-      </ion-col>
-    </ion-row>
-
-    <ion-row justify-content-start padding>
-      <h2>Aliado </h2>
-      <img style="height: 50px; width: 90px; margin-left: 10px;" src="../../assets/iconos/iconos oqr-55.png">
-    </ion-row>
 
     <ion-row>
       <ion-col size=3>
@@ -106,7 +82,7 @@
              
             </ion-col>
     </ion-row>
-  </ion-grid>
+
 
 
 </ion-content>

@@ -7,6 +7,7 @@ import { Product } from '../clases/product';
 import { User } from '../clases/user';
 import { Location } from '../clases/location';
 import { Offer } from '../clases/offer';
+import { DbService } from '../services/db.service';
 
 @Component({
   selector: 'app-offer-details',
@@ -29,18 +30,43 @@ export class OfferDetailsPage implements OnInit {
   array_products: Product[];
   offerLocations:Location[];
   offer_sellers:string[];
+  my_offer:boolean=false;
 
 
   constructor(private route: ActivatedRoute, 
     public navCtrl: NavController,
   public paramSrv: NavParamsService,
-  private geolocation: Geolocation) {
+  private geolocation: Geolocation,
+private dbService: DbService) {
 
+this.user= JSON.parse(localStorage.getItem("user_data"))
   this.markers= new Array<{}>();
+
+this.offerLocations= new Array<Location>();
 
     if(this.paramSrv.param)
     {
-      this.offer=this.paramSrv.param;
+      this.offer = this.paramSrv.param;
+
+      this.offer.sellers.forEach(seller => {
+        console.log(seller)
+        if(seller==this.user._id)
+        {
+          this.my_offer==true;
+        }
+        console.log(this.user)
+        this.dbService.getLocation(seller).subscribe((data:any)=>
+      {
+        
+        this.offerLocations=data.location_data;
+
+        this.offerLocations.forEach(location => {
+          console.log(location);
+          this.addMarker(location.latitude, location.longitude);
+        });
+      })
+
+      });
     }
 
     
@@ -57,7 +83,7 @@ export class OfferDetailsPage implements OnInit {
       this.mylong= resp.coords.longitude;
       this.latitude=this.myLat;
       this.longitude=this.mylong;
-      this.addMarker(this.latitude, this.longitude);
+      //this.addMarker(this.latitude, this.longitude);
       this.myLatLng={ lat:this.latitude, lng:this.longitude };
       
      }).catch((error) => {
