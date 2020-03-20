@@ -16,11 +16,11 @@ export class MenuComponent{
     {
       "icon":"md-person",
       "name":"Mi cuenta",
-      "redirectTo": "seller-panel",
+      "redirectTo": "my-account",
       
     },
     {
-      "icon":"md-disc",
+      "icon":"md-locate",
       "name":"Punto de venta",
       "redirectTo": "seller-panel",
       

@@ -68,16 +68,18 @@
 
                     <ion-row justify-content-center>
 <ion-col size=6>
-<ion-button (click)="kind='Producto'">
+<ion-button class="btn-king" (click)="kind='Producto'">
 Producto
+<ion-icon *ngIf="kind=='Producto'" name="md-checkmark" slot="end" color="light"></ion-icon>
 </ion-button>
 </ion-col>
 <ion-col size=6>
-    <ion-button (click)="kind='Servicio'">
+    <ion-button class="btn-king" (click)="kind='Servicio'">
     Servicio
+    <ion-icon *ngIf="kind=='Servicio'" name="md-checkmark" slot="end" color="light"></ion-icon>
     </ion-button>
     </ion-col>
- 
+    
                     </ion-row>
       
 

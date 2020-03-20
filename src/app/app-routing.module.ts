@@ -71,7 +71,11 @@ const routes: Routes = [
   {
     path: 'my-offers',
     loadChildren: () => import('./my-offers/my-offers.module').then( m => m.MyOffersPageModule)
+  },  {
+    path: 'my-account',
+    loadChildren: () => import('./my-account/my-account.module').then( m => m.MyAccountPageModule)
   },
+
 
 ];
 
