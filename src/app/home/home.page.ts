@@ -31,6 +31,7 @@ export class HomePage implements OnInit {
   busqueda:string;
   notification:boolean=false;
   search_tool:boolean;
+  category:string;
  
 
    options: StreamingVideoOptions = {
@@ -90,14 +91,30 @@ export class HomePage implements OnInit {
     
   }
 
-   async presentModal() {
+   async categoryFilter() {
      
     const modal = await this.modalController.create({
       component: ModalCategoriesPage,
       cssClass:"modal"
       
     });
-    return await modal.present();
+     modal.present();
+
+     modal.onDidDismiss().then((data)=>{
+
+       
+      this.filterCat(data.data.result.category);
+      
+    })
+
+  }
+
+
+  async filterCat(cat:string)
+  {
+      
+        this.aux_offer_list= await this.offer_list.filter(item => item.category.includes(cat) );
+    console.log(this.aux_offer_list)
   }
 
 

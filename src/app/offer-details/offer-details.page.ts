@@ -30,7 +30,7 @@ export class OfferDetailsPage implements OnInit {
   array_products: Product[];
   offerLocations:Location[];
   offer_sellers:string[];
-  my_offer:boolean=false;
+  my_offer:boolean=true;
 
 
   constructor(private route: ActivatedRoute, 
@@ -62,7 +62,7 @@ this.offerLocations= new Array<Location>();
 
         this.offerLocations.forEach(location => {
           console.log(location);
-          this.addMarker(location.latitude, location.longitude);
+          this.addMarker(location);
         });
       })
 
@@ -92,8 +92,14 @@ this.offerLocations= new Array<Location>();
   }
 
 
-  addMarker(lat: number, lng: number) {
-    this.markers.push({ lat: lat, lng: lng, alpha: 1});
+  addMarker(location:Location) {
+    this.markers.push(
+      {
+        lat: location.latitude,
+         lng: location.longitude,
+         address:location.address,
+          alpha: 1
+        });
   }
   
 

@@ -8,14 +8,11 @@
                 <ion-back-button color="light" icon="md-arrow-back" defaultHref="home">
                 </ion-back-button>
                 </ion-buttons>
-            
-            <h1>
-                {{offer.title}}
-              </h1>
-  
-
 
 </ion-toolbar>
+
+<h4 style="color: rgb(0, 0, 0); left: 2px;"> {{offer.product}} a {{offer.price_currency}} {{offer.price}}</h4>
+<h1>{{offer.sellers.lenght}}</h1>
 <strong>DESCRIPCION DE LA PROMOCION:</strong> 
 
 <p>
@@ -23,7 +20,7 @@
 </p>
 
 <agm-map [latitude]='latitude' [longitude]='longitude' 
-  [zoom]="15"
+  [zoom]="8"
   [mapTypeId]='mapType'>
 
   <agm-marker
@@ -31,7 +28,7 @@
   [latitude]="marker.lat"
   [longitude]="marker.lng"
   [opacity]="marker.alpha"
-  [markerDraggable]="true"
+  [markerDraggable]="false"
   [visible]="true"
   (markerClick)="selectMarker($event)"
 >
