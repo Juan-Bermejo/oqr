@@ -31,11 +31,8 @@ export class HomePage implements OnInit {
   busqueda:string;
   notification:boolean=false;
   search_tool:boolean;
-<<<<<<< HEAD
   logged:boolean;
-=======
   category:string;
->>>>>>> 8cb682348640db465f55e323bd7aa0cfc031f5c3
  
 
    options: StreamingVideoOptions = {
