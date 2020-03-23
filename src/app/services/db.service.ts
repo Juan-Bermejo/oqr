@@ -3,7 +3,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { User, UserLogin } from '../clases/user';
 import { Offer } from '../clases/offer';
 import { Location } from '../clases/location';
-import { PostLink } from '../clases/post-link'
+import { PostLink } from '../clases/post-link';
+import { Seller } from '../clases/seller';
 import { RegisterPage } from '../register/register.page';
 import { MapsAPILoader } from '@agm/core';
 import { Subject, Observable } from 'rxjs';
@@ -144,6 +145,21 @@ export class DbService {
       let data = {"user_id": vendor_id}
       var PROD_URL = this.URL_SERVER.concat(url.toString());
       return this.http.post(PROD_URL, data,
+        {headers: new HttpHeaders({"Content-Type": "application/json"})});
+    }
+
+    addVendor(seller: Seller) {
+      let url = 'vendors/';
+      var VEND_URL = this.URL_SERVER.concat(url.toString());
+      return this.http.post(VEND_URL , seller,
+        {headers: new HttpHeaders({"Content-Type": "application/json"})});
+    }
+
+    getVendors(category: String) {
+      let url = 'vendors/getbycategory';
+      let data = {"category": category}
+      var VEND_URL = this.URL_SERVER.concat(url.toString());
+      return this.http.post(VEND_URL , data,
         {headers: new HttpHeaders({"Content-Type": "application/json"})});
     }
 
