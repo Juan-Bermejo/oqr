@@ -5,6 +5,7 @@ import { Offer } from '../clases/offer';
 import { Location } from '../clases/location';
 import { PostLink } from '../clases/post-link';
 import { Seller } from '../clases/seller';
+import { Product } from '../clases/product';
 import { RegisterPage } from '../register/register.page';
 import { MapsAPILoader } from '@agm/core';
 import { Subject, Observable } from 'rxjs';
@@ -160,6 +161,14 @@ export class DbService {
       let data = {"category": category}
       var VEND_URL = this.URL_SERVER.concat(url.toString());
       return this.http.post(VEND_URL , data,
+        {headers: new HttpHeaders({"Content-Type": "application/json"})});
+    }
+
+    createProduct(product: Product, user_id: string) {
+      let url = 'products/';
+      let data = {"product_data": product, "user_id": user_id}
+      var PROD_URL = this.URL_SERVER.concat(url.toString());
+      return this.http.post(PROD_URL , data,
         {headers: new HttpHeaders({"Content-Type": "application/json"})});
     }
 
