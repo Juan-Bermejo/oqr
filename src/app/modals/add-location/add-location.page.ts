@@ -72,8 +72,6 @@ export class AddLocationPage implements OnInit {
   .then((result: NativeGeocoderResult[]) => { 
     this.latitude= parseFloat(result[0].latitude);
      this.longitude= parseFloat(result[0].longitude);
-
-
     
   })
   .catch((error: any) => console.log(error));

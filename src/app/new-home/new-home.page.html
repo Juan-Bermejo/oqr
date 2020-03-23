@@ -12,7 +12,7 @@
         
     
     <ion-col size=8 >
-        <ion-input class="input-location">
+        <ion-input class="input-location" [(ngModel)]="myAddress" readonly >
               <ion-icon style="padding-left: 10px;" color="medium" name="md-pin" ></ion-icon>
           </ion-input>
     </ion-col>
@@ -25,51 +25,6 @@
 
   </ion-row>
 
-  <ion-row>
-      <ion-col size=10 offset=1>
-        
-        <ion-input class="input-search" (ionChange)="filter($event)" placeholder="¿Qué estas buscando?" color="primary" [(ngModel)]="busqueda" >
-          <span>
-                <ion-icon style="padding-left: 10px;" size="large" name="md-search" color="primary-shade">
-                  </ion-icon>
-          </span>
-          <span class="item-right">
-            <ion-button style="
-            border-left-style: solid;
-            border-left-width: 1px;
-            border-left: 'primary';" fill="clear" (click)="searchTools()" >
-                <ion-icon color="primary" name="md-options">
-                  </ion-icon>
-
-            </ion-button>
-
-          </span>
-  
-        </ion-input>
-      
-      </ion-col>
-    </ion-row>
-
-   
-
-        <ion-row *ngIf="search_tool" justify-content-center>
-          
-
-              <ion-button shape="round" color="primary" (click)="categoryFilter()">
-                Categoria
-              </ion-button>
-         
-            
-                <ion-button shape="round" color="primary" >
-                    fecha
-                  </ion-button>
-           
-                  <ion-button shape="round" color="primary">
-                       precio
-                    </ion-button>
-               
-             
-          </ion-row>
   
 
     
@@ -78,8 +33,8 @@
 
 <ion-content padding="true">
 
-  <ion-row>
-      <ion-button expand="block" (click)="modalCategory()">Categorias</ion-button>
+  <ion-row class="ion-justify-content-center">
+      <ion-button expand="block" (click)="modalCategory()">¿Que estas buscando?</ion-button>
   </ion-row>
 
   <ion-toolbar>
