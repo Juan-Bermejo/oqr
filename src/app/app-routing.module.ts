@@ -75,6 +75,18 @@ const routes: Routes = [
     path: 'my-account',
     loadChildren: () => import('./my-account/my-account.module').then( m => m.MyAccountPageModule)
   },
+  {
+    path: 'near-me',
+    loadChildren: () => import('./near-me/near-me.module').then( m => m.NearMePageModule)
+  },
+  {
+    path: 'new-home',
+    loadChildren: () => import('./new-home/new-home.module').then( m => m.NewHomePageModule)
+  },
+  {
+    path: 'billing-information',
+    loadChildren: () => import('./billing-information/billing-information.module').then( m => m.BillingInformationPageModule)
+  },
 
 
 ];

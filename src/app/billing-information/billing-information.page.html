@@ -1,0 +1,109 @@
+
+
+<ion-content padding="true">
+
+  
+  <ion-toolbar>
+
+      <ion-buttons slot="start" collapse="true">
+        <ion-back-button mode="md" type="button" color="light" icon="md-arrow-back" defaultHref="home">
+        </ion-back-button>
+      </ion-buttons>
+        <ion-row justify-content-center>
+          <ion-col>
+              <h1 style="color: rgb(41, 171, 226)">
+                  Mi cuenta
+                </h1>
+          </ion-col> 
+        </ion-row>
+  
+</ion-toolbar>
+
+<ion-row class="ion-justify-content-center">
+  <strong>
+    Datos personales
+  </strong>
+  <ion-item-divider>
+   <ion-label slot="start">
+      Nombre y apellido:
+   </ion-label>
+   <ion-text slot="end">
+      {{user.name}} {{user.last_name}}
+   </ion-text>
+    </ion-item-divider>
+
+    <ion-item-divider>
+        <ion-label slot="start">
+           Telefono:
+        </ion-label>
+        <ion-text slot="end">
+           {{user.phone}}
+        </ion-text>
+         </ion-item-divider>
+
+
+</ion-row>
+
+
+
+<ion-row class="ion-justify-content-center">
+
+  <strong>
+      Datos de la cuenta
+    </strong>
+         <ion-item-divider>
+            <ion-label slot="start">
+               Nombre de usuario:
+            </ion-label>
+            <ion-text slot="end">
+               {{user.user_name}}
+            </ion-text>
+             </ion-item-divider>
+
+         <ion-item-divider>
+            <ion-label slot="start">
+               Password:
+            </ion-label>
+            <ion-input  type="password" value="{{user.password}}" readonly>
+               
+            </ion-input>
+            <ion-button solt="end" size="small" fill="outline">Cambiar</ion-button>
+             </ion-item-divider>
+
+             <ion-item-divider>
+                <ion-label slot="start">
+                   Correo electronico:
+                </ion-label>
+                <ion-text slot="end">
+                   {{user.email}}
+                </ion-text>
+                 </ion-item-divider>
+      
+
+</ion-row>
+
+<ion-row class="ion-justify-content-center" >
+  <strong>
+      Pefiles
+    </strong>
+
+      <ion-item-divider>
+          <ion-label size="large" slot="start">Comprador</ion-label>
+          <ion-toggle size="large" slot="end" disabled="true" checked></ion-toggle>
+      </ion-item-divider>
+
+      <ion-item-divider>
+          <ion-label size="large" slot="start">Punto de venta</ion-label>
+          <ion-toggle size="large" slot="end"  checked="false"></ion-toggle>
+        </ion-item-divider>
+
+        <ion-item-divider>
+            <ion-label size="large" slot="start">Fabricante</ion-label>
+            <ion-toggle size="large" slot="end"  checked="false"></ion-toggle>
+          </ion-item-divider>
+
+
+</ion-row>
+
+
+</ion-content>

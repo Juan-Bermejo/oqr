@@ -34,7 +34,7 @@
    
       <ion-item-divider (click)="goTo('related-products') " >
           <ion-icon size="large" name="md-pricetags" color="primary"></ion-icon>
-          <ion-label>Productos relacionados</ion-label>
+          <ion-label>Mis productos</ion-label>
           <ion-icon slot="end" src="../../assets/ionicons/chevron-forward-outline.svg"></ion-icon>
       </ion-item-divider>
 
@@ -59,7 +59,21 @@
     </ion-row>
     <br>
 
+    <ion-row>
+        <ion-label>
+            Cuit
+        </ion-label>
+        <ion-input type="number" placeholder="Ingrése su número de cuit.">
+            
+        </ion-input>
+    </ion-row>
+    <ion-row class="ion-justify-content-center">
+        <ion-button expand="block">Guardar datos</ion-button>
+    </ion-row>
 
+
+
+<!--
     <ion-row>
       <ion-col size=3>
         
@@ -82,7 +96,7 @@
              
             </ion-col>
     </ion-row>
-
+-->
 
 
 </ion-content>

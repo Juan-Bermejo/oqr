@@ -33,6 +33,8 @@ import { PopOverProductsComponent } from './componentes/pop-over-products/pop-ov
 import { NativeGeocoder } from '@ionic-native/native-geocoder/ngx';
 import { StreamingMedia } from '@ionic-native/streaming-media/ngx';
 import { AddProductPageModule } from './modals/add-product/add-product.module';
+import { ZBar } from '@ionic-native/zbar/ngx';
+//import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 
 
 
@@ -45,6 +47,7 @@ import { AddProductPageModule } from './modals/add-product/add-product.module';
      ModalCategoriesPageModule,
      ModalNewRegionPageModule,
      AddLocationPageModule,
+     AddProductPageModule,
      ModalSimplePageModule,
      AngularFireModule.initializeApp(environment.firebaseConfig),
      AngularFireDatabaseModule,
@@ -60,6 +63,8 @@ import { AddProductPageModule } from './modals/add-product/add-product.module';
     GoogleMapsAPIWrapper,
     Geolocation,
     HttpClient,
+   // BarcodeScanner,
+   ZBar,
     NativeGeocoder,
     StreamingMedia,
     AngularFireAuth,

@@ -1,0 +1,40 @@
+<ion-content padding="true">
+
+    <ion-row>
+        <ion-button expand="block" (click)="modalCategories()"></ion-button>
+    </ion-row>
+
+    <ion-toolbar>
+    
+                <ion-buttons slot="start" collapse="true">
+                    <ion-back-button color="light" icon="md-arrow-back" defaultHref="home">
+                    </ion-back-button>
+                    </ion-buttons>
+    
+    </ion-toolbar>
+ 
+
+    <agm-map [latitude]='myLat' [longitude]='myLong' 
+      [zoom]="10"
+      [mapTypeId]='mapType'>
+    
+      <agm-marker
+      *ngFor="let marker of markers"
+      [latitude]="marker.lat"
+      [longitude]="marker.lng"
+      [opacity]="marker.alpha"
+      [markerDraggable]="false"
+      [visible]="true"
+      (markerClick)="selectMarker($event)"
+    >
+    </agm-marker>
+    </agm-map>
+    
+
+  
+    
+
+    
+    
+    </ion-content>
+    

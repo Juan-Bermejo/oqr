@@ -25,6 +25,22 @@ export class MenuComponent{
       "redirectTo": "seller-panel",
       
     },
+  ]
+
+
+ /* menu_opt = [
+    {
+      "icon":"md-person",
+      "name":"Mi cuenta",
+      "redirectTo": "my-account",
+      
+    },
+    {
+      "icon":"md-locate",
+      "name":"Punto de venta",
+      "redirectTo": "seller-panel",
+      
+    },
     {
       "icon":"md-megaphone",
       "name":"Panel influencer",
@@ -52,7 +68,7 @@ export class MenuComponent{
 
   
   
-  ]
+  ]*/
   
   role:string= "";
   is_logged:boolean;

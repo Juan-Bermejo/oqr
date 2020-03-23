@@ -1,10 +1,8 @@
 import { Component, ViewChild, OnInit, Input, AfterViewInit, OnChanges, SimpleChanges } from '@angular/core';
 import { ModalController, NavController, MenuController } from '@ionic/angular';
 import { StreamingMedia, StreamingVideoOptions } from '@ionic-native/streaming-media/ngx';
-
-
 import { NavigationOptions } from '@ionic/angular/dist/providers/nav-controller';
-import { Router, NavigationExtras } from '@angular/router';
+import { Router, NavigationExtras, ActivatedRoute } from '@angular/router';
 import { NavParamsService } from '../services/nav-params.service';
 import { ModalCategoriesPage } from '../modals/modal-categories/modal-categories.page';
 import { ProductsService } from '../services/products.service';
@@ -12,18 +10,21 @@ import { ProductsService } from '../services/products.service';
 import { AuthService } from '../services/auth.service';
 import { DbService } from '../services/db.service';
 import { MenuService } from '../services/menu.service';
-
+import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { PostLink } from '../clases/post-link';
 import { PostService } from '../services/post.service';
 import { Offer } from '../clases/offer';
+import { User } from '../clases/user';
+import { Product } from '../clases/product';
+import { Location } from '../clases/location';
 
 
 @Component({
-  selector: 'app-home',
-  templateUrl: 'home.page.html',
-  styleUrls: ['home.page.scss']
+  selector: 'app-new-home',
+  templateUrl: './new-home.page.html',
+  styleUrls: ['./new-home.page.scss'],
 })
-export class HomePage implements OnInit {
+export class NewHomePage implements OnInit {
 
   user_id: string = '';
   offer_list;
@@ -33,16 +34,23 @@ export class HomePage implements OnInit {
   search_tool:boolean;
   logged:boolean;
   category:string;
- 
 
-   options: StreamingVideoOptions = {
-    successCallback: () => { console.log('Video played') },
-    errorCallback: (e) => { console.log('Error streaming') },
-    orientation: 'landscape',
-    shouldAutoClose: true,
-    controls: false
-  };
-  
+  user:User;
+  offer: Offer;
+  myLat= -28.68352;
+  myLong= -147.20785;
+  latitude = -28.68352;
+  longitude=-28.68352;
+  mapType = 'roadmap';
+
+  selectedMarker;
+  markers: Array<{}>;
+  myLatLng;
+  array_products: Product[];
+  offerLocations:Location[];
+  offer_sellers:string[];
+  my_offer:boolean=true;
+
    
 
   constructor(private prodSrv:ProductsService,
@@ -50,32 +58,43 @@ export class HomePage implements OnInit {
      private modalController: ModalController,
      public navCtrl: NavController,
      private ParamSrv: NavParamsService,
-     //private afAuth: AngularFireAuth,
      private authService: AuthService,
      private menu: MenuController,
      private dbService: DbService,
-     private menuService: MenuService
-    ) {     
+     private menuService: MenuService,
+     private route: ActivatedRoute, 
+     public paramSrv: NavParamsService,
+     private geolocation: Geolocation
 
-  
+    ) {     
+      localStorage.setItem("user_data", JSON.stringify(this.dbService.user_data));
+      this.user= JSON.parse(localStorage.getItem("user_data"));
+      this.markers= new Array<{}>();
+    
+    this.offerLocations= new Array<Location>();
       this.search_tool=false;
       this.aux_offer_list= new Array();
-
-      console.log("constructor");
       this.search_tool=false;
       
       this.aux_offer_list=this.offer_list;
 
+
+        this.dbService.getLocation(this.user._id).subscribe((data:any)=>
+      {
+        
+        this.offerLocations=data.location_data;
+
+        this.offerLocations.forEach(location => {
+          console.log(location);
+          this.addMarker(location);
+        });
+      })
+
+
  
   }
 
- async ngOnInit() {
-    this.dbService.getAllProducts().subscribe((data)=>{
-      this.offer_list=data;
-      this.aux_offer_list= this.offer_list;
-      console.log(this.offer_list);
-    })
-  }
+
 
   ionViewWillEnter(){
     
@@ -91,10 +110,11 @@ export class HomePage implements OnInit {
     this.menuService.getMenuOpt(this.dbService.is_logged);
 
     localStorage.setItem("user_data", JSON.stringify(this.dbService.user_data));
+    this.user= JSON.parse(localStorage.getItem("user_data"))
     
   }
 
-   async categoryFilter() {
+   async modalCategory() {
      
     const modal = await this.modalController.create({
       component: ModalCategoriesPage,
@@ -151,11 +171,6 @@ export class HomePage implements OnInit {
   
   }
 
-  /*openMenu() {
-    this.menu.enable(true, 'first');
-    this.menu.open('first');
-  }*/
-
 
   dismiss() {
 
@@ -164,17 +179,7 @@ export class HomePage implements OnInit {
     });
   }
 
-  getCurrentUser() {
-    
-    /*this.authService.isAuth().subscribe( auth => {
-      if (auth){
-        this.is_logged = true;
-      }
-      else {
-        this.is_logged = false;
-      }
-    })*/
-  }
+
 
   goToLogIn() {
     this.navCtrl.navigateRoot('login');
@@ -184,6 +189,40 @@ export class HomePage implements OnInit {
    // this.afAuth.auth.signOut();
     
   }
+
+
+getGeoLocation()
+{
+  this.geolocation.getCurrentPosition().then((resp) => {
+    this.myLat=resp.coords.latitude;
+    this.myLong= resp.coords.longitude;
+    this.latitude=this.myLat;
+    this.longitude=this.myLong;
+    //this.addMarker(this.latitude, this.longitude);
+    this.myLatLng={ lat:this.myLat, lng:this.myLong };
+    console.log(this.myLat)
+   }).catch((error) => {
+     console.log('Error getting location', error);
+   });
+}
+
+
+addMarker(location:Location) {
+  this.markers.push(
+    {
+      lat: location.latitude,
+       lng: location.longitude,
+       address:location.address,
+        alpha: 1
+      });
+}
+
+ngOnInit()
+{
+
+  this.getGeoLocation();
+}
+
 
 
 

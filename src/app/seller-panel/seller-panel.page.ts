@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { NavController } from '@ionic/angular';
+import { NavController, ModalController } from '@ionic/angular';
 
 import { DbService } from '../services/db.service';
 import { User } from '../clases/user';
+import { AddProductPage } from '../modals/add-product/add-product.page';
 
 @Component({
   selector: 'app-seller-panel',
@@ -18,6 +19,7 @@ export class SellerPanelPage implements OnInit {
   public user_name: string = '';
 
   constructor(private navCtrl: NavController,
+    private modalctrl: ModalController,
               private dbService: DbService) {
     
    }
@@ -37,5 +39,8 @@ export class SellerPanelPage implements OnInit {
     this.name = this.user_data.name;
     this.user_name = this.user_data.user_name;
   }
+
+
+
 
 }

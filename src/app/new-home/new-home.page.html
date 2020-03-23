@@ -1,0 +1,138 @@
+<ion-toolbar>
+  <ion-row>
+
+      <ion-col size="2">
+        <ion-button *ngIf="!logged" color="success" expand="block" shape="round" (click)="goToLogIn()">Log In</ion-button>
+        <ion-buttons>
+          <ion-menu-button color="primary" menu="first"></ion-menu-button>
+        </ion-buttons> 
+      
+       
+      </ion-col>
+        
+    
+    <ion-col size=8 >
+        <ion-input class="input-location">
+              <ion-icon style="padding-left: 10px;" color="medium" name="md-pin" ></ion-icon>
+          </ion-input>
+    </ion-col>
+
+    <ion-col size=1 >
+      <ion-icon *ngIf="notification" size="large" name="md-alert" color="danger"></ion-icon>
+      <ion-icon *ngIf="!notification" size="large" color="primary" name="md-notifications"></ion-icon>
+     
+    </ion-col>
+
+  </ion-row>
+
+  <ion-row>
+      <ion-col size=10 offset=1>
+        
+        <ion-input class="input-search" (ionChange)="filter($event)" placeholder="¿Qué estas buscando?" color="primary" [(ngModel)]="busqueda" >
+          <span>
+                <ion-icon style="padding-left: 10px;" size="large" name="md-search" color="primary-shade">
+                  </ion-icon>
+          </span>
+          <span class="item-right">
+            <ion-button style="
+            border-left-style: solid;
+            border-left-width: 1px;
+            border-left: 'primary';" fill="clear" (click)="searchTools()" >
+                <ion-icon color="primary" name="md-options">
+                  </ion-icon>
+
+            </ion-button>
+
+          </span>
+  
+        </ion-input>
+      
+      </ion-col>
+    </ion-row>
+
+   
+
+        <ion-row *ngIf="search_tool" justify-content-center>
+          
+
+              <ion-button shape="round" color="primary" (click)="categoryFilter()">
+                Categoria
+              </ion-button>
+         
+            
+                <ion-button shape="round" color="primary" >
+                    fecha
+                  </ion-button>
+           
+                  <ion-button shape="round" color="primary">
+                       precio
+                    </ion-button>
+               
+             
+          </ion-row>
+  
+
+    
+   
+</ion-toolbar>
+
+<ion-content padding="true">
+
+  <ion-row>
+      <ion-button expand="block" (click)="modalCategory()">Categorias</ion-button>
+  </ion-row>
+
+  <ion-toolbar>
+  
+              <ion-buttons slot="start" collapse="true">
+                  <ion-back-button color="light" icon="md-arrow-back" defaultHref="home">
+                  </ion-back-button>
+                  </ion-buttons>
+  
+  </ion-toolbar>
+
+
+  <agm-map [latitude]='myLat' [longitude]='myLong' 
+    [zoom]="15"
+    [mapTypeId]='mapType'>
+  
+    <agm-marker
+    *ngFor="let marker of markers"
+    [latitude]="marker.lat"
+    [longitude]="marker.lng"
+    [opacity]="marker.alpha"
+    [markerDraggable]="false"
+    [visible]="true"
+    (markerClick)="selectMarker($event)"
+  >
+  </agm-marker>
+  </agm-map>
+  
+  </ion-content>
+  
+
+
+<ion-footer>
+ <ion-row>
+
+    <ion-col padding size=3>
+          <img  src="../../assets/iconos/iconos oqr-35.png" alt="">
+      </ion-col>
+  
+      <ion-col padding size=3>
+          <img style="width: 48px;" src="../../assets/iconos/iconos oqr-36.png" alt="" routerLink="/near-me">
+        </ion-col>
+  
+        <ion-col padding size=3>
+            <img src="../../assets/iconos/iconos oqr-37.png" alt="">
+          </ion-col>
+  
+          <ion-col padding size=3>
+              <img src="../../assets/iconos/iconos oqr-38.png" alt="">
+            </ion-col>
+
+ </ion-row>
+
+
+</ion-footer>
+

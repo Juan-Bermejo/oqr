@@ -3,6 +3,8 @@ import { ModalController } from '@ionic/angular';
 import { ModalCategoriesPage } from '../modal-categories/modal-categories.page';
 import { CountriesService } from '../../services/countries.service';
 import { Product } from '../../clases/product';
+import { ZBar, ZBarOptions } from '@ionic-native/zbar/ngx';
+//import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 
 @Component({
   selector: 'app-add-product',
@@ -23,6 +25,8 @@ export class AddProductPage implements OnInit {
  kind:string;
 
   constructor(private modalController: ModalController,
+    private zbar: ZBar,
+    //private barcodeScanner: BarcodeScanner,
     private countrySrv:CountriesService) {
       
       this.countrySrv.getCountries().subscribe((c)=>{
@@ -82,6 +86,22 @@ export class AddProductPage implements OnInit {
       this.messaje="*Tienes que completar todos los datos";
     }
 
+  }
+
+  async barCode()
+  {
+    let options: ZBarOptions = {
+      flash: 'off',
+      drawSight: false
+    }
+
+this.zbar.scan(options)
+   .then(result => {
+      console.log(result); // Scanned code
+   })
+   .catch(error => {
+      console.log(error); // Error message
+   });
   }
 
   
