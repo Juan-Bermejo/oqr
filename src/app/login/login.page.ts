@@ -119,12 +119,12 @@ export class LoginPage implements OnInit {
           user_reg.user_name = res.user.email;
           user_reg.email = res.user.email;
           user_reg.password = ".";
-          user_reg.phone = 87;
+          user_reg.phone = Math.random()*100000;
           
           this.dbService.googleLogin(user_reg).subscribe((data: any) => {
             if(data.status == 201) {
 
-              this.dbService.is_logged = true;
+              this.dbService.setLogged(true);
               this.dbService.user_id = data.user_data._id;
               this.dbService.user_data = data.user_data;
 

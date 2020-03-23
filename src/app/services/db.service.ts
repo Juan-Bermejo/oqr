@@ -139,6 +139,14 @@ export class DbService {
       this.is_logged$.next(this.is_logged);
     }
 
+    getProdOfVendor(vendor_id: string) {
+      let url = 'products/prodvendor/';
+      let data = {"user_id": vendor_id}
+      var PROD_URL = this.URL_SERVER.concat(url.toString());
+      return this.http.post(PROD_URL, data,
+        {headers: new HttpHeaders({"Content-Type": "application/json"})});
+    }
+
     /*
 
     editUser(user: User) {
