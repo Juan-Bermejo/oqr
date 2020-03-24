@@ -172,6 +172,14 @@ export class DbService {
         {headers: new HttpHeaders({"Content-Type": "application/json"})});
     }
 
+    checkIsVendor(user_id: string) {
+      let url = 'vendors/checkisvendor'
+      let data = {"user_id": user_id}
+      var URL = this.URL_SERVER.concat(url.toString());
+      return this.http.post(URL, data,
+        {headers: new HttpHeaders({"Content-Type": "application/json"})});
+    }
+
     /*
 
     editUser(user: User) {
