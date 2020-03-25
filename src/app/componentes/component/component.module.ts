@@ -5,22 +5,28 @@ import { IonicModule } from '@ionic/angular';
 import { MenuService } from '../../services/menu.service';
 import { RouterModule } from '@angular/router';
 import { PopOverProductsComponent } from '../pop-over-products/pop-over-products.component';
+import { NewSellerComponent } from '../new-seller/new-seller.component';
+import { FormsModule } from '@angular/forms';
+
 
 
 
 @NgModule({
   declarations: [
     MenuComponent,
-    PopOverProductsComponent
+    PopOverProductsComponent,
+    NewSellerComponent
   ],
   exports:[
     MenuComponent,
-    PopOverProductsComponent
+    PopOverProductsComponent,
+    NewSellerComponent
   ],
   imports: [
     CommonModule,
     IonicModule,
-    RouterModule
+    RouterModule,
+    FormsModule
   ],
   providers:[
     MenuService,

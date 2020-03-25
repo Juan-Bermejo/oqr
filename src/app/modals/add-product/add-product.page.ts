@@ -4,6 +4,8 @@ import { ModalCategoriesPage } from '../modal-categories/modal-categories.page';
 import { CountriesService } from '../../services/countries.service';
 import { Product } from '../../clases/product';
 import { ZBar, ZBarOptions } from '@ionic-native/zbar/ngx';
+import { DbService } from '../../services/db.service';
+import { User } from '../../clases/user';
 //import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 
 @Component({
@@ -13,22 +15,26 @@ import { ZBar, ZBarOptions } from '@ionic-native/zbar/ngx';
 })
 export class AddProductPage implements OnInit {
   
-
+spinner:boolean=false;
   countries: Object;
  name:string;
- brand:string;
  category:string;
- sub_brand:string;
  currency_price:string;
- price:string;
+ price:number;
  messaje:string;
  kind:string;
+ stock:number;
+ bar_code:number;
+ user:User;
 
   constructor(private modalController: ModalController,
     private zbar: ZBar,
+    private dbService:DbService,
     //private barcodeScanner: BarcodeScanner,
     private countrySrv:CountriesService) {
       
+      this.user=JSON.parse(localStorage.getItem("user_data"));
+
       this.countrySrv.getCountries().subscribe((c)=>{
         this.countries= c;
         console.log(c);
@@ -63,27 +69,38 @@ export class AddProductPage implements OnInit {
 
   saveProduct()
   {
+    this.spinner=true;
+
     if(this.name && this.category && this.kind &&
     this.currency_price && this.price && this.name)
     {
       let p= new Product();
       p.name=this.name;
-      p.brand=this.brand;
-      p.sub_brand=this.sub_brand;
       p.currency_price= this.currency_price;
       p.price=this.price;
       p.category=this.category;
-  
+      p.bar_code=this.bar_code;
+      p.kind= this.kind;
+      p.stock= this.stock;
+      console.log(p);
+      this.spinner=false;
       this.modalController.dismiss({
         "result":{
           "product": p
         },
         'dismissed': true
-      })
+      }).then(()=>{
+        this.dbService.createProduct(p, this.user._id).subscribe((data)=>{
+          console.log(data);
+          this.spinner=false;
+        })
+        
+      });
     }
 
     else{
       this.messaje="*Tienes que completar todos los datos";
+      this.spinner=false;
     }
 
   }
@@ -98,6 +115,7 @@ export class AddProductPage implements OnInit {
 this.zbar.scan(options)
    .then(result => {
       console.log(result); // Scanned code
+      this.bar_code=result;
    })
    .catch(error => {
       console.log(error); // Error message

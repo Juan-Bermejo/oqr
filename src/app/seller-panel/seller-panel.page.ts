@@ -4,6 +4,9 @@ import { NavController, ModalController } from '@ionic/angular';
 import { DbService } from '../services/db.service';
 import { User } from '../clases/user';
 import { AddProductPage } from '../modals/add-product/add-product.page';
+import { Seller } from '../clases/seller';
+import { Location } from '../clases/location';
+import { NewSellerComponent } from '../componentes/new-seller/new-seller.component';
 
 @Component({
   selector: 'app-seller-panel',
@@ -14,14 +17,29 @@ import { AddProductPage } from '../modals/add-product/add-product.page';
 export class SellerPanelPage implements OnInit {
 
   public user_data: User;
+  seller:Seller
 
+cuit:number;
+category:string;
+shop_name:string;
   public name: string = '';
   public user_name: string = '';
+  userLocation:string[];
 
   constructor(private navCtrl: NavController,
     private modalctrl: ModalController,
               private dbService: DbService) {
-    
+                this.seller= new Seller();
+                this.user_data=JSON.parse(localStorage.getItem("user_data"));
+                console.log(this.user_data);
+                this.seller.owner=this.user_data._id;
+                this.dbService.getLocation(this.user_data._id).subscribe((locs:any)=>
+              { console.log(locs)
+                this.userLocation= locs.location_data.map((loc:any) => {
+                 return loc._id;
+                });
+              })
+                
    }
 
   goTo(path:string)
@@ -29,8 +47,37 @@ export class SellerPanelPage implements OnInit {
     this.navCtrl.navigateRoot(path);
   }
 
+  saveSeller()
+  {
+    this.user_data.role="seller";
+   
+    this.seller.category=this.category;
+    this.seller.cuit= this.cuit;
+    this.seller.location= this.userLocation;
+    this.seller.shop_name= this.shop_name;
+    
+console.log(this.seller);
+    this.dbService.addVendor(this.seller).subscribe((data)=>{
+      console.log(data)
+    })
+  }
+
   ngOnInit() {
 
+  }
+
+  async dataModal()
+  {
+    const modal = await this.modalctrl.create({
+      component: NewSellerComponent,
+
+      cssClass:"modal"
+      
+    });
+     modal.present();
+     modal.onDidDismiss().then((data)=>{
+      
+    })
   }
 
   ionViewWillEnter(){

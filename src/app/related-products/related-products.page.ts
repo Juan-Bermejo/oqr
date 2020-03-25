@@ -14,24 +14,6 @@ export class RelatedProductsPage implements OnInit {
 
   constructor(private modalCtrl: ModalController) {
     this.array_products= new Array<Product>();
-    let p1= new Product();
-
-    p1.category="Alimentos";
-    p1.name="Cafe Dolca";
-
-    p1.currency_price="ARS";
-    p1.price="120";
-
-    let p2= new Product();
-
-    p2.category="Alimentos";
-    
-    p2.name="Azucar Ledesma";
-    p2.currency_price="ARS";
-    p2.price="80";
-
-    this.array_products.push(p1);
-    this.array_products.push(p2);
 
    }
 

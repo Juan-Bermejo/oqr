@@ -6,13 +6,14 @@ export class Seller {
 
     _id: string;
     shop_name:string;
-    owner:User[];
+    owner:string;
     cuit:number;
     category:string;
-    location:Location[];
+    location:string[];
     products:Product[];
 
     constructor() {
+       
         // super(user.name, user.last_name, user.user_name, user.password, user.email,user.phone);
         //this.products= new Array<string>();
 

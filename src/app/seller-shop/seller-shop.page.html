@@ -1,0 +1,30 @@
+
+<ion-content padding="true">
+    <ion-toolbar>
+
+          <ion-row justify-content-end>
+              <ion-button fill="clear" (click)="dismissModal()"> 
+                  <ion-icon name="md-close" size="large" color="primary"></ion-icon>  
+                  </ion-button>
+          </ion-row>
+          <ion-row class="ion-justify-content-center">
+              <h1 style="color: rgb(34, 34, 34)">{{shop_name}}</h1>
+          </ion-row>
+    </ion-toolbar>
+
+
+
+    <ion-item-divider *ngFor="let prod of products">
+      <ion-label style="font-size: medium">
+        {{prod.name}}
+      </ion-label>
+      <ion-note color="primary" slot="end" style="font-size: medium">
+       
+        {{prod.price | currency: prod.currency_price}}
+      </ion-note>
+      <ion-icon name="md-add-circle" color="primary" size="large" slot="end">
+
+      </ion-icon>
+    </ion-item-divider>
+
+</ion-content>

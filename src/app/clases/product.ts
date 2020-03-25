@@ -1,12 +1,13 @@
 export class Product {
 
-    public name;
-    public category;
-    public brand;
-    public sub_brand;
-    public currency_price;
-    public price;
-    public kind;
+
+    public name:string;
+    public category:string;
+    public currency_price:string;
+    public price:number;
+    public kind:string;
+    public bar_code:number;
+    public stock:number;
     
 }
 

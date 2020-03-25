@@ -8,7 +8,9 @@ import { Seller } from '../clases/seller';
 import { Product } from '../clases/product';
 import { RegisterPage } from '../register/register.page';
 import { MapsAPILoader } from '@agm/core';
-import { Subject, Observable } from 'rxjs';
+import { Subject, Observable, BehaviorSubject } from 'rxjs';
+
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -17,10 +19,11 @@ export class DbService {
 
   selectedUser: User;
   users: User[];
-
+  public is_seller:boolean=false;
   public user_id: string;
   public offer_id: string;
   public $products: Subject<Offer>
+  public is_seller$;//new Subject<boolean>();
   public is_logged$=new Subject<boolean>();
   public is_logged: boolean = false;
   public user_data;
@@ -35,7 +38,10 @@ export class DbService {
   readonly URL_SERVER_SERV_GET = 'http://cors-anywhere.herokuapp.com/http://31.220.61.6:3000/app/services/getlink';
 
   constructor(private http: HttpClient) {
+    this.is_seller=false;
+    this.is_seller$= new BehaviorSubject(this.is_seller);
     this.selectedUser = new User();
+
    }
 
     addUser(user: User) {
@@ -133,6 +139,20 @@ export class DbService {
       this.is_logged$.next(this.is_logged);
       return this.is_logged$.asObservable();
 
+    }
+
+    getIsSeller$(): Observable<boolean> {
+      this.is_seller$.next(this.is_seller);
+      console.log("getSeller", this.is_seller)
+      return this.is_seller$.asObservable();
+
+    }
+
+    setIsSeller$(data:boolean)
+    {
+      this.is_seller=data;
+      this.is_seller$.next(this.is_seller);
+      console.log("setseller", this.is_seller)
     }
 
     setLogged(data:boolean)

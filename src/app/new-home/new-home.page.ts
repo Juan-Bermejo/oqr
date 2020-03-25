@@ -18,6 +18,8 @@ import { User } from '../clases/user';
 import { Product } from '../clases/product';
 import { Location } from '../clases/location';
 import { NativeGeocoder, NativeGeocoderResult, NativeGeocoderOptions } from '@ionic-native/native-geocoder/ngx';
+import { Seller } from '../clases/seller';
+import { SellerShopPage } from '../seller-shop/seller-shop.page';
 
 
 @Component({
@@ -90,7 +92,7 @@ export class NewHomePage implements OnInit {
 
         this.offerLocations.forEach(location => {
           console.log(location);
-          this.addMarker(location);
+          //this.addMarker(location);
         });
       })
 
@@ -143,15 +145,50 @@ export class NewHomePage implements OnInit {
      modal.present();
 
      modal.onDidDismiss().then((data)=>{
+      this.markers= new Array<{}>();
+      this.dbService.getVendors(data.data.result.category).subscribe((data_seller:any)=>
+      {console.log(data_seller)
+        console.log(data.data.result.category);
+        if(data_seller.vendor_data)
+        {
+          data_seller.vendor_data.forEach((seller:Seller) => {
+            console.log("seller:",seller);
+            this.dbService.getLocation(seller.owner).subscribe((locs:any)=>{
+              locs.location_data.forEach(loc => {
+                this.addMarker(loc, seller);
+              });
+              
+            })
+          });
+        }
+        else{
+          console.log(data_seller);
+        }
 
-      //reemplazar por metodo que traer locaciones por categoria
-     // this.filterCat(data.data.result.category);
+      })
       
     })
 
   }
 
 
+
+  async selectMarker(seller)
+  {
+    console.log(seller)
+     let modal = await this.modalController.create({
+      component: SellerShopPage,
+      cssClass:"modal",
+      componentProps:
+      {
+        "seller": JSON.stringify(seller)
+      }
+      
+    });
+     modal.present();
+
+     modal.onDidDismiss()
+  }
 
 
 
@@ -190,14 +227,17 @@ this.getGeoCoderAddress(this.myLat, this.myLong);
 }
 
 
-addMarker(location:Location) {
+addMarker(location:Location, seller) {
   this.markers.push(
     {
       lat: location.latitude,
        lng: location.longitude,
        address:location.address,
-        alpha: 1
-      });
+        alpha: 1,
+        seller: seller
+    }
+      );
+      console.log(this.markers)
 }
 
 ngOnInit()

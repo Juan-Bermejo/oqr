@@ -34,13 +34,15 @@ import { NativeGeocoder } from '@ionic-native/native-geocoder/ngx';
 import { StreamingMedia } from '@ionic-native/streaming-media/ngx';
 import { AddProductPageModule } from './modals/add-product/add-product.module';
 import { ZBar } from '@ionic-native/zbar/ngx';
+import { SellerShopPageModule } from './seller-shop/seller-shop.module';
+import { NewSellerComponent } from './componentes/new-seller/new-seller.component';
 //import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 
 
 
 @NgModule({
   declarations: [AppComponent, ScrollbarStyleDirective],
-  entryComponents: [PopOverProductsComponent],
+  entryComponents: [PopOverProductsComponent, NewSellerComponent],
   imports: [BrowserModule,
      IonicModule.forRoot(), 
      AppRoutingModule, 
@@ -53,7 +55,8 @@ import { ZBar } from '@ionic-native/zbar/ngx';
      AngularFireDatabaseModule,
      AngularFireAuthModule,
      ComponentModule,
-     HttpClientModule
+     HttpClientModule,
+     SellerShopPageModule
      
     ],
   providers: [

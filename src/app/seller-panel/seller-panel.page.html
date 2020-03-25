@@ -5,7 +5,7 @@
         <ion-toolbar>
 
                 <ion-buttons slot="start" collapse="true">
-                  <ion-back-button mode="md" type="button" color="light" icon="md-arrow-back" defaultHref="home">
+                  <ion-back-button mode="md" type="button" color="light" icon="md-arrow-back" defaultHref="new-home">
                   </ion-back-button>
                 </ion-buttons>
                   <ion-row justify-content-center>
@@ -56,20 +56,21 @@
           <ion-icon slot="end" src="../../assets/ionicons/chevron-forward-outline.svg"></ion-icon>
       </ion-item-divider>
 
+
+        
+    <ion-item-divider (click)="dataModal()" >
+            <ion-icon size="large" name="md-create" color="primary"></ion-icon>
+            <ion-label>Datos de mi negocio</ion-label>
+            <ion-icon slot="end" src="../../assets/ionicons/chevron-forward-outline.svg"></ion-icon>
+        </ion-item-divider>
+
     </ion-row>
     <br>
 
-    <ion-row>
-        <ion-label>
-            Cuit
-        </ion-label>
-        <ion-input type="number" placeholder="Ingrése su número de cuit.">
-            
-        </ion-input>
-    </ion-row>
-    <ion-row class="ion-justify-content-center">
-        <ion-button expand="block">Guardar datos</ion-button>
-    </ion-row>
+    <ion-card>
+            * Tienes que tener los datos de tus negocio cargados y almenos una locacion registrada para porder ser un vendedor.
+        </ion-card>
+
 
 
 

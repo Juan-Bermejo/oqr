@@ -130,8 +130,9 @@ export class AddLocationPage implements OnInit {
         this.latitude=undefined;
         this.longitude=undefined;
         this.location_data=undefined;
+        this.markers=new Array<{}>();
         this.getGeoLocation();
-        this.markers=new Array();
+        
       })
 
     })

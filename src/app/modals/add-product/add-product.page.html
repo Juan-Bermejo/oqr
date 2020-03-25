@@ -50,6 +50,23 @@
 
 </ion-row>
 
+<ion-row *ngIf="kind=='Producto'" justify-content-center>
+        <h4 >Ingrese el codigo de barras del producto</h4>
+        
+        </ion-row>
+        
+        <ion-row justify-content-center *ngIf="kind=='Producto'">
+        
+          <ion-col size=11 >
+        
+              <ion-input  type="number" [(ngModel)]="bar_code">
+        
+                </ion-input>
+        
+        
+            </ion-col>
+        
+        </ion-row>
 
 <ion-row justify-content-center>
 <h4 >Ingrese el nombre del producto</h4>
@@ -88,18 +105,37 @@
           </ion-input>
         </ion-col>
   </ion-row>
+
+  <ion-row justify-content-center>
+        <h4 >Ingrese el stock del producto</h4>
+        
+        </ion-row>
+        
+        <ion-row justify-content-center>
+        
+          <ion-col size=11 >
+        
+              <ion-input  type="number" [(ngModel)]="stock">
+        
+                </ion-input>
+        
+        
+            </ion-col>
+        
+        </ion-row>
   <ion-row justify-content-center>
       <ion-text color="danger" >{{messaje}} </ion-text>
   </ion-row>
 
   <ion-row justify-content-center>
 
-<ion-button shape="round"  (click)="saveProduct()">
+        <ion-spinner *ngIf="spinner" name="crescent" color="primary" ></ion-spinner>
+<ion-button *ngIf="!spinner" shape="round"  (click)="saveProduct()">
 Guardar Producto
 </ion-button>
   </ion-row>
 
-  <ion-fab vertical="bottom" color="primary" horizontal="end" slot="fixed">
+  <ion-fab *ngIf="kind == 'Producto'" vertical="bottom" color="primary" horizontal="end" slot="fixed">
         <ion-fab-button (click)="barCode()" >
           <ion-icon name="md-barcode"></ion-icon>
         </ion-fab-button>
