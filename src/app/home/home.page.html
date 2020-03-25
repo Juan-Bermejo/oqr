@@ -86,8 +86,8 @@
      
           <img class="img-list" src="../../assets/images/{{item.category}}.jpg">
 
-          <h4 style="color: aliceblue; left: 2px;"> {{item.product}} a {{item.price_currency}} {{item.price}}</h4>
-      <h1>{{item.sellers.lenght}}</h1>
+          <h4 style="color: aliceblue; left: 2px;"> {{item.product}} a {{item.price | currency: item.price_currency}}</h4>
+      
     </ion-item>
   </ion-list>
 
@@ -112,7 +112,7 @@
             </ion-col>
     
             <ion-col padding size=3>
-                <img src="../../assets/iconos/iconos oqr-38.png" alt="">
+                <img src="../../assets/iconos/iconos oqr-38.png" alt=""  routerLink="/my-account" >
               </ion-col>
 
    </ion-row>

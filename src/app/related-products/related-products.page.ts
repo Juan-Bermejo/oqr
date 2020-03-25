@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Product } from '../clases/product';
 import { ModalController } from '@ionic/angular';
 import { AddProductPage } from '../modals/add-product/add-product.page';
+import { DbService } from '../services/db.service';
+import { User } from '../clases/user';
+
 
 @Component({
   selector: 'app-related-products',
@@ -10,10 +13,20 @@ import { AddProductPage } from '../modals/add-product/add-product.page';
 })
 export class RelatedProductsPage implements OnInit {
 
+  user:User;
   array_products:Array<Product>;
 
-  constructor(private modalCtrl: ModalController) {
+  constructor(private modalCtrl: ModalController, private dbserv: DbService) {
     this.array_products= new Array<Product>();
+    this.user=JSON.parse(localStorage.getItem("user_data"));
+    this.dbserv.checkIsVendor(this.user._id).subscribe((sellerData:any)=>
+  {
+    this.dbserv.getProdOfVendor(sellerData.vendor_data._id).subscribe((data:any)=>
+    {
+      this.array_products=data.location_data;
+    })
+  })
+
 
    }
 

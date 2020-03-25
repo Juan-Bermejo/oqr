@@ -56,8 +56,8 @@ export class LoginPage implements OnInit {
   }
 
   loginRedirect() {
-    //this.navCtrl.navigateRoot('home');
-    this.navCtrl.navigateRoot('new-home');
+    this.navCtrl.navigateRoot('home');
+   
   }
 
   onLogin(form_log: NgForm) {
@@ -74,8 +74,8 @@ export class LoginPage implements OnInit {
 
           this.dbService.checkIsVendor(data.user_data._id).subscribe((dataSeller:any)=>
         { console.log(dataSeller)
-          if(dataSeller.vendor_data)
-          {console.log("yeees")
+          if(dataSeller.vendor_data._id)
+          {
             this.dbService.setIsSeller$(true);
           }
           else{
@@ -170,15 +170,28 @@ export class LoginPage implements OnInit {
   }
 
   directLoginOne(){
-    this.dbService.checkLogin('admin01', 'root')
+    this.dbService.checkLogin("amorelli", "1111")
       .subscribe((data: any) => {
         if(data.status == 200) {
 
+          //this.resetForm(form_log);
           //this.dbService.user_id = data.id_user;
           this.dbService.is_logged = true;
           this.dbService.user_id = data.user_data._id;
           this.dbService.user_data = data.user_data;
           this.dbService.setLogged(true);
+
+          this.dbService.checkIsVendor(data.user_data._id).subscribe((dataSeller:any)=>
+        { console.log(dataSeller)
+          if(dataSeller.vendor_data._id)
+          {
+            this.dbService.setIsSeller$(true);
+          }
+          else{
+            this.dbService.setIsSeller$(false);
+          }
+        })
+          
           this.loginRedirect();
 
         }

@@ -1,9 +1,22 @@
-<ion-header>
+
+<ion-content padding="true">
   <ion-toolbar>
-    <ion-title>my-offers</ion-title>
-  </ion-toolbar>
-</ion-header>
 
-<ion-content>
+    <ion-buttons slot="start" collapse="true">
+      <ion-back-button mode="md" type="button" color="light" icon="md-arrow-back" defaultHref="home">
+      </ion-back-button>
+    </ion-buttons>
+      <ion-row justify-content-center>
+        <ion-col>
+            <h1 style="color: rgb(41, 171, 226)">
+               Mis ofertas
+              </h1>
+        </ion-col> 
+      </ion-row>
 
+</ion-toolbar>
+
+<ion-button routerLink="new-offer" shape="round" expand="block" >
+  Nueva Oferta
+</ion-button>
 </ion-content>

@@ -20,8 +20,7 @@
         <ion-list-header>Mis productos relacionados</ion-list-header>
         <ion-item *ngFor="let p of array_products">
             {{p.name}}
-            {{p.currency_price}}
-            {{p.price}}
+            {{p.price | currency: p.currency_price}}
             <ion-label color="primary" slot="end">Modificar</ion-label>
 
         </ion-item>

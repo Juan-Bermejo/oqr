@@ -10,7 +10,10 @@ import { Offer } from '../clases/offer';
 export class MyOffersPage implements OnInit {
 
   constructor(private dbService: DbService
-              ) { }
+              ) {
+
+                
+               }
 
   public data_offers: Offer[];
 

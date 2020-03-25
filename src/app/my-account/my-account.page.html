@@ -6,7 +6,7 @@
     <ion-toolbar>
 
         <ion-buttons slot="start" collapse="true">
-          <ion-back-button mode="md" type="button" color="light" icon="md-arrow-back" defaultHref="new-home">
+          <ion-back-button mode="md" type="button" color="light" icon="md-arrow-back" defaultHref="home">
           </ion-back-button>
         </ion-buttons>
           <ion-row justify-content-center>
@@ -94,14 +94,14 @@
 
         <ion-item-divider>
             <ion-label size="large" slot="start">Punto de venta</ion-label>
-            <ion-toggle (ionChange)="toSeller()" *ngIf="is_seller" size="large" slot="end"  checked="true"></ion-toggle>
-            <ion-toggle (ionChange)="toSeller()" *ngIf="!is_seller" size="large" slot="end"  checked="false"></ion-toggle>
+            <ion-toggle (ionChange)="toSeller()"  size="large" slot="end"  checked="is_seller"></ion-toggle>
+           
           </ion-item-divider>
 
           <ion-item-divider>
               <ion-label size="large" slot="start">Fabricante</ion-label>
-              <ion-toggle *ngIf="is_maker" size="large" slot="end"  checked="true"></ion-toggle>
-              <ion-toggle *ngIf="!is_maker" size="large" slot="end"  checked="false"></ion-toggle>
+              <ion-toggle *ngIf="is_maker" size="large" slot="end"  checked="is_seller"></ion-toggle>
+              <ion-toggle *ngIf="!is_maker" size="large" slot="end"  checked="is_seller"></ion-toggle>
             </ion-item-divider>
 
 
