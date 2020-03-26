@@ -82,6 +82,12 @@ export class DbService {
         {headers: new HttpHeaders({"Content-Type": "application/json"})});
     }
 
+    deleteUser(user_id:string){
+      let url = 'users/'.concat(user_id);
+      let USER_URL = this.URL_SERVER.concat(url);
+      return this.http.delete(USER_URL);
+    }
+
     //OFFER SERVICES
 
 
@@ -114,6 +120,12 @@ export class DbService {
         {headers: new HttpHeaders({"Content-Type": "application/json"})});
     }
 
+    deleteOffer(offer_id:string){
+      let url = 'offers/'.concat(offer_id);
+      let OFFER_URL = this.URL_SERVER.concat(url);
+      return this.http.delete(OFFER_URL);
+    }
+
     //PRODUCTS SERVICES
 
      getAllProducts(){
@@ -123,9 +135,15 @@ export class DbService {
     createProduct(product: Product, user_id: string) {
       let url = 'products/';
       let data = {"product_data": product, "user_id": user_id}
-      var PROD_URL = this.URL_SERVER.concat(url.toString());
+      let PROD_URL = this.URL_SERVER.concat(url.toString());
       return this.http.post(PROD_URL , data,
         {headers: new HttpHeaders({"Content-Type": "application/json"})});
+    }
+
+    deleteProduct(product_id:string){
+      let url = 'products/'.concat(product_id);
+      let PROD_URL = this.URL_SERVER.concat(url);
+      return this.http.delete(PROD_URL);
     }
 
     //LINKS SERVICES
@@ -167,6 +185,8 @@ export class DbService {
         {headers: new HttpHeaders({"Content-Type": "application/json"})});
     }
 
+    //OTHER
+
     getLogged$(): Observable<boolean> {
       this.is_logged$.next(this.is_logged);
       return this.is_logged$.asObservable();
@@ -192,6 +212,8 @@ export class DbService {
       this.is_logged=data;
       this.is_logged$.next(this.is_logged);
     }
+
+
 
     //VENDORS SERVICES
 
@@ -224,6 +246,12 @@ export class DbService {
       var URL = this.URL_SERVER.concat(url.toString());
       return this.http.post(URL, data,
         {headers: new HttpHeaders({"Content-Type": "application/json"})});
+    }
+
+    deleteVendor(vendor_id: string){
+      let url = 'vendors/'.concat(vendor_id);
+      let VEND_URL = this.URL_SERVER.concat(url);
+      return this.http.delete(VEND_URL);
     }
 
     /*
