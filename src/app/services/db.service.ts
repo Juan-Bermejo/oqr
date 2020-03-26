@@ -82,9 +82,13 @@ export class DbService {
         {headers: new HttpHeaders({"Content-Type": "application/json"})});
     }
 
+    //OFFER SERVICES
+
 
     createOffer(offer: Offer) {
-      return this.http.post(this.URL_SERVER_PROD, offer,
+      let url = 'offers/';
+      let OFFER_URL = this.URL_SERVER.concat(url.toString());
+      return this.http.post(OFFER_URL, offer,
         {headers: new HttpHeaders({"Content-Type": "application/json"})});
     }
 
@@ -96,9 +100,35 @@ export class DbService {
       }
     }
 
+    getAllOffers() {
+      let url = 'offers/';
+      let OFFER_URL = this.URL_SERVER.concat(url);
+      return this.http.get(OFFER_URL);
+    }
+
+    getOffersByVendor(vendor_id: string){
+       let url = 'offers/vendoroffers'
+       let data= {"vendor_id": vendor_id}
+       let OFFER_URL = this.URL_SERVER.concat(url);
+       return this.http.post(OFFER_URL, data,
+        {headers: new HttpHeaders({"Content-Type": "application/json"})});
+    }
+
+    //PRODUCTS SERVICES
+
      getAllProducts(){
       return this.http.get(this.URL_SERVER_PROD);
     }
+
+    createProduct(product: Product, user_id: string) {
+      let url = 'products/';
+      let data = {"product_data": product, "user_id": user_id}
+      var PROD_URL = this.URL_SERVER.concat(url.toString());
+      return this.http.post(PROD_URL , data,
+        {headers: new HttpHeaders({"Content-Type": "application/json"})});
+    }
+
+    //LINKS SERVICES
 
     postLink(link: PostLink) {
       return this.http.post(this.URL_SERVER_SERV, link,
@@ -119,6 +149,8 @@ export class DbService {
       }
       
     }
+
+    //LOCATION SERVICES
 
     saveLocation(location_data: Location) {
       let url = 'services/locations/';
@@ -161,6 +193,8 @@ export class DbService {
       this.is_logged$.next(this.is_logged);
     }
 
+    //VENDORS SERVICES
+
     getProdOfVendor(vendor_id: string) {
       let url = 'products/prodvendor/';
       let data = {"user_id": vendor_id}
@@ -181,14 +215,6 @@ export class DbService {
       let data = {"category": category}
       var VEND_URL = this.URL_SERVER.concat(url.toString());
       return this.http.post(VEND_URL , data,
-        {headers: new HttpHeaders({"Content-Type": "application/json"})});
-    }
-
-    createProduct(product: Product, user_id: string) {
-      let url = 'products/';
-      let data = {"product_data": product, "user_id": user_id}
-      var PROD_URL = this.URL_SERVER.concat(url.toString());
-      return this.http.post(PROD_URL , data,
         {headers: new HttpHeaders({"Content-Type": "application/json"})});
     }
 
