@@ -113,10 +113,29 @@ export class DbService {
     }
 
     getOffersByVendor(vendor_id: string){
-       let url = 'offers/vendoroffers'
-       let data= {"vendor_id": vendor_id}
-       let OFFER_URL = this.URL_SERVER.concat(url);
-       return this.http.post(OFFER_URL, data,
+      let url = 'offers/vendoroffers'
+      let data = {"vendor_id": vendor_id}
+      let OFFER_URL = this.URL_SERVER.concat(url);
+      return this.http.post(OFFER_URL, data,
+      {headers: new HttpHeaders({"Content-Type": "application/json"})});
+    }
+
+    getOfferLocations(offer_id: string){
+      let url = 'offers/getofferlocations'
+      let data = {"offer_id": offer_id}
+      let OFFER_URL = this.URL_SERVER.concat(url);
+      return this.http.post(OFFER_URL, data,
+        {headers: new HttpHeaders({"Content-Type": "application/json"})});
+    }
+
+    nearOffers(locality: string, sub_locality: string){
+      let url = 'offers/nearoffers'
+      let data = {
+        "locality": locality,
+        "sub_locality": sub_locality
+      }
+      let OFFER_URL = this.URL_SERVER.concat(url);
+      return this.http.post(OFFER_URL, data,
         {headers: new HttpHeaders({"Content-Type": "application/json"})});
     }
 
