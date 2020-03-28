@@ -232,7 +232,7 @@ addMarker(location:Location) {
        lng: location.longitude,
        address:location.address,
         alpha: 1,
-        seller: location.user_id
+        seller: location.vendor_id
     }
       );
       console.log(this.markers)

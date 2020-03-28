@@ -27,7 +27,7 @@ export class AddLocationPage implements OnInit {
   selectedMarker;
   markers;
   location_data;
-  user;
+  user:User;
 
    options: NativeGeocoderOptions = {
     useLocale: true,
@@ -42,6 +42,7 @@ export class AddLocationPage implements OnInit {
   private dbService: DbService) {
 
     this.user= JSON.parse(localStorage.getItem('user_data'));
+    console.log(this.user)
       this.mapType = 'roadmap';
       this.mapOn=true;
       this.getGeoLocation();
@@ -49,6 +50,7 @@ export class AddLocationPage implements OnInit {
      
      }
     
+
 
 
   getGeoLocation()
@@ -104,7 +106,7 @@ export class AddLocationPage implements OnInit {
       l.longitude= this.longitude;
       l.province=this.location_data.administrativeArea;
       l.subLocality= this.location_data.subLocality;
-      l.user_id=this.user._id;
+      l.vendor_id=this.user.shops[0];
      console.log(this.location_data)
      console.log(l);
       this.dbService.saveLocation(l).subscribe((data)=>{

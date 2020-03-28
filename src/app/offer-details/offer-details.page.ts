@@ -94,7 +94,7 @@ this.offerLocations= new Array<Location>();
          lng: location.longitude,
          address:location.address,
           alpha: 1,
-          user: location.user_id,
+          user: location.vendor_id,
           icon: "../../../assets/iconos/User-Blue-icon.png"
         });
   }

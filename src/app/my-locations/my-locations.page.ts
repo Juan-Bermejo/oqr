@@ -19,7 +19,7 @@ export class MyLocationsPage implements OnInit {
 
     this.user= JSON.parse(localStorage.getItem("user_data"));
     
-    this.dbService.getLocation(this.user._id).subscribe((data:any)=>{
+    this.dbService.getLocation(this.user.shops[0]).subscribe((data:any)=>{
       console.log(data);
       this.myLocations=data.location_data;
     })

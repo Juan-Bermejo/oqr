@@ -13,7 +13,7 @@ export class User {
     offers: Offer[];
     locations: Location[];
     billing_information:any;
-
+    shops: string[];
 
     constructor(name='', last_name='', user_name='', password='', email='', phone=0) {
 
