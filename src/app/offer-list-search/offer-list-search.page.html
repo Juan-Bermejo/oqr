@@ -61,7 +61,7 @@
 
         <img class="img-list" src="../../assets/images/{{offer.category}}.jpg">
 
-        <ion-card-title > {{offer.product}} a {{offer.price_currency}} {{offer.price}} </ion-card-title>
+        <ion-card-title > {{offer.product}} a {{offer.price | currency : offer.price_currency}} </ion-card-title>
         
             <ion-card-subtitle color="dark">{{offer.description}}</ion-card-subtitle>
           </ion-card-content>

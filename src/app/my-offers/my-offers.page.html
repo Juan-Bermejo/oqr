@@ -3,7 +3,7 @@
   <ion-toolbar>
 
     <ion-buttons slot="start" collapse="true">
-      <ion-back-button mode="md" type="button" color="light" icon="md-arrow-back" defaultHref="home">
+      <ion-back-button mode="md" type="button" color="light" icon="md-arrow-back" defaultHref="seller-panel">
       </ion-back-button>
     </ion-buttons>
       <ion-row justify-content-center>
@@ -16,7 +16,55 @@
 
 </ion-toolbar>
 
-<ion-button routerLink="new-offer" shape="round" expand="block" >
+<ion-button (click)="goTo('new-offer')" shape="round" expand="block" >
   Nueva Oferta
 </ion-button>
+
+
+
+
+<ion-list>
+  <ion-card *ngFor="let offer of data_offers"  >
+    <ion-card-content>
+
+
+        <img class="img-list" src="../../assets/images/{{offer.category}}.jpg">
+
+        <ion-card-title > {{offer.product}} a {{offer.price_currency}} {{offer.price}} </ion-card-title>
+        
+            <ion-card-subtitle color="dark">{{offer.description}}</ion-card-subtitle>
+          </ion-card-content>
+
+              <ion-row justify-content-start>
+             
+                      <ion-col size=6>  
+
+                        <ion-button fill="outline" expand="block" color="primary">
+                            <ion-label>
+                                Editar
+                              </ion-label>
+                            <ion-icon color="primary" name="md-create">
+                              </ion-icon>
+
+                            </ion-button>
+                              </ion-col>
+                                 
+                        <ion-col size=6> 
+                            <ion-button fill="outline" expand="block"color="primary" (click)="deleteOffer(offer._id)"> 
+                                <ion-label>
+                                    Eliminar
+                                  </ion-label>
+                        <ion-icon color="primary" name="md-trash">
+                          </ion-icon>
+                        </ion-button>
+                          </ion-col>
+                                  
+  
+
+              </ion-row>
+
+
+  </ion-card>
+</ion-list>
+
 </ion-content>

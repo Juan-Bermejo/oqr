@@ -84,17 +84,6 @@ export class NearMePage implements OnInit {
      // this.aux_offer_list=this.offer_list;
 
 
-        this.dbService.getLocation(this.user._id).subscribe((data:any)=>
-      {
-        
-        this.offerLocations=data.location_data;
-
-        this.offerLocations.forEach(location => {
-          console.log(location);
-          //this.addMarker(location);
-        });
-      })
-
 
  
   }
@@ -108,11 +97,21 @@ export class NearMePage implements OnInit {
       this.location_data= result[0];
       this.myAddress=result[0].thoroughfare + " " + result[0].subThoroughfare +", "+ result[0].locality
       +", "+result[0].countryName;
-      console.log(JSON.stringify(result[0]))
+
+      this.dbService.nearOffers(this.location_data.locality, this.location_data.subLocality).subscribe((data:any)=>
+{ console.log(data);
+  /*data.location_data.forEach(loc => {
+    this.addMarker(loc)
+  });*/
+              
+})
 
     })
     .catch((error: any) => console.log(error));
   }
+
+
+
 
 
 
@@ -154,7 +153,7 @@ export class NearMePage implements OnInit {
             console.log("seller:",seller);
             this.dbService.getLocation(seller.owner).subscribe((locs:any)=>{
               locs.location_data.forEach(loc => {
-                this.addMarker(loc, seller);
+                this.addMarker(loc);
               });
               
             })
@@ -226,18 +225,20 @@ this.getGeoCoderAddress(this.myLat, this.myLong);
 }
 
 
-addMarker(location:Location, seller) {
+addMarker(location:Location) {
   this.markers.push(
     {
       lat: location.latitude,
        lng: location.longitude,
        address:location.address,
         alpha: 1,
-        seller: seller
+        seller: location.user_id
     }
       );
       console.log(this.markers)
 }
+
+
 
 ngOnInit()
 {

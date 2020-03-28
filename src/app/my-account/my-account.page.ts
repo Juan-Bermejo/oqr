@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { User } from '../clases/user';
 import { DbService } from '../services/db.service';
-import { NavController } from '@ionic/angular';
+import { NavController, AlertController, ToastController } from '@ionic/angular';
 
 @Component({
   selector: 'app-my-account',
@@ -13,7 +13,10 @@ export class MyAccountPage implements OnInit {
   user:User;
   public is_seller:boolean=false;
 
-  constructor(private dbService: DbService, private navCtrl: NavController) {
+  constructor(private dbService: DbService,
+     private navCtrl: NavController,
+    private alertController:AlertController,
+  private toastCtrl: ToastController) {
 
     this.getIs_seller();
 
@@ -27,9 +30,63 @@ export class MyAccountPage implements OnInit {
     this.dbService.getIsSeller$().subscribe((data)=>{
     
       this.is_seller=data;
-      console.log(data)
+      console.log("la data",data)
     });
    }
+
+
+
+   async deleteConfirm() {
+    const alert = await this.alertController.create({
+      header: '',
+      message: ' <strong>¿Estas seguro que quieres dejar de ser vendedor?</strong>!!!',
+      buttons: [
+        {
+          text: 'No',
+          role: 'cancel',
+          cssClass: 'primary',
+          handler: (blah) => {
+            console.log('Confirm Cancel: blah');
+          }
+        }, {
+          text: 'Si',
+          handler: () => {
+            this.deleteSeller();
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
+  deleteSeller()
+  {console.log("entro ");
+     this.dbService.checkIsVendor(this.user._id).subscribe((data:any)=>
+  { console.log("seller: ", data);
+    this.dbService.deleteVendor(data.vendor_data._id).subscribe((dataDelete)=>
+  { console.log(dataDelete)
+    this.toastCtrl.create({
+      message:"Ya no eres un vendedor.",
+      animated:true,
+      position:"top",
+      color:"success"
+    
+      
+    }).then(()=>
+  {
+    this.is_seller=false;
+    this.dbService.setIsSeller$(this.is_seller);
+    console.log("proceso finalizado")
+  })
+  })
+  });
+  //sub.unsubscribe();
+  
+    
+  }
+
+
 
    toSeller()
    {
@@ -41,13 +98,18 @@ export class MyAccountPage implements OnInit {
      }
      else
      {
-       this.is_seller=false;
-       this.dbService.setIsSeller$(this.is_seller);
+
+      this.deleteConfirm();
+ 
      }
      
    }
 
   ngOnInit() {
+  }
+
+  ionViewWillEnter(){
+  this.getIs_seller();
   }
 
 }

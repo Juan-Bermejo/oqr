@@ -12,6 +12,7 @@ import { PopOverProductsComponent } from '../componentes/pop-over-products/pop-o
 import { Offer } from '../clases/offer';
 import { DbService } from '../services/db.service';
 import { of } from 'rxjs';
+import { Seller } from '../clases/seller';
 
 
 @Component({
@@ -35,6 +36,7 @@ export class NewOfferPage implements OnInit {
   categories = categories
 
 
+  seller:Seller;
   user:User;
   index:number=0;
   id: number;
@@ -64,12 +66,18 @@ export class NewOfferPage implements OnInit {
     private ParamSrv: NavParamsService,
     private dbService: DbService )
      {
-      this.user= JSON.parse(localStorage.getItem("user"));
+      this.user= JSON.parse(localStorage.getItem("user_data"));
       this.kind="Producto";
       this.countrySrv.getCountries().subscribe((c)=>{
         this.countries= c;
         console.log(c);
       })
+      console.log(this.user)
+
+      this.dbService.checkIsVendor(this.user._id).subscribe((data:any)=>
+    {
+      this.seller=data.vendor_data;
+    })
    }
 
 
@@ -179,11 +187,11 @@ export class NewOfferPage implements OnInit {
     offer.price_currency = this.prod_currency;
     offer.description = this.description;
     offer.product = this.product;
-    offer.sellers.push(this.dbService.user_id);
+    offer.sellers.push(this.seller._id);
     offer.stock=this.stock;
     offer.views=0;
     offer.sellers_cuantity= offer.sellers.length;
-
+console.log("offer: ", offer)
     this.dbService.createOffer(offer)
       .subscribe((data: any) => {
         if(data.status == 200) {

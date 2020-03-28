@@ -70,7 +70,7 @@ export class HomePage implements OnInit {
   }
 
  async ngOnInit() {
-    this.dbService.getAllProducts().subscribe((data)=>{
+    this.dbService.getAllOffers().subscribe((data)=>{
       this.offer_list=data;
       this.aux_offer_list= this.offer_list;
       console.log(this.offer_list);

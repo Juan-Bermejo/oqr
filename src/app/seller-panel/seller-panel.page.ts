@@ -7,6 +7,7 @@ import { AddProductPage } from '../modals/add-product/add-product.page';
 import { Seller } from '../clases/seller';
 import { Location } from '../clases/location';
 import { NewSellerComponent } from '../componentes/new-seller/new-seller.component';
+import { NavParamsService } from '../services/nav-params.service';
 
 @Component({
   selector: 'app-seller-panel',
@@ -28,11 +29,15 @@ shop_name:string;
 
   constructor(private navCtrl: NavController,
     private modalctrl: ModalController,
-              private dbService: DbService) {
+              private dbService: DbService,
+            private navParams: NavParamsService) 
+            {
+
                 this.seller= new Seller();
                 this.user_data=JSON.parse(localStorage.getItem("user_data"));
-                console.log(this.user_data);
+
                 this.seller.owner=this.user_data._id;
+
                 this.dbService.getLocation(this.user_data._id).subscribe((locs:any)=>
               { console.log(locs)
                 this.userLocation= locs.location_data.map((loc:any) => {
@@ -86,6 +91,7 @@ console.log(this.seller);
     this.name = this.user_data.name;
     this.user_name = this.user_data.user_name;
   }
+
 
 
 

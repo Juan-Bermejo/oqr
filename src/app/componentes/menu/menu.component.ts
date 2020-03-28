@@ -11,24 +11,7 @@ import { NavController } from '@ionic/angular';
 })
 export class MenuComponent{
 
-
   menu_opt = [
-    {
-      "icon":"md-person",
-      "name":"Mi cuenta",
-      "redirectTo": "my-account",
-      
-    },
-    {
-      "icon":"md-locate",
-      "name":"Punto de venta",
-      "redirectTo": "seller-panel",
-      
-    },
-  ]
-
-
- /* menu_opt = [
     {
       "icon":"md-person",
       "name":"Mi cuenta",
@@ -52,41 +35,39 @@ export class MenuComponent{
       "redirectTo": "",
     },
 
-    {
-      "icon":"md-cash",
-      "name":"Quiero hacer una oferta",
-      "redirectTo": "new-offer",
-  
-    },
-    {
-      "icon":"md-megaphone",
-      "name":"Quiero promocionar una oferta",
-      "redirectTo": "offer-list-search",
-    },
 
-
-
-  
-  
-  ]*/
+  ]
   
   role:string= "";
   is_logged:boolean;
+  is_seller: boolean=false;
 
   constructor(private menuSrv:MenuService, private dbService:DbService, private navCtrl: NavController) {
   this.dbService.getLogged$().subscribe((data)=>{
     this.is_logged=data;
     console.log(this.is_logged);
   })
+
+   this.getIs_seller();
   
   
+  }
+
+
+  getIs_seller()
+  {
+   this.dbService.getIsSeller$().subscribe((data)=>{
+   
+     this.is_seller=data;
+     console.log("la data",data)
+   });
   }
 
   closeSession()
   { 
     localStorage.removeItem("user_data");
     this.dbService.setLogged(false);
-    this.navCtrl.navigateRoot("/login");
+    this.navCtrl.navigateRoot("login");
     
 
   }

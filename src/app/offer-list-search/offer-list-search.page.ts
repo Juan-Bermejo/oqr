@@ -29,7 +29,7 @@ export class OfferListSearchPage implements OnInit {
       this.aux_offer_list= new Array();
 
 
-      this.dbServ.getAllProducts().subscribe((data: Offer[])=>{
+      this.dbServ.getAllOffers().subscribe((data: Offer[])=>{
         this.offer_list=data;
        this.aux_offer_list=this.offer_list;
       })

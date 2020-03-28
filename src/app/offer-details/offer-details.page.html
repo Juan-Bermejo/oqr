@@ -20,7 +20,7 @@
 </p>
 
 <agm-map [latitude]='latitude' [longitude]='longitude' 
-  [zoom]="8"
+  [zoom]="14"
   [mapTypeId]='mapType'>
 
   <agm-marker
@@ -31,6 +31,8 @@
   [markerDraggable]="false"
   [visible]="true"
   (markerClick)="selectMarker($event)"
+  [iconUrl]="marker.icon"
+
 >
 </agm-marker>
 </agm-map>

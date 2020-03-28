@@ -98,15 +98,15 @@ export class AddLocationPage implements OnInit {
     this.getGeoCoderAddress(this.latitude, this.longitude).then(()=>{
       let l= new Location();
       l.address=this.address;
-      l.city= this.city
+      l.city= this.location_data.locality
       l.country=this.location_data.countryName;
       l.latitude=this.latitude;
       l.longitude= this.longitude;
       l.province=this.location_data.administrativeArea;
       l.subLocality= this.location_data.subLocality;
       l.user_id=this.user._id;
-     
-     // console.log(l);
+     console.log(this.location_data)
+     console.log(l);
       this.dbService.saveLocation(l).subscribe((data)=>{
 
         console.log("Data:",data);
