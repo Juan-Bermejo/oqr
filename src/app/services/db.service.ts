@@ -196,9 +196,9 @@ export class DbService {
         {headers: new HttpHeaders({"Content-Type": "application/json"})});
     }
 
-    getLocation(user_id: string) {
+    getLocation(vendor_id: string) {
       let url = 'services/sendlocation/';
-      let data = {"user_id": user_id}
+      let data = {"vendor_id": vendor_id}
       var LOC_URL = this.URL_SERVER.concat(url.toString());
       return this.http.post(LOC_URL, data,
         {headers: new HttpHeaders({"Content-Type": "application/json"})});
@@ -238,7 +238,7 @@ export class DbService {
 
     getProdOfVendor(vendor_id: string) {
       let url = 'products/prodvendor/';
-      let data = {"user_id": vendor_id}
+      let data = {"vendor_id": vendor_id}
       var PROD_URL = this.URL_SERVER.concat(url.toString());
       return this.http.post(PROD_URL, data,
         {headers: new HttpHeaders({"Content-Type": "application/json"})});
