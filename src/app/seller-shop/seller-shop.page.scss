@@ -4,7 +4,6 @@
 }
 
 
-
 ion-back-button{
 
     --background:rgb(41, 171, 226);
@@ -12,3 +11,45 @@ ion-back-button{
    
 
   }
+
+  img{
+    height: 150px;
+    width: 350px;
+    border-radius: 20px;
+}
+
+
+
+
+h1{
+    text-align: center;
+    
+        margin-top: 1px;
+        margin-bottom: 1px;
+        font-size: 25px;
+    
+}
+
+  ion-input{
+      height: 50px;
+      padding-left: 50px;
+      border-style: solid;
+      border-width: 2px 2px 2px 2px;
+      border-color: rgb(41, 171, 226);
+      border-radius: 45px;
+      color: rgb(41, 171, 226);
+      text-align: center;
+     
+      
+  }
+
+
+  .select-currency{
+      width: 100%;
+      border-bottom-width: 0px;
+
+  }
+
+
+
+

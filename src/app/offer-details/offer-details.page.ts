@@ -54,10 +54,12 @@ this.offerLocations= new Array<Location>();
       
         this.dbService.getOfferLocations(this.offer._id).subscribe((dataLoc:any)=>
       { console.log(dataLoc);
-        dataLoc.locations.forEach(location => {
-          console.log(location);
-          this.addMarker(location);
-        });
+       this.offerLocations= dataLoc.locations;
+       
+       for(let i =0; i< this.offerLocations.length; i++)
+       {
+         this.addMarker(this.offerLocations[i]);
+       }
      
       /* this.offerLocations.forEach((location:Location)=>
       {
@@ -87,17 +89,20 @@ this.offerLocations= new Array<Location>();
   }
 
 
-  addMarker(location:Location) {
+  async addMarker(location:Location) {
     this.markers.push(
       {
+        location: location,
         lat: location.latitude,
          lng: location.longitude,
          address:location.address,
           alpha: 1,
-          user: location.vendor_id,
+          seller: location.vendor_id,
           icon: "../../../assets/iconos/User-Blue-icon.png"
         });
   }
+
+
   
 
   ngOnInit() {
@@ -111,19 +116,12 @@ this.offerLocations= new Array<Location>();
 
   async selectMarker(seller)
   {
-    console.log(seller)
-     let modal = await this.modalController.create({
-      component: SellerShopPage,
-      cssClass:"modal",
-      componentProps:
-      {
-        "seller": JSON.stringify(seller)
-      }
-      
-    });
-     modal.present();
-
-     modal.onDidDismiss()
+    this.navCtrl.navigateRoot('seller-shop')
+    this.paramSrv.param=
+    {
+      "offer": JSON.stringify(this.offer) ,
+      "seller": JSON.stringify(seller)
+    }
   }
 
 
