@@ -6,6 +6,7 @@ import { IonicModule, IonicRouteStrategy, NavParams } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 
+
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { ScrollbarStyleDirective } from './scrollbar-style.directive';
@@ -24,7 +25,7 @@ import { Facebook } from '@ionic-native/facebook/ngx';
 import { ComponentModule } from './componentes/component/component.module';
 import { MenuService } from './services/menu.service';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
-
+import { Validators, FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AddLocationPageModule } from './modals/add-location/add-location.module';
 import { ModalCategoriesPageModule } from './modals/modal-categories/modal-categories.module';
 import { ModalNewRegionPageModule } from './modals/modal-new-region/modal-new-region.module';
@@ -56,7 +57,9 @@ import { NewSellerComponent } from './componentes/new-seller/new-seller.componen
      AngularFireAuthModule,
      ComponentModule,
      HttpClientModule,
-     SellerShopPageModule
+     SellerShopPageModule,
+     FormsModule,
+     ReactiveFormsModule,
      
     ],
   providers: [

@@ -11,32 +11,9 @@ import { NavController } from '@ionic/angular';
 })
 export class MenuComponent{
 
-  menu_opt = [
-    {
-      "icon":"md-person",
-      "name":"Mi cuenta",
-      "redirectTo": "my-account",
-      
-    },
-    {
-      "icon":"md-locate",
-      "name":"Punto de venta",
-      "redirectTo": "seller-panel",
-      
-    },
-    {
-      "icon":"md-megaphone",
-      "name":"Panel influencer",
-      "redirectTo": "influencer-panel",
-    },
-    {
-      "icon":"md-business",
-      "name":"Panel fabricante",
-      "redirectTo": "",
-    },
+  /*menu_opt = [
 
-
-  ]
+  ]*/
   
   role:string= "";
   is_logged:boolean;

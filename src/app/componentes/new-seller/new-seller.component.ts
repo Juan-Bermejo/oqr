@@ -3,6 +3,7 @@ import { NavController, ModalController } from '@ionic/angular';
 import { DbService } from '../../services/db.service';
 import { Seller } from '../../clases/seller';
 import { ModalCategoriesPage } from '../../modals/modal-categories/modal-categories.page';
+import { FormBuilder, FormControl, Validators, FormGroup } from '@angular/forms';
 
 
 @Component({
@@ -15,14 +16,14 @@ export class NewSellerComponent implements OnInit {
   userLocation: any;
   user_data: any;
   seller: Seller;
-  cuit:number;
-  category:string;
-  shop_name:string;
   spinner:boolean=false;
 
+
   constructor(private navCtrl: NavController,
-    private modalctrl: ModalController,
-              private dbService: DbService) {
+              private modalctrl: ModalController,
+              private dbService: DbService,
+              private builder: FormBuilder) {
+
                 this.seller= new Seller();
                 this.user_data=JSON.parse(localStorage.getItem("user_data"));
                 console.log(this.user_data);
@@ -37,15 +38,39 @@ export class NewSellerComponent implements OnInit {
    }
 
 
+   
+  category = new FormControl('', [
+    Validators.required
+  ]);
+
+  cuit = new FormControl('', [
+    Validators.required
+  ]);
+
+
+
+  shop_name = new FormControl('', [
+    Validators.required
+  ]);
+
+
+  registroForm: FormGroup = this.builder.group({
+    category: this.category,
+    cuit: this.cuit,
+    shop_name: this.shop_name,
+
+  });
+
+
    saveSeller()
    {
      this.spinner=true;
      this.user_data.role="seller";
     
-     this.seller.category=this.category;
-     this.seller.cuit= this.cuit;
-     this.seller.location= this.userLocation;
-     this.seller.shop_name= this.shop_name;
+     this.seller.category = this.registroForm.value.category;
+     this.seller.cuit = this.registroForm.value.cuit;
+     this.seller.location = this.registroForm.value.location;
+     this.seller.shop_name = this.registroForm.value.shop_name;
      
      setTimeout(() => {
 
@@ -53,6 +78,7 @@ export class NewSellerComponent implements OnInit {
       this.dbService.addVendor(this.seller).subscribe((data)=>{
         this.spinner=false;
         this.dbService.setIsSeller$(true);
+        this.registroForm.reset();
         console.log(data)
       },
      (data)=>{
@@ -80,7 +106,7 @@ export class NewSellerComponent implements OnInit {
       modal.present();
       modal.onDidDismiss().then((data)=>{
  
-       this.category = data.data.result.category;
+       this.category.setValue(data.data.result.category);
        
      })
    }

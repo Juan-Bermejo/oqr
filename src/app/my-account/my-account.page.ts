@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { User } from '../clases/user';
 import { DbService } from '../services/db.service';
-import { NavController, AlertController, ToastController } from '@ionic/angular';
+import { NavController, AlertController, ToastController, ModalController } from '@ionic/angular';
+import { NewSellerComponent } from '../componentes/new-seller/new-seller.component';
 
 @Component({
   selector: 'app-my-account',
@@ -12,11 +13,13 @@ export class MyAccountPage implements OnInit {
 
   user:User;
   public is_seller:boolean=false;
+  seller_check:boolean;
 
   constructor(private dbService: DbService,
-     private navCtrl: NavController,
-    private alertController:AlertController,
-  private toastCtrl: ToastController) {
+      private navCtrl: NavController,
+      private alertController:AlertController,
+      private toastCtrl: ToastController,
+      private modalctrl:ModalController) {
 
     this.getIs_seller();
 
@@ -30,6 +33,7 @@ export class MyAccountPage implements OnInit {
     this.dbService.getIsSeller$().subscribe((data)=>{
     
       this.is_seller=data;
+      this.seller_check=data;
       console.log("la data",data)
     });
    }
@@ -52,6 +56,7 @@ export class MyAccountPage implements OnInit {
           text: 'Si',
           handler: () => {
             this.deleteSeller();
+            
           }
         }
       ]
@@ -61,11 +66,11 @@ export class MyAccountPage implements OnInit {
   }
 
   deleteSeller()
-  {console.log("entro ");
+  {
      this.dbService.checkIsVendor(this.user._id).subscribe((data:any)=>
-  { console.log("seller: ", data);
+  { this.seller_check=false;
     this.dbService.deleteVendor(data.vendor_data._id).subscribe((dataDelete)=>
-  { console.log(dataDelete)
+  { 
     this.toastCtrl.create({
       message:"Ya no eres un vendedor.",
       animated:true,
@@ -94,7 +99,7 @@ export class MyAccountPage implements OnInit {
     
      if(!this.is_seller)
      {
-      this.navCtrl.navigateRoot("seller-panel");
+      this.dataModal()
      }
      else
      {
@@ -103,6 +108,21 @@ export class MyAccountPage implements OnInit {
  
      }
      
+   }
+
+
+   async dataModal()
+   {
+     const modal = await this.modalctrl.create({
+       component: NewSellerComponent,
+ 
+       cssClass:"modal"
+       
+     });
+      modal.present();
+      modal.onDidDismiss().then((data)=>{
+       this.getIs_seller();
+     })
    }
 
   ngOnInit() {

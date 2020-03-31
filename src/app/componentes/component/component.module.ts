@@ -6,8 +6,8 @@ import { MenuService } from '../../services/menu.service';
 import { RouterModule } from '@angular/router';
 import { PopOverProductsComponent } from '../pop-over-products/pop-over-products.component';
 import { NewSellerComponent } from '../new-seller/new-seller.component';
-import { FormsModule } from '@angular/forms';
-
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { Validators, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 
 
 
@@ -26,7 +26,8 @@ import { FormsModule } from '@angular/forms';
     CommonModule,
     IonicModule,
     RouterModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers:[
     MenuService,

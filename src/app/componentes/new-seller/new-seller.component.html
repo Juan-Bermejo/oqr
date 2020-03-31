@@ -14,7 +14,7 @@
     </ion-row>
     
 
-
+    <form [formGroup]="registroForm" (ngSubmit)="saveSeller()">
 
         <ion-row justify-content-center>
             <ion-col justify-content-center size="10" >
@@ -22,7 +22,7 @@
             </ion-col>
 
             <ion-col size=10 >
-                <ion-input type="text" placeholder="Ingresa el nombre de tu negocio" [(ngModel)]="shop_name" ></ion-input>
+                <ion-input type="text" placeholder="Ingresa el nombre de tu negocio" name="shop_name" [formControl]="shop_name" required  ></ion-input>
             </ion-col>
           </ion-row>
 
@@ -32,7 +32,7 @@
 
         <ion-row justify-content-center>
           <ion-col size=11>
-              <ion-input (click)="modalCategories()" readonly placeholder="Seleccione una categoria." [(ngModel)]="category" >
+              <ion-input (click)="modalCategories()" readonly  name="category" [formControl]="category" required >
                   <span class="item-right">
                       <ion-icon slot="end" src="../../assets/ionicons/chevron-down-outline.svg">
                       </ion-icon>
@@ -43,13 +43,14 @@
 
         </ion-row>
 
+        
             <ion-row justify-content-center>
                 <ion-col justify-content-center size="10" >
                     <h4>Cuit</h4>
                 </ion-col>
     
                 <ion-col size=10 >
-                    <ion-input type="number" placeholder="Ingresa el cuit de tu negocio" [(ngModel)]="cuit" ></ion-input>
+                    <ion-input type="tel" maxlength="11" placeholder="Ingresa el cuit de tu negocio" name="cuit" [formControl]="cuit" required></ion-input>
                 </ion-col>
               </ion-row>
 
@@ -57,11 +58,11 @@
                 <ion-spinner *ngIf="spinner" name="crescent">
 
                 </ion-spinner>
-                <ion-button *ngIf="!spinner" shape="round" expand="block" (click)="saveSeller()">
+                <ion-button type="submit" *ngIf="!spinner" shape="round" expand="block" [disabled]="!registroForm.valid">
                   Guardar datos
                 </ion-button>
               </ion-row>
-    
+            </form>
 
 </ion-content>
 
