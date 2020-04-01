@@ -128,17 +128,6 @@ export class DbService {
         {headers: new HttpHeaders({"Content-Type": "application/json"})});
     }
 
-    nearOffers(locality: string, sub_locality: string){
-      let url = 'offers/nearoffers'
-      let data = {
-        "locality": locality,
-        "sub_locality": sub_locality
-      }
-      let OFFER_URL = this.URL_SERVER.concat(url);
-      return this.http.post(OFFER_URL, data,
-        {headers: new HttpHeaders({"Content-Type": "application/json"})});
-    }
-
     deleteOffer(offer_id:string){
       let url = 'offers/'.concat(offer_id);
       let OFFER_URL = this.URL_SERVER.concat(url);
@@ -200,6 +189,17 @@ export class DbService {
       let url = 'services/sendlocation/';
       let data = {"vendor_id": vendor_id}
       var LOC_URL = this.URL_SERVER.concat(url.toString());
+      return this.http.post(LOC_URL, data,
+        {headers: new HttpHeaders({"Content-Type": "application/json"})});
+    }
+
+    nearLocations(locality: string, sub_locality: string){
+      let url = 'services/getlocations'
+      let data = {
+        "locality": locality,
+        "sub_locality": sub_locality
+      }
+      let LOC_URL = this.URL_SERVER.concat(url);
       return this.http.post(LOC_URL, data,
         {headers: new HttpHeaders({"Content-Type": "application/json"})});
     }
