@@ -91,6 +91,14 @@ const routes: Routes = [
     path: 'seller-shop',
     loadChildren: () => import('./seller-shop/seller-shop.module').then( m => m.SellerShopPageModule)
   },
+  {
+    path: 'offer-list-asociate',
+    loadChildren: () => import('./offer-list-asociate/offer-list-asociate.module').then( m => m.OfferListAsociatePageModule)
+  },
+  {
+    path: 'asociate-offer',
+    loadChildren: () => import('./asociate-offer/asociate-offer.module').then( m => m.AsociateOfferPageModule)
+  },
 
 
 ];

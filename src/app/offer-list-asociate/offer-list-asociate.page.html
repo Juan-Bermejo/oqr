@@ -1,0 +1,111 @@
+
+
+<ion-content >
+    <ion-toolbar>
+
+        <ion-buttons slot="start" collapse="true">
+            <ion-back-button color="light" icon="md-arrow-back" defaultHref="home">
+            </ion-back-button>
+            </ion-buttons>
+
+
+
+
+</ion-toolbar>
+
+    <ion-row class="ion-justify-content-center">
+
+
+        <ion-col size=10 >
+          
+            <ion-input class="input-search" (ionChange)="filter($event)" placeholder="¿Qué estas buscando?" color="primary" [(ngModel)]="busqeda" >
+              <span>
+                    <ion-icon style="padding-left: 10px;" size="large" name="md-search" color="primary-shade">
+                      </ion-icon>
+              </span>
+              <span class="item-right">
+                <ion-button style="
+                border-left-style: solid;
+                border-left-width: 1px;
+                border-left: 'primary';" fill="clear" (click)="searchTools()" >
+                    <ion-icon color="primary" name="md-options">
+                      </ion-icon>
+  
+                </ion-button>
+  
+              </span>
+      
+            </ion-input>
+          
+          </ion-col>
+    </ion-row>
+
+    <ion-row class="ion-justify-content-center" *ngIf="search_tool " >
+
+        <ion-button shape="round" color="primary">Categoria</ion-button>
+      
+        <ion-button shape="round" color="primary">Comision</ion-button>
+    
+      
+          <ion-button shape="round"  color="primary">Fecha</ion-button>
+      
+        
+            <ion-button shape="round" color="primary">Vistas</ion-button>
+        
+    </ion-row>
+
+<ion-list>
+  <ion-card *ngFor="let offer of aux_offer_list" (click)="goToOfferDetails(offer)" >
+    <ion-card-content>
+
+
+        <img class="img-list" src="../../assets/images/{{offer.category}}.jpg">
+
+        <ion-card-title > {{offer.product}} a {{offer.price | currency : offer.price_currency}} </ion-card-title>
+        
+            <ion-card-subtitle color="dark">{{offer.description}}</ion-card-subtitle>
+          </ion-card-content>
+
+              <ion-row justify-content-start>
+             
+                      <ion-col size=4>  
+                        <ion-chip outline color="primary">
+                            <ion-icon color="primary" name="md-people">
+                              </ion-icon>
+                              <ion-label>
+                                  {{offer.sellers_cuantity}}
+                              </ion-label>
+                            </ion-chip>
+                              </ion-col>
+                                 
+                        <ion-col size=4> 
+                            <ion-chip outline color="primary"> 
+                        <ion-icon color="primary" name="md-cash">
+                          </ion-icon>
+                          <ion-label>
+                              {{offer.commission | currency:offer.currency_commission}}
+                          </ion-label>
+                        </ion-chip>
+                          </ion-col>
+                                  
+                          <ion-col size=4>   
+                              <ion-chip outline color="primary">
+                              <ion-icon color="primary" name="md-briefcase"></ion-icon>
+                              
+                                <ion-label>
+                                    {{offer.commission * offer.sellers_cuantity * offer.stock | currency:offer.currency_commission}}
+                                </ion-label>
+                              </ion-chip>
+                                </ion-col>
+
+              </ion-row>
+
+
+  </ion-card>
+</ion-list>
+
+  
+
+
+
+</ion-content>
