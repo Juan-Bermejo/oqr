@@ -97,12 +97,12 @@ export class NearMePage implements OnInit {
       this.location_data= result[0];
       this.myAddress=result[0].thoroughfare + " " + result[0].subThoroughfare +", "+ result[0].locality
       +", "+result[0].countryName;
-
-      this.dbService.nearOffers(this.location_data.locality, this.location_data.subLocality).subscribe((data:any)=>
+      console.log(this.location_data);
+      this.dbService.nearLocations(this.location_data.locality, this.location_data.subLocality).subscribe((data:any)=>
 { console.log(data);
-  /*data.location_data.forEach(loc => {
+  data.locations.forEach(loc => {
     this.addMarker(loc)
-  });*/
+  });
               
 })
 

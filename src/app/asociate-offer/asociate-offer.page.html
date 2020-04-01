@@ -1,0 +1,87 @@
+
+  <ion-toolbar>
+      <ion-buttons slot="start" collapse="true">
+          <ion-back-button mode="md" type="button" color="light" icon="md-arrow-back" defaultHref="home">
+          </ion-back-button>
+        </ion-buttons>
+    <ion-title color="primary">Asociarme a esta oferta</ion-title>
+  </ion-toolbar>
+
+
+<ion-content>
+
+  <ion-card padding>
+    <img src="../../assets/images/{{offer.category}}.jpg">
+   
+    <ion-card-title> {{offer.product}} a {{offer.price_currency}} {{offer.price}}  </ion-card-title>
+    <ion-card-subtitle> {{offer.description}} </ion-card-subtitle>
+
+    <ion-list>
+      
+        <ion-item>
+            <ion-label>Fecha de publicacion</ion-label>
+            <ion-note slot="end">
+
+                  {{offer.date}} 
+    
+            </ion-note>
+        </ion-item>
+        <ion-item>
+            <ion-label>Cantidad de vendedores</ion-label>
+            <ion-note slot="end">              
+              <ion-badge>
+                {{offer.sellers_cuantity}} 
+            </ion-badge>
+               </ion-note>
+        </ion-item>
+        <ion-item>
+            <ion-label>Comision por venta</ion-label>
+            <ion-note slot="end"> 
+                <ion-badge>
+                    {{offer.commission}} 
+                </ion-badge>
+               </ion-note>
+          </ion-item>
+          <ion-item>
+              <ion-label>Comision total</ion-label>
+              <ion-note slot="end"> 
+                  <ion-badge>
+                        {{offer.commission * offer.sellers_cuantity * offer.stock}}
+                  </ion-badge>
+              </ion-note>
+            </ion-item>
+            </ion-list>
+
+
+  <ion-item-divider>
+    <ion-icon name="md-pin" size="large" color="primary" slot="start" >
+    </ion-icon>
+    <ion-label>Ver las locaciones de esta oferta</ion-label>
+  </ion-item-divider>
+  <ion-item-divider>
+      <ion-icon name="md-pricetags" size="large" color="primary" slot="start" >
+      </ion-icon>
+      <ion-label>Ver los productos relacionados de esta oferta</ion-label>
+    </ion-item-divider>
+
+
+  <ion-row class="ion-justify-content-center">
+    <ion-button expand="block" (click)="associate()" >
+      <ion-icon name="md-people" color="light" size="large" slot="start"></ion-icon>
+      Quiero asociarme a esta oferta</ion-button>
+  </ion-row>
+  <ion-row>
+    <ion-item-divider>
+        <ion-checkbox slot="start" [(ngModel)]="checkProducts" ></ion-checkbox>
+      <ion-label style="font-size: medium">Asociarme tambien a los productos relacionados.</ion-label>
+    </ion-item-divider>
+      
+  </ion-row>
+
+  </ion-card>
+</ion-content>
+
+
+
+
+
