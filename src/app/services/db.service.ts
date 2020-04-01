@@ -28,14 +28,7 @@ export class DbService {
   public is_logged: boolean = false;
   public user_data;
 
-  readonly URL_SERVER = 'http://cors-anywhere.herokuapp.com/http://31.220.61.6:3000/app/';
-
-  readonly URL_SERVER_USER = 'http://cors-anywhere.herokuapp.com/http://31.220.61.6:3000/app/users/';
-  readonly URL_SERVER_USER_OF = 'http://cors-anywhere.herokuapp.com/http://31.220.61.6:3000/app/users/addoffer/';
-  readonly URL_SERVER_PROD = 'http://cors-anywhere.herokuapp.com/http://31.220.61.6:3000/app/products/';
-  readonly URL_SERVER_LOG = 'http://cors-anywhere.herokuapp.com/http://31.220.61.6:3000/app/users/log';
-  readonly URL_SERVER_SERV = 'http://cors-anywhere.herokuapp.com/http://31.220.61.6:3000/app/services/postlink';
-  readonly URL_SERVER_SERV_GET = 'http://cors-anywhere.herokuapp.com/http://31.220.61.6:3000/app/services/getlink';
+  readonly URL_SERVER = 'https://ofertaqr.com/app/';
 
   constructor(private http: HttpClient) {
     this.is_seller=false;
@@ -45,39 +38,45 @@ export class DbService {
    }
 
     addUser(user: User) {
-      return this.http.post(this.URL_SERVER_USER, user,
+      let url = 'users';
+      let USER_URL = this.URL_SERVER.concat(url);
+      return this.http.post(USER_URL, user,
         {headers: new HttpHeaders({"Content-Type": "application/json"})});
     }
 
     googleLogin(user: User) {
       let url = 'users/google';
-      var LOG_URL = this.URL_SERVER.concat(url.toString());
+      let LOG_URL = this.URL_SERVER.concat(url);
       return this.http.post(LOG_URL, user,
         {headers: new HttpHeaders({"Content-Type": "application/json"})});
     }
 
     checkLogin(user_name: string, password: string) {
+      let url = 'users/log';
+      let LOG_URL = this.URL_SERVER.concat(url);
       var data = {
         "user_name": user_name,
         "password": password
       }
-      return this.http.post(this.URL_SERVER_LOG, data);
+      return this.http.post(LOG_URL, data);
     }
 
     getUser(user_id: string) {
+      let url = 'users/'.concat(user_id);
       if(user_id != ''){
         this.user_id = user_id;
-        var GET_USER_URL = this.URL_SERVER_USER.concat(this.user_id.toString());
-        return this.http.get(GET_USER_URL);
+        let USER_URL = this.URL_SERVER.concat(url);
+        return this.http.get(USER_URL);
       }
     }
 
     updateUser(user_id: string, offer_id){
+      let url = 'users/addoffer/'.concat(user_id);
       var data = {
         "id_user": user_id,
         "id_offer": offer_id
       }
-      var UPDATE_USER_OFFER = this.URL_SERVER_USER_OF.concat(this.user_id.toString());
+      var UPDATE_USER_OFFER = this.URL_SERVER.concat(url);
       return this.http.post(UPDATE_USER_OFFER, data,
         {headers: new HttpHeaders({"Content-Type": "application/json"})});
     }
@@ -90,19 +89,19 @@ export class DbService {
 
     //OFFER SERVICES
 
-
     createOffer(offer: Offer) {
       let url = 'offers/';
-      let OFFER_URL = this.URL_SERVER.concat(url.toString());
+      let OFFER_URL = this.URL_SERVER.concat(url);
       return this.http.post(OFFER_URL, offer,
         {headers: new HttpHeaders({"Content-Type": "application/json"})});
     }
 
     getOffer(offer_id: string) {
+      let url = 'offers/'.concat(offer_id);
       if(offer_id != ''){
         this.offer_id = offer_id;
-        var GET_OFFER_URL = this.URL_SERVER_PROD.concat(this.offer_id.toString());
-        return this.http.get(GET_OFFER_URL);
+        var OFFER_URL = this.URL_SERVER.concat(url);
+        return this.http.get(OFFER_URL);
       }
     }
 
@@ -148,14 +147,24 @@ export class DbService {
 
     //PRODUCTS SERVICES
 
+    getProduct(product_id: string){
+      let url = 'products/'.concat(product_id);
+      if(product_id != ''){
+        let PRODUCT_URL = this.URL_SERVER.concat(url);
+        return this.http.get(PRODUCT_URL);
+      }
+    }
+
      getAllProducts(){
-      return this.http.get(this.URL_SERVER_PROD);
+      let url = 'products';
+      let PRODUCTS_URL = this.URL_SERVER.concat(url);
+      return this.http.get(PRODUCTS_URL);
     }
 
     createProduct(product: Product, user_id: string) {
       let url = 'products/';
       let data = {"product_data": product, "user_id": user_id}
-      let PROD_URL = this.URL_SERVER.concat(url.toString());
+      let PROD_URL = this.URL_SERVER.concat(url);
       return this.http.post(PROD_URL , data,
         {headers: new HttpHeaders({"Content-Type": "application/json"})});
     }
@@ -169,20 +178,26 @@ export class DbService {
     //LINKS SERVICES
 
     postLink(link: PostLink) {
-      return this.http.post(this.URL_SERVER_SERV, link,
+      let url = 'services/postlink';
+      let LINK_URL = this.URL_SERVER.concat(url);
+      return this.http.post(LINK_URL, link,
         {headers: new HttpHeaders({"Content-Type": "application/json"})});
     }
 
     getLinks() {
-      return this.http.get(this.URL_SERVER_SERV);
+      let url = 'services/postlink';
+      let LINK_URL = this.URL_SERVER.concat(url);
+      return this.http.get(LINK_URL);
     }
 
     getLinkById(offer_id) {
+      let url = 'services/getlink';
+      let LINK_URL = this.URL_SERVER.concat(url);
       if(offer_id != ''){
         console.log(offer_id);
         let data= {"offer_id": offer_id}
 
-        return this.http.post(this.URL_SERVER_SERV_GET, data,
+        return this.http.post(LINK_URL, data,
           {headers: new HttpHeaders({"Content-Type": "application/json"})});
       }
       
