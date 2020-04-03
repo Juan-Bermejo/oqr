@@ -9,6 +9,7 @@ import { Location } from '../clases/location';
 import { Offer } from '../clases/offer';
 import { DbService } from '../services/db.service';
 import { SellerShopPage } from '../seller-shop/seller-shop.page';
+import { Seller } from '../clases/seller';
 
 @Component({
   selector: 'app-offer-details',
@@ -17,6 +18,7 @@ import { SellerShopPage } from '../seller-shop/seller-shop.page';
 })
 export class OfferDetailsPage implements OnInit {
 
+  is_my_offer: boolean= false;
   user:User;
   offer: Offer;
   latitude = -28.68352;
@@ -32,6 +34,9 @@ export class OfferDetailsPage implements OnInit {
   offerLocations:Location[];
   offer_sellers:string[];
   my_offer:boolean=true;
+  seller:Seller;
+  is_seller:boolean;
+  
 
 
   constructor(private route: ActivatedRoute, 
@@ -41,19 +46,32 @@ export class OfferDetailsPage implements OnInit {
     private dbService: DbService,
     private modalController:ModalController) {
 
-this.user= JSON.parse(localStorage.getItem("user_data"))
-  this.markers= new Array<{}>();
+      this.markers= new Array<{}>();
 
-this.offerLocations= new Array<Location>();
+      this.offerLocations= new Array<Location>();
+
+      this.user= JSON.parse(localStorage.getItem("user_data"))
+      
+      this.dbService.checkIsVendor(this.user._id).subscribe((data:any)=>
+      {
+        this.seller = data.vendor_data;
+        
+
+      })
+
 
     if(this.paramSrv.param)
     {
       this.offer = this.paramSrv.param;
 
-     
+      if(this.seller)
+      {
+        console.log(this.seller)
+      }
       
         this.dbService.getOfferLocations(this.offer._id).subscribe((dataLoc:any)=>
-      { console.log(dataLoc);
+      { 
+
        this.offerLocations= dataLoc.locations;
        
        for(let i =0; i< this.offerLocations.length; i++)
@@ -61,10 +79,6 @@ this.offerLocations= new Array<Location>();
          this.addMarker(this.offerLocations[i]);
        }
      
-      /* this.offerLocations.forEach((location:Location)=>
-      {
-        this.addMarker(location);
-      })*/
         
       })
     
@@ -72,6 +86,12 @@ this.offerLocations= new Array<Location>();
 
 
   }
+
+  ionViewWillEnter(){
+
+
+  }
+
 
   getGeoLocation()
   {
@@ -116,13 +136,23 @@ this.offerLocations= new Array<Location>();
 
   async selectMarker(seller)
   {
-    this.navCtrl.navigateRoot('seller-shop')
     this.paramSrv.param=
     {
       "offer": JSON.stringify(this.offer) ,
       "seller": JSON.stringify(seller)
     }
+    this.navCtrl.navigateRoot('seller-shop')
+
   }
 
+  joinOffer()
+  {
+    this.paramSrv.param=
+    {
+      "offer":this.offer,
+      "seller": this.seller
+    }
+    this.navCtrl.navigateRoot('asociate-offer');
+  }
 
 }

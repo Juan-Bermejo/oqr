@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { ModalController, ToastController } from '@ionic/angular';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { NativeGeocoder, NativeGeocoderResult, NativeGeocoderOptions } from '@ionic-native/native-geocoder/ngx';
 import { Location } from '../../clases/location';
@@ -21,6 +21,8 @@ export class AddLocationPage implements OnInit {
   city: string;
   province: string;
   country: string;
+  current_latitude:number;
+  current_longitude:number;
   latitude:number;
   longitude:number;
   mapType = 'roadmap';
@@ -39,13 +41,15 @@ export class AddLocationPage implements OnInit {
   constructor(private modalCtrl:ModalController,
     private geolocation: Geolocation,
     private nativeGeocoder: NativeGeocoder,
-  private dbService: DbService) {
+    private dbService: DbService,
+  private toast: ToastController) {
 
     this.user= JSON.parse(localStorage.getItem('user_data'));
     console.log(this.user)
       this.mapType = 'roadmap';
       this.mapOn=true;
       this.getGeoLocation();
+
       
      
      }
@@ -56,8 +60,8 @@ export class AddLocationPage implements OnInit {
   getGeoLocation()
   {
     this.geolocation.getCurrentPosition().then((resp) => {
-      this.latitude=resp.coords.latitude;
-      this.longitude= resp.coords.longitude;
+      this.current_latitude=resp.coords.latitude;
+      this.current_longitude= resp.coords.longitude;
 
      
       
@@ -72,8 +76,12 @@ export class AddLocationPage implements OnInit {
     
     this.nativeGeocoder.forwardGeocode(this.address, this.options)
   .then((result: NativeGeocoderResult[]) => { 
+    
     this.latitude= parseFloat(result[0].latitude);
      this.longitude= parseFloat(result[0].longitude);
+
+     this.current_latitude=this.latitude;
+     this.current_longitude=this.longitude;
     
   })
   .catch((error: any) => console.log(error));
@@ -95,49 +103,44 @@ export class AddLocationPage implements OnInit {
 
   addLocation()
   {
+    console.log(this.latitude)
+    if(this.latitude != undefined && this.longitude != undefined )
+    {
 
+      this.getGeoCoderAddress(this.latitude, this.longitude).then(()=>{
 
-    this.getGeoCoderAddress(this.latitude, this.longitude).then(()=>{
-      let l= new Location();
-      l.address=this.address;
-      l.city= this.location_data.locality
-      l.country=this.location_data.countryName;
-      l.latitude=this.latitude;
-      l.longitude= this.longitude;
-      l.province=this.location_data.administrativeArea;
-      l.subLocality= this.location_data.subLocality;
-      l.vendor_id=this.user.shops[0];
-     console.log(this.location_data)
-     console.log(l);
-      this.dbService.saveLocation(l).subscribe((data)=>{
-
-        console.log("Data:",data);
-      })
-      
-      this.modalCtrl.dismiss({
-        "result":{
-          "address":  this.address,
-          "city":  this.location_data.locality,
-          "province": this.location_data.administrativeArea,
-          "country":  this.location_data.countryName,
-          "postalCode": this.location_data.postalCode,
-          "lat":  this.latitude,
-          "lon":  this.longitude,
-          "subLocality":this.location_data.subLocality,
-          "subAdministrativeArea": this.location_data.subAdministrativeArea
-        },
-        'dismissed': true
-      }).then(()=>{
-        this.mapOn=false;
-        this.latitude=undefined;
-        this.longitude=undefined;
-        this.location_data=undefined;
-        this.markers=new Array<{}>();
-        this.getGeoLocation();
+        let l= new Location();
+        l.address=this.address;
+        l.city= this.location_data.locality
+        l.country=this.location_data.countryName;
+        l.latitude=this.latitude;
+        l.longitude= this.longitude;
+        l.province=this.location_data.administrativeArea;
+        l.subLocality= this.location_data.subLocality;
+        l.vendor_id=this.user.shops[0];
+  
+       console.log(this.location_data)
+       console.log(l);
+  
+        this.dbService.saveLocation(l).subscribe((data)=>{
+  
+          console.log("Data:",data);
+        })
         
       })
 
-    })
+    }
+    else{
+      this.toast.create(
+        {
+          message:"Debes cargar una locacion.",
+          color:"danger"
+        }
+      )
+    }
+
+    
+
 
 
   }
@@ -150,8 +153,8 @@ export class AddLocationPage implements OnInit {
     this.mapOn=true;
 
     this.geolocation.getCurrentPosition().then((resp) => {
-      this.latitude=resp.coords.latitude;
-      this.longitude= resp.coords.longitude;
+      this.current_latitude=resp.coords.latitude;
+      this.current_longitude= resp.coords.longitude;
   
      
       

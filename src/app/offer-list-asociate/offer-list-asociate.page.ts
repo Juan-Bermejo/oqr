@@ -21,6 +21,7 @@ export class OfferListAsociatePage implements OnInit {
   search_tool:boolean;
   seller:Seller;
   user:User;
+  
 
    
 
@@ -41,6 +42,7 @@ export class OfferListAsociatePage implements OnInit {
       this.dbServ.checkIsVendor(this.user._id).subscribe((data:any)=>
     {
       this.seller=data.vendor_data;
+      console.log(data.vendor_data)
     })
 
 

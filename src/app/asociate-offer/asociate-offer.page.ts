@@ -4,6 +4,7 @@ import { NavParamsService } from '../services/nav-params.service';
 import { DbService } from '../services/db.service';
 import { Offer } from '../clases/offer';
 import { Seller } from '../clases/seller';
+import { User } from '../clases/user';
 
 @Component({
   selector: 'app-asociate-offer',
@@ -12,6 +13,8 @@ import { Seller } from '../clases/seller';
 })
 export class AsociateOfferPage implements OnInit {
 
+  is_my_offer: boolean;
+  user:User;
   offer:Offer;
   seller:Seller;
   checkProducts:boolean;
@@ -22,10 +25,24 @@ export class AsociateOfferPage implements OnInit {
     private ParamSrv: NavParamsService,
    private dbServ:DbService) {
 
+    this.user= JSON.parse(localStorage.getItem("user_data"));
     this.offer=this.ParamSrv.param.offer;
     this.seller=this.ParamSrv.param.seller;
     console.log(this.offer)
     console.log(this.seller)
+    console.log(this.ParamSrv.param)
+
+      for(let i =0; i< this.offer.sellers.length; i++)
+      {
+        if(this.offer.sellers[i] == this.seller._id)
+        { 
+          console.log(this.offer.sellers[i])
+          console.log(this.seller._id)
+          this.is_my_offer=true;
+        }
+      }
+
+   
 
     }
 
@@ -46,13 +63,16 @@ export class AsociateOfferPage implements OnInit {
             role: 'cancel',
             cssClass: 'parimary',
             
-            handler: (blah) => {
-              console.log('Confirm Cancel: blah');
+            handler: () => {
+
             }
           }, {
             text: 'Confirmar',
             handler: () => {
-              console.log('Confirm Okay');
+               this.dbServ.joinToOffer(this.user._id,this.offer._id,false).subscribe((data:any)=>
+              {
+                console.log(data)
+              })
             }
           }
         ]

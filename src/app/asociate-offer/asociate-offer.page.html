@@ -66,9 +66,13 @@
 
 
   <ion-row class="ion-justify-content-center">
-    <ion-button expand="block" (click)="associate()" >
+    <ion-button *ngIf="!is_my_offer" expand="block" (click)="associate()" >
       <ion-icon name="md-people" color="light" size="large" slot="start"></ion-icon>
       Quiero asociarme a esta oferta</ion-button>
+
+      <ion-button *ngIf="is_my_offer" color="danger" expand="block" (click)="desAssociate()" >
+          <ion-icon name="md-people" color="light" size="large" slot="start"></ion-icon>
+          Quiero dejar de ser socio</ion-button>
   </ion-row>
   <ion-row>
     <ion-item-divider>
