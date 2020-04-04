@@ -229,7 +229,8 @@ Producto
                     </ion-item>
           </ion-list>
 
-          <ion-button (click)="saveOffer()" shape="round">
+          <ion-spinner *ngIf="spinner" name="crescent" color="primary" ></ion-spinner>
+          <ion-button *ngIf="!spinner" (click)="saveOffer()" shape="round">
             Confirmar Oferta
           </ion-button>
 

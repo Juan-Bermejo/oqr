@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, NgZone, ElementRef, ViewChild } from '@angular/core';
 import { ModalController, ToastController } from '@ionic/angular';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { NativeGeocoder, NativeGeocoderResult, NativeGeocoderOptions } from '@ionic-native/native-geocoder/ngx';
 import { Location } from '../../clases/location';
 import { User } from '../../clases/user';
 import { DbService } from '../../services/db.service';
+import { MapsAPILoader } from '@agm/core';
 
 
 @Component({
@@ -36,13 +37,18 @@ export class AddLocationPage implements OnInit {
     maxResults: 5
 };
 
+zoom: number;
 
+@ViewChild('search',{static:false})
+public searchElementRef: ElementRef;
 
   constructor(private modalCtrl:ModalController,
     private geolocation: Geolocation,
     private nativeGeocoder: NativeGeocoder,
     private dbService: DbService,
-  private toast: ToastController) {
+  private toast: ToastController,
+  private mapsAPILoader: MapsAPILoader,
+  private ngZone: NgZone) {
 
     this.user= JSON.parse(localStorage.getItem('user_data'));
     console.log(this.user)
@@ -149,6 +155,39 @@ export class AddLocationPage implements OnInit {
 
 
   ngOnInit() {
+
+
+    //////////////////////////////////////// Para cuando se pague el place
+
+/*
+     //load Places Autocomplete
+     this.mapsAPILoader.load().then(() => {
+      //this.setCurrentLocation();
+      //this.geoCoder = new google.maps.Geocoder;
+ 
+      let autocomplete = new google.maps.places.Autocomplete(this.searchElementRef.nativeElement, {
+        types: ["address"]
+      });
+      autocomplete.addListener("place_changed", () => {
+        this.ngZone.run(() => {
+          //get the place result
+          let place: google.maps.places.PlaceResult = autocomplete.getPlace();
+ 
+          //verify result
+          if (place.geometry === undefined || place.geometry === null) {
+            return;
+          }
+ 
+          //set latitude, longitude and zoom
+          this.latitude = place.geometry.location.lat();
+          this.longitude = place.geometry.location.lng();
+          this.zoom = 12;
+        });
+      });
+    });
+
+*/
+    ////////////////////////////////////
 
     this.mapOn=true;
 

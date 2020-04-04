@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NavController, ModalController } from '@ionic/angular';
+import { NavController, ModalController, NavParams } from '@ionic/angular';
 import { DbService } from '../../services/db.service';
 import { Seller } from '../../clases/seller';
 import { ModalCategoriesPage } from '../../modals/modal-categories/modal-categories.page';
@@ -17,14 +17,29 @@ export class NewSellerComponent implements OnInit {
   user_data: any;
   seller: Seller;
   spinner:boolean=false;
+  is_seller:boolean=false;
 
 
   constructor(private navCtrl: NavController,
               private modalctrl: ModalController,
               private dbService: DbService,
-              private builder: FormBuilder) {
+              private builder: FormBuilder,
+              private navParams: NavParams) {
 
-                this.seller= new Seller();
+                if(this.navParams.get("seller"))
+                {
+                  this.seller=this.navParams.get("seller")
+                  this.is_seller=true;
+                  this.registroForm.controls['cuit'].setValue(this.seller.cuit)
+                  this.registroForm.controls['shop_name'].setValue(this.seller.shop_name)
+                  this.registroForm.controls['category'].setValue(this.seller.category)
+                
+                }
+                else{
+                  this.seller= new Seller();
+                }
+
+                
                 this.user_data=JSON.parse(localStorage.getItem("user_data"));
                 console.log(this.user_data);
                 this.seller.owner=this.user_data._id;
@@ -74,17 +89,26 @@ export class NewSellerComponent implements OnInit {
      
      setTimeout(() => {
 
-      
-      this.dbService.addVendor(this.seller).subscribe((data)=>{
-        this.spinner=false;
-        this.dbService.setIsSeller$(true);
-        this.registroForm.reset();
-        console.log(data)
-      },
-     (data)=>{
-       this.spinner=false;
- 
-     })
+      if(this.is_seller)
+      {
+        console.log("Modificar el vendedor")
+      }
+      else{
+
+        this.dbService.addVendor(this.seller).subscribe((data)=>{
+          this.spinner=false;
+          this.dbService.setIsSeller$(true);
+          this.registroForm.reset();
+          console.log(data)
+        },
+       (data)=>{
+         this.spinner=false;
+   
+       })
+       
+
+      }
+
 
       this.dismissModal("");
 

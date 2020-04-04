@@ -35,7 +35,7 @@ export class NewOfferPage implements OnInit {
   
   categories = categories
 
-
+  spinner:boolean=false;
   seller:Seller;
   user:User;
   index:number=0;
@@ -178,6 +178,13 @@ export class NewOfferPage implements OnInit {
 
   saveOffer()
   {
+    this.spinner=true;
+
+    setTimeout(() => {
+      
+      
+ 
+
     let offer = new Offer()
     offer.category = this.category;
     offer.kind = this.kind;
@@ -201,22 +208,24 @@ console.log("offer: ", offer)
           toast.message = 'Oferta creada con exito';
           toast.duration = 2000;
           document.body.appendChild(toast);
+          this.spinner=false;
           return toast.present();
 
         }
-
+        this.spinner=false;
       });
 
     this.dbService.updateUser(this.dbService.user_id, this.dbService.offer_id)
       .subscribe((data: any) => {
         if(data.status == 200) {
 
+          this.navCtrl.navigateRoot('home');
           console.log('ok');
 
         }
 
       });
-
+    }, 2000);
   }
 
   ngOnInit() {

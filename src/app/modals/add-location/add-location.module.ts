@@ -16,7 +16,8 @@ import { AgmCoreModule } from '@agm/core';
     IonicModule,
     AddLocationPageRoutingModule,
     AgmCoreModule.forRoot({
-      apiKey: 'AIzaSyAfYTQGAvHWC7vd-1iTEQSGoDQT_xJNw2A'
+      apiKey: 'AIzaSyAfYTQGAvHWC7vd-1iTEQSGoDQT_xJNw2A',
+      libraries: ['places']
     })
   ],
   declarations: [AddLocationPage]

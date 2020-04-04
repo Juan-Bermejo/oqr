@@ -36,6 +36,12 @@ shop_name:string;
                 this.seller= new Seller();
                 this.user_data=JSON.parse(localStorage.getItem("user_data"));
 
+                this.dbService.checkIsVendor(this.user_data._id).subscribe((data:any)=>
+              {
+                console.log(data)
+                this.seller= data.vendor_data;
+              })
+
                 this.seller.owner=this.user_data._id;
 
                 this.dbService.getLocation(this.user_data._id).subscribe((locs:any)=>
@@ -76,7 +82,12 @@ console.log(this.seller);
     const modal = await this.modalctrl.create({
       component: NewSellerComponent,
 
-      cssClass:"modal"
+      cssClass:"modal",
+      componentProps:
+      {
+        "seller":this.seller
+      }
+
       
     });
      modal.present();

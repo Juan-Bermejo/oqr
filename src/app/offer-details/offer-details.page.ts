@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, NgZone } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NavController, ModalController } from '@ionic/angular';
 import { NavParamsService } from '../services/nav-params.service';
@@ -10,6 +10,7 @@ import { Offer } from '../clases/offer';
 import { DbService } from '../services/db.service';
 import { SellerShopPage } from '../seller-shop/seller-shop.page';
 import { Seller } from '../clases/seller';
+import { AgmMap, MapsAPILoader } from '@agm/core';
 
 @Component({
   selector: 'app-offer-details',
@@ -18,11 +19,14 @@ import { Seller } from '../clases/seller';
 })
 export class OfferDetailsPage implements OnInit {
 
+  @ViewChild('map',{static:false,})map:AgmMap;
+  
+
   is_my_offer: boolean= false;
   user:User;
   offer: Offer;
-  latitude = -28.68352;
-  longitude = -147.20785;
+  latitude:number;
+  longitude:number;
   mapType = 'roadmap';
 
   selectedMarker;
@@ -36,6 +40,7 @@ export class OfferDetailsPage implements OnInit {
   my_offer:boolean=true;
   seller:Seller;
   is_seller:boolean;
+  zoom:number;
   
 
 
@@ -45,7 +50,12 @@ export class OfferDetailsPage implements OnInit {
     private geolocation: Geolocation,
     private dbService: DbService,
     private modalController:ModalController) {
+      
+    this.getGeoLocation();
 
+
+
+      this.zoom=12;
       this.markers= new Array<{}>();
 
       this.offerLocations= new Array<Location>();
@@ -89,7 +99,15 @@ export class OfferDetailsPage implements OnInit {
 
   ionViewWillEnter(){
 
+  }
 
+
+  ready(data)
+  {
+    console.log(data)
+    this.map.zoom=25;
+    this.map.latitude=this.latitude;
+    this.longitude=this.longitude;
   }
 
 
@@ -109,7 +127,8 @@ export class OfferDetailsPage implements OnInit {
   }
 
 
-  async addMarker(location:Location) {
+   addMarker(location:Location) {
+
     this.markers.push(
       {
         location: location,
@@ -126,8 +145,6 @@ export class OfferDetailsPage implements OnInit {
   
 
   ngOnInit() {
-
-    this.getGeoLocation();
 
  
   }

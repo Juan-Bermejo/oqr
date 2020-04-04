@@ -20,6 +20,25 @@
 
     <ion-row class="ion-justify-content-center">
 
+            <ion-item-divider (click)="dataModal()" >
+                    <ion-icon size="large" name="md-create" color="primary"></ion-icon>
+                    <ion-label>Datos de mi negocio</ion-label>
+                    <ion-icon slot="end" src="../../assets/ionicons/chevron-forward-outline.svg"></ion-icon>
+                </ion-item-divider>
+                <ion-item-divider>
+                
+                        <ion-label slot="start">Nombre:</ion-label>
+                        <ion-label>{{seller.shop_name}}</ion-label>
+                   
+                        <ion-label slot="end"> Cuit: </ion-label>
+                        <ion-label slot="end"> {{seller.cuit}} </ion-label>
+ 
+                </ion-item-divider>
+
+                <ion-row class="ion-justify-content-center">
+                        <ion-label> {{seller.category}} </ion-label>
+                   </ion-row>
+
       <ion-item-divider (click)="goTo('my-offers')" >
           <ion-icon size="large" name="md-cash" color="primary"  color="primary"></ion-icon>
           <ion-label>Mis ofertas</ion-label>
@@ -58,11 +77,7 @@
 
 
         
-    <ion-item-divider (click)="dataModal()" >
-            <ion-icon size="large" name="md-create" color="primary"></ion-icon>
-            <ion-label>Datos de mi negocio</ion-label>
-            <ion-icon slot="end" src="../../assets/ionicons/chevron-forward-outline.svg"></ion-icon>
-        </ion-item-divider>
+
 
     </ion-row>
     <br>

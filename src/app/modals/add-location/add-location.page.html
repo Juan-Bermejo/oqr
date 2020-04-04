@@ -18,7 +18,7 @@
   <ion-col size=10>
 
   
-    <ion-input placeholder="Ingresa una direccion." [(ngModel)]="address" >
+    <ion-input placeholder="Ingresa una direccion." [(ngModel)]="address">
         <span>
           <ion-icon name="md-pin" size="large" color="primary"></ion-icon>
         </span>
@@ -31,6 +31,10 @@
 
           </span>
       </ion-input>
+
+
+      <!-- Para cuando se pague el places <input type="text" class="native-input sc-ion-input-ios" (keydown.enter)="$event.preventDefault()" placeholder="Search Nearest Location" autocorrect="off" autocapitalize="off" spellcheck="off" type="text" #search>-->
+
     </ion-col>
 </ion-row>
 

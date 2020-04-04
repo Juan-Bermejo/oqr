@@ -1,6 +1,6 @@
 
 
-<ion-content padding="true">
+<ion-content class="ion-padding">
 
 <ion-toolbar>
 
@@ -19,9 +19,9 @@
   {{offer.description}}
 </p>
 
-<agm-map [latitude]='latitude' [longitude]='longitude' 
-  [zoom]="14"
-  [mapTypeId]='mapType'>
+<agm-map (mapReady)="ready($event)" [usePanning]="true" (ngOnDestroy)="ready($event)" [latitude]='latitude' [longitude]='longitude' 
+  [zoom]="zoom"
+  [mapTypeId]='mapType' #map>
 
   <agm-marker
   *ngFor="let marker of markers"
