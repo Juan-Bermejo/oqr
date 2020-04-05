@@ -127,6 +127,17 @@ export class DbService {
         {headers: new HttpHeaders({"Content-Type": "application/json"})});
     }
 
+    nearOffers(locality: string, sub_locality: string){
+      let url = 'offers/nearoffers'
+      let data = {
+        "locality": locality,
+        "sub_locality": sub_locality
+      }
+      let OFFER_URL = this.URL_SERVER.concat(url);
+      return this.http.post(OFFER_URL, data,
+        {headers: new HttpHeaders({"Content-Type": "application/json"})});
+    }
+
     joinToOffer(user_id:string, offer_id:string, add_products: boolean){
       let url = 'offers/jointooffer'
       let data = {
