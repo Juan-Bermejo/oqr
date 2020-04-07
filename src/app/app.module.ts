@@ -38,6 +38,8 @@ import { ZBar } from '@ionic-native/zbar/ngx';
 import { SellerShopPageModule } from './seller-shop/seller-shop.module';
 import { NewSellerComponent } from './componentes/new-seller/new-seller.component';
 //import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
+import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
+
 
 
 
@@ -69,6 +71,7 @@ import { NewSellerComponent } from './componentes/new-seller/new-seller.componen
     GoogleMapsAPIWrapper,
     Geolocation,
     HttpClient,
+
     
    // BarcodeScanner,
    ZBar,
@@ -77,6 +80,7 @@ import { NewSellerComponent } from './componentes/new-seller/new-seller.componen
     AngularFireAuth,
     GooglePlus,
     Facebook,
+    InAppBrowser,
     
     
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }

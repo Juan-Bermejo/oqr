@@ -16,4 +16,8 @@ ion-back-button{
 
 agm-map { 
     height: 400px;
+    max-height:none;
 }
+
+.agm-map-container-inner { width: inherit; height: inherit; } 
+/*.agm-map-content { display:none; }*/

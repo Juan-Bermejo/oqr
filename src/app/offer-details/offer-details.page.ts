@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, NgZone } from '@angular/core';
+import { Component, OnInit, ViewChild, NgZone, HostListener, Renderer, ElementRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NavController, ModalController } from '@ionic/angular';
 import { NavParamsService } from '../services/nav-params.service';
@@ -10,7 +10,8 @@ import { Offer } from '../clases/offer';
 import { DbService } from '../services/db.service';
 import { SellerShopPage } from '../seller-shop/seller-shop.page';
 import { Seller } from '../clases/seller';
-import { AgmMap, MapsAPILoader } from '@agm/core';
+import { AgmMap, MapsAPILoader, GoogleMapsAPIWrapper } from '@agm/core';
+
 
 @Component({
   selector: 'app-offer-details',
@@ -19,8 +20,9 @@ import { AgmMap, MapsAPILoader } from '@agm/core';
 })
 export class OfferDetailsPage implements OnInit {
 
-  @ViewChild('map',{static:false,})map:AgmMap;
-  
+
+  @ViewChild('AgmMap', {static:false}) AgmMap:AgmMap;
+
 
   is_my_offer: boolean= false;
   user:User;
@@ -49,13 +51,13 @@ export class OfferDetailsPage implements OnInit {
     public paramSrv: NavParamsService,
     private geolocation: Geolocation,
     private dbService: DbService,
-    private modalController:ModalController) {
+    private modalController:ModalController,
+    private wrapper: ElementRef, private renderer: Renderer
+    ) {
       
     this.getGeoLocation();
 
-
-
-      this.zoom=12;
+     
       this.markers= new Array<{}>();
 
       this.offerLocations= new Array<Location>();
@@ -102,13 +104,9 @@ export class OfferDetailsPage implements OnInit {
   }
 
 
-  ready(data)
-  {
-    console.log(data)
-    this.map.zoom=25;
-    this.map.latitude=this.latitude;
-    this.longitude=this.longitude;
-  }
+
+
+
 
 
   getGeoLocation()
@@ -146,7 +144,6 @@ export class OfferDetailsPage implements OnInit {
 
   ngOnInit() {
 
- 
   }
 
 
@@ -172,4 +169,24 @@ export class OfferDetailsPage implements OnInit {
     this.navCtrl.navigateRoot('asociate-offer');
   }
 
+
+  change(event)
+  {
+  
+  }
+  
+
+  ngAfterViewInit(){
+
+  
+  }
+
+
+
+
 }
+
+
+
+
+

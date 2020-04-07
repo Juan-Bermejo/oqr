@@ -71,7 +71,8 @@ const routes: Routes = [
   {
     path: 'my-offers',
     loadChildren: () => import('./my-offers/my-offers.module').then( m => m.MyOffersPageModule)
-  },  {
+  },
+  {
     path: 'my-account',
     loadChildren: () => import('./my-account/my-account.module').then( m => m.MyAccountPageModule)
   },
@@ -98,6 +99,10 @@ const routes: Routes = [
   {
     path: 'asociate-offer',
     loadChildren: () => import('./asociate-offer/asociate-offer.module').then( m => m.AsociateOfferPageModule)
+  },
+  {
+    path: 'pay-return',
+    loadChildren: () => import('./pay-return/pay-return.module').then( m => m.PayReturnPageModule)
   },
 
 

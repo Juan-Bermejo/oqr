@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { ModalController, NavParams, ToastController } from '@ionic/angular';
+import { ModalController, NavParams, ToastController, NavController } from '@ionic/angular';
 import { NavParamsService } from '../services/nav-params.service';
 import { DbService } from '../services/db.service';
 import { User } from '../clases/user';
@@ -8,6 +8,8 @@ import { Seller } from '../clases/seller';
 import { Product } from '../clases/product';
 import { Offer } from '../clases/offer';
 import { Cart } from '../clases/cart';
+import { PostService } from '../services/post.service';
+import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 
 @Component({
   selector: 'app-seller-shop',
@@ -28,10 +30,14 @@ export class SellerShopPage implements OnInit {
    cart: Cart;
    offerdata:any;
 
+
   constructor(private modalCtrl:ModalController,
               private dbService:DbService,
               private navParams: NavParamsService,
-              private toastController: ToastController) { 
+              private toastController: ToastController,
+            private postService:PostService,
+          private navCtrl: NavController,
+          private iab: InAppBrowser) { 
               
               this.cart= new Cart();
               this.dataMarker= JSON.parse(this.navParams.param.seller)
@@ -120,6 +126,36 @@ export class SellerShopPage implements OnInit {
     }
 
 
+    payMobbex()
+    {
+
+      this.postService.pagarMobbex(
+
+       JSON.stringify( {
+          "total": this.cart.total,
+          "description": "Unproducto de prueba",
+          "currency": "ARS",
+          "test": true,
+          "reference": "operacion de prueba1",
+          "return_url":"http://localhost:8100/pay-return/"
+        })).subscribe((data:any)=>
+    {
+      console.log(data)
+      if(data.result==true)
+      {
+       // const browser = this.iab.create(data.data.url);
+       window.open(data.data.url,'_system', 'location=yes');
+
+      }
+      
+      
+    },(error)=>
+  {
+    console.log(error)
+  })
+    }
+
+
   addProductToCart(product:Product)
   {
     if(product.stock > 0 )
@@ -158,7 +194,6 @@ export class SellerShopPage implements OnInit {
     {
       this.addProductToCart(prod)
 
-     
     }
     else{
 

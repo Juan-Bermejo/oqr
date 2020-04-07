@@ -19,23 +19,27 @@
   {{offer.description}}
 </p>
 
-<agm-map (mapReady)="ready($event)" [usePanning]="true" (ngOnDestroy)="ready($event)" [latitude]='latitude' [longitude]='longitude' 
-  [zoom]="zoom"
-  [mapTypeId]='mapType' #map>
+    <agm-map  [latitude]='latitude' [longitude]='longitude' 
+    [zoom]=12
+    [mapTypeId]='mapType' 
+    #AgmMap
+    >
+  
+    <agm-marker
+    *ngFor="let marker of markers"
+    [latitude]="marker.lat"
+    [longitude]="marker.lng"
+    [opacity]="marker.alpha"
+    [markerDraggable]="false"
+    [visible]="true"
+    (markerClick)="selectMarker(marker)"
+    [iconUrl]="marker.icon"
 
-  <agm-marker
-  *ngFor="let marker of markers"
-  [latitude]="marker.lat"
-  [longitude]="marker.lng"
-  [opacity]="marker.alpha"
-  [markerDraggable]="false"
-  [visible]="true"
-  (markerClick)="selectMarker(marker)"
-  [iconUrl]="marker.icon"
+  >
+  </agm-marker>
+  </agm-map>
+  
 
->
-</agm-marker>
-</agm-map>
 
 
 

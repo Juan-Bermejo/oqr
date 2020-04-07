@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Subject, Observable } from 'rxjs';
 import { PostLink } from '../clases/post-link';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -14,6 +14,17 @@ export class PostService {
 
   constructor(private http: HttpClient) {
    
+   }
+
+   pagarMobbex(data:any)
+   {
+  
+    return this.http.post("https://api.mobbex.com/p/checkout",
+  data, {headers: new HttpHeaders({
+    "x-api-key":"zJ8LFTBX6Ba8D611e9io13fDZAwj0QmKO1Hn1yIj",
+    "x-access-token": "d31f0721-2f85-44e7-bcc6-15e19d1a53cc",
+    "Content-Type": "application/json"
+  })} )
    }
 
    getposts$(): Observable<PostLink[]> {

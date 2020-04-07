@@ -2,7 +2,7 @@ import { Component, ViewChild, OnInit, Input, AfterViewInit, OnChanges, SimpleCh
 import { ModalController, NavController, MenuController } from '@ionic/angular';
 import { StreamingMedia, StreamingVideoOptions } from '@ionic-native/streaming-media/ngx';
 
-
+import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { NavigationOptions } from '@ionic/angular/dist/providers/nav-controller';
 import { Router, NavigationExtras } from '@angular/router';
 import { NavParamsService } from '../services/nav-params.service';
@@ -16,6 +16,7 @@ import { MenuService } from '../services/menu.service';
 import { PostLink } from '../clases/post-link';
 import { PostService } from '../services/post.service';
 import { Offer } from '../clases/offer';
+import { NativeGeocoder, NativeGeocoderResult, NativeGeocoderOptions } from '@ionic-native/native-geocoder/ngx';
 
 
 @Component({
@@ -25,6 +26,9 @@ import { Offer } from '../clases/offer';
 })
 export class HomePage implements OnInit {
 
+  myAddress: string;
+  longitude: number;
+  latitude: number;
   user_id: string = '';
   offer_list;
   aux_offer_list:Array<any>;
@@ -33,15 +37,20 @@ export class HomePage implements OnInit {
   search_tool:boolean;
   logged:boolean;
   category:string;
- 
+  location_data: NativeGeocoderResult;
 
-   options: StreamingVideoOptions = {
+  options: NativeGeocoderOptions = {
+    useLocale: true,
+    maxResults: 5
+};
+
+  /* options: StreamingVideoOptions = {
     successCallback: () => { console.log('Video played') },
     errorCallback: (e) => { console.log('Error streaming') },
     orientation: 'landscape',
     shouldAutoClose: true,
     controls: false
-  };
+  };*/
   
    
 
@@ -54,7 +63,9 @@ export class HomePage implements OnInit {
      private authService: AuthService,
      private menu: MenuController,
      private dbService: DbService,
-     private menuService: MenuService
+     private menuService: MenuService,
+     private geolocation: Geolocation,
+     private nativeGeocoder: NativeGeocoder
     ) {     
 
   
@@ -93,6 +104,48 @@ export class HomePage implements OnInit {
     localStorage.setItem("user_data", JSON.stringify(this.dbService.user_data));
     
   }
+
+
+  getGeoCoderAddress(lat:number, long:number)
+  {
+    return this.nativeGeocoder.reverseGeocode(lat, long, this.options)
+    .then((result: NativeGeocoderResult[]) =>{ 
+      this.location_data= result[0];
+      this.myAddress=result[0].thoroughfare + " " + result[0].subThoroughfare +", "+ result[0].locality
+      +", "+result[0].countryName;
+     
+      this.dbService.nearOffers(this.location_data.locality, this.location_data.subLocality).subscribe((data:any)=>
+    { 
+  
+  console.log(data);
+  this.aux_offer_list= data.offers[0];
+ /* data.locations.forEach(loc => {
+    
+  });*/
+              
+    })
+
+    })
+    .catch((error: any) => console.log(error));
+  }
+
+
+
+  getGeoLocation()
+{
+  this.geolocation.getCurrentPosition().then((resp) => {
+
+    this.latitude=resp.coords.latitude;
+    this.longitude=resp.coords.longitude;
+    //this.addMarker(this.latitude, this.longitude);
+this.getGeoCoderAddress(this.latitude, this.longitude);
+
+   }).catch((error) => {
+     console.log('Error getting location', error);
+   });
+}
+
+
 
    async categoryFilter() {
      
