@@ -39,8 +39,11 @@ import { SellerShopPageModule } from './seller-shop/seller-shop.module';
 import { NewSellerComponent } from './componentes/new-seller/new-seller.component';
 //import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
+import { JwtHelperService, JwtModule } from '@auth0/angular-jwt';
 
-
+export function tokenGetter() {
+  return localStorage.getItem('token');
+}
 
 
 @NgModule({
@@ -62,6 +65,13 @@ import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
      SellerShopPageModule,
      FormsModule,
      ReactiveFormsModule,
+     JwtModule.forRoot({
+      config: {
+        tokenGetter: tokenGetter,
+        whitelistedDomains: ['localhost:3001'],
+        blacklistedRoutes: ['localhost:3001/auth/']
+      }
+    }),
      
     ],
   providers: [
@@ -71,6 +81,7 @@ import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
     GoogleMapsAPIWrapper,
     Geolocation,
     HttpClient,
+    JwtHelperService,
 
     
    // BarcodeScanner,

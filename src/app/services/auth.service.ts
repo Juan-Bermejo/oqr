@@ -8,6 +8,9 @@ import { auth } from 'firebase/app';
 })
 export class AuthService {
 
+  isAuthenticated(): any {
+    throw new Error("Method not implemented.");
+  }
   constructor(private afAuth: AngularFireAuth) { }
 
   registerUser(email: string, pass: string) {

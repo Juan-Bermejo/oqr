@@ -10,10 +10,12 @@ import { Observable } from 'rxjs';
 import { Facebook } from '@ionic-native/facebook/ngx';
 
 import { DbService } from '../services/db.service';
-import { NgForm } from '@angular/forms';
+import { NgForm, Validators, FormControl, FormGroup, FormBuilder } from '@angular/forms';
 import { ToastController } from '@ionic/angular';
 import { HomePage } from '../home/home.page';
 import { MenuService } from '../services/menu.service';
+import { JwtHelperService } from '@auth0/angular-jwt';
+import { TokenService } from '../services/token.service';
 
 
 
@@ -27,6 +29,8 @@ export class LoginPage implements OnInit {
 
   logged: Boolean = false;
   user : Observable<firebase.User>;
+  user_token:User;
+  data_token:any;
 
   constructor(private navCtrl: NavController, 
               private afAuth: AngularFireAuth, 
@@ -35,11 +39,24 @@ export class LoginPage implements OnInit {
               private googlePlus: GooglePlus,
               private facebook: Facebook,
               public dbService: DbService,
-              public menuService: MenuService) { }
+              private builder: FormBuilder,
+              private tokenServ: TokenService) { }
 
-  public user_name: string = '';
-  public password: string = '';
   private anyErrors: string = '';
+
+  user_name = new FormControl('', [
+    Validators.required
+  ]);
+  password = new FormControl('', [
+    Validators.required
+  ]);
+
+
+
+  registroForm: FormGroup = this.builder.group({
+    user_name: this.user_name,
+    password: this.password,
+  });
 
   ngOnInit() {
 
@@ -60,19 +77,27 @@ export class LoginPage implements OnInit {
    
   }
 
-  onLogin(form_log: NgForm) {
-    this.dbService.checkLogin(this.user_name, this.password)
+  onLogin() {
+    this.dbService.checkLogin(this.user_name.value, this.password.value)
       .subscribe((data: any) => {
+        console.log(data)
         if(data.status == 200) {
 
-          this.resetForm(form_log);
+        localStorage.setItem("token", data.token);
+       
+        this.data_token = this.tokenServ.GetPayLoad();
+        console.log(this.data_token)
+        console.log(this.data_token.doc)
+        this.user_token = this.data_token.doc;
           //this.dbService.user_id = data.id_user;
           this.dbService.is_logged = true;
-          this.dbService.user_id = data.user_data._id;
-          this.dbService.user_data = data.user_data;
+          this.dbService.user_id = this.user_token._id;
+          this.dbService.user_data = this.user_token;
+          
+       
           this.dbService.setLogged(true);
-
-          this.dbService.checkIsVendor(data.user_data._id).subscribe((dataSeller:any)=>
+          this.registroForm.reset();
+          this.dbService.checkIsVendor(this.user_token._id).subscribe((dataSeller:any)=>
         { console.log(dataSeller)
           if(dataSeller.vendor_data._id)
           {
@@ -82,7 +107,7 @@ export class LoginPage implements OnInit {
             this.dbService.setIsSeller$(false);
           }
         })
-          
+         
           this.loginRedirect();
 
         }

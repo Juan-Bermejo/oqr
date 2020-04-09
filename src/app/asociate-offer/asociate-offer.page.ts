@@ -81,6 +81,20 @@ export class AsociateOfferPage implements OnInit {
       await alert.present();
     }
 
+    async desAssociate()
+    {
+      this.dbServ.dropOffer(this.user._id,this.offer._id).subscribe((data:any)=>
+    {
+      const toast = document.createElement('ion-toast');
+      toast.message = 'Ya no eres socio de esta oferta';
+      toast.duration = 2000;
+      toast.color= "primary";
+      toast.position="top";
+      document.body.appendChild(toast);
+      return toast.present(); 
+    })
+    }
+
   ngOnInit() {
   }
 

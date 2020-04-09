@@ -17,6 +17,7 @@ import { PostLink } from '../clases/post-link';
 import { PostService } from '../services/post.service';
 import { Offer } from '../clases/offer';
 import { NativeGeocoder, NativeGeocoderResult, NativeGeocoderOptions } from '@ionic-native/native-geocoder/ngx';
+import { TokenService } from '../services/token.service';
 
 
 @Component({
@@ -65,7 +66,8 @@ export class HomePage implements OnInit {
      private dbService: DbService,
      private menuService: MenuService,
      private geolocation: Geolocation,
-     private nativeGeocoder: NativeGeocoder
+     private nativeGeocoder: NativeGeocoder,
+     private tokenServ: TokenService
     ) {     
 
   
@@ -90,9 +92,19 @@ export class HomePage implements OnInit {
 
   ionViewWillEnter(){
     
-    if(this.dbService.user_data != null){
+   /* if(this.dbService.user_data != null){
       this.dbService.is_logged = true;
       this.logged = true;
+    }
+    else {
+      this.logged = false;
+      this.dbService.is_logged = false;
+    }*/
+
+    if(localStorage.getItem("token")){
+      this.dbService.is_logged = true;
+      this.logged = true;
+      console.log("logeado")
     }
     else {
       this.logged = false;
@@ -100,8 +112,8 @@ export class HomePage implements OnInit {
     }
 
     this.menuService.getMenuOpt(this.dbService.is_logged);
-
-    localStorage.setItem("user_data", JSON.stringify(this.dbService.user_data));
+    
+    localStorage.setItem("user_data", JSON.stringify(this.tokenServ.GetPayLoad().doc));
     
   }
 
