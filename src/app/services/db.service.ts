@@ -6,6 +6,7 @@ import { Location } from '../clases/location';
 import { PostLink } from '../clases/post-link';
 import { Seller } from '../clases/seller';
 import { Product } from '../clases/product';
+import { Purchase } from '../clases/purchase';
 import { RegisterPage } from '../register/register.page';
 import { MapsAPILoader } from '@agm/core';
 import { Subject, Observable, BehaviorSubject } from 'rxjs';
@@ -24,16 +25,14 @@ export class DbService {
   public offer_id: string;
   public $products: Subject<Offer>
   public is_seller$;//new Subject<boolean>();
-  public is_logged$;
+  public is_logged$=new Subject<boolean>();
   public is_logged: boolean = false;
   public user_data;
 
   readonly URL_SERVER = 'https://ofertaqr.com/app/';
 
   constructor(private http: HttpClient) {
-    this.is_logged=false;
     this.is_seller=false;
-    this.is_logged$ = new BehaviorSubject(this.is_logged);
     this.is_seller$= new BehaviorSubject(this.is_seller);
     this.selectedUser = new User();
 
@@ -281,7 +280,6 @@ export class DbService {
     {
       this.is_logged=data;
       this.is_logged$.next(this.is_logged);
-      //return this.is_logged$.asObservable();
     }
 
 
@@ -323,6 +321,15 @@ export class DbService {
       let url = 'vendors/'.concat(vendor_id);
       let VEND_URL = this.URL_SERVER.concat(url);
       return this.http.delete(VEND_URL);
+    }
+
+    //PURCHASES SERVICES
+
+    sendPurchase(purchase: Purchase){
+      let url = 'purchases/';
+      let PURCHASE_URL = this.URL_SERVER.concat(url);
+      return this.http.post(PURCHASE_URL, purchase,
+        {headers: new HttpHeaders({"Content-Type": "application/json"})});
     }
 
     /*
