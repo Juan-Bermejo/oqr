@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { ModalController, NavParams, ToastController, NavController } from '@ionic/angular';
 import { NavParamsService } from '../services/nav-params.service';
 import { DbService } from '../services/db.service';
@@ -10,6 +10,8 @@ import { Offer } from '../clases/offer';
 import { Cart } from '../clases/cart';
 import { PostService } from '../services/post.service';
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
+import { Subscription } from 'rxjs';
+import { Purchase } from '../clases/purchase';
 
 @Component({
   selector: 'app-seller-shop',
@@ -28,7 +30,8 @@ export class SellerShopPage implements OnInit {
    offer: Offer;
    seller:Seller;
    cart: Cart;
-   offerdata:any;
+   offerdata:Offer;
+   purchase_sub:Subscription;
 
 
   constructor(private modalCtrl:ModalController,
@@ -38,12 +41,13 @@ export class SellerShopPage implements OnInit {
             private postService:PostService,
           private navCtrl: NavController,
           private iab: InAppBrowser) { 
-              
+
+
               this.cart= new Cart();
               this.dataMarker= JSON.parse(this.navParams.param.seller)
               this.offer= JSON.parse(this.navParams.param.offer) ;
               this.offerdata=this.offer;
-              
+              console.log(this.offer)
               this.user_id=JSON.parse(localStorage.getItem("user_data"))._id
 
 
@@ -57,11 +61,7 @@ export class SellerShopPage implements OnInit {
               (data)=>
             {
               console.log(data)          
-            },
-          ()=>
-        {
-          console.log("complete")
-        })
+            })
 
             dbService.getUser(this.user_id).subscribe((user:User)=>{
                   
@@ -96,6 +96,16 @@ export class SellerShopPage implements OnInit {
 
               }               /* FIN DEL CONSTRUCTOR */
 
+ionViewDidEnter()
+{
+
+                
+}
+
+
+
+
+
 
   dismissModal()
   {
@@ -113,8 +123,7 @@ export class SellerShopPage implements OnInit {
       this.cart.currency= this.offerdata.price_currency;
       this.cart.total += this.offerdata.price;
       this.offerdata.stock -= 1;
-  
-      console.log(this.cart);
+      
       //Luego se debe registrar el cambio en la oferta en bd
     }
 
@@ -124,35 +133,52 @@ export class SellerShopPage implements OnInit {
     }
 
     }
+   // "return_url":"http://ofertaqr.com/app/purchases/paymentcheck"
 
-
-    payMobbex()
+     payMobbex()
     {
-
+     
       this.postService.pagarMobbex(
 
-       JSON.stringify( {
-          "total": this.cart.total,
-          "description": "Unproducto de prueba",
-          "currency": "ARS",
-          "test": true,
-          "reference": "operacion de prueba1",
-          "return_url":"http://localhost:8100/pay-return/"
-        })).subscribe((data:any)=>
-    {
-      console.log(data)
-      if(data.result==true)
+        JSON.stringify( {
+           "total": this.offerdata.commission,
+           "description": "Unproducto de prueba",
+           "currency": "ARS",
+          // "test": true,
+           "reference": "prueba de compra",
+           "redirect":false,
+           "webhook": "https://ofertaqr.com/app/purchases/paymentcheck"
+         })).subscribe((dataMobexApi:any)=>
+     {
+       console.log("dataMobexApi",dataMobexApi)
+       if(dataMobexApi.result==true)
+       {
+        let p= new Purchase()
+      
+        p.influencer_id=this.user._id;
+        p.offer_id= this.offerdata._id;
+        p.price= this.cart.total;
+        p.user_id= this.user._id;
+        p.vendor_id= this.seller._id;
+        p.transactionId= dataMobexApi.data.id;
+        console.log("p: ",p)
+       this.dbService.sendPurchase(p)
+       .subscribe((dataP:any)=>
       {
-       // const browser = this.iab.create(data.data.url);
-       window.open(data.data.url,'_system', 'location=yes');
+        console.log(dataP)
 
-      }
-      
-      
-    },(error)=>
-  {
-    console.log(error)
-  })
+        
+        window.open(dataMobexApi.data.url,'_system', 'location=yes');
+ 
+       }
+       
+       
+     )
+    }})
+
+
+
+
     }
 
 

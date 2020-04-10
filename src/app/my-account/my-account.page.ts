@@ -3,6 +3,8 @@ import { User } from '../clases/user';
 import { DbService } from '../services/db.service';
 import { NavController, AlertController, ToastController, ModalController } from '@ionic/angular';
 import { NewSellerComponent } from '../componentes/new-seller/new-seller.component';
+import { tokenGetter } from '../app.module';
+import { TokenService } from '../services/token.service';
 
 @Component({
   selector: 'app-my-account',
@@ -19,11 +21,14 @@ export class MyAccountPage implements OnInit {
       private navCtrl: NavController,
       private alertController:AlertController,
       private toastCtrl: ToastController,
-      private modalctrl:ModalController) {
+      private modalctrl:ModalController,
+      private tokenServ: TokenService) {
 
     this.getIs_seller();
 
-    this.user= JSON.parse(localStorage.getItem("user_data")) ;
+    this.user=this.tokenServ.GetPayLoad().doc;
+    console.log(this.user)
+   // this.user= JSON.parse(localStorage.getItem("user_data")) ;
   
  
    }

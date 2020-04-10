@@ -17,35 +17,30 @@ export class MenuComponent{
   ]*/
   
   role:string= "";
-  is_logged:boolean;
+  is_logged:boolean=false;
   is_seller: boolean=false;
 
   constructor(private menuSrv:MenuService,private tokenServ: TokenService, private dbService:DbService, private navCtrl: NavController) {
-
-    if(localStorage.getItem("token")){
-      this.dbService.is_logged = true;
-      console.log("el boludo entro")
-      localStorage.setItem("user_data", JSON.stringify(this.tokenServ.GetPayLoad().doc));
-    }
-    else {
-      this.dbService.is_logged = false;
-    }
-
     
-   
 
   }
 
-
-  getIs_seller()
+   getIs_logged()
   {
-   this.dbService.getIsSeller$().subscribe((data)=>{
+     this.dbService.getLogged$().subscribe((data:any)=>
+    {
+      this.is_logged=data;
+    })
+  }
+
+   getIs_seller()
+  {
+     this.dbService.getIsSeller$().subscribe((data)=>{
    
      this.is_seller=data;
-     console.log("la data",data)
+
    });
   }
-
 
 
   closeSession()
@@ -62,27 +57,40 @@ export class MenuComponent{
 
   }
 
-  ngOnInit() {
-    this.dbService.getLogged$().subscribe((data)=>{
-      if(data==true)
-      {
-        this.is_logged=true;
-      }
-      else{
-        this.is_logged=false;
-      }
-      //this.is_logged=data;
-      console.log("is logged menu: ", this.is_logged);
-    })
-  
-     this.getIs_seller();
+   ngOnInit() {
+     
+    this.getIs_logged();
+    this.getIs_seller();
+
+    if(localStorage.getItem("token")){
+    
+     this.dbService.setLogged(true);
+
+      localStorage.setItem("user_data", JSON.stringify(this.tokenServ.GetPayLoad().doc));
+
+      this.dbService.checkIsVendor(this.tokenServ.GetPayLoad().doc._id).subscribe((dataSeller:any)=>
+      { 
+        if(dataSeller.vendor_data._id)
+        {
+          this.dbService.setIsSeller$(true);
+          
+        }
+        else{
+          this.dbService.setIsSeller$(false);
+        }
+        
+      })
+      
+    }
+    else {
+      this.dbService.setLogged(false);
+      this.dbService.setIsSeller$(false)
+    }
+
     
   }
 
-  /*ngAfterViewChecked(): void {
-    this.menu_opt = this.menuSrv.menu_data;
-  }*/
-  
+ 
 
 
 

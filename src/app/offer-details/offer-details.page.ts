@@ -43,6 +43,7 @@ export class OfferDetailsPage implements OnInit {
   seller:Seller;
   is_seller:boolean;
   zoom:number;
+  influencer_id:string;
   
 
 
@@ -66,15 +67,16 @@ export class OfferDetailsPage implements OnInit {
       
       this.dbService.checkIsVendor(this.user._id).subscribe((data:any)=>
       {
-        this.seller = data.vendor_data;
         
+        this.seller = data.vendor_data;
+        console.log(this.seller)
 
       })
 
 
     if(this.paramSrv.param)
     {
-      this.offer = this.paramSrv.param;
+      this.offer = this.paramSrv.param
 
       if(this.seller)
       {
@@ -98,6 +100,7 @@ export class OfferDetailsPage implements OnInit {
 
 
   }
+
 
   ionViewWillEnter(){
 

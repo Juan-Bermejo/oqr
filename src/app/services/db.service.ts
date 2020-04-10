@@ -24,16 +24,17 @@ export class DbService {
   public user_id: string;
   public offer_id: string;
   public $products: Subject<Offer>
-  public is_seller$;//new Subject<boolean>();
-  public is_logged$=new Subject<boolean>();
+  public is_seller$: BehaviorSubject<boolean>;
+  public is_logged$:BehaviorSubject<boolean>;
   public is_logged: boolean = false;
   public user_data;
 
   readonly URL_SERVER = 'https://ofertaqr.com/app/';
 
   constructor(private http: HttpClient) {
-    this.is_seller=false;
+   // this.is_seller=false;
     this.is_seller$= new BehaviorSubject(this.is_seller);
+    this.is_logged$= new BehaviorSubject(this.is_logged);
     this.selectedUser = new User();
 
    }
@@ -264,7 +265,6 @@ export class DbService {
 
     getIsSeller$(): Observable<boolean> {
       this.is_seller$.next(this.is_seller);
-      console.log("getSeller", this.is_seller)
       return this.is_seller$.asObservable();
 
     }

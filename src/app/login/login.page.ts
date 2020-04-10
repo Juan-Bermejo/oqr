@@ -196,17 +196,24 @@ export class LoginPage implements OnInit {
 
   directLoginOne(){
     this.dbService.checkLogin("amorelli", "1111")
-      .subscribe((data: any) => {
+      .subscribe(async (data: any) => {
+        console.log(data)
         if(data.status == 200) {
 
-          //this.resetForm(form_log);
-          //this.dbService.user_id = data.id_user;
+        localStorage.setItem("token", data.token);
+       
+        this.data_token = this.tokenServ.GetPayLoad();
+        console.log(this.data_token)
+        console.log(this.data_token.doc)
+        this.user_token = this.data_token.doc;
           this.dbService.is_logged = true;
-          this.dbService.user_id = data.user_data._id;
-          this.dbService.user_data = data.user_data;
+          this.dbService.user_id = this.user_token._id;
+          this.dbService.user_data = this.user_token;
+          
+       
           this.dbService.setLogged(true);
-
-          this.dbService.checkIsVendor(data.user_data._id).subscribe((dataSeller:any)=>
+          this.registroForm.reset();
+          this.dbService.checkIsVendor(this.user_token._id).subscribe((dataSeller:any)=>
         { console.log(dataSeller)
           if(dataSeller.vendor_data._id)
           {
@@ -216,7 +223,7 @@ export class LoginPage implements OnInit {
             this.dbService.setIsSeller$(false);
           }
         })
-          
+         
           this.loginRedirect();
 
         }
