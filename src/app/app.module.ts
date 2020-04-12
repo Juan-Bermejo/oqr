@@ -40,6 +40,7 @@ import { NewSellerComponent } from './componentes/new-seller/new-seller.componen
 //import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 import { JwtHelperService, JwtModule } from '@auth0/angular-jwt';
+import { Deeplinks } from '@ionic-native/deeplinks/ngx';
 
 export function tokenGetter() {
   return localStorage.getItem('token');
@@ -82,6 +83,7 @@ export function tokenGetter() {
     Geolocation,
     HttpClient,
     JwtHelperService,
+    Deeplinks,
 
     
    // BarcodeScanner,

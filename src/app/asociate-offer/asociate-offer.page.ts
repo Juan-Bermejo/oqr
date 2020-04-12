@@ -26,6 +26,7 @@ export class AsociateOfferPage implements OnInit {
    private dbServ:DbService) {
 
     this.user= JSON.parse(localStorage.getItem("user_data"));
+    
     this.offer=this.ParamSrv.param.offer;
     this.seller=this.ParamSrv.param.seller;
     console.log(this.offer)
