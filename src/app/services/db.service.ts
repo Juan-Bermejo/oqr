@@ -332,6 +332,26 @@ export class DbService {
         {headers: new HttpHeaders({"Content-Type": "application/json"})});
     }
 
+    //PRODUCT TABLE REFERENCE
+
+    checkProductByCode(_rev: string){
+      let url = 'prodref/code';
+      let PRODUCT_REF = this.URL_SERVER.concat(url);
+      return this.http.post(PRODUCT_REF, _rev,
+        {headers: new HttpHeaders({"Content-Type": "application/json"})});
+    }
+
+    checkProductByName(brand: string, name: string){
+      let url = 'prodref/name';
+      let data = {
+        'brand': brand,
+        'name': name
+      }
+      let PRODUCT_REF = this.URL_SERVER.concat(url);
+      return this.http.post(PRODUCT_REF, data,
+        {headers: new HttpHeaders({"Content-Type": "application/json"})});
+    }
+
     /*
 
     editUser(user: User) {
