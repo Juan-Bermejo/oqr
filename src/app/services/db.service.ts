@@ -334,10 +334,13 @@ export class DbService {
 
     //PRODUCT TABLE REFERENCE
 
-    checkProductByCode(_rev: string){
+    checkProductByCode(code: string){
       let url = 'prodref/code';
+      let data = {
+        'code': code
+      }
       let PRODUCT_REF = this.URL_SERVER.concat(url);
-      return this.http.post(PRODUCT_REF, _rev,
+      return this.http.post(PRODUCT_REF, data,
         {headers: new HttpHeaders({"Content-Type": "application/json"})});
     }
 
