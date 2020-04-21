@@ -289,18 +289,12 @@ export class DbService {
 
     //VENDORS SERVICES
 
-    getVendorById(vendor_id: string){
-      let url = 'vendors/'.concat(vendor_id);
-      let VEND_URL = this.URL_SERVER.concat(url);
-      return this.http.get(VEND_URL);
-    }
-
     updateVendor(vendor_id: string, seller: Seller){
       let url = 'vendors/'.concat(vendor_id);
       let VEND_URL = this.URL_SERVER.concat(url);
       return this.http.put(VEND_URL, seller,
         {headers: new HttpHeaders({"Content-Type": "application/json"})});
-    }
+    }a
 
     getProdOfVendor(vendor_id: string) {
       let url = 'products/prodvendor/';
