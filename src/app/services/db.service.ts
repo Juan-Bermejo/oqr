@@ -140,11 +140,14 @@ export class DbService {
         {headers: new HttpHeaders({"Content-Type": "application/json"})});
     }
 
-    joinToOffer(user_id:string, offer_id:string, add_products: boolean){
+    joinToOffer(user_id:string, offer_id:string, price:number, currency:string, stock:number, add_products:boolean){
       let url = 'offers/jointooffer'
       let data = {
         "user_id": user_id, 
         "offer_id": offer_id,
+        "price": price,
+        "currency": currency,
+        "stock": stock,
         "add_products": add_products
       }
       let OFFER_URL = this.URL_SERVER.concat(url);
@@ -285,6 +288,19 @@ export class DbService {
 
 
     //VENDORS SERVICES
+
+    getVendorById(vendor_id: string){
+      let url = 'vendors/'.concat(vendor_id);
+      let VEND_URL = this.URL_SERVER.concat(url);
+      return this.http.get(VEND_URL);
+    }
+
+    updateVendor(vendor_id: string, seller: Seller){
+      let url = 'vendors/'.concat(vendor_id);
+      let VEND_URL = this.URL_SERVER.concat(url);
+      return this.http.put(VEND_URL, seller,
+        {headers: new HttpHeaders({"Content-Type": "application/json"})});
+    }
 
     getProdOfVendor(vendor_id: string) {
       let url = 'products/prodvendor/';
