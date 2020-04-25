@@ -1,7 +1,8 @@
 
 *
 {
-    font-family: "roboto-black"
+    font-family: "roboto-black";
+    
 }
 
 h1{
@@ -23,7 +24,8 @@ ion-back-button{
   }
 
   ion-input{
-      height: 50px;
+      height: 25px;
+
       
       border-style: solid;
       border-width: 0px 0px 2px 0px;
@@ -49,18 +51,21 @@ ion-back-button{
     border-style: solid;
     border-width: 0px 0px 2px 0px;
     border-color: rgb(41, 171, 226);
+    height: 25px;
+    
+
     
   }
 
 
 
   .container{
-      display: block;
+     /* display: block;*/
   }
 
   .nextButton
   {
-      margin-top:250px;
+     /* margin-top:250px;*/
   }
   .pay-side
   {
@@ -129,5 +134,47 @@ ion-note{
 {
     height: 50px;
     width: 150px;
+}
+
+
+.autocomplete {
+	width: 100%;
+
+	ion-searchbar {
+        padding: 1px !important;
+        height: 25px;
+        border-style: solid;
+        border-width: 0px 0px 2px 0px;
+        border-color: rgb(41, 171, 226);
+	}
+
+	ion-list {
+		position: absolute;
+		width: inherit;
+		overflow-y: scroll;
+		max-height: 150%;
+		z-index: 999;
+
+		ion-item {
+
+			img {
+				max-height: 2.5rem;
+				width: auto;
+				margin: auto;
+				display: block;
+			}
+		}
+
+		ion-item:hover {
+			cursor: pointer;
+            --background: rgb(41, 171, 226);
+            background-color: rgb(41, 171, 226);
+        }
+        ion-item:focus {
+			cursor: pointer;
+            --background: rgb(41, 171, 226);
+            background-color: rgb(41, 171, 226);
+		}
+	}
 }
 

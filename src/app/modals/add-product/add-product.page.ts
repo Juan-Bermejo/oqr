@@ -6,6 +6,7 @@ import { Product } from '../../clases/product';
 import { ZBar, ZBarOptions } from '@ionic-native/zbar/ngx';
 import { DbService } from '../../services/db.service';
 import { User } from '../../clases/user';
+import { Seller } from '../../clases/seller';
 //import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 
 @Component({
@@ -26,6 +27,7 @@ spinner:boolean=false;
  stock:number;
  bar_code:number;
  user:User;
+ seller:Seller;
 
   constructor(private modalController: ModalController,
     private zbar: ZBar,
@@ -34,6 +36,10 @@ spinner:boolean=false;
     private countrySrv:CountriesService) {
       
       this.user=JSON.parse(localStorage.getItem("user_data"));
+      this.dbService.checkIsVendor(this.user._id).subscribe((data:any)=>
+      {
+        this.seller=data.vendor_data;
+      })
 
       this.countrySrv.getCountries().subscribe((c)=>{
         this.countries= c;
@@ -83,19 +89,36 @@ spinner:boolean=false;
       p.kind= this.kind;
       p.stock= this.stock;
       console.log(p);
+
+      this.seller.products.push(p);
+      this.dbService.updateVendor(this.seller).toPromise()
+      .then((data:any)=>
+    {
+      console.log(data);
+    }
+  )//then
+      .catch((error)=>
+    {
+      console.log(error)
+    }) //catch
+    .finally(()=>
+  {
+    this.spinner=false;
+
+    this.modalController.dismiss({
+      "result":{
+        "product": p
+      },
+      'dismissed': true
+    }).then(()=>{
+
       this.spinner=false;
-      this.modalController.dismiss({
-        "result":{
-          "product": p
-        },
-        'dismissed': true
-      }).then(()=>{
-        this.dbService.createProduct(p, this.user._id).subscribe((data)=>{
-          console.log(data);
-          this.spinner=false;
-        })
-        
-      });
+
+
+    });
+    
+  })//finally
+
     }
 
     else{

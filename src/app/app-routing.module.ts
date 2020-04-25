@@ -110,7 +110,11 @@ const routes: Routes = [
   {
     path: 'pay-return', 
     loadChildren: () => import('./pay-return/pay-return.module').then( m => m.PayReturnPageModule)
+  },  {
+    path: 'select-related-products',
+    loadChildren: () => import('./modals/select-related-products/select-related-products.module').then( m => m.SelectRelatedProductsPageModule)
   },
+
 
 
 ];

@@ -3,7 +3,9 @@
 <ion-content >
 <ion-row justify-content-end>
     <ion-button fill="clear" (click)="dismissModal()"> 
-        <ion-icon name="md-close" size="large" color="primary"></ion-icon>  
+        <ion-icon name="md-close" size="large" color="primary"></ion-icon>
+
+          
         </ion-button>
 </ion-row>
 
@@ -27,8 +29,14 @@
 
             <ion-item-divider (click)="dismissModal(cat.name)">
           
-                <ion-icon color="primary" slot="start" name="{{cat.icon}}" >
+                <ion-icon *ngIf=" cat.icon!='none' " color="primary" slot="start" name="{{cat.icon}}" >
                 </ion-icon> 
+
+                <ion-thumbnail *ngIf="cat.icon == 'none' " style="height: 32px; width: 32px;" slot="start">
+
+                        <ion-img style="height: 25px; width: 25px;" src="../../../assets/iconos/categorias/{{cat.name}}.png"></ion-img>
+                      </ion-thumbnail>
+
                 <ion-label color="primary" style="font-size: smaller">
                    {{cat.name}}
                 </ion-label> 

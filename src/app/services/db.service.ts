@@ -140,7 +140,7 @@ export class DbService {
         {headers: new HttpHeaders({"Content-Type": "application/json"})});
     }
 
-    joinToOffer(user_id:string, offer_id:string, price:number, currency:string, stock:number, add_products:boolean){
+   /* joinToOffer(user_id:string, offer_id:string, price:number, currency:string, stock:number, add_products:boolean){
       let url = 'offers/jointooffer'
       let data = {
         "user_id": user_id, 
@@ -153,7 +153,7 @@ export class DbService {
       let OFFER_URL = this.URL_SERVER.concat(url);
       return this.http.post(OFFER_URL, data,
         {headers: new HttpHeaders({"Content-Type": "application/json"})});
-    }
+    }*/
 
     dropOffer(user_id: string, offer_id: string){
       let url = 'offers/dropoffer';

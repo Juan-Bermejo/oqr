@@ -4,6 +4,7 @@ import { ModalController } from '@ionic/angular';
 import { AddProductPage } from '../modals/add-product/add-product.page';
 import { DbService } from '../services/db.service';
 import { User } from '../clases/user';
+import { Seller } from '../clases/seller';
 
 
 @Component({
@@ -15,16 +16,15 @@ export class RelatedProductsPage implements OnInit {
 
   user:User;
   array_products:Array<Product>;
+  seller:Seller;
 
   constructor(private modalCtrl: ModalController, private dbserv: DbService) {
     this.array_products= new Array<Product>();
     this.user=JSON.parse(localStorage.getItem("user_data"));
-    this.dbserv.checkIsVendor(this.user._id).subscribe((sellerData:any)=>
+    this.dbserv.checkIsVendor(this.user._id).subscribe((data:any)=>
   {
-    this.dbserv.getProdOfVendor(sellerData.vendor_data._id).subscribe((data:any)=>
-    {
-      this.array_products=data.location_data;
-    })
+    this.seller= data.vendor_data;
+    this.array_products= this.seller.products;
   })
 
 
@@ -46,7 +46,7 @@ export class RelatedProductsPage implements OnInit {
        modal.onDidDismiss().then((data)=>{
          if(data)
          {
-          this.array_products.push(data.data.result.product);
+         // this.array_products.push(data.data.result.product);
          }
         
         

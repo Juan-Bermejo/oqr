@@ -8,7 +8,7 @@
             <ion-back-button mode="md" type="button" color="light" icon="md-arrow-back" defaultHref="home">
             </ion-back-button>
           </ion-buttons>
-            <ion-row justify-content-center align-items-center>
+            <ion-row class="ion-justify-content-center" class= "ion-align-items-center">
               <ion-col size=3 offset=1>
                   <img src="../../assets/iconos/iconos oqr-31.png" alt="">
               </ion-col>
@@ -35,20 +35,54 @@
 
     <ion-slides #slides pager="false" [options]="slideOpts" id="slide" (ionSlideWillChange)="setIndex()" >
 
+            <ion-slide class= "ion-align-items-center">
+                    <div class="container">
+                            <ion-row class="ion-justify-content-center">               
+                                    <h4>¿Que tipo de oferta quieres hacer?</h4>
+                            </ion-row>
 
-        <ion-slide align-items-center>
+                            <ion-row class="ion-justify-content-center">
+                                    <ion-col size=6>
+                                    <ion-button class="btn-king" (click)="type_offer='Descuento'">
+                                    Descuento
+                                    <ion-icon *ngIf="type_offer=='Descuento'" name="md-checkmark" slot="end" color="light"></ion-icon>
+                                    </ion-button>
+                                    </ion-col>
+                                    <ion-col size=6>
+                                        <ion-button class="btn-king" (click)="type_offer='Precio'">
+                                        Precio fijo
+                                        <ion-icon *ngIf="type_offer=='Precio'" name="md-checkmark" slot="end" color="light"></ion-icon>
+                                        </ion-button>
+                                        </ion-col>
+                                        
+               </ion-row>
+
+               <ion-row *ngIf="type_offer=='Descuento'" class="ion-justify-content-center">
+                    <ion-col class="ion-justify-content-center" size="10" >
+                        <h4>Ingresa el porcentaje del descuento</h4>
+                    </ion-col>
+
+                    <ion-col size=10 >
+                        <ion-input (ionChange)="validatePercentage($event)" type="number" placeholder="Mayor a 1 y menor a 100" [(ngModel)]="percentage" ></ion-input>
+                    </ion-col>
+                  </ion-row>
+                                                        
+
+                        </div>
+                </ion-slide>
+
+        <ion-slide class= "ion-align-items-start">
 
 
- 
           <div class="container">
 
 
 
-                    <ion-row justify-content-center>               
-                            <h4>Selecciona la categoria del producto</h4>
+                    <ion-row class="ion-justify-content-center">               
+                            <h4>Selecciona la categoria del {{kind}}</h4>
                     </ion-row >
 
-                      <ion-row justify-content-center>
+                      <ion-row class="ion-justify-content-center">
                         <ion-col size=11>
                             <ion-input (click)="ModalCategories()" readonly placeholder="Seleccione una categoria." [(ngModel)]="category" >
                                 <span class="item-right">
@@ -62,11 +96,11 @@
                       </ion-row>
         
 
-                      <ion-row justify-content-center>               
+                      <ion-row *ngIf="type_offer == 'Precio'" class="ion-justify-content-center">               
                           <h4>¿Qué tipo de producto quieres ofertar?</h4>
                   </ion-row >
 
-                    <ion-row justify-content-center>
+                    <ion-row *ngIf="type_offer == 'Precio'" class="ion-justify-content-center">
 <ion-col size=6>
 <ion-button class="btn-king" (click)="kind='Producto'">
 Producto
@@ -81,37 +115,109 @@ Producto
     </ion-col>
     
                     </ion-row>
+                    <div *ngIf="kind=='Producto' && type_offer=='Precio'">
+
+                            <ion-row class="ion-justify-content-center">               
+                                    <h4>Ingrese el codigo de barras</h4>
+                            </ion-row >
+        
+                              <ion-row class="ion-justify-content-center">
+                                <ion-col size=11>
+                                    <ion-input type="number"  placeholder="Ingrese o lea el codigo." [(ngModel)]="barcode" >
+                                        <span class="item-right">
+                                            <ion-button fill="clear" (click)="readBarcode()">
+                                                <ion-icon slot="end" size="large" name="md-barcode" color="primary">
+                                                </ion-icon>
+                                            </ion-button>
+                                            
+                                        </span>
+                                           
+                                          </ion-input>
+                                </ion-col>
+        
+                              </ion-row>
+
+                    </div>
+
       
 
-              <ion-row justify-content-center>
-                  <h4 >Ingrese el nombre del producto</h4>
+          <!--    <ion-row *ngIf="type_offer == 'Precio'" class="ion-justify-content-center">
+                  <h4 >Ingrese el {{kind}}</h4>
 
                 </ion-row>
       
-                  <ion-row justify-content-center>
+                  <ion-row *ngIf="type_offer == 'Precio'" class="ion-justify-content-center" style="bottom: 2px;"> 
       
                       <ion-col size=11 >
                  
-                          <ion-input  type="text" [(ngModel)]="product">
+                          <ion-input type="text" placeholder="Ingrese el nombre." [(ngModel)]="product">
       
                             </ion-input>
+
+      
 
 
                         </ion-col>
 
-                  </ion-row>
+                  </ion-row>-->
+
+                  <ion-row *ngIf="type_offer == 'Precio'" class="ion-justify-content-center">
+                        <h4 >Ingrese el {{kind}}</h4>
       
-                  <ion-row justify-content-center>
+                      </ion-row>
+                      <ion-row>
+                  <div class="autocomplete">
+                        <ion-input
+                            [(ngModel)]="searchText"
+                            (ionChange)="filter($event)"
+                            (ionBlur)="removeFocus()"
+                            placeholder="Busca el producto."
+                            
+                           >
+                        </ion-input>
+                        <ion-list>
+                            <ion-item *ngFor="let p of aux_product_list" (click)="addNote(p)">
+                                {{p.name}}
+                            </ion-item>
+                        </ion-list>
+                    </div>
+                </ion-row>
+
+                  <div *ngIf="type_offer == 'Descuento'">
+
+                  <ion-row *ngIf="type_offer == 'Descuento'">
+                      <h4>Seleccióne los productos relacionados que desea ofertar</h4>
+                  </ion-row>
+
+                  <ion-row  class="ion-justify-content-center">
+                        <ion-col size=11>
+                            <ion-input (click)="ModalRelatedProducts()" readonly placeholder="Seleccione los productos."  >
+                                <span class="item-right">
+                                    <ion-icon slot="end" src="../../assets/ionicons/chevron-down-outline.svg">
+                                    </ion-icon>
+                                </span>
+                                   
+                                  </ion-input>
+                        </ion-col>
+
+                      </ion-row>
+
+                      <ion-item-divider *ngFor="let p of products">
+                        {{p.name}}
+                      </ion-item-divider>
+
+                    </div>
+                  <ion-row class="ion-justify-content-center">
                       <h4>Agrega una breve descripción de tu oferta</h4>
                     </ion-row>
               
-              <ion-row justify-content-center>
+              <ion-row class="ion-justify-content-center">
                 <ion-col size=11 >
                     <ion-textarea type="text"  maxlength=250 [(ngModel)]="description" ></ion-textarea> 
                 </ion-col>
                        
           </ion-row>
-          <ion-row justify-content-center>
+          <ion-row class="ion-justify-content-center">
               <strong> 250 Caracteres   </strong> 
           </ion-row>  
 
@@ -123,17 +229,16 @@ Producto
 
         <!-- /////////////////                  SLIDE 2                    ///////////////// -->
 
-        <ion-slide align-items-start>
+        <ion-slide>
 
           <div class="container">
 
-              <ion-row justify-content-center>
-                  <h4 *ngIf="kind == 'Producto'">Ingrese el precio del producto</h4>
-                  <h4 *ngIf="kind == 'Servicio'">Ingrese el precio del servicio</h4>
+              <ion-row *ngIf="type_offer=='Precio'" class="ion-justify-content-center">
+                  <h4>Ingrese el precio del {{kind}}</h4>
                 </ion-row>
       
-                <ion-row align-items-center>
-                    <ion-col justify-content-center offset=1 size="10">
+                <ion-row *ngIf="type_offer=='Precio'" class= "ion-align-items-center">
+                    <ion-col class="ion-justify-content-center" offset=1 size="10">
                         
                         <ion-input type="number" placeholder="Ingresa el importe." [(ngModel)]="price">
                             <span>
@@ -147,16 +252,16 @@ Producto
                       </ion-col>
                 </ion-row>
 
-              <ion-row justify-content-center>
+              <ion-row class="ion-justify-content-center">
                   <h4>¿Cuento quieres pagar por cada venta?</h4>
                 </ion-row>
     
-                <ion-row align-items-center>
-                    <ion-col justify-content-center offset=1 size="10">
+                <ion-row class= "ion-align-items-center">
+                    <ion-col class="ion-justify-content-center" offset=1 size="10">
                         
                         <ion-input type="number" placeholder="Ingresa el importe." [(ngModel)]="commission">
                             <span>
-                                <ion-select disabled="true" [(ngModel)]=" currency_commission" class="select-currency" readonly placeholder="Moneda">
+                                <ion-select  [(ngModel)]=" currency_commission" class="select-currency" readonly placeholder="Moneda">
                                     <ion-select-option *ngFor="let c of countries">
                                       {{c.currencies[0].code}}
                                     </ion-select-option>
@@ -166,8 +271,8 @@ Producto
                       </ion-col>
                 </ion-row>
 
-                <ion-row justify-content-center>
-                    <ion-col justify-content-center size="10" >
+                <ion-row class="ion-justify-content-center">
+                    <ion-col class="ion-justify-content-center" size="10" >
                         <h4>¿Cuantas unidades quieres ofertar?</h4>
                     </ion-col>
 
@@ -188,18 +293,25 @@ Producto
 
 <ion-slide align-items-start>
     <div class="container">
-<ion-row justify-content-center>
+<ion-row class="ion-justify-content-center">
   <h4>Detalle de tu oferta</h4>
 </ion-row>
 
 
           <ion-list col-10>
-            <ion-list-header style="text-align: center; font-size: large" >
-             <ion-title>
+            <ion-list-header style="text-align: center; font-size: large; max-width: 400px;" >
+             <ion-title *ngIf="type_offer=='Precio'">
                 {{product}} por {{prod_currency}} {{price}}.
              </ion-title>
+             <ion-title *ngIf="type_offer=='Descuento'">
+                    {{percentage}}% de descuento en {{category}}.
+                 </ion-title>
                
             </ion-list-header>
+            <ion-item>
+                    <ion-label>Tipo de oferta</ion-label>
+                    <ion-note color="primary" slot="end">{{type_offer}}</ion-note>
+                  </ion-item>
             <ion-item>
                 <ion-label>Categoria del producto</ion-label>
                 <ion-note color="primary" slot="end">{{category}}</ion-note>
@@ -208,10 +320,14 @@ Producto
                   <ion-label>Cantidad de ofertas</ion-label>
                   <ion-note color="primary" slot="end">{{stock}}</ion-note>
                 </ion-item>
-                <ion-item>
+                <ion-item *ngIf="type_offer=='Precio'">
                     <ion-label>Precio del producto / servicio:</ion-label>
                     <ion-note color="primary" slot="end">{{prod_currency}}  {{price}} </ion-note>
                   </ion-item>
+                  <ion-item *ngIf="type_offer=='Descuento'">
+                        <ion-label>Descuento:</ion-label>
+                        <ion-note color="primary" slot="end">{{percentage}}</ion-note>
+                      </ion-item>
                 <ion-item>
                     <ion-label>Comision por venta:</ion-label>
                     <ion-note color="primary" slot="end">{{currency_commission}}  {{commission}} </ion-note>
@@ -227,6 +343,14 @@ Producto
                             
                      
                     </ion-item>
+                    <ion-item class="ion-justify-content-center">
+                        Productos
+                        <ion-item-divider class="ion-justify-content-center" *ngFor="let p of products">
+                            {{p.name}}
+                        </ion-item-divider>
+                                
+                         
+                        </ion-item>
           </ion-list>
 
           <ion-spinner *ngIf="spinner" name="crescent" color="primary" ></ion-spinner>
@@ -248,9 +372,9 @@ Producto
 
 
 
-      <ion-row justify-content-end >
+      <ion-row class="ion-justify-content-end">
       
-          <ion-button *ngIf="index != 2"  color="primary" fill="clear" (click)="next()" >
+          <ion-button *ngIf="index != 3"  color="primary" fill="clear" (click)="next()" >
               Siguiente
               <ion-icon slot="end" name="md-arrow-forward" size="large" color="primary">
                   

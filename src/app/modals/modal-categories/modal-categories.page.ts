@@ -15,7 +15,7 @@ export class ModalCategoriesPage implements OnInit {
 
   constructor(public modalCtrl: ModalController, private navCtrl: NavController) {
     this.aux_list_cat= new Array();
-    this.aux_list_cat=this.list_cat;
+    this.aux_list_cat= this.sortList(this.list_cat);
    }
   
   dismissModal(category_selected)
@@ -41,6 +41,14 @@ export class ModalCategoriesPage implements OnInit {
       this.aux_list_cat=this.list_cat;
     }
 
+  }
+  sortList(array:Array<any>)
+  {
+    return array.sort(function(a, b){
+      
+      return a.name.toLowerCase().localeCompare(b.name.toLowerCase());
+    
+    });
   }
 
 

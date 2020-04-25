@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { PostLink } from '../clases/post-link';
 import { NavParamsService } from '../services/nav-params.service';
 import { Offer } from '../clases/offer';
 import { DbService } from '../services/db.service';
-import { NavController } from '@ionic/angular';
+import { NavController, IonSlides } from '@ionic/angular';
 
 @Component({
   selector: 'app-offer-videos',
@@ -13,8 +13,13 @@ import { NavController } from '@ionic/angular';
 })
 export class OfferVideosPage implements OnInit {
 
+  @ViewChild("slides",{static:true}) slides: IonSlides;
   post: PostLink[];
   offer:Offer;
+  slideOpts = {
+    initialSlide: 0,
+    speed: 400,
+  };
 
   constructor( private paramSrv: NavParamsService, private dbService: DbService,
   private navCtrl: NavController) {
@@ -25,12 +30,14 @@ export class OfferVideosPage implements OnInit {
 
     this.dbService.getLinkById(this.offer._id).subscribe((data:any)=>{
       this.post = new Array();
-      document.getElementById("post").innerHTML="";
+      //document.getElementById("post").innerHTML="";
       this.post= data.link_data;
       for(let i = 0; i < this.post.length; i++)
-      {
+      { console.log(this.post[i])
+        
+         //this.post[i].link  + "<br> < (click)='goTo("+this.post[i].influencer+")'>Comprar</ion-button>";
         document.getElementById("post").innerHTML += this.post[i].link
-        + "<br> <ion-button (click)='goTo("+this.post[i].influencer+")'>Comprar</ion-button>"
+        + "<br> <button onClick='goTo("+this.post[i].influencer+")'>Comprar</button>"
       } 
      
     } )

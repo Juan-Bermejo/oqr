@@ -64,7 +64,7 @@ shop_name:string;
    
     this.seller.category=this.category;
     this.seller.cuit= this.cuit;
-    this.seller.location= this.userLocation;
+   // this.seller.location= this.userLocation;
     this.seller.shop_name= this.shop_name;
     
 console.log(this.seller);
