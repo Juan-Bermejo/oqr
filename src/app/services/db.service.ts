@@ -202,6 +202,17 @@ export class DbService {
       return this.http.delete(PROD_URL);
     }
 
+    //PRODUCT REFERENCE
+    
+
+    getFilterProducts(name: string){
+      let url = 'prodref/filter';
+      let data = {"name": name}
+      let PROD_REF_URL = this.URL_SERVER.concat(url);
+      return this.http.post(PROD_REF_URL, data,
+        {headers: new HttpHeaders({"Content-Type": "application/json"})});
+    }
+
     //LINKS SERVICES
 
     postLink(link: PostLink) {
