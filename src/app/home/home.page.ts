@@ -31,7 +31,7 @@ export class HomePage implements OnInit {
   longitude: number;
   latitude: number;
   user_id: string = '';
-  offer_list;
+  offer_list:Array<Offer>;
   aux_offer_list:Array<any>;
   busqueda:string;
   notification:boolean=false;
@@ -53,7 +53,7 @@ export class HomePage implements OnInit {
     controls: false
   };*/
   
-   
+   nombres:Array<string>;
 
   constructor(private prodSrv:ProductsService,
     private streamingMedia: StreamingMedia,
@@ -69,7 +69,7 @@ export class HomePage implements OnInit {
      private nativeGeocoder: NativeGeocoder,
      private tokenServ: TokenService
     ) {     
-
+      this.nombres= new Array<string>();
   
       this.search_tool=false;
       this.aux_offer_list= new Array();
@@ -83,10 +83,21 @@ export class HomePage implements OnInit {
   }
 
  async ngOnInit() {
-    this.dbService.getAllOffers().subscribe((data)=>{
+    this.dbService.getAllOffers().subscribe((data:any)=>{
       this.offer_list=data;
       this.aux_offer_list= this.offer_list;
       console.log(this.offer_list);
+      this.offer_list.map((o)=>
+    {
+      if(o.offer_name=="Precio")
+    {
+      this.nombres.push(o.products_id[0]);
+    }
+    else{
+      this.nombres.push("array de productos");
+    }
+     
+    })
     })
   }
 
@@ -176,6 +187,15 @@ this.getGeoCoderAddress(this.latitude, this.longitude);
     })
 
   }
+  getProd(id:string)
+  {
+    this.dbService.getProduct(id).toPromise().then((data:any)=>
+  {
+    
+    console.log(data)
+    return data;
+  })
+  }
 
 
   async filterCat(cat:string)
@@ -193,7 +213,7 @@ this.getGeoCoderAddress(this.latitude, this.longitude);
     
     if(key)
     {
-      this.aux_offer_list= await this.offer_list.filter(item => item.product.toLowerCase().includes(key) );
+      this.aux_offer_list= await this.offer_list.filter(item => item.category.toLowerCase().includes(key) );
     }
     else
     {

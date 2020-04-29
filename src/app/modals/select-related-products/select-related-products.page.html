@@ -8,26 +8,27 @@
         
                   
                 </ion-button>
+                <ion-title>Mis productos relacionados</ion-title>
         </ion-row>
       </ion-toolbar>
 
-        <ion-title>Mis productos relacionados</ion-title>
+        
         <ion-row class="ion-justify-content-center">
           
-            <ion-checkbox (ionChange)="selectAll($event)" [(ngModel)]="all"></ion-checkbox>
-          <ion-label>Seleccionar todos</ion-label>
+            <ion-checkbox *ngIf="type_offer == 'Descuento'" (ionChange)="selectAll($event)" [(ngModel)]="all"></ion-checkbox>
+          <ion-label *ngIf="type_offer == 'Descuento'">Seleccionar todos</ion-label>
         </ion-row>
         <ion-list>
         <div *ngFor="let p of products; let i = index" [attr.data-index]="i">
 
           <ion-item class="selected" (click)="addProduct(p.product,i)" *ngIf="p.selected==true" >
            <ion-label solt="start">{{p.product.name}}</ion-label> 
-           <ion-label solt="end">{{p.product.price | currency: p.product.currency_price}}</ion-label>
+           <ion-label *ngIf="type_offer == 'Descuento'" solt="end">{{p.product.price | currency: p.product.currency_price}}</ion-label>
           </ion-item>
 
           <ion-item color="light" (click)="addProduct(p.product,i)" *ngIf="p.selected==false" >
               <ion-label solt="start">{{p.product.name}}</ion-label> 
-              <ion-label solt="end">{{p.product.price | currency: p.product.currency_price}}</ion-label>
+              <ion-label *ngIf="type_offer == 'Descuento'" solt="end">{{p.product.price | currency: p.product.currency_price}}</ion-label>
           </ion-item>
         </div>
       </ion-list>

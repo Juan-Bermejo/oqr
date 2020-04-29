@@ -19,14 +19,19 @@ export class SelectRelatedProductsPage implements OnInit {
   all:boolean= false;
   products: {"selected","product"}[];
   selected_products: Product[];
+  type_offer:string;
+  selected:Product;
   
   constructor(private dbService: DbService, 
      private modalCtrl:ModalController,
      private paramServ: NavParamsService) {
 
+      this.selected= new Product();
       this.selected_products= new Array<Product>();
 
+    this.type_offer = this.paramServ.param.type_offer;
     this.category = this.paramServ.param.category;
+
 
     this.user= JSON.parse(localStorage.getItem("user_data"));
 
@@ -51,16 +56,76 @@ export class SelectRelatedProductsPage implements OnInit {
 
    addProduct(prod:Product, index)
    {
-     this.products[index].selected=!this.products[index].selected;
-
-     let iSearch = this.selected_products.findIndex((p) => p.name == prod.name);
-
-     if(iSearch > -1)
+     switch(this.type_offer)
      {
-      this.selected_products.splice(iSearch);
-     }
-     else{
-       this.selected_products.push(prod);
+      case "Descuento":
+
+      this.products[index].selected=!this.products[index].selected;
+
+      let iSearch = this.selected_products.findIndex((p) => p.name == prod.name);
+ 
+      if(iSearch > -1)
+      {
+       this.selected_products.splice(iSearch);
+      }
+      else{
+        this.selected_products.push(prod);
+      }
+ 
+      break;
+
+      case "Precio":
+
+      if(this.selected._id == prod._id)
+      {
+        this.selected=new Product();
+        this.products[index].selected=!this.products[index].selected;
+      }
+      else
+      {
+        if(this.products.findIndex((p) => p.product._id == this.selected._id) > -1)
+        {          
+          let iSearch = this.products.findIndex((p) => p.product._id == this.selected._id);
+          this.products[iSearch].selected=false;
+         
+          this.products[index].selected=!this.products[index].selected;
+        
+        this.selected=prod;
+        }
+        else{
+          this.selected= prod;
+          this.products[index].selected=!this.products[index].selected;
+        }
+      }
+
+      break;
+
+      case "Gratis":
+
+      if(this.selected._id == prod._id)
+      {
+        this.selected=new Product();
+        this.products[index].selected=!this.products[index].selected;
+      }
+      else
+      {
+        if(this.products.findIndex((p) => p.product._id == this.selected._id) > -1)
+        {          
+          let iSearch = this.products.findIndex((p) => p.product._id == this.selected._id);
+          this.products[iSearch].selected=false;
+         
+          this.products[index].selected=!this.products[index].selected;
+        
+        this.selected=prod;
+        }
+        else{
+          this.selected= prod;
+          this.products[index].selected=!this.products[index].selected;
+        }
+      }
+
+      break;
+
      }
 
      
@@ -90,12 +155,26 @@ export class SelectRelatedProductsPage implements OnInit {
 
    dismissModal(category_selected)
    {
+     if(this.type_offer != "Descuento")
+     {
+      this.modalCtrl.dismiss({
+        "result":{
+          "product": this.selected
+        },
+        'dismissed': true
+      })
+
+     }
+     if(this.type_offer == "Descuento")
+     {
      this.modalCtrl.dismiss({
        "result":{
          "products": this.selected_products
        },
        'dismissed': true
      })
+     }
+
    }
 
 

@@ -11,7 +11,7 @@ import { ModalSimplePage } from '../modals/modal-simple/modal-simple.page';
 import { PopOverProductsComponent } from '../componentes/pop-over-products/pop-over-products.component';
 import { Offer } from '../clases/offer';
 import { DbService } from '../services/db.service';
-import { of } from 'rxjs';
+import { of, Subscription } from 'rxjs';
 import { Seller } from '../clases/seller';
 import { ZBar, ZBarOptions } from '@ionic-native/zbar/ngx';
 import { Product } from '../clases/product';
@@ -37,14 +37,14 @@ export class NewOfferPage implements OnInit {
   user_data: User;
   
   categories = categories
-
+  prod_subcribe:Subscription;
   type_offer:string;
   spinner:boolean=false;
   seller:Seller;
   user:User;
   index:number=0;
   id: number;
-  product: string;
+  product: Product;
   price: number;
   stock: number;
   currency_commission:string;
@@ -68,14 +68,7 @@ export class NewOfferPage implements OnInit {
   percentage:number;
   o_prueba:Offer;
   searchText:string;
-  product_list= [
-    {
-      name: "coca-cola",
-    },
-    {
-      name: "cafe dolca"
-    }
-  ];
+  product_list:Array<Product>;
   aux_product_list:Array<Product>;
 
 
@@ -87,6 +80,9 @@ export class NewOfferPage implements OnInit {
     private zbar: ZBar,
     private dbService: DbService )
      {
+       this.prod_subcribe= new Subscription()
+       this.product= new Product();
+       this.products= new Array<Product>();
       this.aux_product_list= new Array<Product>();
        
        
@@ -108,27 +104,39 @@ export class NewOfferPage implements OnInit {
 
    addNote(p)
    {
-    this.products.push(p);
+    this.product= p;
     this.searchText= p.name;
-    this.aux_product_list.splice(0);
+    this.aux_product_list= new Array<Product>();
     console.log(this.product);
    }
 
-   async filter(input)
+    filter(input)
    {
-     let key = this.searchText//input.detail.value
-     console.log(key)
-     if(key != undefined || key != "" || key != null )
+     if(this.prod_subcribe.closed== false)
      {
-     /* this.dbService.get (key).toPromise().then((data:any)=>
-      {
-        console.log(data);
-      })*/
-
-      // this.aux_product_list= await this.product_list.filter(item => item.name.toLowerCase().includes(key) );
+       console.log(this.prod_subcribe.closed)
+      this.prod_subcribe.unsubscribe();
+      console.log("abierto y cierra");
      }
-     if( key == undefined || key == "" || key == null || key == this.products[0].name)
+
+     this.spinner=true;
+     let key = this.searchText//input.detail.value
+     //let key = input.detail.value
+     console.log(key)
+     if(key != undefined && key != "" && key != null && key != this.product.name )
      {
+     this.prod_subcribe = this.dbService.getFilterProducts(key).subscribe( (data:any)=>
+      {console.log(this.prod_subcribe.closed)
+        this.aux_product_list = data;
+        console.log(data);
+        
+        this.spinner=false
+      })
+
+     }
+     if( key == undefined || key == "" || key == null || key == this.product.name || this.searchText == this.product.name)
+     {
+      this.spinner=false;
        this.aux_product_list= new Array<any>();
      }
 
@@ -160,14 +168,22 @@ export class NewOfferPage implements OnInit {
         {
           this.category != undefined &&
           this.kind != undefined &&
-          this.product != undefined &&
-          this.description != undefined
+          this.product != undefined /*&&
+          this.description != undefined*/
           ? this.lockUnlockSwipe() : this.slides.lockSwipeToNext(true)
         }
         if(this.type_offer == 'Descuento')
         {
           this.category != undefined &&
-          this.products != undefined &&
+          this.products != undefined /*&&
+          this.description != undefined*/
+          ? this.lockUnlockSwipe() : this.slides.lockSwipeToNext(true)
+        }
+        if(this.type_offer == 'Gratis')
+        {
+          this.category != undefined &&
+          this.kind != undefined &&
+          this.product != undefined &&
           this.description != undefined
           ? this.lockUnlockSwipe() : this.slides.lockSwipeToNext(true)
         }
@@ -188,7 +204,8 @@ export class NewOfferPage implements OnInit {
           this.currency_commission != undefined 
           ? this.lockUnlockSwipe() : this.slides.lockSwipeToNext(true);
         }
-        if(this.type_offer=='Descuento')
+        
+        if(this.type_offer!='Precio')
         {
           this.stock != undefined &&
           this.commission != undefined &&
@@ -252,6 +269,11 @@ export class NewOfferPage implements OnInit {
 
 
   async ModalCategories() {
+    this.ParamSrv.param=
+    {
+      "seller": this.seller
+     
+    }
     const modal = await this.modalController.create({
       component: ModalCategoriesPage,
 
@@ -260,8 +282,9 @@ export class NewOfferPage implements OnInit {
     });
      modal.present();
      modal.onDidDismiss().then((data)=>{
-
+    
       this.category = data.data.result.category;
+      this.ParamSrv.param={};
       
     })
   }
@@ -270,7 +293,8 @@ export class NewOfferPage implements OnInit {
   {
     this.ParamSrv.param=
     {
-      "category": this.category
+      "category": this.category,
+      "type_offer":this.type_offer
     }
     const modal = await this.modalController.create({
       component: SelectRelatedProductsPage,
@@ -282,6 +306,7 @@ export class NewOfferPage implements OnInit {
      modal.onDidDismiss().then((data)=>{
       console.log(data.data)
       this.products = data.data.result.products;
+      this.product = data.data.result.product;
       
     })
   }
@@ -349,6 +374,7 @@ export class NewOfferPage implements OnInit {
     offer.sellers_cuantity= offer.sellers.length;
     offer.offer_name= "Precio"
     offer.is_active=false;
+    offer.products_id.push(this.product._id);
   }
   if(this.type_offer=='Descuento')
   {
@@ -358,8 +384,10 @@ export class NewOfferPage implements OnInit {
     offer.percentage= this.percentage;
     offer.description = this.description;
     offer.offer_name = this.type_offer;
+    
     offer.sellers.push(this.seller._id);
     offer.stock=this.stock;
+    offer.products_id.push(this.product._id); 
     offer.views=0;
     offer.offer_name= "Descuento";
     offer.sellers_cuantity= offer.sellers.length;
@@ -453,7 +481,8 @@ this.zbar.scan(options)
         return toast.present(); 
       }
       else{
-        this.product= data.product.name;
+        this.product= data.product;
+        this.searchText= this.product.name;
       }
     })
    })
