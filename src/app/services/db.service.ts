@@ -140,14 +140,16 @@ export class DbService {
         {headers: new HttpHeaders({"Content-Type": "application/json"})});
     }
 
-    joinToOffer(user_id:string, offer_id:string, price:number, currency:string, stock:number, add_products:boolean){
+    joinToOffer(user_id:string, offer_id:string, commission:number, currency:string, stock:number, percentage:number, time_discount:number, add_products:boolean){
       let url = 'offers/jointooffer'
       let data = {
         "user_id": user_id, 
         "offer_id": offer_id,
-        "price": price,
+        "commission": commission,
         "currency": currency,
         "stock": stock,
+        "percentage": percentage,
+        "time_discount": time_discount,
         "add_products": add_products
       }
       let OFFER_URL = this.URL_SERVER.concat(url);
