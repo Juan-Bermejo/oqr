@@ -70,10 +70,10 @@ export class AsociateOfferPage implements OnInit {
           }, {
             text: 'Confirmar',
             handler: () => {
-           /*   this.dbServ.joinToOffer(this.user._id,this.offer._id,false).subscribe((data:any)=>
+             this.dbServ.joinToOffer(this.user._id,this.offer._id, this.offer.price, this.offer.currency_commission,this.offer.stock,false).subscribe((data:any)=>
               {
                 console.log(data)
-              })*/
+              })
             }
           }
         ]

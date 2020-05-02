@@ -138,6 +138,7 @@ public searchElementRef: ElementRef;
        this.dbService.updateVendor(this.seller).toPromise().then((data)=>
       {
         console.log(data);
+        this.dismissModal();
       })
   
        /* this.dbService.saveLocation(l).subscribe((data)=>{

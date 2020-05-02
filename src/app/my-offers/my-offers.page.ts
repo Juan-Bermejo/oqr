@@ -4,6 +4,7 @@ import { Offer } from '../clases/offer';
 import { NavController, ToastController } from '@ionic/angular';
 import { Seller } from '../clases/seller';
 import { NavParamsService } from '../services/nav-params.service';
+import { User } from '../clases/user';
 
 @Component({
   selector: 'app-my-offers',
@@ -14,14 +15,16 @@ export class MyOffersPage implements OnInit {
 
   public data_offers: Offer[];
   seller:Seller;
+  user:User;
 
   constructor(private dbService: DbService,
               private navCtrol: NavController,
               private navParams: NavParamsService,
               private toastCtrl: ToastController
   ) {
+    this.user= JSON.parse(localStorage.getItem("user_data"));
 
-    this.dbService.checkIsVendor(this.dbService.user_id).subscribe((data:any)=>
+    this.dbService.checkIsVendor(this.user._id).subscribe((data:any)=>
   {
     this.dbService.getOffersByVendor(data.vendor_data._id).subscribe((offers_data:any)=>
   {

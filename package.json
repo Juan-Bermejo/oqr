@@ -50,6 +50,7 @@
     "core-js": "^2.5.4",
     "firebase": "^7.8.2",
     "ionic-plugin-deeplinks": "^1.0.20",
+    "mapbox-gl": "^1.10.0",
     "rxjs": "~6.5.1",
     "tslib": "^1.9.0",
     "zone.js": "~0.9.1"
@@ -67,6 +68,7 @@
     "@types/googlemaps": "^3.39.2",
     "@types/jasmine": "~3.3.8",
     "@types/jasminewd2": "~2.0.3",
+    "@types/mapbox-gl": "^1.9.1",
     "@types/node": "~8.9.4",
     "codelyzer": "^5.0.0",
     "cordova-plugin-device": "^2.0.2",

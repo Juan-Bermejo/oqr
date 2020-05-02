@@ -7,6 +7,9 @@ import { Location } from '../app/clases/location';
 
 export const environment = {
   production: false,
+
+  mapBoxKey: 'pk.eyJ1IjoiYW1vcmVsbGkiLCJhIjoiY2s5a2JtbTNtMDloczNwcW5nbWRvdHBzZCJ9.jEm7Rp2mqcCPtyEnC4-VOw',
+
   firebaseConfig: {
 
     apiKey: "AIzaSyDp1Yj3P0CD3x-JuURp9jqLRi8k5XBHC3w",

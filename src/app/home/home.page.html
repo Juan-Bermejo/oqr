@@ -90,8 +90,12 @@
           <img class="img-list" src="../../assets/images/{{item.category}}.jpg">
 
           <h4 *ngIf="item.offer_name=='Precio'" style="color: aliceblue; background-color: rgba(0, 0, 0, 0.541); left: 2px;">
-             {{nombres[i]}} a {{item.price | currency: item.price_currency}}
+             {{item.one_product[0].name}} a {{item.price | currency: item.price_currency}}
             </h4>
+            <h4 *ngIf="item.offer_name=='Gratis'" style="color: aliceblue; background-color: rgba(0, 0, 0, 0.541); left: 2px;">
+              {{item.one_product[0].name}} Gratis!
+              {{item.description}}
+             </h4>
           <h4 *ngIf="item.offer_name=='Descuento'" style="color: aliceblue; background-color: rgba(0, 0, 0, 0.541); left: 2px;">
             %{{item.percentage}} de descuento en {{item.category}}
             </h4>

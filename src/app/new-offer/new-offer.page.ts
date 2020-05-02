@@ -35,7 +35,7 @@ export class NewOfferPage implements OnInit {
 
   user_id: string;
   user_data: User;
-  
+  check_time_discount:boolean;
   categories = categories
   prod_subcribe:Subscription;
   type_offer:string;
@@ -354,13 +354,15 @@ export class NewOfferPage implements OnInit {
           await alert.present();
             */
     
-        
+
 
   let offer = new Offer()
+  this.check_time_discount ? offer.time_discount = Date.now() : offer.time_discount=0;
   if(this.type_offer=='Precio')
   {
-    
+   
     offer.category = this.category;
+    offer.one_product= this.product;
     offer.kind = this.kind;
     offer.currency_commission = this.currency_commission;
     offer.commission = this.commission;
@@ -387,7 +389,7 @@ export class NewOfferPage implements OnInit {
     
     offer.sellers.push(this.seller._id);
     offer.stock=this.stock;
-    offer.products_id.push(this.product._id); 
+    //offer.products_id.push(this.product._id); 
     offer.views=0;
     offer.offer_name= "Descuento";
     offer.sellers_cuantity= offer.sellers.length;
@@ -397,6 +399,22 @@ export class NewOfferPage implements OnInit {
     {
       offer.products_id.push(this.products[i]._id);
     }
+  }
+  if(this.type_offer=='Gratis')
+  {
+    offer.category = this.category;
+    offer.currency_commission = this.currency_commission;
+    offer.commission = this.commission;
+    offer.description = this.description;
+    offer.offer_name = this.type_offer;
+    offer.sellers.push(this.seller._id);
+    offer.stock=this.stock;
+    offer.one_product= this.product;
+    offer.views=0;
+    offer.sellers_cuantity= offer.sellers.length;
+    offer.is_active=false;
+        
+
   }
 
   console.log(offer)

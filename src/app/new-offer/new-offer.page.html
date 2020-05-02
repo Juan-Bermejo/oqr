@@ -37,6 +37,8 @@
 
             <ion-slide class= "ion-align-items-center">
                     <div class="container">
+                            
+                        
                             <ion-row class="ion-justify-content-center">               
                                     <h4>¿Que tipo de oferta quieres hacer?</h4>
                             </ion-row>
@@ -304,6 +306,27 @@ Producto
                         <ion-input type="number" placeholder="Ingresa la cantidad" [(ngModel)]="stock" ></ion-input>
                     </ion-col>
                   </ion-row>
+
+                  <ion-row class="ion-justify-content-center">
+
+                    <ion-card>
+                        <ion-card-header class="ion-align-items-start">
+                            <ion-icon style="font-size: 35px" src="../../assets/iconos/svg/ICONOS-05.svg">
+                            </ion-icon>
+
+                       <ion-label>
+                           Descuento por retiro programado.
+                       </ion-label>
+                    </ion-card-header>
+                       <p>* Agrega esta opcion para que tus compradores puedan rerirar el producto en 48hs a cambio de un descuento extra.</p>
+                       <ion-checkbox [(ngModel)]="check_time_discount" size="large">
+
+                       </ion-checkbox>
+                    </ion-card>
+
+                            
+               
+                      </ion-row>
 
 
 

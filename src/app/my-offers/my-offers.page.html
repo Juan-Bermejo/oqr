@@ -30,7 +30,28 @@
 
         <img class="img-list" src="../../assets/images/{{offer.category}}.jpg">
 
-        <ion-card-title > {{offer.product}} a {{offer.price_currency}} {{offer.price}} </ion-card-title>
+        <h4 *ngIf="offer.offer_name=='Precio'" style="color: aliceblue; background-color: rgba(0, 0, 0, 0.541); left: 2px;">
+          {{offer.one_product[0].name}} a {{offer.price | currency: offer.price_currency}}
+         </h4>
+         <h4 *ngIf="offer.offer_name=='Gratis'" style="color: aliceblue; background-color: rgba(0, 0, 0, 0.541); left: 2px;">
+           {{offer.one_product[0].name}} Gratis!
+           {{offer.description}}
+          </h4>
+       <h4 *ngIf="offer.offer_name=='Descuento'" style="color: aliceblue; background-color: rgba(0, 0, 0, 0.541); left: 2px;">
+         %{{offer.percentage}} de descuento en {{offer.category}}
+         </h4>
+
+        <ion-card-title *ngIf="offer.offer_name=='Precio'" >
+           {{offer.one_product[0].name}} a {{offer.price | currency: offer.price_currency}} 
+          </ion-card-title>
+
+            <ion-card-title *ngIf="offer.offer_name=='Gratis'" > 
+              {{offer.one_product[0].name}} Gratis!
+            </ion-card-title>
+
+            <ion-card-title *ngIf="offer.offer_name=='Descuento'" > 
+              %{{offer.percentage}} de descuento en {{offer.category}}
+            </ion-card-title>
         
             <ion-card-subtitle color="dark">{{offer.description}}</ion-card-subtitle>
           </ion-card-content>

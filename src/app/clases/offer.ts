@@ -1,12 +1,14 @@
 import { User } from './user';
 import { Location } from './location';
 import { PostLink } from './post-link';
+import { Product } from './product';
 
 export class Offer {
 
     _id:string;
     offer_name:string;
     products_id: string[];
+    one_product:Product;
     kind:string;
     price_currency:string;
     price: number;
@@ -21,6 +23,7 @@ export class Offer {
     sellers_cuantity:number;
     posts: PostLink[];
     percentage:number;
+    time_discount:number;
     is_active:boolean;
 
     constructor()

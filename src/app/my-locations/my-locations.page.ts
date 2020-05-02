@@ -20,8 +20,14 @@ export class MyLocationsPage implements OnInit {
     private navCtrl: NavController) {
 
     this.user= JSON.parse(localStorage.getItem("user_data"));
-    
-    this.dbService.getLocation(this.user.shops[0]).subscribe((data:any)=>{
+
+    this.dbService.checkIsVendor(this.user._id).toPromise().then((data:any)=>
+  {
+    this.myLocations = data.vendor_data.location;
+    console.log(this.myLocations)
+  })
+  
+    this.dbService.getLocation(this.user.shops[0]).toPromise().then((data:any)=>{
       console.log(data);
       this.myLocations=data.location_data;
     })
