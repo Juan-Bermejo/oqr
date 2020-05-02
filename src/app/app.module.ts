@@ -41,6 +41,7 @@ import { NewSellerComponent } from './componentes/new-seller/new-seller.componen
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 import { JwtHelperService, JwtModule } from '@auth0/angular-jwt';
 import { Deeplinks } from '@ionic-native/deeplinks/ngx';
+import { SelectRelatedProductsPageModule } from './modals/select-related-products/select-related-products.module';
 
 export function tokenGetter() {
   return localStorage.getItem('token');
@@ -54,6 +55,7 @@ export function tokenGetter() {
      IonicModule.forRoot(), 
      AppRoutingModule, 
      ModalCategoriesPageModule,
+     SelectRelatedProductsPageModule,
      ModalNewRegionPageModule,
      AddLocationPageModule,
      AddProductPageModule,

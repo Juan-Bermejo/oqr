@@ -85,11 +85,16 @@
 
 
   <ion-list>
-    <ion-item (click)="goToOfferDetails(item)" lines="none" *ngFor="let item of aux_offer_list ">
+    <ion-item (click)="goToOfferDetails(item)" lines="none" *ngFor="let item of aux_offer_list; let i = index ">
      
           <img class="img-list" src="../../assets/images/{{item.category}}.jpg">
 
-          <h4 style="color: aliceblue; background-color: rgba(0, 0, 0, 0.541); left: 2px;"> {{item.product}} a {{item.price | currency: item.price_currency}}</h4>
+          <h4 *ngIf="item.offer_name=='Precio'" style="color: aliceblue; background-color: rgba(0, 0, 0, 0.541); left: 2px;">
+             {{nombres[i]}} a {{item.price | currency: item.price_currency}}
+            </h4>
+          <h4 *ngIf="item.offer_name=='Descuento'" style="color: aliceblue; background-color: rgba(0, 0, 0, 0.541); left: 2px;">
+            %{{item.percentage}} de descuento en {{item.category}}
+            </h4>
       
     </ion-item>
   </ion-list>

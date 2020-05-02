@@ -13,6 +13,7 @@ import { Seller } from '../clases/seller';
 import { AgmMap, MapsAPILoader, GoogleMapsAPIWrapper } from '@agm/core';
 
 
+
 @Component({
   selector: 'app-offer-details',
   templateUrl: './offer-details.page.html',
@@ -104,6 +105,11 @@ export class OfferDetailsPage implements OnInit {
 
   ionViewWillEnter(){
 
+  }
+
+  ionViewDidEnter()
+  {
+   
   }
 
 

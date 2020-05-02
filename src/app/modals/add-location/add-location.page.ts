@@ -6,6 +6,7 @@ import { Location } from '../../clases/location';
 import { User } from '../../clases/user';
 import { DbService } from '../../services/db.service';
 import { MapsAPILoader } from '@agm/core';
+import { Seller } from '../../clases/seller';
 
 
 @Component({
@@ -31,6 +32,7 @@ export class AddLocationPage implements OnInit {
   markers;
   location_data;
   user:User;
+  seller:Seller;
 
    options: NativeGeocoderOptions = {
     useLocale: true,
@@ -46,11 +48,15 @@ public searchElementRef: ElementRef;
     private geolocation: Geolocation,
     private nativeGeocoder: NativeGeocoder,
     private dbService: DbService,
-  private toast: ToastController,
-  private mapsAPILoader: MapsAPILoader,
-  private ngZone: NgZone) {
+    private toast: ToastController,
+    private mapsAPILoader: MapsAPILoader,
+    private ngZone: NgZone) {
 
     this.user= JSON.parse(localStorage.getItem('user_data'));
+    this.dbService.checkIsVendor(this.user._id).subscribe((data:any)=>
+  {
+    this.seller= data.vendor_data;
+  })
     console.log(this.user)
       this.mapType = 'roadmap';
       this.mapOn=true;
@@ -127,11 +133,17 @@ public searchElementRef: ElementRef;
   
        console.log(this.location_data)
        console.log(l);
+       this.seller.location.push(l);
+
+       this.dbService.updateVendor(this.seller).toPromise().then((data)=>
+      {
+        console.log(data);
+      })
   
-        this.dbService.saveLocation(l).subscribe((data)=>{
+       /* this.dbService.saveLocation(l).subscribe((data)=>{
   
           console.log("Data:",data);
-        })
+        })*/
         
       })
 

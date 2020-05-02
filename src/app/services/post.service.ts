@@ -8,12 +8,17 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 })
 export class PostService {
 
-
+  private instaApiUrl="https://api.instagram.com/oembed?url=";
   private posts$ = new Subject<PostLink[]>();
   private posts:PostLink[];
 
   constructor(private http: HttpClient) {
    
+   }
+
+   getInstaPost(url:string)
+   {
+    return this.http.get(this.instaApiUrl + url + "&omitscript=true");
    }
 
    pagarMobbex(data:any)

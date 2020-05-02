@@ -25,6 +25,8 @@ export class PromoteOfferPage implements OnInit {
   spinnerTT:boolean;
   messaje="";
   messajeTT="";
+  spinnerInsta:boolean;
+  messajeInsta="";
   user:User;
 
   constructor(private route: ActivatedRoute, 
@@ -33,7 +35,7 @@ export class PromoteOfferPage implements OnInit {
     private postSrv: PostService,
     private dbService: DbService) {
 
-this.user= JSON.parse(localStorage.getItem("user"));
+this.user= JSON.parse(localStorage.getItem("user_data"));
   this.offer=new Offer();
     this.spinner=false;
     this.spinnerTT=false;
@@ -44,6 +46,35 @@ this.user= JSON.parse(localStorage.getItem("user"));
   ngOnInit() {
     
 
+  }
+
+  addInstagramLink()
+  {
+    this.spinnerInsta=true;
+    this.postSrv.getInstaPost("https://www.instagram.com/p/B-381HJhAG2/").subscribe((data:any)=>
+  {
+    let l = new PostLink();
+    l.link=data.html;
+    l.influencer=this.user._id;
+    l.offer_id=this.offer._id;
+
+    console.log(data);
+    this.dbService.postLink(l)
+    .subscribe((data: any) => {
+      setTimeout(() => {
+        this.spinnerInsta=false;
+      }, 2000);
+      if(data.status == 200) {
+
+        const toast = document.createElement('ion-toast');
+        toast.message = 'Link agregado';
+        toast.duration = 2000;
+        document.body.appendChild(toast);
+        return toast.present();
+
+      }
+    });
+  })
   }
 
   addTikTokLink()

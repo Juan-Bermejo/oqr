@@ -119,7 +119,7 @@ ionViewDidEnter()
   {
     if(this.offerdata.stock >0 )
     {
-      this.cart.products.push(this.offerdata.product);
+      //this.cart.products.push(this.offerdata.product);
       this.cart.currency= this.offerdata.price_currency;
       this.cart.total += this.offerdata.price;
       this.offerdata.stock -= 1;

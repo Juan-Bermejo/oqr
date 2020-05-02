@@ -56,7 +56,7 @@ export class OfferListSearchPage implements OnInit {
     
     if(key)
     {
-      this.aux_offer_list= await this.offer_list.filter(item => item.product.toLowerCase().includes(key) );
+     // this.aux_offer_list= await this.offer_list.filter(item => item.product.toLowerCase().includes(key) );
     }
     else
     {
