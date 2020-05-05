@@ -53,15 +53,98 @@
             </ion-list>
 
 
-  <ion-item-divider>
+  <!--<ion-item-divider>
     <ion-icon name="md-pin" size="large" color="primary" slot="start" >
     </ion-icon>
     <ion-label>Ver las locaciones de esta oferta</ion-label>
+  </ion-item-divider>-->
+<ion-title>
+  Ingresa la comision que quieres pagar
+</ion-title>
+  <ion-item-divider>        
+              <ion-input type="number" placeholder="Ingresa el importe." [(ngModel)]="commision">
+                  <span>
+                      <ion-select (ionChange)="currency_commission=prod_currency" [(ngModel)]="prod_currency" class="select-currency" placeholder="Moneda">
+                          <ion-select-option *ngFor="let c of countries" >
+                            {{c.currencies[0].code}}
+                          </ion-select-option>
+                        </ion-select>
+                     </span>
+              </ion-input>
+
   </ion-item-divider>
-  <ion-item-divider>
+
+  <ion-title>
+      Ingresa tu stock
+    </ion-title>
+      <ion-item-divider>
+         <ion-input type="number" placeholder="Ingresa el stock." [(ngModel)]="stock">
+        </ion-input>
+      </ion-item-divider>
+
+
+  <!--<ion-item-divider>
       <ion-icon name="md-pricetags" size="large" color="primary" slot="start" >
       </ion-icon>
       <ion-label>Ver los productos relacionados de esta oferta</ion-label>
+    </ion-item-divider>-->
+
+
+<ion-item-divider class="ion-align-items-center">
+    <ion-icon slot="start" style="font-size: 35px" src="../../assets/iconos/svg/ICONOS-05.svg">
+    </ion-icon>
+    <ion-label>
+        Descuento por retiro programado.
+     </ion-label>
+
+   <ion-checkbox [(ngModel)]="check_time_discount">
+    </ion-checkbox>
+</ion-item-divider>
+
+<ion-item-divider *ngIf="!check_time_discount">
+
+    <ion-input type="number" placeholder="Porcentaje" [(ngModel)]="time_value" readonly>
+        <span>
+            <ion-select  [(ngModel)]="time_type"  class="select-currency" placeholder="Dias" readonly>
+                <ion-select-option value="Dias">
+                  Dias
+                </ion-select-option>
+                <ion-select-option value="Horas">
+                        Horas
+                      </ion-select-option>
+              </ion-select>
+           </span>
+
+           <span>
+               <ion-input type="number" style="border-bottom: none" placeholder="Cantidad" readonly>
+
+               </ion-input>
+           </span>
+    </ion-input>
+
+  </ion-item-divider>
+
+    <ion-item-divider *ngIf="check_time_discount">
+
+      <ion-input type="number" placeholder="Porcentaje" [(ngModel)]="time_value">
+          <span>
+              <ion-select  [(ngModel)]="time_type"  class="select-currency" placeholder="Dias">
+                  <ion-select-option value="Dias">
+                    Dias
+                  </ion-select-option>
+                  <ion-select-option value="Horas">
+                          Horas
+                        </ion-select-option>
+                </ion-select>
+             </span>
+
+             <span>
+                 <ion-input type="number" style="border-bottom: none" placeholder="Cantidad">
+
+                 </ion-input>
+             </span>
+      </ion-input>
+
     </ion-item-divider>
 
 
@@ -83,6 +166,8 @@
   </ion-row>
 
   </ion-card>
+
+        
 </ion-content>
 
 

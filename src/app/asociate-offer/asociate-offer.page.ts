@@ -18,6 +18,10 @@ export class AsociateOfferPage implements OnInit {
   offer:Offer;
   seller:Seller;
   checkProducts:boolean;
+  myCommission:number;
+  currencyCommission:string;
+  myStock:number;
+  checkTimeDiscount:boolean;
 
   constructor(private modalController: ModalController,
     public navCtrl: NavController,
@@ -70,7 +74,15 @@ export class AsociateOfferPage implements OnInit {
           }, {
             text: 'Confirmar',
             handler: () => {
-             this.dbServ.joinToOffer(this.user._id,this.offer._id, this.offer.price, this.offer.currency_commission,this.offer.stock,false).subscribe((data:any)=>
+              let time_discount: number;
+              this.checkTimeDiscount ? time_discount = Date.now() : time_discount = -1;
+             this.dbServ.joinToOffer(
+               this.user._id,this.offer._id, 
+              this.myCommission, 
+              this.currencyCommission,
+              this.myStock,
+              0,
+              time_discount,false).subscribe((data:any)=>
               {
                 console.log(data)
               })

@@ -12,6 +12,11 @@
         </ion-row>
       </ion-toolbar>
 
+      <ion-button shape="round" expand="block" (click)="addProductModal()" >
+        <ion-icon name="md-add" slot="start"></ion-icon>
+        Agregar un nuevo producto
+      </ion-button>
+
         
         <ion-row class="ion-justify-content-center">
           
@@ -24,11 +29,13 @@
           <ion-item class="selected" (click)="addProduct(p.product,i)" *ngIf="p.selected==true" >
            <ion-label solt="start">{{p.product.name}}</ion-label> 
            <ion-label *ngIf="type_offer == 'Descuento'" solt="end">{{p.product.price | currency: p.product.currency_price}}</ion-label>
+           <ion-checkbox slot="end" checked></ion-checkbox>
           </ion-item>
 
           <ion-item color="light" (click)="addProduct(p.product,i)" *ngIf="p.selected==false" >
               <ion-label solt="start">{{p.product.name}}</ion-label> 
               <ion-label *ngIf="type_offer == 'Descuento'" solt="end">{{p.product.price | currency: p.product.currency_price}}</ion-label>
+              <ion-checkbox slot="end"></ion-checkbox>
           </ion-item>
         </div>
       </ion-list>

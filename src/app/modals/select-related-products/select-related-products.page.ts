@@ -5,6 +5,7 @@ import { User } from '../../clases/user';
 import { Product } from '../../clases/product';
 import { NavParamsService } from '../../services/nav-params.service';
 import { ModalController } from '@ionic/angular';
+import { AddProductPage } from '../add-product/add-product.page';
 
 @Component({
   selector: 'app-select-related-products',
@@ -150,6 +151,42 @@ export class SelectRelatedProductsPage implements OnInit {
       })
        this.selected_products.splice(0);
      }
+   }
+
+   async addProductModal()
+   {
+    
+      const modal = await this.modalCtrl.create({
+        component: AddProductPage,
+        componentProps: {
+  
+        },
+        cssClass:"modal"
+        
+      });
+       modal.present();
+       modal.onDidDismiss().then((data)=>{
+      
+
+        this.dbService.checkIsVendor(this.user._id).toPromise().then( (data:any)=>
+        {
+        this.seller = data.vendor_data;
+       
+    
+        let p_filtred =  this.seller.products.filter(p=>p.category == this.category);
+    
+        this.products = p_filtred.map((p)=>
+      {
+        return {
+          "product":p,
+          "selected":false
+        } 
+      })
+    
+        });
+        
+      })
+    
    }
 
 

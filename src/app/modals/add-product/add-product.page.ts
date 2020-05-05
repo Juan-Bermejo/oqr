@@ -95,6 +95,17 @@ spinner:boolean=false;
       .then((data:any)=>
     {
       console.log(data);
+      this.modalController.dismiss({
+        "result":{
+          "product": p
+        },
+        'dismissed': true
+      }).then(()=>{
+  
+        this.spinner=false;
+  
+  
+      });
     }
   )//then
       .catch((error)=>
@@ -104,18 +115,6 @@ spinner:boolean=false;
     .finally(()=>
   {
     this.spinner=false;
-
-    this.modalController.dismiss({
-      "result":{
-        "product": p
-      },
-      'dismissed': true
-    }).then(()=>{
-
-      this.spinner=false;
-
-
-    });
     
   })//finally
 

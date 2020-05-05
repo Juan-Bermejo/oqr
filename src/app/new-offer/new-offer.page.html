@@ -37,6 +37,8 @@
 
             <ion-slide class= "ion-align-items-center">
                     <div class="container">
+
+
                             
                         
                             <ion-row class="ion-justify-content-center">               
@@ -309,7 +311,7 @@ Producto
 
                   <ion-row class="ion-justify-content-center">
 
-                    <ion-card>
+                    <ion-card style="font-size: 15px;">
                         <ion-card-header class="ion-align-items-start">
                             <ion-icon style="font-size: 35px" src="../../assets/iconos/svg/ICONOS-05.svg">
                             </ion-icon>
@@ -318,10 +320,37 @@ Producto
                            Descuento por retiro programado.
                        </ion-label>
                     </ion-card-header>
-                       <p>* Agrega esta opcion para que tus compradores puedan rerirar el producto en 48hs a cambio de un descuento extra.</p>
+                       <p>* Vende sin tener stock y ofrece un descuento extra.</p>
                        <ion-checkbox [(ngModel)]="check_time_discount" size="large">
-
                        </ion-checkbox>
+
+                        <ion-row class= "ion-align-items-center" *ngIf="check_time_discount">
+                                <ion-col class="ion-justify-content-center"  size="12">
+                                    
+                                    <ion-input type="number" placeholder="Porcentaje" [(ngModel)]="time_value">
+                                        <span>
+                                            <ion-select  [(ngModel)]="time_type"  class="select-currency" placeholder="Dias">
+                                                <ion-select-option value="Dias">
+                                                  Dias
+                                                </ion-select-option>
+                                                <ion-select-option value="Horas">
+                                                        Horas
+                                                      </ion-select-option>
+                                              </ion-select>
+                                           </span>
+
+                                           <span>
+                                               <ion-input type="number" style="border-bottom: none" placeholder="Cantidad">
+
+                                               </ion-input>
+                                           </span>
+                                    </ion-input>
+    
+                                  </ion-col>
+                            </ion-row>
+
+
+
                     </ion-card>
 
                             
