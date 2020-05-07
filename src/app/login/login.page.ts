@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, Input } from '@angular/core';
-import { NavController } from '@ionic/angular';
+import { NavController, MenuController } from '@ionic/angular';
 import { User, UserLogin} from '../clases/user';
 import { AngularFireAuth } from '@angular/fire/auth';
 import * as firebase from 'firebase/app';
@@ -33,6 +33,7 @@ export class LoginPage implements OnInit {
   data_token:any;
 
   constructor(private navCtrl: NavController, 
+              private menu: MenuController,
               private afAuth: AngularFireAuth, 
               private authService: AuthService, 
               private platform: Platform,
@@ -270,6 +271,16 @@ export class LoginPage implements OnInit {
     if (form) {
       form.reset();
     }
+  }
+
+  ionViewDidEnter()
+  {
+    this.menu.enable(false);
+  }
+
+  ionViewWillLeave()
+  {
+    this.menu.enable(true);
   }
 
 }

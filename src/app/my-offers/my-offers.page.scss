@@ -111,12 +111,6 @@ ion-item
 } 
 
 
-ion-footer
-{
-    background-color: rgb(41, 171, 226);
-
-}
-
 img{
     height: 40px;
     width: 40px;
@@ -126,6 +120,16 @@ img{
 {
     background: rgba(255, 255, 255, 0.308);
     background-color: rgba(255, 255, 255, 0.315);
+}
+
+h1{
+    text-align: center;
+    
+        margin-top: 1px;
+        margin-bottom: 1px;
+        font-size: 25px;
+        color: rgb(41, 171, 226);
+    
 }
 
 

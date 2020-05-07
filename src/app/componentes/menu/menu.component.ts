@@ -1,7 +1,7 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { MenuService } from '../../services/menu.service';
 import { DbService } from '../../services/db.service';
-import { NavController } from '@ionic/angular';
+import { NavController, MenuController } from '@ionic/angular';
 import { TokenService } from '../../services/token.service';
 
  
@@ -20,7 +20,11 @@ export class MenuComponent{
   is_logged:boolean=false;
   is_seller: boolean=false;
 
-  constructor(private menuSrv:MenuService,private tokenServ: TokenService, private dbService:DbService, private navCtrl: NavController) {
+  constructor(private menuSrv:MenuService,
+              private tokenServ: TokenService, 
+              private dbService:DbService, 
+              private navCtrl: NavController,
+              public  menu: MenuController) {
     
 
   }

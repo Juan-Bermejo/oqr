@@ -1,16 +1,15 @@
 
 
 
-<ion-content>
+<ion-content padding="true">
     <ion-toolbar>
-
         <ion-buttons slot="start" collapse="true">
           <ion-back-button mode="md" type="button" color="light" icon="md-arrow-back" defaultHref="seller-panel">
           </ion-back-button>
         </ion-buttons>
           <ion-row justify-content-center align-items-center>
-              <ion-col offset="2">
-                  <h1 style="color: rgb(5, 5, 5)">
+              <ion-col >
+                  <h1 style="color: rgb(41, 171, 226);">
                       Mis locaciones
                     </h1>
               </ion-col> 
@@ -19,8 +18,9 @@
             </ion-col>
 
           </ion-row>
-    
+
 </ion-toolbar>
+<div class="container">
 <ion-card>
     <ion-list *ngIf="myLocations">
         <ion-item *ngFor="let l of myLocations">
@@ -28,11 +28,8 @@
         </ion-item>
       </ion-list>
 </ion-card>
-
-  <ion-row justify-content-center>
-      <ion-button shape="round" (click)="ModalNewLocation()" > Agregar locacion</ion-button>
-  </ion-row>
-
- 
-
+</div>
 </ion-content>
+<ion-footer>
+    <ion-button shape="round" expand="block" (click)="ModalNewLocation()" > Agregar locacion</ion-button>
+</ion-footer>

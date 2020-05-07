@@ -2,7 +2,7 @@
 
 
 
-<ion-content>
+<ion-content padding="true">
 
     <ion-toolbar>
         <ion-buttons slot="start" collapse="true">
@@ -26,9 +26,11 @@
         </ion-item>
       
     </ion-list>
-    <ion-row justify-content-center>
-        <ion-button shape="round" fill="outline" (click)="addProductModal()">Agregar producto</ion-button>
-    </ion-row>
-
 
 </ion-content>
+
+<ion-footer>
+        <ion-row class="ion-justify-content-center">
+                <ion-button shape="round" expand="block" (click)="addProductModal()">Agregar producto</ion-button>
+            </ion-row>
+</ion-footer>

@@ -8,6 +8,7 @@
     </ion-buttons>
       <ion-row justify-content-center>
         <ion-col>
+          
             <h1 style="color: rgb(41, 171, 226)">
                Mis ofertas
               </h1>
@@ -15,13 +16,6 @@
       </ion-row>
 
 </ion-toolbar>
-
-<ion-button (click)="goTo('new-offer')" shape="round" expand="block" >
-  Nueva Oferta
-</ion-button>
-
-
-
 
 <ion-list>
   <ion-card *ngFor="let offer of data_offers"  >
@@ -89,3 +83,11 @@
 </ion-list>
 
 </ion-content>
+<ion-footer>
+  
+      <ion-button (click)="goTo('new-offer')" shape="round" expand="block" >
+          Nueva Oferta
+        </ion-button>
+
+
+</ion-footer>

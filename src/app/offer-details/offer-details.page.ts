@@ -116,9 +116,11 @@ export class OfferDetailsPage implements OnInit {
     
   }
 
+  
+
   ionViewWillEnter(){
-    console.log("willenter")
-    this.buildMap();
+  
+    //this.buildMap();
     this.map.on('load', ()=> {
       
       this. layers = this.map.getStyle().layers;
@@ -182,6 +184,7 @@ export class OfferDetailsPage implements OnInit {
         let m = new Mapboxgl.Marker({
           
           draggable: true,
+          
           
           })
           .setLngLat([amar[i].long, amar[i].lat])
@@ -449,6 +452,21 @@ buildMap()
 
   ngAfterViewInit(){
 
+    this.map = new Mapboxgl.Map({
+      accessToken:environment.mapBoxKey,
+      style: 'mapbox://styles/mapbox/light-v10',
+      center: [-58.3884179, -34.8636133],
+      zoom: 15.5,
+      pitch: 45,
+      bearing: -17.6,
+      container: 'map',
+      antialias: false
+      });
+
+      this.map.on('load',()=>
+    {
+      this.map.resize();
+    })
   
   }
 
