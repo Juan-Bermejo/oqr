@@ -117,7 +117,7 @@ spinner:boolean=false;
    
      }
      removeFocus(){
-       this.searchText= "";
+       //this.searchText= "";
        console.log("removeFocus");
   
      }
