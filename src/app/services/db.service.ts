@@ -89,6 +89,27 @@ export class DbService {
       return this.http.delete(USER_URL);
     }
 
+    //INFLUENCER SERVICES
+
+    createInfluencer(inf_data: Influencer){
+      let INFL_URL = this.URL_SERVER.concat('influencers/');
+      return this.http.post(INFL_URL, inf_data,
+        {headers: new HttpHeaders({"Content-Type": "application/json"})});
+    }
+
+    promoteOffer(user_id: string, offer: Offer){
+      let INFL_URL = this.URL_SERVER.concat('influencers/promote');
+      let data = {
+        "user_id": user_id,
+        "offer_id": offer._id,
+        "product": offer.offer_name,
+        "category": offer.category,
+        "comission": offer.commission
+      }
+      return this.http.post(INFL_URL, data,
+        {headers: new HttpHeaders({"Content-Type": "application/json"})});
+    }
+
     //OFFER SERVICES
 
     createOffer(offer: Offer) {
