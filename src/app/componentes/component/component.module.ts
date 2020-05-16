@@ -9,6 +9,7 @@ import { NewSellerComponent } from '../new-seller/new-seller.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Validators, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { InputCodeInfluencerComponent } from '../input-code-influencer/input-code-influencer.component';
+import { GenerateCodeInfluencerComponent } from '../generate-code-influencer/generate-code-influencer.component';
 
 
 
@@ -17,13 +18,15 @@ import { InputCodeInfluencerComponent } from '../input-code-influencer/input-cod
     MenuComponent,
     PopOverProductsComponent,
     NewSellerComponent,
-    InputCodeInfluencerComponent
+    InputCodeInfluencerComponent,
+    GenerateCodeInfluencerComponent
   ],
   exports:[
     MenuComponent,
     PopOverProductsComponent,
     NewSellerComponent,
-    InputCodeInfluencerComponent
+    InputCodeInfluencerComponent,
+    GenerateCodeInfluencerComponent
   ],
   imports: [
     CommonModule,

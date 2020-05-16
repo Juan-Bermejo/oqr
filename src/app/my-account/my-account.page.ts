@@ -5,6 +5,7 @@ import { NavController, AlertController, ToastController, ModalController } from
 import { NewSellerComponent } from '../componentes/new-seller/new-seller.component';
 import { tokenGetter } from '../app.module';
 import { TokenService } from '../services/token.service';
+import { GenerateCodeInfluencerComponent } from '../componentes/generate-code-influencer/generate-code-influencer.component';
 
 @Component({
   selector: 'app-my-account',
@@ -15,7 +16,9 @@ export class MyAccountPage implements OnInit {
 
   user:User;
   public is_seller:boolean=false;
+  public is_influencer:boolean=false;
   seller_check:boolean;
+  
 
   constructor(private dbService: DbService,
       private navCtrl: NavController,
@@ -31,6 +34,11 @@ export class MyAccountPage implements OnInit {
    // this.user= JSON.parse(localStorage.getItem("user_data")) ;
   
  
+   }
+
+   getIs_influencer()
+   {
+
    }
 
    getIs_seller()
@@ -115,11 +123,39 @@ export class MyAccountPage implements OnInit {
      
    }
 
+   toInfluencer()
+   {
+    if(!this.is_influencer)
+    {
+     this.ModalCodeInfluencer()
+    }
+    else
+    {
+
+     this.deleteConfirm();
+
+    }
+   }
+
 
    async dataModal()
    {
      const modal = await this.modalctrl.create({
        component: NewSellerComponent,
+ 
+       cssClass:"modal"
+       
+     });
+      modal.present();
+      modal.onDidDismiss().then((data)=>{
+       this.getIs_seller();
+     })
+   }
+
+   async ModalCodeInfluencer()
+   {
+     const modal = await this.modalctrl.create({
+       component: GenerateCodeInfluencerComponent,
  
        cssClass:"modal"
        
