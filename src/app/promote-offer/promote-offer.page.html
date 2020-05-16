@@ -12,9 +12,23 @@
 
   <ion-card padding>
     <img src="../../assets/images/{{offer.category}}.jpg">
-   
-    <ion-card-title> {{offer.product}} a {{offer.price_currency}} {{offer.price}}  </ion-card-title>
-    <ion-card-subtitle> {{offer.description}} </ion-card-subtitle>
+
+    <ion-card-title *ngIf="offer.offer_name=='Precio'" style="color: rgba(39, 39, 39, 0.904)">
+            {{offer.one_product[0].name}} a {{offer.price | currency: offer.price_currency}}
+           </ion-card-title>
+           <ion-card-title *ngIf="offer.offer_name=='Gratis'" style="color: black">
+             {{offer.one_product[0].name}} Gratis!
+             {{offer.description}}
+            </ion-card-title>
+         <ion-card-title *ngIf="offer.offer_name=='Descuento'" style="color: black">
+           %{{offer.percentage}} de descuento en {{offer.category}}
+           </ion-card-title>
+    
+         
+          <ion-card-subtitle *ngIf="offer.offer_name!='Gratis'" style="color: black">
+              {{offer.description}}
+             </ion-card-subtitle>
+    
 
     <ion-list>
       
@@ -51,7 +65,7 @@
               </ion-note>
             </ion-item>
             </ion-list>
-
+<!--
             <ion-row>
                     <ion-input type="text" placeholder="Ingresa el link de tu video." [(ngModel)]="link" >
                             <span>
@@ -88,14 +102,19 @@
                         </span>
                     </ion-input>
 
-                   <!-- <ion-spinner *ngIf="spinnerTT" name="crescent" color="primary" ></ion-spinner>-->
+                  <ion-spinner *ngIf="spinnerTT" name="crescent" color="primary" ></ion-spinner>
 
                     <ion-button (click)="addInstagramLink()"> <ion-icon name="md-add" ></ion-icon></ion-button>
         
         </ion-row>
         <p style="text-align: center; color: rgba(196, 70, 70, 0.774)"> {{messajeTT}} </p>
-
+-->
   </ion-card>
+
+  <ion-button expand="block" shape="round" >
+      <ion-icon name="md-megaphone" slot="start" ></ion-icon>
+Quiero Promocionar esta oferta
+  </ion-button>
   
 
       <ion-fab vertical="bottom" horizontal="end" slot="fixed">

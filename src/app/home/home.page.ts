@@ -18,6 +18,7 @@ import { PostService } from '../services/post.service';
 import { Offer } from '../clases/offer';
 import { NativeGeocoder, NativeGeocoderResult, NativeGeocoderOptions } from '@ionic-native/native-geocoder/ngx';
 import { TokenService } from '../services/token.service';
+import { InputCodeInfluencerComponent } from '../componentes/input-code-influencer/input-code-influencer.component';
 
 
 @Component({
@@ -27,6 +28,8 @@ import { TokenService } from '../services/token.service';
 })
 export class HomePage implements OnInit {
 
+  lng: number;
+  lat: number;
   myAddress: string;
   longitude: number;
   latitude: number;
@@ -79,10 +82,13 @@ export class HomePage implements OnInit {
       
       this.aux_offer_list=this.offer_list;
 
+      
  
   }
 
  async ngOnInit() {
+
+
     this.dbService.getAllOffers().subscribe((data:any)=>{
       this.offer_list=data;
       this.aux_offer_list= this.offer_list;
@@ -168,6 +174,23 @@ this.getGeoCoderAddress(this.latitude, this.longitude);
    });
 }
 
+async inputInfluecerCode()
+{
+  const modal = await this.modalController.create({
+    component: InputCodeInfluencerComponent,
+    cssClass:"modal"
+    
+  });
+   modal.present();
+
+   modal.onDidDismiss().then((data)=>{
+
+     
+    
+  })
+
+}
+
 
 
    async categoryFilter() {
@@ -231,8 +254,10 @@ this.getGeoCoderAddress(this.latitude, this.longitude);
   async goToOfferDetails(offer)
   {
     
-  this.ParamSrv.param=offer
-  this.navCtrl.navigateForward(['offer-videos']);
+  this.ParamSrv.param={
+    "offer":offer
+  }
+  this.navCtrl.navigateForward(['offer-influencers']);
   
   }
 

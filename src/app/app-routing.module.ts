@@ -114,6 +114,18 @@ const routes: Routes = [
     path: 'select-related-products',
     loadChildren: () => import('./modals/select-related-products/select-related-products.module').then( m => m.SelectRelatedProductsPageModule)
   },
+  {
+    path: 'canal-influencer',
+    loadChildren: () => import('./canal-influencer/canal-influencer.module').then( m => m.CanalInfluencerPageModule)
+  },
+  {
+    path: 'chat',
+    loadChildren: () => import('./chat/chat.module').then( m => m.ChatPageModule)
+  },
+  {
+    path: 'offer-influencers',
+    loadChildren: () => import('./offer-influencers/offer-influencers.module').then( m => m.OfferInfluencersPageModule)
+  },
 
 
 

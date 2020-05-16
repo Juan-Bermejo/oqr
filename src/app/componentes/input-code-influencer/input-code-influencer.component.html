@@ -1,0 +1,44 @@
+<ion-content padding="true" class="ion-align-items-center">
+
+
+
+  <div class="cont col-sm-10">
+
+
+<ion-row justify-content-end>
+    <ion-button fill="clear" (click)="dismissModal()"> 
+        <ion-icon name="md-close" size="large" color="primary"></ion-icon>
+
+          
+        </ion-button>
+</ion-row>
+
+      <ion-row class="ion-justify-content-center">
+        <ion-col size="10">
+            <ion-title color="primary">
+           Código de influencer.
+              </ion-title>
+        </ion-col>
+
+          </ion-row>
+          
+          <ion-row class="ion-justify-content-center">
+              <ion-col size="10">
+                  <ion-input placeholder="Ingresa el codigo aquí">
+                    </ion-input>
+                </ion-col>
+           
+          </ion-row>
+
+          <ion-row class="ion-justify-content-center">
+            <ion-button shape="round" expand="block" (click)="influencerCanal()" >
+              Buscar
+            </ion-button>
+          </ion-row>
+
+  </div>
+
+
+
+
+</ion-content>

@@ -8,6 +8,7 @@ import { PopOverProductsComponent } from '../pop-over-products/pop-over-products
 import { NewSellerComponent } from '../new-seller/new-seller.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Validators, FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { InputCodeInfluencerComponent } from '../input-code-influencer/input-code-influencer.component';
 
 
 
@@ -15,12 +16,14 @@ import { Validators, FormBuilder, FormControl, FormGroup } from '@angular/forms'
   declarations: [
     MenuComponent,
     PopOverProductsComponent,
-    NewSellerComponent
+    NewSellerComponent,
+    InputCodeInfluencerComponent
   ],
   exports:[
     MenuComponent,
     PopOverProductsComponent,
-    NewSellerComponent
+    NewSellerComponent,
+    InputCodeInfluencerComponent
   ],
   imports: [
     CommonModule,

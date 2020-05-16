@@ -8,6 +8,7 @@ import { Deeplinks } from '@ionic-native/deeplinks/ngx';
 import { HomePage } from './home/home.page';
 import { LoginPage } from './login/login.page';
 import { SellerShopPage } from './seller-shop/seller-shop.page';
+import { PushNotificationsService } from './services/push-notifications.service';
 
 @Component({
   selector: 'app-root',
@@ -22,7 +23,8 @@ export class AppComponent {
     private statusBar: StatusBar,
     private dbservice: DbService,
     protected navController: NavController,
-    protected deeplinks: Deeplinks
+    protected deeplinks: Deeplinks,
+    private pushService: PushNotificationsService
   ) {
     this.initializeApp();
     this.deeplinks.routeWithNavController(this.navController, {
@@ -37,6 +39,8 @@ export class AppComponent {
            // nomatch.$link - the full link data
            console.error('Got a deeplink that didn\'t match', nomatch);
          });
+
+
   }
 
 
@@ -45,6 +49,8 @@ export class AppComponent {
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
+
+      this.pushService.configuracionInicial();
     });
   }
 

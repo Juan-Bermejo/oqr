@@ -37,7 +37,7 @@
 
     </ion-col>
 </ion-row>
-
+<!--
 <div class="map-container">
 
     <agm-map [latitude]='current_latitude' [longitude]='current_longitude' 
@@ -56,7 +56,18 @@
 </agm-map>
 
 </div>
+-->
+<div style="height: 100%; padding-top: 200px" *ngIf="spinner">
+    <ion-row  class="ion-justify-content-center">
+            <ion-spinner color="primary" ></ion-spinner>
+    </ion-row>
+    
+</div>
 
+
+
+
+<div id="map" ></div>
 
 
 

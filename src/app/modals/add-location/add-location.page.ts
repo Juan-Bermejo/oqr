@@ -7,6 +7,8 @@ import { User } from '../../clases/user';
 import { DbService } from '../../services/db.service';
 import { MapsAPILoader } from '@agm/core';
 import { Seller } from '../../clases/seller';
+import * as Mapboxgl from 'mapbox-gl';
+import { environment } from '../../../environments/environment';
 
 
 @Component({
@@ -17,7 +19,11 @@ import { Seller } from '../../clases/seller';
 export class AddLocationPage implements OnInit {
 
 
-
+  spinner: boolean;
+  labelLayerId: any;
+  layers: Mapboxgl.Layer[];
+  map: Mapboxgl.Map;
+  marker: Mapboxgl.Marker;
   mapOn: any;
   address: string;
   city: string;
@@ -49,8 +55,10 @@ public searchElementRef: ElementRef;
     private nativeGeocoder: NativeGeocoder,
     private dbService: DbService,
     private toast: ToastController,
-    private mapsAPILoader: MapsAPILoader,
-    private ngZone: NgZone) {
+    
+   ) {
+
+    this.getCurrentPosition();
 
     this.user= JSON.parse(localStorage.getItem('user_data'));
     this.dbService.checkIsVendor(this.user._id).subscribe((data:any)=>
@@ -60,7 +68,7 @@ public searchElementRef: ElementRef;
     console.log(this.user)
       this.mapType = 'roadmap';
       this.mapOn=true;
-      this.getGeoLocation();
+     // this.getGeoLocation();
 
       
      
@@ -94,6 +102,20 @@ public searchElementRef: ElementRef;
 
      this.current_latitude=this.latitude;
      this.current_longitude=this.longitude;
+
+     this.map.flyTo({
+      center: [this.current_longitude, this.current_latitude],
+      essential: true // this animation is considered essential with respect to prefers-reduced-motion
+      });
+
+      this.marker.remove();
+      this.marker 
+      .setLngLat([this.current_longitude, this.current_latitude ])
+      .addTo(this.map);
+  
+
+
+  
     
   })
   .catch((error: any) => console.log(error));
@@ -135,16 +157,12 @@ public searchElementRef: ElementRef;
        console.log(l);
        this.seller.location.push(l);
 
+
        this.dbService.updateVendor(this.seller).toPromise().then((data)=>
       {
         console.log(data);
         this.dismissModal();
       })
-  
-       /* this.dbService.saveLocation(l).subscribe((data)=>{
-  
-          console.log("Data:",data);
-        })*/
         
       })
 
@@ -168,8 +186,10 @@ public searchElementRef: ElementRef;
 
 
   ngOnInit() {
+    console.log("ngOnInit")
+    this.getCurrentPosition();
 
-
+    //this.getGeoLocation();
     //////////////////////////////////////// Para cuando se pague el place
 
 /*
@@ -201,7 +221,7 @@ public searchElementRef: ElementRef;
 
 */
     ////////////////////////////////////
-
+/*
     this.mapOn=true;
 
     this.geolocation.getCurrentPosition().then((resp) => {
@@ -212,7 +232,7 @@ public searchElementRef: ElementRef;
       
      }).catch((error) => {
        console.log('Error getting location', error);
-     });
+     });*/
   }
 
 
@@ -220,6 +240,176 @@ public searchElementRef: ElementRef;
   dismissModal()
   {
     this.modalCtrl.dismiss()
+  }
+
+  
+  ionViewWillEnter(){
+/*
+    navigator.geolocation.getCurrentPosition(position => {
+      this.lat = position.coords.latitude;
+      this.lng = position.coords.longitude;
+      })
+      */
+     /*
+    this.spinner=true;
+    setTimeout(() => {
+      this.spinner=false;
+     // this.loadMap();
+    }, 2000);
+    
+    */
+  
+  }
+
+  ionViewDidEnter()
+  {
+    console.log("didEnter 2");
+ 
+  }
+
+  ionViewWillLeave()
+  {
+    console.log("willLeave 3");
+  }
+  ionViewDidLeave()
+  {
+    console.log("didLeave 4");
+  }
+
+    loadMap(lng, lat)
+  {
+
+   
+    this.map = new Mapboxgl.Map({
+      accessToken:environment.mapBoxKey,
+      style: 'mapbox://styles/mapbox/light-v10',
+      center: [lng, lat],
+      zoom: 15.5,
+      pitch: 45,
+      bearing: -17.6,
+      container: 'map',
+      antialias: false
+      });
+
+      this.map.on('load',()=>
+    {
+      this.map.resize();
+    })
+
+
+  this. marker = new Mapboxgl.Marker()
+  .setLngLat([lng, lat])
+  .addTo(this.map);
+
+
+  }
+
+
+    async ngAfterViewInit()
+  {
+    
+      this.map = new Mapboxgl.Map({
+        accessToken:environment.mapBoxKey,
+        style: 'mapbox://styles/mapbox/light-v10',
+        center: [-58.5733844, -34.6154611 ],
+        zoom: 15,
+        pitch: 45,
+        bearing: -17.6,
+        container: 'map',
+        antialias: false
+        });
+  
+        this.map.on('load',async ()=>
+      {
+        await this.getCurrentPosition();
+
+        this.map.flyTo({
+          center: [this.current_latitude, this.current_longitude],
+          essential: true // this animation is considered essential with respect to prefers-reduced-motion
+          });
+
+          this. marker = new Mapboxgl.Marker()
+          .setLngLat([ this.current_latitude, this.current_longitude ])
+          .addTo(this.map);
+
+        this.map.resize();
+      })
+
+
+      this. map.addControl(
+        new Mapboxgl.GeolocateControl({
+          positionOptions: {
+            enableHighAccuracy: true
+          },
+          trackUserLocation: true
+        })
+      );
+
+
+  
+  /*
+    this. marker = new Mapboxgl.Marker()
+    .setLngLat([this.current_longitude, this.current_latitude ])
+    .addTo(this.map);
+    
+    */
+
+     
+
+
+     
+  }
+
+
+/*
+
+  ionViewWillEnter(){
+  
+    this.map.on('load', async ()=> {
+      
+      this. layers = this.map.getStyle().layers;
+       
+      this. labelLayerId;
+       
+      this.map.addLayer(
+      {
+      id: '3d-buildings',
+      source: 'composite',
+      
+      "source-layer": 'building',
+      filter: ['==', 'extrude', 'true'],
+      type: 'fill-extrusion',
+      minzoom: 15,
+      paint: {
+      "fill-extrusion-color":'#aaa',
+    
+      "fill-extrusion-height": 5,
+      "fill-extrusion-base": 3,
+      "fill-extrusion-opacity":0.6
+      }
+      },
+      this.labelLayerId
+      );
+ 
+      });
+
+           
+      this. marker = new Mapboxgl.Marker()
+          .setLngLat([this.longitude, this.latitude])
+          .addTo(this.map);
+
+      
+      
+  }*/
+
+   getCurrentPosition()
+  {
+     navigator.geolocation.getCurrentPosition(position => {
+      this.current_longitude = position.coords.latitude;
+      this.current_latitude = position.coords.longitude;
+ 
+     // this.map.flyTo([this.current_longitude,this.current_latitude])
+        })
   }
 
 }

@@ -1,0 +1,48 @@
+
+
+
+    <ion-toolbar>
+
+        <ion-buttons slot="start" collapse="true">
+          <ion-back-button mode="md" type="button" color="light" icon="md-arrow-back" defaultHref="home">
+          </ion-back-button>
+        </ion-buttons>
+        <ion-title>
+          Bienvenidos a mi canal
+        </ion-title>
+    </ion-toolbar>
+    <ion-card>
+        <ion-row class="ion-justify-content-center">
+
+            <ion-avatar>
+                <img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y">
+              </ion-avatar>
+        </ion-row>
+    </ion-card>
+
+<ion-content padding="true">
+
+
+    <ion-list>
+        <ion-item (click)="goToOfferDetails(item)" lines="none" *ngFor="let item of aux_offer_list; let i = index ">
+         
+              <img class="img-list" src="../../assets/images/{{item.category}}.jpg">
+    
+              <h4 *ngIf="item.offer_name=='Precio'" style="color: aliceblue; background-color: rgba(0, 0, 0, 0.541); left: 2px;">
+                 {{item.one_product[0].name}} a {{item.price | currency: item.price_currency}}
+                </h4>
+                <h4 *ngIf="item.offer_name=='Gratis'" style="color: aliceblue; background-color: rgba(0, 0, 0, 0.541); left: 2px;">
+                  {{item.one_product[0].name}} Gratis!
+                  {{item.description}}
+                 </h4>
+              <h4 *ngIf="item.offer_name=='Descuento'" style="color: aliceblue; background-color: rgba(0, 0, 0, 0.541); left: 2px;">
+                %{{item.percentage}} de descuento en {{item.category}}
+                </h4>
+          
+        </ion-item>
+      </ion-list>
+
+
+
+
+</ion-content>
