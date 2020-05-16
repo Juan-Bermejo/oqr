@@ -3,6 +3,7 @@ import { MenuService } from '../../services/menu.service';
 import { DbService } from '../../services/db.service';
 import { NavController, MenuController } from '@ionic/angular';
 import { TokenService } from '../../services/token.service';
+import { User } from '../../clases/user';
 
  
 @Component({
@@ -19,6 +20,7 @@ export class MenuComponent{
   role:string= "";
   is_logged:boolean=false;
   is_seller: boolean=false;
+  is_influencer: boolean = false;
 
   constructor(private menuSrv:MenuService,
               private tokenServ: TokenService, 
@@ -46,9 +48,20 @@ export class MenuComponent{
    });
   }
 
+  getIs_influencer()
+  {
+     this.dbService.getIsInfluencer$().subscribe((data)=>{
+   
+     this.is_influencer=data;
+
+   });
+  }
+
 
   closeSession()
   { 
+    this.menu.close("first").then(()=>
+  {
     localStorage.removeItem("user_data");
     localStorage.removeItem("token");
 
@@ -56,15 +69,75 @@ export class MenuComponent{
   {
     this.dbService.setLogged(false);
     this.dbService.setIsSeller$(false);
+    this.dbService.setIsInfluencer$(false);
+    
   })
+
+  })
+
     
 
   }
 
-   ngOnInit() {
-     
+  ngAfterViewInit()
+  {/*
+
+    let user:User = this.tokenServ.GetPayLoad().doc._id
     this.getIs_logged();
     this.getIs_seller();
+    this.getIs_influencer();
+
+    if(localStorage.getItem("token")){
+    
+     this.dbService.setLogged(true);
+
+      localStorage.setItem("user_data", JSON.stringify(this.tokenServ.GetPayLoad().doc));
+
+      this.dbService.checkIsVendor(user._id).subscribe((dataSeller:any)=>
+      { 
+        if(dataSeller.vendor_data._id)
+        {
+          this.dbService.setIsSeller$(true);
+          
+        }
+        else{
+          this.dbService.setIsSeller$(false);
+        }
+        
+      })
+
+
+
+      this.dbService.getInfluencerByUser(user._id).subscribe((dataInfluencer:any)=>
+      { 
+        console.log(dataInfluencer)
+        if(dataInfluencer.influencer_data)
+        {
+          console.log("haydata")
+          this.dbService.setIsInfluencer$(true);
+          
+        }
+        else{
+          console.log("No haydata")
+          this.dbService.setIsInfluencer$(false);
+        }
+        
+      })
+      
+    }
+    else {
+      this.dbService.setLogged(false);
+      this.dbService.setIsSeller$(false);
+      this.dbService.setIsInfluencer$(false);
+    }*/
+
+  }
+
+   ngOnInit() {
+   
+    this.getIs_logged();
+    this.getIs_seller();
+    this.getIs_influencer();
 
     if(localStorage.getItem("token")){
     
@@ -84,11 +157,27 @@ export class MenuComponent{
         }
         
       })
+
+
+
+      this.dbService.getInfluencerByUser(this.tokenServ.GetPayLoad().doc._id).subscribe((dataInfluencer:any)=>
+      { 
+        if(dataInfluencer.influencer_data._id)
+        {
+          this.dbService.setIsInfluencer$(true);
+          
+        }
+        else{
+          this.dbService.setIsInfluencer$(false);
+        }
+        
+      })
       
     }
     else {
       this.dbService.setLogged(false);
-      this.dbService.setIsSeller$(false)
+      this.dbService.setIsSeller$(false);
+      this.dbService.setIsInfluencer$(false);
     }
 
     

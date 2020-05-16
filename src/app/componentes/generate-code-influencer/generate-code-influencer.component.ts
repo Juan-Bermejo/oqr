@@ -14,6 +14,7 @@ export class GenerateCodeInfluencerComponent implements OnInit {
 
   influencer_code:string;
   user:User;
+  spinner= false;
 
   constructor(private modalCtrl: ModalController, 
     private navCtrl: NavController,
@@ -30,17 +31,23 @@ export class GenerateCodeInfluencerComponent implements OnInit {
 
   influencerCanal()
   {
+    this.spinner = true;
     let i = new Influencer();
     i.user_id = this.user._id;
     i.code= this.influencer_code;
+    console.log("Influencer a guardar: " ,i)
     this.dbServ.createInfluencer(i).toPromise().then((data)=>
   {
     console.log(data)
+    this.spinner=false;
     this.navCtrl.navigateRoot('influencer-panel').then(()=>
   {
     this.dismissModal();
   })
-  })
+  }).catch((error)=>
+{this.spinner=false;
+  console.log(error)
+})
 
 
   }

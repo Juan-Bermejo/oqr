@@ -150,4 +150,17 @@ this.user= JSON.parse(localStorage.getItem("user_data"));
 
   }
 
+
+  promoteOffer()
+  {/*
+    this.spinner = true;
+
+    setTimeout(() => {
+
+      this.dbService
+
+      
+    }, 1000);*/
+  }
+
 }

@@ -18,6 +18,7 @@ export class MyAccountPage implements OnInit {
   public is_seller:boolean=false;
   public is_influencer:boolean=false;
   seller_check:boolean;
+  influencer_check:boolean;
   
 
   constructor(private dbService: DbService,
@@ -28,6 +29,7 @@ export class MyAccountPage implements OnInit {
       private tokenServ: TokenService) {
 
     this.getIs_seller();
+    this.getIs_influencer();
 
     this.user=this.tokenServ.GetPayLoad().doc;
     console.log(this.user)
@@ -38,7 +40,11 @@ export class MyAccountPage implements OnInit {
 
    getIs_influencer()
    {
-
+    this.dbService.getIsInfluencer$().subscribe((data)=>
+  {
+    this.is_influencer = data;
+    this.influencer_check = data;
+  })
    }
 
    getIs_seller()
@@ -171,6 +177,7 @@ export class MyAccountPage implements OnInit {
 
   ionViewWillEnter(){
   this.getIs_seller();
+  this.getIs_influencer();
   }
 
 }

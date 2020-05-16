@@ -28,14 +28,15 @@
             
             <ion-row class="ion-justify-content-center">
                 <ion-col size="10">
-                    <ion-input placeholder="Ingresa el codigo aquí">
+                    <ion-input placeholder="Ingresa el codigo aquí" [(ngModel)]="influencer_code">
                       </ion-input>
                   </ion-col>
              
             </ion-row>
   
             <ion-row class="ion-justify-content-center">
-              <ion-button shape="round" expand="block" (click)="influencerCanal()" >
+              <ion-spinner *ngIf="spinner" ></ion-spinner>
+              <ion-button *ngIf="!spinner"  shape="round" expand="block" (click)="influencerCanal()"  >
                 Ingresar
               </ion-button>
             </ion-row>

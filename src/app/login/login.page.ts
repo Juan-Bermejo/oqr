@@ -84,28 +84,41 @@ export class LoginPage implements OnInit {
         console.log(data)
         if(data.status == 200) {
 
-        localStorage.setItem("token", data.token);
+      
+          localStorage.setItem("token", data.token);
        
-        this.data_token = this.tokenServ.GetPayLoad();
-        console.log(this.data_token)
-        console.log(this.data_token.doc)
-        this.user_token = this.data_token.doc;
-          //this.dbService.user_id = data.id_user;
-          this.dbService.is_logged = true;
-          this.dbService.user_id = this.user_token._id;
-          this.dbService.user_data = this.user_token;
-          
-       
-          this.dbService.setLogged(true);
-          this.registroForm.reset();
-          this.dbService.checkIsVendor(this.user_token._id).subscribe((dataSeller:any)=>
-        { console.log(dataSeller)
-          if(dataSeller.vendor_data._id)
+          this.data_token = this.tokenServ.GetPayLoad();
+          console.log(this.data_token)
+          console.log(this.data_token.doc)
+          this.user_token = this.data_token.doc;
+            this.dbService.is_logged = true;
+            this.dbService.user_id = this.user_token._id;
+            this.dbService.user_data = this.user_token;
+            
+         
+            this.dbService.setLogged(true);
+            this.registroForm.reset();
+            this.dbService.checkIsVendor(this.user_token._id).subscribe((dataSeller:any)=>
+          { console.log(dataSeller)
+            if(dataSeller.vendor_data._id)
+            {
+              this.dbService.setIsSeller$(true);
+            }
+            else{
+              this.dbService.setIsSeller$(false);
+            }
+          })
+  
+          this.dbService.getInfluencerByUser(this.user_token._id).subscribe((dataInfluencer: any)=>
+        {
+          console.log("Is_ influencer", dataInfluencer)
+  
+          if(dataInfluencer.influencer_data)
           {
-            this.dbService.setIsSeller$(true);
+            this.dbService.setIsInfluencer$(true);
           }
           else{
-            this.dbService.setIsSeller$(false);
+            this.dbService.setIsInfluencer$(false);
           }
         })
          
@@ -195,8 +208,8 @@ export class LoginPage implements OnInit {
     }
   }
 
-  directLoginOne(){
-    this.dbService.checkLogin("amorelli", "1111")
+  async directLoginOne(){
+   await this.dbService.checkLogin("amorelli", "1111")
       .subscribe(async (data: any) => {
         console.log(data)
         if(data.status == 200) {
@@ -214,7 +227,7 @@ export class LoginPage implements OnInit {
        
           this.dbService.setLogged(true);
           this.registroForm.reset();
-          this.dbService.checkIsVendor(this.user_token._id).subscribe((dataSeller:any)=>
+       await   this.dbService.checkIsVendor(this.user_token._id).subscribe((dataSeller:any)=>
         { console.log(dataSeller)
           if(dataSeller.vendor_data._id)
           {
@@ -224,6 +237,19 @@ export class LoginPage implements OnInit {
             this.dbService.setIsSeller$(false);
           }
         })
+
+      await  this.dbService.getInfluencerByUser(this.user_token._id).subscribe((dataInfluencer: any)=>
+      {
+        console.log("Is_ influencer", dataInfluencer)
+
+        if(dataInfluencer.influencer_data)
+        {
+          this.dbService.setIsInfluencer$(true);
+        }
+        else{
+          this.dbService.setIsInfluencer$(false);
+        }
+      })
          
           this.loginRedirect();
 
