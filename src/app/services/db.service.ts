@@ -98,6 +98,20 @@ export class DbService {
         {headers: new HttpHeaders({"Content-Type": "application/json"})});
     }
 
+    getInfluencerByUser(user_id: string){
+      let INFL_URL = this.URL_SERVER.concat('influencers/getinf');
+      let data = {'user_id': user_id}
+      return this.http.post(INFL_URL, data,
+        {headers: new HttpHeaders({"Content-Type": "application/json"})});
+    }
+
+    getInfluencersByOffer(offer_id: string){
+      let INFL_URL = this.URL_SERVER.concat('influencers/getfromoffer');
+      let data = {'offer_id': offer_id}
+      return this.http.post(INFL_URL, data,
+        {headers: new HttpHeaders({"Content-Type": "application/json"})});
+    }
+
     promoteOffer(user_id: string, offer: Offer, video_link: string){
       let INFL_URL = this.URL_SERVER.concat('influencers/promote');
       let data = {
