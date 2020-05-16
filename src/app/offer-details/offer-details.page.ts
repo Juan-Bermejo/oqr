@@ -86,7 +86,8 @@ export class OfferDetailsPage implements OnInit {
 
     if(this.paramSrv.param)
     {
-      this.offer = this.paramSrv.param
+      this.offer = this.paramSrv.param.offer
+     
 
       if(this.seller)
       {
@@ -121,7 +122,7 @@ export class OfferDetailsPage implements OnInit {
   ionViewWillEnter(){
   
     //this.buildMap();
-    this.map.on('load', ()=> {
+    this.map.on('load', async ()=> {
       
       this. layers = this.map.getStyle().layers;
        
@@ -156,15 +157,8 @@ export class OfferDetailsPage implements OnInit {
       this.labelLayerId
       );
  
-
-      this.map.on('click', 'mark', (e) =>{
-       console.log("hola")
-        });
       });
 
-     /* this.marker = new Mapboxgl.Marker()
-      .setLngLat([-58.3884179, -34.8636133])
-      .addTo(this.map);*/
       let amar= [
         {
         long: -58.5084179,
@@ -179,14 +173,27 @@ export class OfferDetailsPage implements OnInit {
             lat:-35.0036180
             },
       ]
+
+
       for(let i =0; i <amar.length; i++)
       {
-        let m = new Mapboxgl.Marker({
-          
-          draggable: true,
-          
-          
-          })
+
+       const div = window.document.createElement('div');
+       div.innerHTML = "<h1>Aca va la info del shop y el ingreso</h1>"
+        
+    
+        div.addEventListener('click',async ()=>
+      {
+        console.log("diste click");
+      })
+
+      let popup = new Mapboxgl.Popup()
+              .setDOMContent(div);
+
+      let el = document.createElement('div');
+           
+      let marker = new Mapboxgl.Marker()
+          .setPopup(popup)
           .setLngLat([amar[i].long, amar[i].lat])
           .addTo(this.map);
            
@@ -467,6 +474,21 @@ buildMap()
     {
       this.map.resize();
     })
+
+    let element = document.createElement('div');
+    element.className="marker";
+
+    element.addEventListener('click',()=>
+  {
+    console.log("diste click");
+  })
+
+    let mark = new Mapboxgl.Marker(element)
+    .setLngLat({
+      lng:-58.3884179,
+      lat: -34.8636133
+    })
+
   
   }
 

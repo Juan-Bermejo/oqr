@@ -7,7 +7,7 @@
           <ion-back-button mode="md" type="button" color="light" icon="md-arrow-back" defaultHref="seller-panel">
           </ion-back-button>
         </ion-buttons>
-          <ion-row justify-content-center align-items-center>
+          <ion-row justify-content-center >
               <ion-col >
                   <h1 style="color: rgb(41, 171, 226);">
                       Mis locaciones
@@ -22,14 +22,14 @@
 </ion-toolbar>
 <div class="container">
 <ion-card>
-    <ion-list *ngIf="myLocations">
-        <ion-item *ngFor="let l of myLocations">
+    <div *ngIf="myLocations">
+        <ion-item-divider *ngFor="let l of myLocations">
           {{l.address}} {{l.city}} {{l.country}}
-        </ion-item>
-      </ion-list>
+        </ion-item-divider>
+      </div>
 </ion-card>
 </div>
 </ion-content>
 <ion-footer>
-    <ion-button shape="round" expand="block" (click)="ModalNewLocation()" > Agregar locacion</ion-button>
+    <ion-button shape="round" expand="block" routerLink="/add-location" > Agregar locacion</ion-button>
 </ion-footer>

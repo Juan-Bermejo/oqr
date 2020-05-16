@@ -31,6 +31,7 @@ export class OfferListSearchPage implements OnInit {
 
       this.dbServ.getAllOffers().subscribe((data: Offer[])=>{
         this.offer_list=data;
+        console.log(this.offer_list)
        this.aux_offer_list=this.offer_list;
       })
 

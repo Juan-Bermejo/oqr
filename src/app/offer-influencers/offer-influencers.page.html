@@ -1,0 +1,33 @@
+
+<ion-content>
+    <ion-toolbar>
+        <ion-buttons slot="start" collapse="true">
+            <ion-back-button mode="md" type="button" color="light" icon="md-arrow-back" defaultHref="seller-panel">
+            </ion-back-button>
+          </ion-buttons>
+      <h1>Influencers</h1>
+    </ion-toolbar>
+
+    <div *ngIf="influencers">
+        <ion-list *ngFor="let c of influencers">
+        
+        </ion-list>
+        </div>
+        <div *ngIf="!influencers">
+          <ion-row class="ion-justify-content-center">
+              <ion-title style="color: rgba(190, 190, 190, 0.322); text-align: center">
+                  Nadie esta promocionando esta oferta.
+                </ion-title>
+          </ion-row>
+        </div>
+          <div *ngIf="!influencers">
+              <ion-row class="ion-justify-content-center">
+                  <ion-button expand="block" shape="round" (click)="goTo()" >
+                    Ver oferta
+                  </ion-button>
+              </ion-row>
+        
+        </div>
+
+
+</ion-content>

@@ -42,6 +42,8 @@ import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 import { JwtHelperService, JwtModule } from '@auth0/angular-jwt';
 import { Deeplinks } from '@ionic-native/deeplinks/ngx';
 import { SelectRelatedProductsPageModule } from './modals/select-related-products/select-related-products.module';
+import { InputCodeInfluencerComponent } from './componentes/input-code-influencer/input-code-influencer.component';
+import { OneSignal } from '@ionic-native/onesignal/ngx';
 
 export function tokenGetter() {
   return localStorage.getItem('token');
@@ -50,7 +52,7 @@ export function tokenGetter() {
 
 @NgModule({
   declarations: [AppComponent, ScrollbarStyleDirective],
-  entryComponents: [PopOverProductsComponent, NewSellerComponent],
+  entryComponents: [PopOverProductsComponent, NewSellerComponent, InputCodeInfluencerComponent],
   imports: [BrowserModule,
      IonicModule.forRoot(), 
      AppRoutingModule, 
@@ -86,10 +88,9 @@ export function tokenGetter() {
     HttpClient,
     JwtHelperService,
     Deeplinks,
-
-    
+    OneSignal,
    // BarcodeScanner,
-   ZBar,
+    ZBar,
     NativeGeocoder,
     StreamingMedia,
     AngularFireAuth,
