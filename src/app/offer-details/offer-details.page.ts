@@ -13,6 +13,7 @@ import { Seller } from '../clases/seller';
 import { AgmMap, MapsAPILoader, GoogleMapsAPIWrapper } from '@agm/core';
 import { environment } from '../../environments/environment';
 import * as Mapboxgl from 'mapbox-gl'
+import { TokenService } from '../services/token.service';
 
 
 
@@ -53,7 +54,7 @@ export class OfferDetailsPage implements OnInit {
   is_seller:boolean;
   zoom:number;
   influencer_id:string;
-  
+  is_logged:boolean=false;
 
 
   constructor(private route: ActivatedRoute, 
@@ -62,9 +63,21 @@ export class OfferDetailsPage implements OnInit {
     private geolocation: Geolocation,
     private dbService: DbService,
     private modalController:ModalController,
+    private tokenSrv: TokenService,
     private wrapper: ElementRef, private renderer: Renderer
     ) {
      
+      this.dbService.getLogged$().subscribe((logged_check)=>
+    {
+      this.is_logged=logged_check;
+      this.is_logged ? this.user= tokenSrv.GetPayLoad(): this.user= null;
+      console.log(this.user);
+    })
+
+    this.dbService.getIsSeller$().subscribe((data)=>
+    {
+      this.is_seller= data;
+    })
      
     this.getGeoLocation();
 
@@ -72,16 +85,6 @@ export class OfferDetailsPage implements OnInit {
       this.markers= new Array<{}>();
 
       this.offerLocations= new Array<Location>();
-
-      this.user= JSON.parse(localStorage.getItem("user_data"))
-      
-      this.dbService.checkIsVendor(this.user._id).subscribe((data:any)=>
-      {
-        
-        this.seller = data.vendor_data;
-        console.log(this.seller)
-
-      })
 
 
     if(this.paramSrv.param)

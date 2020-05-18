@@ -74,13 +74,14 @@
     Eres socio en esta oferta
   </ion-text>
   <ion-col size=12>
-    <ion-button *ngIf="!is_my_offer" (click)="joinOffer()" size="large" shape="round" expand="block" >
+    <ion-button [disabled]="!is_seller" *ngIf="!is_my_offer" (click)="joinOffer()" size="large" shape="round" expand="block" >
       <ion-icon name="md-people" color="light" size="large"></ion-icon>
       Asociarme a esta oferta
     </ion-button>
   </ion-col>
 
 </ion-row>
+
 
 
 

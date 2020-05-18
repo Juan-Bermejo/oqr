@@ -10,6 +10,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Validators, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { InputCodeInfluencerComponent } from '../input-code-influencer/input-code-influencer.component';
 import { GenerateCodeInfluencerComponent } from '../generate-code-influencer/generate-code-influencer.component';
+import { LoginComponent } from '../login/login.component';
 
 
 
@@ -19,21 +20,24 @@ import { GenerateCodeInfluencerComponent } from '../generate-code-influencer/gen
     PopOverProductsComponent,
     NewSellerComponent,
     InputCodeInfluencerComponent,
-    GenerateCodeInfluencerComponent
+    LoginComponent,
+    GenerateCodeInfluencerComponent,
+    
   ],
   exports:[
     MenuComponent,
     PopOverProductsComponent,
     NewSellerComponent,
     InputCodeInfluencerComponent,
-    GenerateCodeInfluencerComponent
+    GenerateCodeInfluencerComponent,
+    LoginComponent
   ],
   imports: [
     CommonModule,
     IonicModule,
     RouterModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ],
   providers:[
     MenuService,

@@ -1,9 +1,10 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { MenuService } from '../../services/menu.service';
 import { DbService } from '../../services/db.service';
-import { NavController, MenuController } from '@ionic/angular';
+import { NavController, MenuController, ModalController } from '@ionic/angular';
 import { TokenService } from '../../services/token.service';
 import { User } from '../../clases/user';
+import { LoginComponent } from '../login/login.component';
 
  
 @Component({
@@ -26,7 +27,8 @@ export class MenuComponent{
               private tokenServ: TokenService, 
               private dbService:DbService, 
               private navCtrl: NavController,
-              public  menu: MenuController) {
+              public  menu: MenuController,
+              private modalController: ModalController) {
     
 
   }
@@ -57,6 +59,23 @@ export class MenuComponent{
    });
   }
 
+  async goToLogin()
+{
+  const modal = await this.modalController.create({
+    component: LoginComponent,
+    cssClass:"modal"
+    
+  });
+   modal.present();
+
+   modal.onDidDismiss().then((data)=>{
+
+     
+    
+  })
+
+}
+
 
   closeSession()
   { 
@@ -64,14 +83,17 @@ export class MenuComponent{
   {
     localStorage.removeItem("user_data");
     localStorage.removeItem("token");
+    this.dbService.setLogged(false);
+    this.dbService.setIsSeller$(false);
+    this.dbService.setIsInfluencer$(false);
 
-    this.navCtrl.navigateRoot("login").then(()=>
+  /*  this.navCtrl.navigateRoot("login").then(()=>
   {
     this.dbService.setLogged(false);
     this.dbService.setIsSeller$(false);
     this.dbService.setIsInfluencer$(false);
     
-  })
+  })*/
 
   })
 

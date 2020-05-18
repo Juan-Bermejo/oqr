@@ -19,6 +19,7 @@ import { Offer } from '../clases/offer';
 import { NativeGeocoder, NativeGeocoderResult, NativeGeocoderOptions } from '@ionic-native/native-geocoder/ngx';
 import { TokenService } from '../services/token.service';
 import { InputCodeInfluencerComponent } from '../componentes/input-code-influencer/input-code-influencer.component';
+import { LoginComponent } from '../componentes/login/login.component';
 
 
 @Component({
@@ -42,6 +43,7 @@ export class HomePage implements OnInit {
   logged:boolean;
   category:string;
   location_data: NativeGeocoderResult;
+  is_logged:boolean= false;
 
   options: NativeGeocoderOptions = {
     useLocale: true,
@@ -72,6 +74,11 @@ export class HomePage implements OnInit {
      private nativeGeocoder: NativeGeocoder,
      private tokenServ: TokenService
     ) {     
+
+      this.dbService.getLogged$().subscribe((data)=>
+    {
+      this.is_logged = data;
+    })
       this.nombres= new Array<string>();
   
       this.search_tool=false;
@@ -178,6 +185,23 @@ async inputInfluecerCode()
 {
   const modal = await this.modalController.create({
     component: InputCodeInfluencerComponent,
+    cssClass:"modal"
+    
+  });
+   modal.present();
+
+   modal.onDidDismiss().then((data)=>{
+
+     
+    
+  })
+
+}
+
+async goToLogin()
+{
+  const modal = await this.modalController.create({
+    component: LoginComponent,
     cssClass:"modal"
     
   });

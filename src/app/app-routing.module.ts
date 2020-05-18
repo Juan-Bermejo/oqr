@@ -5,14 +5,14 @@ import {
 } from './services/auth-guard.service';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'login', pathMatch: 'full' },
+  { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: 'home', loadChildren: () => import('./home/home.module').then( m => m.HomePageModule),
   
 },
   {
     path: 'login',
     loadChildren: () => import('./login/login.module').then( m => m.LoginPageModule),
-    canActivate:[AuthGuard]
+   // canActivate:[AuthGuard]
     
   },
   {
@@ -110,7 +110,8 @@ const routes: Routes = [
   {
     path: 'pay-return', 
     loadChildren: () => import('./pay-return/pay-return.module').then( m => m.PayReturnPageModule)
-  },  {
+  },
+  {
     path: 'select-related-products',
     loadChildren: () => import('./modals/select-related-products/select-related-products.module').then( m => m.SelectRelatedProductsPageModule)
   },

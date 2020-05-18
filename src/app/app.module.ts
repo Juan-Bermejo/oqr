@@ -45,6 +45,7 @@ import { SelectRelatedProductsPageModule } from './modals/select-related-product
 import { InputCodeInfluencerComponent } from './componentes/input-code-influencer/input-code-influencer.component';
 import { OneSignal } from '@ionic-native/onesignal/ngx';
 import { GenerateCodeInfluencerComponent } from './componentes/generate-code-influencer/generate-code-influencer.component';
+import { LoginComponent } from './componentes/login/login.component';
 
 export function tokenGetter() {
   return localStorage.getItem('token');
@@ -57,8 +58,9 @@ export function tokenGetter() {
     PopOverProductsComponent,
      NewSellerComponent, 
      InputCodeInfluencerComponent,
-     GenerateCodeInfluencerComponent],
-     
+     GenerateCodeInfluencerComponent,
+     LoginComponent],
+
   imports: [BrowserModule,
      IonicModule.forRoot(), 
      AppRoutingModule, 
