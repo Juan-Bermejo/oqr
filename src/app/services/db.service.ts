@@ -28,8 +28,6 @@ export class DbService {
   public is_seller$: BehaviorSubject<boolean>;
   public is_logged$:BehaviorSubject<boolean>;
   public is_logged: boolean = false;
-  public is_influencer$:BehaviorSubject<boolean>;
-  public is_influencer: boolean = false;
   public user_data;
 
   readonly URL_SERVER = 'https://ofertaqr.com/app/';
@@ -38,7 +36,6 @@ export class DbService {
    // this.is_seller=false;
     this.is_seller$= new BehaviorSubject(this.is_seller);
     this.is_logged$= new BehaviorSubject(this.is_logged);
-    this.is_influencer$= new BehaviorSubject(this.is_influencer);
     this.selectedUser = new User();
 
    }
@@ -324,12 +321,6 @@ export class DbService {
 
     }
 
-    getIsInfluencer$(): Observable<boolean> {
-      this.is_influencer$.next(this.is_influencer);
-      return this.is_influencer$.asObservable();
-
-    }
-
     setIsSeller$(data:boolean)
     {
       this.is_seller=data;
@@ -343,22 +334,14 @@ export class DbService {
       this.is_logged$.next(this.is_logged);
     }
 
-    setIsInfluencer$(data:boolean)
-    {
-      this.is_influencer=data;
-      this.is_influencer$.next(this.is_influencer);
-      console.log("setinfluencer", this.is_influencer)
-    }
-
-    setIsInfluencer(data:boolean)
-    {
-      this.is_influencer=data;
-      this.is_influencer$.next(this.is_influencer);
-    }
-
 
 
     //VENDORS SERVICES
+
+    getVendorById(vendor_id: string){
+      let VEND_URL = this.URL_SERVER.concat('vendors/' + vendor_id);
+      return this.http.get(VEND_URL);
+    }
 
     updateVendor(seller: Seller){
       let url = 'vendors/'.concat(seller._id);
