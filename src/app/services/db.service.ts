@@ -112,7 +112,7 @@ export class DbService {
         {headers: new HttpHeaders({"Content-Type": "application/json"})});
     }
 
-    promoteOffer(user_id: string, offer: Offer, video_link: string){
+    promoteOffer(user_id: string, offer: Offer){
       let INFL_URL = this.URL_SERVER.concat('influencers/promote');
       let data = {
         "user_id": user_id,
@@ -120,7 +120,6 @@ export class DbService {
         "product": offer.offer_name,
         "category": offer.category,
         "comission": offer.commission,
-        "video_link": video_link
       }
       return this.http.post(INFL_URL, data,
         {headers: new HttpHeaders({"Content-Type": "application/json"})});
