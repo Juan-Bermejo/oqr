@@ -97,7 +97,7 @@
         Descuento por retiro programado.
      </ion-label>
 
-   <ion-checkbox [(ngModel)]="check_time_discount">
+   <ion-checkbox [disabled]="!is_logged" [(ngModel)]="check_time_discount">
     </ion-checkbox>
 </ion-item-divider>
 
@@ -149,7 +149,7 @@
 
 
   <ion-row class="ion-justify-content-center">
-    <ion-button *ngIf="!is_my_offer" expand="block" (click)="associate()" >
+    <ion-button [disabled]="!is_logged" *ngIf="!is_my_offer" expand="block" (click)="associate()" >
       <ion-icon name="md-people" color="light" size="large" slot="start"></ion-icon>
       Quiero asociarme a esta oferta</ion-button>
 
@@ -159,7 +159,7 @@
   </ion-row>
   <ion-row>
     <ion-item-divider>
-        <ion-checkbox slot="start" [(ngModel)]="checkProducts" ></ion-checkbox>
+        <ion-checkbox [disabled]="!is_logged" slot="start" [(ngModel)]="checkProducts" ></ion-checkbox>
       <ion-label style="font-size: medium">Asociarme tambien a los productos relacionados.</ion-label>
     </ion-item-divider>
       

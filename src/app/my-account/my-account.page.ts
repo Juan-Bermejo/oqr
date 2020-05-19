@@ -5,6 +5,7 @@ import { NavController, AlertController, ToastController, ModalController } from
 import { NewSellerComponent } from '../componentes/new-seller/new-seller.component';
 import { tokenGetter } from '../app.module';
 import { TokenService } from '../services/token.service';
+import { GenerateCodeInfluencerComponent } from '../componentes/generate-code-influencer/generate-code-influencer.component';
 
 @Component({
   selector: 'app-my-account',
@@ -15,7 +16,10 @@ export class MyAccountPage implements OnInit {
 
   user:User;
   public is_seller:boolean=false;
+  public is_influencer:boolean=false;
   seller_check:boolean;
+  influencer_check:boolean;
+  
 
   constructor(private dbService: DbService,
       private navCtrl: NavController,
@@ -25,12 +29,22 @@ export class MyAccountPage implements OnInit {
       private tokenServ: TokenService) {
 
     this.getIs_seller();
+    this.getIs_influencer();
 
     this.user=this.tokenServ.GetPayLoad().doc;
     console.log(this.user)
    // this.user= JSON.parse(localStorage.getItem("user_data")) ;
   
  
+   }
+
+   getIs_influencer()
+   {
+    this.dbService.getIsInfluencer$().subscribe((data)=>
+  {
+    this.is_influencer = data;
+    this.influencer_check = data;
+  })
    }
 
    getIs_seller()
@@ -115,6 +129,20 @@ export class MyAccountPage implements OnInit {
      
    }
 
+   toInfluencer()
+   {
+    if(!this.is_influencer)
+    {
+     this.ModalCodeInfluencer()
+    }
+    else
+    {
+
+     this.deleteConfirm();
+
+    }
+   }
+
 
    async dataModal()
    {
@@ -130,11 +158,26 @@ export class MyAccountPage implements OnInit {
      })
    }
 
+   async ModalCodeInfluencer()
+   {
+     const modal = await this.modalctrl.create({
+       component: GenerateCodeInfluencerComponent,
+ 
+       cssClass:"modal"
+       
+     });
+      modal.present();
+      modal.onDidDismiss().then((data)=>{
+       this.getIs_seller();
+     })
+   }
+
   ngOnInit() {
   }
 
   ionViewWillEnter(){
   this.getIs_seller();
+  this.getIs_influencer();
   }
 
 }

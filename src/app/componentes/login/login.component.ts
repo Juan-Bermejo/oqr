@@ -1,36 +1,27 @@
-import { Component, OnInit, ViewChild, Input } from '@angular/core';
-import { NavController, MenuController } from '@ionic/angular';
-import { User, UserLogin} from '../clases/user';
+import { Component, OnInit } from '@angular/core';
+import { NgForm, FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
+import { User } from '../../clases/user';
+import { NavController, MenuController, Platform, ModalController } from '@ionic/angular';
 import { AngularFireAuth } from '@angular/fire/auth';
-import * as firebase from 'firebase/app';
-import { AuthService } from '../services/auth.service'; 
+import { AuthService } from '../../services/auth.service';
 import { GooglePlus } from '@ionic-native/google-plus/ngx';
-import { Platform } from '@ionic/angular';
-import { Observable } from 'rxjs';
 import { Facebook } from '@ionic-native/facebook/ngx';
-
-import { DbService } from '../services/db.service';
-import { NgForm, Validators, FormControl, FormGroup, FormBuilder } from '@angular/forms';
-import { ToastController } from '@ionic/angular';
-import { HomePage } from '../home/home.page';
-import { MenuService } from '../services/menu.service';
-import { JwtHelperService } from '@auth0/angular-jwt';
-import { TokenService } from '../services/token.service';
-
-
+import { DbService } from '../../services/db.service';
+import { TokenService } from '../../services/token.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-login',
-  templateUrl: './login.page.html',
-  styleUrls: ['./login.page.scss'],
+  templateUrl: './login.component.html',
+  styleUrls: ['./login.component.scss'],
 })
-
-export class LoginPage implements OnInit {
+export class LoginComponent implements OnInit {
 
   logged: Boolean = false;
   user : Observable<firebase.User>;
   user_token:User;
   data_token:any;
+  spinner:boolean= false;
 
   constructor(private navCtrl: NavController, 
               private menu: MenuController,
@@ -41,6 +32,7 @@ export class LoginPage implements OnInit {
               private facebook: Facebook,
               public dbService: DbService,
               private builder: FormBuilder,
+              private modalCtrl: ModalController,
               private tokenServ: TokenService) { }
 
   private anyErrors: string = '';
@@ -79,7 +71,10 @@ export class LoginPage implements OnInit {
   }
 
   onLogin() {
-    this.dbService.checkLogin(this.user_name.value, this.password.value)
+    this.spinner=true;
+    setTimeout(() => {
+
+      this.dbService.checkLogin(this.user_name.value, this.password.value)
       .subscribe((data: any) => {
         console.log(data)
         if(data.status == 200) {
@@ -122,7 +117,9 @@ export class LoginPage implements OnInit {
           }
         })
          
-          this.loginRedirect();
+          //this.loginRedirect();
+          this.dismissModal();
+          this.spinner= false;
 
         }
 
@@ -131,9 +128,13 @@ export class LoginPage implements OnInit {
           toast.message = 'Usuario o contraseña incorrecto';
           toast.duration = 2000;
           document.body.appendChild(toast);
+          this.spinner= false;
           return toast.present(); 
         }
       });
+      
+    }, 1000);
+  
 
     // this.authService.loginEmailUser(this.email, this.password)
     //   .then( (res) => {
@@ -209,7 +210,10 @@ export class LoginPage implements OnInit {
   }
 
   async directLoginOne(){
-   await this.dbService.checkLogin("amorelli", "1111")
+    this.spinner=true;
+    setTimeout(async () => {
+
+      await this.dbService.checkLogin("amorelli", "1111")
       .subscribe(async (data: any) => {
         console.log(data)
         if(data.status == 200) {
@@ -251,7 +255,9 @@ export class LoginPage implements OnInit {
         }
       })
          
-          this.loginRedirect();
+         // this.loginRedirect();
+         this.dismissModal();
+         this.spinner= false;
 
         }
 
@@ -260,9 +266,13 @@ export class LoginPage implements OnInit {
           toast.message = 'Usuario o contraseña incorrecto';
           toast.duration = 2000;
           document.body.appendChild(toast);
+          this.spinner= false;
           return toast.present(); 
         }
       });
+      
+    }, 1000);
+  
   }
 
   directLoginTwo(){
@@ -290,7 +300,11 @@ export class LoginPage implements OnInit {
   }
 
   register_page() {
-    this.navCtrl.navigateRoot('register');
+    
+    this.navCtrl.navigateRoot('register').then(()=>
+  {
+    this.dismissModal()
+  })
   }
 
   resetForm(form?: NgForm) {
@@ -308,5 +322,16 @@ export class LoginPage implements OnInit {
   {
     this.menu.enable(true);
   }
+
+
+  dismissModal()
+  {
+    
+    this.modalCtrl.dismiss({
+
+      'dismissed': true
+    })
+  }
+
 
 }

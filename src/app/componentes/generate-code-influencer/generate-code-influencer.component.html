@@ -1,0 +1,49 @@
+<ion-content padding="true" class="ion-align-items-center">
+
+
+
+    <div class="cont col-sm-10">
+  
+  
+  <ion-row justify-content-end>
+      <ion-button fill="clear" (click)="dismissModal()"> 
+          <ion-icon name="md-close" size="large" color="primary"></ion-icon>
+  
+            
+          </ion-button>
+  </ion-row>
+  
+        <ion-row class="ion-justify-content-center">
+          <ion-col size="10">
+              <ion-title color="primary">
+             Código de influencer.
+                </ion-title>
+                <p>
+                  Elije un código para identificarte como influencer.
+                  Por medio de este código los usuarios podran acceder a las ofertas que estes promocionando.
+                </p>
+          </ion-col>
+  
+            </ion-row>
+            
+            <ion-row class="ion-justify-content-center">
+                <ion-col size="10">
+                    <ion-input placeholder="Ingresa el codigo aquí" [(ngModel)]="influencer_code">
+                      </ion-input>
+                  </ion-col>
+             
+            </ion-row>
+  
+            <ion-row class="ion-justify-content-center">
+              <ion-spinner *ngIf="spinner" ></ion-spinner>
+              <ion-button *ngIf="!spinner"  shape="round" expand="block" (click)="influencerCanal()"  >
+                Ingresar
+              </ion-button>
+            </ion-row>
+  
+    </div>
+  
+  
+  
+  
+  </ion-content>

@@ -3,7 +3,7 @@
     <ion-row>
 
         <ion-col size="2">
-          <ion-button *ngIf="!logged" color="success" expand="block" shape="round" (click)="goToLogIn()">Log In</ion-button>
+         <!-- <ion-button *ngIf="!logged" color="success" expand="block" shape="round" (click)="goToLogIn()">Log In</ion-button>-->
           <ion-buttons>
             <ion-menu-button color="primary" menu="first"></ion-menu-button>
           </ion-buttons> 
@@ -19,9 +19,13 @@
       </ion-col>
 
       <ion-col size=1 >
+        <div *ngIf="is_logged" >
         <ion-icon *ngIf="notification" size="large" name="md-alert" color="danger"></ion-icon>
         <ion-icon *ngIf="!notification" size="large" color="primary" name="md-notifications"></ion-icon>
-       
+      </div>
+        <ion-button *ngIf="!is_logged" fill="clear" (click)="goToLogin()" >
+          <ion-icon name="md-person" color="primary" size="large" ></ion-icon>
+        </ion-button>
       </ion-col>
 
     </ion-row>

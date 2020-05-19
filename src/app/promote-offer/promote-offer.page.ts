@@ -28,12 +28,18 @@ export class PromoteOfferPage implements OnInit {
   spinnerInsta:boolean;
   messajeInsta="";
   user:User;
+  is_logged:boolean=false;
 
   constructor(private route: ActivatedRoute, 
     public navCtrl: NavController,
     public paramSrv: NavParamsService,
     private postSrv: PostService,
     private dbService: DbService) {
+
+      this.dbService.getLogged$().subscribe((logged_check)=>
+      {
+        this.is_logged=logged_check;
+      })
 
 this.user= JSON.parse(localStorage.getItem("user_data"));
   this.offer=new Offer();
@@ -148,6 +154,19 @@ this.user= JSON.parse(localStorage.getItem("user_data"));
     }
 
 
+  }
+
+
+  promoteOffer()
+  {/*
+    this.spinner = true;
+
+    setTimeout(() => {
+
+      this.dbService
+
+      
+    }, 1000);*/
   }
 
 }

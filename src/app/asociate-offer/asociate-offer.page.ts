@@ -5,6 +5,7 @@ import { DbService } from '../services/db.service';
 import { Offer } from '../clases/offer';
 import { Seller } from '../clases/seller';
 import { User } from '../clases/user';
+import { TokenService } from '../services/token.service';
 
 @Component({
   selector: 'app-asociate-offer',
@@ -22,20 +23,34 @@ export class AsociateOfferPage implements OnInit {
   currencyCommission:string;
   myStock:number;
   checkTimeDiscount:boolean;
+  is_logged=false;
 
   constructor(private modalController: ModalController,
     public navCtrl: NavController,
     public alertCtrl: AlertController,
     private ParamSrv: NavParamsService,
-   private dbServ:DbService) {
+   private dbServ:DbService,
+  private token: TokenService) {
 
-    this.user= JSON.parse(localStorage.getItem("user_data"));
+    this.dbServ.getLogged$().subscribe((logged_check)=>
+    {
+      this.is_logged=logged_check;
+    })
+
+    if(token.GetPayLoad())
+    {
+     // this.user= JSON.parse(localStorage.getItem("user_data"));
+      this.user= token.GetPayLoad();
+    }
+
+   
     
     this.offer=this.ParamSrv.param.offer;
-    this.seller=this.ParamSrv.param.seller;
-    console.log(this.offer)
-    console.log(this.seller)
-    console.log(this.ParamSrv.param)
+    
+    if(this.ParamSrv.param.seller)
+    {
+      this.seller=this.ParamSrv.param.seller;
+
 
       for(let i =0; i< this.offer.sellers.length; i++)
       {
@@ -46,6 +61,9 @@ export class AsociateOfferPage implements OnInit {
           this.is_my_offer=true;
         }
       }
+
+    }
+
 
    
 
