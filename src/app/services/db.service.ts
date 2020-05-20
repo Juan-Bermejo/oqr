@@ -385,6 +385,13 @@ export class DbService {
         {headers: new HttpHeaders({"Content-Type": "application/json"})});
     }
 
+    getVendorByName(shop_name: string){
+      var VEND_URL = this.URL_SERVER.concat('vendors/getbyname');
+      let data = {"shop_name":shop_name};
+      return this.http.post(VEND_URL , data,
+        {headers: new HttpHeaders({"Content-Type": "application/json"})});
+    }
+
     getVendors(category: String) {
       let url = 'vendors/getbycategory';
       let data = {"category": category}
