@@ -5,6 +5,7 @@ import { AddProductPage } from '../modals/add-product/add-product.page';
 import { DbService } from '../services/db.service';
 import { User } from '../clases/user';
 import { Seller } from '../clases/seller';
+import { TokenService } from '../services/token.service';
 
 
 @Component({
@@ -18,9 +19,9 @@ export class RelatedProductsPage implements OnInit {
   array_products:Array<Product>;
   seller:Seller;
 
-  constructor(private modalCtrl: ModalController, private dbserv: DbService) {
+  constructor(private modalCtrl: ModalController, private dbserv: DbService, private token: TokenService) {
     this.array_products= new Array<Product>();
-    this.user=JSON.parse(localStorage.getItem("user_data"));
+    this.user=this.token.GetPayLoad().doc;
     this.dbserv.checkIsVendor(this.user._id).subscribe((data:any)=>
   {
     this.seller= data.vendor_data;
@@ -52,6 +53,18 @@ export class RelatedProductsPage implements OnInit {
         
       })
     
+   }
+
+   ionViewWillEnter()
+   {
+    this.user=this.token.GetPayLoad().doc;
+    this.dbserv.checkIsVendor(this.user._id).subscribe((data:any)=>
+  {
+    this.seller= data.vendor_data;
+    this.array_products= this.seller.products;
+    console.log("seller: ",this.seller)
+  })
+
    }
 
   ngOnInit() {

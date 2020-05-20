@@ -4,6 +4,7 @@ import { DbService } from '../../services/db.service';
 import { Seller } from '../../clases/seller';
 import { ModalCategoriesPage } from '../../modals/modal-categories/modal-categories.page';
 import { FormBuilder, FormControl, Validators, FormGroup } from '@angular/forms';
+import { TokenService } from '../../services/token.service';
 
 
 @Component({
@@ -24,7 +25,8 @@ export class NewSellerComponent implements OnInit {
               private modalctrl: ModalController,
               private dbService: DbService,
               private builder: FormBuilder,
-              private navParams: NavParams) {
+              private navParams: NavParams,
+            private token: TokenService) {
 
                 if(this.navParams.get("seller"))
                 {
@@ -40,7 +42,7 @@ export class NewSellerComponent implements OnInit {
                 }
 
                 
-                this.user_data=JSON.parse(localStorage.getItem("user_data"));
+                this.user_data=token.GetPayLoad().doc;
                 console.log(this.user_data);
                 this.seller.owner=this.user_data._id;
                 this.dbService.getLocation(this.user_data._id).subscribe((locs:any)=>

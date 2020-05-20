@@ -70,7 +70,7 @@ export class OfferDetailsPage implements OnInit {
       this.dbService.getLogged$().subscribe((logged_check)=>
     {
       this.is_logged=logged_check;
-      this.is_logged ? this.user= tokenSrv.GetPayLoad(): this.user= null;
+      this.is_logged ? this.user= tokenSrv.GetPayLoad().doc: this.user= null;
       console.log(this.user);
     })
 

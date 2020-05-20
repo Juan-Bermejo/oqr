@@ -152,8 +152,8 @@ spinner:boolean=false;
   {
     this.spinner=true;
 
-    if(this.name && this.category && this.kind &&
-    this.currency_price && this.price && this.name)
+    if( this.category && this.kind &&
+    this.currency_price && this.price && this.searchText)
     {
      
       let p= new Product();
@@ -187,6 +187,8 @@ spinner:boolean=false;
       .catch((error)=>
     {
       console.log(error)
+      this.spinner=false;
+      this.messaje ="No se pudo guardar el producto."
     }) //catch
     .finally(()=>
   {

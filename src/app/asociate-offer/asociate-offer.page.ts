@@ -18,6 +18,7 @@ export class AsociateOfferPage implements OnInit {
   user:User;
   offer:Offer;
   seller:Seller;
+
   checkProducts:boolean;
   myCommission:number;
   currencyCommission:string;
@@ -31,6 +32,7 @@ export class AsociateOfferPage implements OnInit {
     private ParamSrv: NavParamsService,
    private dbServ:DbService,
   private token: TokenService) {
+    
 
     this.dbServ.getLogged$().subscribe((logged_check)=>
     {
@@ -40,15 +42,15 @@ export class AsociateOfferPage implements OnInit {
     if(token.GetPayLoad())
     {
      // this.user= JSON.parse(localStorage.getItem("user_data"));
-      this.user= token.GetPayLoad();
+      this.user= token.GetPayLoad().doc;
     }
 
-   
-    
     this.offer=this.ParamSrv.param.offer;
+    this.myCommission = this.offer.commission;
     
     if(this.ParamSrv.param.seller)
     {
+      console.log(this.seller);
       this.seller=this.ParamSrv.param.seller;
 
 

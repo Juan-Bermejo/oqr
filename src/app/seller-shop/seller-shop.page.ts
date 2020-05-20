@@ -12,6 +12,7 @@ import { PostService } from '../services/post.service';
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 import { Subscription } from 'rxjs';
 import { Purchase } from '../clases/purchase';
+import { TokenService } from '../services/token.service';
 
 @Component({
   selector: 'app-seller-shop',
@@ -25,13 +26,14 @@ export class SellerShopPage implements OnInit {
   user_id:string;
   products:Product[];
   foto:string;
-   dataMarker:any;
+   dataMarker:Seller;
    shop_name:string;
    offer: Offer;
    seller:Seller;
    cart: Cart;
    offerdata:Offer;
    purchase_sub:Subscription;
+   is_logged:boolean= false
 
 
   constructor(private modalCtrl:ModalController,
@@ -40,30 +42,62 @@ export class SellerShopPage implements OnInit {
               private toastController: ToastController,
             private postService:PostService,
           private navCtrl: NavController,
-          private iab: InAppBrowser) { 
+          private iab: InAppBrowser,
+          private token: TokenService) { 
 
+            this.cart= new Cart();
 
-              this.cart= new Cart();
-              this.dataMarker= JSON.parse(this.navParams.param.seller)
-              this.offer= JSON.parse(this.navParams.param.offer) ;
-              this.offerdata=this.offer;
-              console.log(this.offer)
-              this.user_id=JSON.parse(localStorage.getItem("user_data"))._id
+            this,dbService.getLogged$().subscribe((data)=>
+          {
+            this.is_logged = data;
+            if(this.is_logged)
+            {
+              this.user = token.GetPayLoad().doc;
 
+              this.cart.user_id= this.user_id;
+              this.user_id=this.user._id;
 
-              this.dbService.checkIsVendor(this.user_id).subscribe((data:any)=>
-              {
-                this.seller= data.vendor_data;
+            }
+
+            this.dbService.getOffer(this.navParams.param.offer).toPromise()
+            .then((data:any)=>
+          {
+            this.offer= data ;
+            this.offerdata=this.offer;
+            console.log(data)
+          })
+
+           
+              this.dbService.getVendorById(this.navParams.param.seller).subscribe((data:any)=>
+              { console.log("vendedor: ", data)
+                this.seller= data;
+                this.dataMarker= data;
                 this.shop_name= this.seller.shop_name;
                 this.cart.vendor_id= this.seller._id;
+                this.products = this.dataMarker.products;
                 console.log(this.seller);
               },
               (data)=>
             {
               console.log(data)          
             })
+            
+          })
+              
 
-            dbService.getUser(this.user_id).subscribe((user:User)=>{
+              
+              /*this.dbService.checkIsVendor(this.navParams.param.seller).toPromise()
+              .then((data:any)=>
+            {
+              this.dataMarker= data.vendor_data;
+            })*/
+
+              
+
+
+     
+
+         /*   dbService.getUser(this.user_id).subscribe((user:User)=>{
                   
                   this.user=user;
               },
@@ -74,24 +108,24 @@ export class SellerShopPage implements OnInit {
         ()=>
       {
         console.log("complete")
-      })
+      })*//*
 
-               this.dbService.getProdOfVendor(this.dataMarker.seller).subscribe((data:any)=>{
-                console.log(this.dataMarker.seller)
+               this.dbService.getProdOfVendor(this.dataMarker._id).subscribe((data:any)=>{
+                
                 console.log(data);
                 this.products= data.products_vendor
               },
               (data)=>
             {
-              console.log("error: ",data, this.dataMarker.seller)          
+              console.log("error: ",data, this.dataMarker)          
             },
           ()=>
         {
           console.log("complete")
         })
 
+              */
               
-              this.cart.user_id= this.user_id;
               
 
               }               /* FIN DEL CONSTRUCTOR */
