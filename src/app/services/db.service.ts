@@ -359,7 +359,8 @@ export class DbService {
     //VENDORS SERVICES
 
     getVendorById(vendor_id: string){
-      let VEND_URL = this.URL_SERVER.concat('vendors/' + vendor_id);
+      let url = "vendors/".concat(vendor_id);
+      let VEND_URL = this.URL_SERVER.concat(url);
       return this.http.get(VEND_URL);
     }
 
