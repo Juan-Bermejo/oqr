@@ -42,7 +42,7 @@ export class OfferDetailsPage implements OnInit {
   labelLayerId:any;
   layers:any;
   selectedMarker;
-  markers: Array<{}>;
+  markers: Array<any>;
   myLatLng;
   myLat;
   mylong;
@@ -102,11 +102,11 @@ export class OfferDetailsPage implements OnInit {
 
        this.offerLocations= dataLoc.locations;
        
-      /* for(let i =0; i< this.offerLocations.length; i++)
+       for(let i =0; i< this.offerLocations.length; i++)
        {
          this.addMarker(this.offerLocations[i]);
        }
-     */
+     
         
       })
     
@@ -162,7 +162,7 @@ export class OfferDetailsPage implements OnInit {
  
       });
 
-      let amar= [
+     /* let amar= [
         {
         long: -58.5084179,
         lat:-34.9636133
@@ -175,32 +175,10 @@ export class OfferDetailsPage implements OnInit {
             long: -59.0884220,
             lat:-35.0036180
             },
-      ]
+      ]*/
+      
 
-
-      for(let i =0; i <amar.length; i++)
-      {
-
-       const div = window.document.createElement('div');
-       div.innerHTML = "<h1>Aca va la info del shop y el ingreso</h1>"
-        
     
-        div.addEventListener('click',async ()=>
-      {
-        console.log("diste click");
-      })
-
-      let popup = new Mapboxgl.Popup()
-              .setDOMContent(div);
-
-      let el = document.createElement('div');
-           
-      let marker = new Mapboxgl.Marker()
-          .setPopup(popup)
-          .setLngLat([amar[i].long, amar[i].lat])
-          .addTo(this.map);
-           
-      }
       
 
 
@@ -340,7 +318,7 @@ this.map.on('load', function() {
          address:location.address,
           alpha: 1,
           seller: location.vendor_id,
-          icon: "../../../assets/iconos/User-Blue-icon.png"
+         // icon: "../../../assets/iconos/User-Blue-icon.png"
         });
   }
 
@@ -473,24 +451,36 @@ buildMap()
       antialias: false
       });
 
-      this.map.on('load',()=>
+      this.map.on('load',async ()=>
     {
       this.map.resize();
+      for(let i =0; i <this.markers.length; i++)
+      {console.log(this.markers[i])
+
+       const div = window.document.createElement('div');
+       div.innerHTML = "<h1>Aca va la info del shop y el ingreso</h1>"
+        
+    
+        div.addEventListener('click',async ()=>
+      {
+        console.log("diste click");
+      })
+
+      let popup = new Mapboxgl.Popup()
+              .setDOMContent(div);
+
+      let el = document.createElement('div');
+           
+      let marker = new Mapboxgl.Marker()
+          .setPopup(popup)
+          .setLngLat([this.markers[i].lng, this.markers[i].lat])
+          .addTo(this.map);
+           
+      }
+      
     })
 
-    let element = document.createElement('div');
-    element.className="marker";
 
-    element.addEventListener('click',()=>
-  {
-    console.log("diste click");
-  })
-
-    let mark = new Mapboxgl.Marker(element)
-    .setLngLat({
-      lng:-58.3884179,
-      lat: -34.8636133
-    })
 
   
   }

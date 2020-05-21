@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, ViewChild } from '@angular/core';
-import { ModalController, NavParams, ToastController, NavController } from '@ionic/angular';
+import { ModalController, ToastController, NavController } from '@ionic/angular';
 import { NavParamsService } from '../services/nav-params.service';
 import { DbService } from '../services/db.service';
 import { User } from '../clases/user';
@@ -13,6 +13,8 @@ import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 import { Subscription } from 'rxjs';
 import { Purchase } from '../clases/purchase';
 import { TokenService } from '../services/token.service';
+import { ActivatedRoute } from '@angular/router';
+
 
 @Component({
   selector: 'app-seller-shop',
@@ -22,6 +24,8 @@ import { TokenService } from '../services/token.service';
 export class SellerShopPage implements OnInit {
 
   
+  sellerName:string;
+  offerId:string;
   user:User;
   user_id:string;
   products:Product[];
@@ -37,6 +41,7 @@ export class SellerShopPage implements OnInit {
 
 
   constructor(private modalCtrl:ModalController,
+    private activatedRoute: ActivatedRoute,
               private dbService:DbService,
               private navParams: NavParamsService,
               private toastController: ToastController,
@@ -44,7 +49,9 @@ export class SellerShopPage implements OnInit {
           private navCtrl: NavController,
           private iab: InAppBrowser,
           private token: TokenService) { 
-
+    
+            this.offer= new Offer();
+            this.seller= new Seller();
             this.cart= new Cart();
 
             this,dbService.getLogged$().subscribe((data)=>
@@ -274,11 +281,50 @@ ionViewDidEnter()
 
   ngOnInit() {
 
+  if(this.navParams.param)
+  {
+   this.offer= this.navParams.param.offer; 
+   this.seller= this.navParams.param.seller; 
+  }
+  else{
+
+    if (document.URL.indexOf("?") > 0) {
+      let splitURL = document.URL.split("?");
+      let splitParams = splitURL[1].split("&");
+      let i: any;
+      for (i in splitParams){
+        let singleURLParam = splitParams[i].split('=');
+        if (singleURLParam[0] == "offer"){
+          this.offerId = singleURLParam[1];
+        }
+        if (singleURLParam[0] == "seller"){
+          this.sellerName = singleURLParam[1];
+        }
+      }
+
+      
+
+      
+    }
+
+  }
+
+/*
+    this.activatedRoute.params.subscribe((params) => {
+      console.log('Params: ', params);
+    });*/
+    
+//this.offer= this.webParams.get('offer');
+
+
+/*
     this.dataMarker= this.navParams.param.seller
    //this.shop_name= this.seller.shop_name;
   
     this.offer= this.navParams.param.offer
-    
+    */
+
+
   }
 
 }

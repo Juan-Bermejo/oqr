@@ -167,6 +167,8 @@ spinner:boolean=false;
       console.log(p);
 
       this.seller.products.push(p);
+
+      console.log("envio seller: ", this.seller)
       this.dbService.updateVendor(this.seller).toPromise()
       .then((data:any)=>
     {
