@@ -25,6 +25,7 @@ export class SellerShopPage implements OnInit {
 
   
   sellerName:string;
+  sellerId:string;
   offerId:string;
   user:User;
   user_id:string;
@@ -66,28 +67,7 @@ export class SellerShopPage implements OnInit {
 
             }
 
-            this.dbService.getOffer(this.navParams.param.offer).toPromise()
-            .then((data:any)=>
-          {
-            this.offer= data ;
-            this.offerdata=this.offer;
-            console.log(data)
-          })
-
            
-              this.dbService.getVendorById(this.navParams.param.seller).subscribe((data:any)=>
-              { console.log("vendedor: ", data)
-                this.seller= data;
-                this.dataMarker= data;
-                this.shop_name= this.seller.shop_name;
-                this.cart.vendor_id= this.seller._id;
-                this.products = this.dataMarker.products;
-                console.log(this.seller);
-              },
-              (data)=>
-            {
-              console.log(data)          
-            })
             
           })
               
@@ -281,10 +261,23 @@ ionViewDidEnter()
 
   ngOnInit() {
 
+    
   if(this.navParams.param)
   {
-   this.offer= this.navParams.param.offer; 
-   this.seller= this.navParams.param.seller; 
+   this.offer=  JSON.parse(this.navParams.param.offer); 
+   this.sellerId= this.navParams.param.seller;
+  
+   console.log (this.navParams.param.seller);
+
+   this.dbService.getVendorById (this.sellerId).subscribe((data:any)=>
+  {
+    this.seller= data;
+    this.dataMarker= data;
+    this.shop_name= this.seller.shop_name;
+    this.cart.vendor_id= this.seller._id;
+    this.products = this.dataMarker.products;
+    console.log("vendedor: ", data);
+  })
   }
   else{
 
@@ -302,7 +295,20 @@ ionViewDidEnter()
         }
       }
 
-      
+      this.dbService.getVendorByName(this.sellerName).toPromise().then((data:any)=>
+      {
+        this.seller= data;
+        this.dataMarker= data;
+        this.shop_name= this.seller.shop_name;
+        this.cart.vendor_id= this.seller._id;
+        this.products = this.dataMarker.products;
+      })
+      this.dbService.getOffer(this.offerId).toPromise().then((data:any)=>
+    {
+      this.offer= data ;
+      this.offerdata=this.offer;
+      console.log(data)
+    })
 
       
     }

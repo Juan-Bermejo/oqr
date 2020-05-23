@@ -6,6 +6,7 @@ import { Offer } from '../clases/offer';
 import { Seller } from '../clases/seller';
 import { User } from '../clases/user';
 import { TokenService } from '../services/token.service';
+import { CountriesService } from '../services/countries.service';
 
 @Component({
   selector: 'app-asociate-offer',
@@ -18,7 +19,7 @@ export class AsociateOfferPage implements OnInit {
   user:User;
   offer:Offer;
   seller:Seller;
-
+  countries;
   checkProducts:boolean;
   myCommission:number;
   currencyCommission:string;
@@ -27,6 +28,7 @@ export class AsociateOfferPage implements OnInit {
   is_logged=false;
 
   constructor(private modalController: ModalController,
+    private countrySrv:CountriesService,
     public navCtrl: NavController,
     public alertCtrl: AlertController,
     private ParamSrv: NavParamsService,
@@ -128,6 +130,27 @@ export class AsociateOfferPage implements OnInit {
     })
     }
 
+
+    ionViewWillEnter()
+    {
+      this.dbServ.checkIsVendor(this.user._id).subscribe((data:any)=>
+    {
+      for(let i =0; i< this.offer.sellers.length; i++)
+      {
+        if(this.offer.sellers[i] == data.vendor_data._id)
+        { 
+          console.log(this.offer.sellers[i])
+          
+          this.is_my_offer=true;
+        }
+      }
+      
+    })
+      this.countrySrv.getCountries().subscribe((c)=>{
+        this.countries= c;
+        console.log(c);
+      })
+    }
   ngOnInit() {
   }
 
