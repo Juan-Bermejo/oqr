@@ -37,6 +37,21 @@ export class MyOffersPage implements OnInit {
                 
                }
 
+
+               async desAssociate(offerId)
+               {
+                 this.dbService.dropOffer(this.user._id,offerId).subscribe((data:any)=>
+               {
+                 const toast = document.createElement('ion-toast');
+                 toast.message = 'Ya no eres socio de esta oferta';
+                 toast.duration = 2000;
+                 toast.color= "primary";
+                 toast.position="top";
+                 document.body.appendChild(toast);
+                 return toast.present(); 
+               })
+               }
+
   
 deleteOffer(offer_id)
 {

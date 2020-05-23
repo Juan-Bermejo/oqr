@@ -8,6 +8,7 @@ import { Seller } from '../clases/seller';
 import { Location } from '../clases/location';
 import { NewSellerComponent } from '../componentes/new-seller/new-seller.component';
 import { NavParamsService } from '../services/nav-params.service';
+import { TokenService } from '../services/token.service';
 
 @Component({
   selector: 'app-seller-panel',
@@ -30,11 +31,12 @@ shop_name:string;
   constructor(private navCtrl: NavController,
     private modalctrl: ModalController,
               private dbService: DbService,
+              private tokenSrv: TokenService,
             private navParams: NavParamsService) 
             {
 
                 this.seller= new Seller();
-                this.user_data=JSON.parse(localStorage.getItem("user_data"));
+                this.user_data=this.tokenSrv.GetPayLoad().doc;
 
                 this.dbService.checkIsVendor(this.user_data._id).subscribe((data:any)=>
               {
