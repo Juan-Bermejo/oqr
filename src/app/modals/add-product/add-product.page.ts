@@ -8,6 +8,8 @@ import { DbService } from '../../services/db.service';
 import { User } from '../../clases/user';
 import { Seller } from '../../clases/seller';
 import { Subscription } from 'rxjs';
+import { TokenService } from '../../services/token.service';
+import { ImagePicker, ImagePickerOptions } from '@ionic-native/image-picker/ngx';
 
 //import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 
@@ -18,6 +20,7 @@ import { Subscription } from 'rxjs';
 })
 export class AddProductPage implements OnInit {
   
+  photos: any;
   searchText: string;
 spinner:boolean=false;
   countries: Object;
@@ -38,8 +41,10 @@ spinner:boolean=false;
  spinnerAC:boolean=false;
 
   constructor(private modalController: ModalController,
+    private imagePicker: ImagePicker,
     private zbar: ZBar,
     private dbService:DbService,
+    private tokenSrv: TokenService,
     //private barcodeScanner: BarcodeScanner,
     private countrySrv:CountriesService) {
       this.prod_subcribe= new Subscription()
@@ -47,7 +52,7 @@ spinner:boolean=false;
       this.dbProducts= new Array<Product>();
       this.aux_product_list= new Array<Product>();
       
-      this.user=JSON.parse(localStorage.getItem("user_data"));
+      this.user=this.tokenSrv.GetPayLoad().doc;
       this.dbService.checkIsVendor(this.user._id).subscribe((data:any)=>
       {
         this.seller=data.vendor_data;
@@ -63,6 +68,22 @@ spinner:boolean=false;
         this.countries= c;
         console.log(c);
       })
+     }
+
+
+     addPhoto()
+     {
+       let options: ImagePickerOptions = {
+         maximumImagesCount: 1,
+         
+       }
+
+      this.imagePicker.getPictures(options).then((results) => {
+        for (var i = 0; i < results.length; i++) {
+            console.log('Image URI: ' + results[i]);
+        }
+        this.photos= results;
+      }, (err) => { });
      }
 
      addNote(p)

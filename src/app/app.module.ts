@@ -46,6 +46,8 @@ import { InputCodeInfluencerComponent } from './componentes/input-code-influence
 import { OneSignal } from '@ionic-native/onesignal/ngx';
 import { GenerateCodeInfluencerComponent } from './componentes/generate-code-influencer/generate-code-influencer.component';
 import { LoginComponent } from './componentes/login/login.component';
+import { ImagePicker } from '@ionic-native/image-picker/ngx';
+
 
 export function tokenGetter() {
   return localStorage.getItem('token');
@@ -97,6 +99,7 @@ export function tokenGetter() {
     JwtHelperService,
     Deeplinks,
     OneSignal,
+    ImagePicker,
    // BarcodeScanner,
     ZBar,
     NativeGeocoder,
