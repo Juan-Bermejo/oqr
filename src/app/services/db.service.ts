@@ -447,6 +447,14 @@ export class DbService {
         {headers: new HttpHeaders({"Content-Type": "application/json"})});
     }
 
+    //IMAGES
+
+    sendImage(form) {
+      let url = 'services/upload';
+      let SERVICE_URL = this.URL_SERVER.concat(url);
+      return this.http.post(SERVICE_URL, form);
+    }
+  
     /*
 
     editUser(user: User) {
