@@ -72,7 +72,8 @@ export class HomePage implements OnInit {
      private menuService: MenuService,
      private geolocation: Geolocation,
      private nativeGeocoder: NativeGeocoder,
-     private tokenServ: TokenService
+     private tokenServ: TokenService,
+     private router :Router,
     ) {     
 
       this.dbService.getLogged$().subscribe((data)=>
@@ -275,13 +276,13 @@ async goToLogin()
     console.log(this.search_tool);
   }
 
-  async goToOfferDetails(offer)
+   goToOfferDetails(offer)
   {
-    
-  this.ParamSrv.param={
-    "offer":offer
-  }
-  this.navCtrl.navigateForward(['offer-influencers']);
+console.log(offer._id)
+ // this.navCtrl.navigateForward(['offer-details/?offer='+offer._id]);
+ //this.router.navigateByUrl('offer-details/?offer='+offer._id);
+ this.router.navigateByUrl('offer-details/'+offer._id);
+
   
   }
 

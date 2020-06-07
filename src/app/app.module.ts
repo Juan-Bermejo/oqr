@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
+import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 
 import { IonicModule, IonicRouteStrategy, NavParams } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
@@ -46,8 +47,9 @@ import { InputCodeInfluencerComponent } from './componentes/input-code-influence
 import { OneSignal } from '@ionic-native/onesignal/ngx';
 import { GenerateCodeInfluencerComponent } from './componentes/generate-code-influencer/generate-code-influencer.component';
 import { LoginComponent } from './componentes/login/login.component';
-import { ImagePicker } from '@ionic-native/image-picker/ngx';
-
+import { CartComponent } from './componentes/cart/cart.component';
+import { EditShopComponent } from './componentes/edit-shop/edit-shop.component';
+import { TypeOfferModalComponent } from './componentes/type-offer-modal/type-offer-modal.component';
 
 export function tokenGetter() {
   return localStorage.getItem('token');
@@ -61,7 +63,10 @@ export function tokenGetter() {
      NewSellerComponent, 
      InputCodeInfluencerComponent,
      GenerateCodeInfluencerComponent,
-     LoginComponent],
+     LoginComponent,
+     EditShopComponent,
+     CartComponent,
+     TypeOfferModalComponent],
 
   imports: [BrowserModule,
      IonicModule.forRoot(), 
@@ -99,7 +104,6 @@ export function tokenGetter() {
     JwtHelperService,
     Deeplinks,
     OneSignal,
-    ImagePicker,
    // BarcodeScanner,
     ZBar,
     NativeGeocoder,
@@ -108,9 +112,12 @@ export function tokenGetter() {
     GooglePlus,
     Facebook,
     InAppBrowser,
+   
     
     
-    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
+    
+    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+    {provide: LocationStrategy, useClass: HashLocationStrategy},
   ],
   bootstrap: [AppComponent]
 })

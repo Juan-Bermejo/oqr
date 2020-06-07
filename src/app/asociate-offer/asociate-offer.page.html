@@ -1,111 +1,152 @@
 
   <ion-toolbar>
-      <ion-buttons slot="start" collapse="true">
-          <ion-back-button mode="md" type="button" color="light" icon="md-arrow-back" defaultHref="home">
-          </ion-back-button>
-        </ion-buttons>
-    <ion-title color="primary">Asociarme a esta oferta</ion-title>
-  </ion-toolbar>
+    <ion-buttons slot="start" collapse="true">
+        <ion-back-button mode="md" type="button" color="light" icon="md-arrow-back" defaultHref="home">
+        </ion-back-button>
+      </ion-buttons>
+  <ion-title color="primary">Asociarme a esta oferta</ion-title>
+</ion-toolbar>
 
 
 <ion-content>
 
-  <ion-card padding>
-    <img src="../../assets/images/{{offer.category}}.jpg">
-   
-    <ion-card-title> {{offer.product}} a {{offer.price_currency}} {{offer.price}}  </ion-card-title>
-    <ion-card-subtitle> {{offer.description}} </ion-card-subtitle>
+<ion-card padding>
+  <ion-row class="ion-justify-content-center">
+      <img src="../../assets/images/{{offer.category}}.jpg">
+    </ion-row>
+    <ion-row class="ion-justify-content-center">
+      <ion-card-title *ngIf="offer.offer_name=='Precio'" style="color: rgba(39, 39, 39, 0.904)">
+          {{offer.one_product[0].name}} a {{offer.price | currency: offer.price_currency}}
+         </ion-card-title>
+         <ion-card-title *ngIf="offer.offer_name=='Gratis'" style="color: black">
+           {{offer.one_product[0].name}} Gratis!
+           {{offer.description}}
+          </ion-card-title>
+       <ion-card-title *ngIf="offer.offer_name=='Descuento'" style="color: black">
+         %{{offer.percentage}} de descuento en {{offer.category}}
+         </ion-card-title>
+        </ion-row>
+        <ion-row class="ion-justify-content-center">
+        <ion-card-subtitle *ngIf="offer.offer_name!='Gratis'" style="color: black">
+            {{offer.description}}
+           </ion-card-subtitle>
+           </ion-row>
 
-    <ion-list>
-      
-        <ion-item>
-            <ion-label>Fecha de publicacion</ion-label>
-            <ion-note slot="end">
 
-                  {{offer.date}} 
+
+  <ion-list>
     
-            </ion-note>
-        </ion-item>
-        <ion-item>
-            <ion-label>Cantidad de vendedores</ion-label>
-            <ion-note slot="end">              
+      <ion-item>
+          <ion-label>Fecha de publicacion</ion-label>
+          <ion-note slot="end">
+
+                {{offer.date}} 
+  
+          </ion-note>
+      </ion-item>
+      <ion-item>
+          <ion-label>Cantidad de vendedores</ion-label>
+          <ion-note slot="end">              
+            <ion-badge>
+              {{offer.sellers_cuantity}} 
+          </ion-badge>
+             </ion-note>
+      </ion-item>
+      <ion-item>
+          <ion-label>Comision por venta</ion-label>
+          <ion-note slot="end"> 
               <ion-badge>
-                {{offer.sellers_cuantity}} 
-            </ion-badge>
-               </ion-note>
+                  {{offer.commission}} 
+              </ion-badge>
+             </ion-note>
         </ion-item>
         <ion-item>
-            <ion-label>Comision por venta</ion-label>
+            <ion-label>Comision total</ion-label>
             <ion-note slot="end"> 
                 <ion-badge>
-                    {{offer.commission}} 
+                      {{offer.commission * offer.sellers_cuantity * offer.stock}}
                 </ion-badge>
-               </ion-note>
+            </ion-note>
           </ion-item>
-          <ion-item>
-              <ion-label>Comision total</ion-label>
-              <ion-note slot="end"> 
-                  <ion-badge>
-                        {{offer.commission * offer.sellers_cuantity * offer.stock}}
-                  </ion-badge>
-              </ion-note>
-            </ion-item>
-            </ion-list>
+          </ion-list>
 
 
-  <!--<ion-item-divider>
-    <ion-icon name="md-pin" size="large" color="primary" slot="start" >
-    </ion-icon>
-    <ion-label>Ver las locaciones de esta oferta</ion-label>
-  </ion-item-divider>-->
+<!--<ion-item-divider>
+  <ion-icon name="md-pin" size="large" color="primary" slot="start" >
+  </ion-icon>
+  <ion-label>Ver las locaciones de esta oferta</ion-label>
+</ion-item-divider>-->
 <ion-title>
-  Ingresa la comision que quieres pagar
+Ingresa la comision que quieres pagar
 </ion-title>
-  <ion-item-divider>        
-              <ion-input type="number" placeholder="Ingresa el importe." [(ngModel)]="commision">
-                  <span>
-                      <ion-select (ionChange)="currency_commission=prod_currency" [(ngModel)]="prod_currency" class="select-currency" placeholder="Moneda">
-                          <ion-select-option *ngFor="let c of countries" >
-                            {{c.currencies[0].code}}
-                          </ion-select-option>
-                        </ion-select>
-                     </span>
-              </ion-input>
+<ion-item-divider>        
+            <ion-input type="number" placeholder="Ingresa el importe." [(ngModel)]="commision">
+                <span>
+                    <ion-select (ionChange)="currency_commission=prod_currency" [(ngModel)]="prod_currency" class="select-currency" placeholder="Moneda">
+                        <ion-select-option *ngFor="let c of countries" >
+                          {{c.currencies[0].code}}
+                        </ion-select-option>
+                      </ion-select>
+                   </span>
+            </ion-input>
 
-  </ion-item-divider>
+</ion-item-divider>
 
-  <ion-title>
-      Ingresa tu stock
-    </ion-title>
-      <ion-item-divider>
-         <ion-input type="number" placeholder="Ingresa el stock." [(ngModel)]="stock">
-        </ion-input>
-      </ion-item-divider>
+<ion-title>
+    Ingresa tu stock
+  </ion-title>
+    <ion-item-divider>
+       <ion-input type="number" placeholder="Ingresa el stock." [(ngModel)]="stock">
+      </ion-input>
+    </ion-item-divider>
 
 
-  <!--<ion-item-divider>
-      <ion-icon name="md-pricetags" size="large" color="primary" slot="start" >
-      </ion-icon>
-      <ion-label>Ver los productos relacionados de esta oferta</ion-label>
-    </ion-item-divider>-->
+<!--<ion-item-divider>
+    <ion-icon name="md-pricetags" size="large" color="primary" slot="start" >
+    </ion-icon>
+    <ion-label>Ver los productos relacionados de esta oferta</ion-label>
+  </ion-item-divider>-->
 
 
 <ion-item-divider class="ion-align-items-center">
-    <ion-icon slot="start" style="font-size: 35px" src="../../assets/iconos/svg/ICONOS-05.svg">
-    </ion-icon>
-    <ion-label>
-        Descuento por retiro programado.
-     </ion-label>
+  <ion-icon slot="start" style="font-size: 35px" src="../../assets/iconos/svg/ICONOS-05.svg">
+  </ion-icon>
+  <ion-label>
+      Descuento por retiro programado.
+   </ion-label>
 
-   <ion-checkbox [disabled]="!is_logged" [(ngModel)]="check_time_discount">
-    </ion-checkbox>
+ <ion-checkbox [disabled]="!is_logged" [(ngModel)]="check_time_discount">
+  </ion-checkbox>
 </ion-item-divider>
 
 <ion-item-divider *ngIf="!check_time_discount">
 
-    <ion-input type="number" placeholder="Porcentaje" [(ngModel)]="time_value" readonly>
+  <ion-input type="number" placeholder="Porcentaje" [(ngModel)]="time_value" readonly>
+      <span>
+          <ion-select  [(ngModel)]="time_type"  class="select-currency" placeholder="Dias" readonly>
+              <ion-select-option value="Dias">
+                Dias
+              </ion-select-option>
+              <ion-select-option value="Horas">
+                      Horas
+                    </ion-select-option>
+            </ion-select>
+         </span>
+
+         <span>
+             <ion-input type="number" style="border-bottom: none" placeholder="Cantidad" readonly>
+
+             </ion-input>
+         </span>
+  </ion-input>
+
+</ion-item-divider>
+
+  <ion-item-divider *ngIf="check_time_discount">
+
+    <ion-input type="number" placeholder="Porcentaje" [(ngModel)]="time_value">
         <span>
-            <ion-select  [(ngModel)]="time_type"  class="select-currency" placeholder="Dias" readonly>
+            <ion-select  [(ngModel)]="time_type"  class="select-currency" placeholder="Dias">
                 <ion-select-option value="Dias">
                   Dias
                 </ion-select-option>
@@ -116,7 +157,7 @@
            </span>
 
            <span>
-               <ion-input type="number" style="border-bottom: none" placeholder="Cantidad" readonly>
+               <ion-input type="number" style="border-bottom: none" placeholder="Cantidad">
 
                </ion-input>
            </span>
@@ -124,50 +165,27 @@
 
   </ion-item-divider>
 
-    <ion-item-divider *ngIf="check_time_discount">
 
-      <ion-input type="number" placeholder="Porcentaje" [(ngModel)]="time_value">
-          <span>
-              <ion-select  [(ngModel)]="time_type"  class="select-currency" placeholder="Dias">
-                  <ion-select-option value="Dias">
-                    Dias
-                  </ion-select-option>
-                  <ion-select-option value="Horas">
-                          Horas
-                        </ion-select-option>
-                </ion-select>
-             </span>
+<ion-row class="ion-justify-content-center">
+  <ion-button [disabled]="!is_logged" *ngIf="!is_my_offer" expand="block" (click)="associate()" >
+    <ion-icon name="md-people" color="light" size="large" slot="start"></ion-icon>
+    Quiero asociarme a esta oferta</ion-button>
 
-             <span>
-                 <ion-input type="number" style="border-bottom: none" placeholder="Cantidad">
+    <ion-button *ngIf="is_my_offer" color="danger" expand="block" (click)="desAssociate()" >
+        <ion-icon name="md-people" color="light" size="large" slot="start"></ion-icon>
+        Quiero dejar de ser socio</ion-button>
+</ion-row>
+<ion-row>
+  <ion-item-divider>
+      <ion-checkbox [disabled]="!is_logged" slot="start" [(ngModel)]="checkProducts" ></ion-checkbox>
+    <ion-label style="font-size: medium">Asociarme tambien a los productos relacionados.</ion-label>
+  </ion-item-divider>
+    
+</ion-row>
 
-                 </ion-input>
-             </span>
-      </ion-input>
+</ion-card>
 
-    </ion-item-divider>
-
-
-  <ion-row class="ion-justify-content-center">
-    <ion-button [disabled]="!is_logged" *ngIf="!is_my_offer" expand="block" (click)="associate()" >
-      <ion-icon name="md-people" color="light" size="large" slot="start"></ion-icon>
-      Quiero asociarme a esta oferta</ion-button>
-
-      <ion-button *ngIf="is_my_offer" color="danger" expand="block" (click)="desAssociate()" >
-          <ion-icon name="md-people" color="light" size="large" slot="start"></ion-icon>
-          Quiero dejar de ser socio</ion-button>
-  </ion-row>
-  <ion-row>
-    <ion-item-divider>
-        <ion-checkbox [disabled]="!is_logged" slot="start" [(ngModel)]="checkProducts" ></ion-checkbox>
-      <ion-label style="font-size: medium">Asociarme tambien a los productos relacionados.</ion-label>
-    </ion-item-divider>
       
-  </ion-row>
-
-  </ion-card>
-
-        
 </ion-content>
 
 

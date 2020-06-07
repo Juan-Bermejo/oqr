@@ -6,6 +6,7 @@ import { DbService } from '../../services/db.service';
 import { User } from '../../clases/user';
 import { Seller } from '../../clases/seller';
 import { NavParamsService } from '../../services/nav-params.service';
+import { TokenService } from '../../services/token.service';
 
 
 @Component({
@@ -23,14 +24,16 @@ export class ModalCategoriesPage implements OnInit {
 
   constructor(public modalCtrl: ModalController, 
     private navCtrl: NavController,
-     private dbserv:DbService,
-    private paramServ: NavParamsService) {
+    private dbserv:DbService,
+    private paramServ: NavParamsService,
+    private token: TokenService) {
 
       if(this.paramServ.param != undefined && this.paramServ.param.seller)
       {
+        console.log(this.paramServ.param.seller)
         this.seller= this.paramServ.param.seller;
         this.array_products= new Array<Product>();
-        this.user=JSON.parse(localStorage.getItem("user_data"));
+        this.user=this.token.GetPayLoad().doc;
 
         this.array_products= this.seller.products;
         this.aux_list_cat= this.list_cat.filter((cat)=>

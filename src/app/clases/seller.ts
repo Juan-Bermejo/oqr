@@ -12,7 +12,12 @@ export class Seller {
     category:string;
     location:Location[];
     products:Product[];
-    offers:{};
+    offers:Array<{
+        "association_date":number,
+        "offer_id":string,
+        "price":number,
+        "stock":number
+      }>;
 
     constructor() {
        this.products= new Array<Product>()

@@ -1,88 +1,43 @@
 
 
-<ion-content class="ion-padding">
+<ion-content padding="true">
 
-<ion-toolbar>
-
-            <ion-buttons slot="start" collapse="true">
-                <ion-back-button color="light" icon="md-arrow-back" defaultHref="home">
-                </ion-back-button>
-                </ion-buttons>
-                <ion-title color="primary">
-                    Locaciones de la oferta
-                  </ion-title>
-
-</ion-toolbar>
-
-<ion-row class="ion-justify-content-center">
-    <strong *ngIf="offer.offer_name=='Precio'" style="color: rgba(39, 39, 39, 0.904)">
-        {{offer.one_product[0].name}} a {{offer.price | currency: offer.price_currency}}
-       </strong>
-       <strong *ngIf="offer.offer_name=='Gratis'" style="color: black">
-         {{offer.one_product[0].name}} Gratis!
-         {{offer.description}}
-        </strong>
-     <strong *ngIf="offer.offer_name=='Descuento'" style="color: black">
-       %{{offer.percentage}} de descuento en {{offer.category}}
-       </strong>
-
-      </ion-row>
-      <p *ngIf="offer.offer_name!='Gratis'" style="color: black">
-          {{offer.description}}
-         </p>
-
-  <!---
-<ion-row class="ion-justify-content-center">
-  <h4 style="color: rgb(0, 0, 0); left: 2px;"> {{offer.product}} a {{offer.price_currency}} {{offer.price}}</h4>
-
-  <strong>Descripcion de la oferta:</strong> 
-
-<p>
-  {{offer.description}}
-</p>
-</ion-row>
--->
-
-
-   <!-- <agm-map  [latitude]='latitude' [longitude]='longitude' 
-    [zoom]=12
-    [mapTypeId]='mapType' 
-    #AgmMap
-    >
+  <ion-toolbar>
   
-    <agm-marker
-    *ngFor="let marker of markers"
-    [latitude]="marker.lat"
-    [longitude]="marker.lng"
-    [opacity]="marker.alpha"
-    [markerDraggable]="false"
-    [visible]="true"
-    (markerClick)="selectMarker(marker)"
-    [iconUrl]="marker.icon"
-
-  >
-  </agm-marker>
-  </agm-map>-->
-  <div id="map"></div>
+              <ion-buttons slot="start" collapse="true">
+                  <ion-back-button color="light" icon="md-arrow-back" defaultHref="home">
+                  </ion-back-button>
+                  </ion-buttons>
+                  <ion-title color="primary">
+                      Locaciones de la oferta
+                    </ion-title>
   
-
-
-
-
-<ion-row  class="ion-justify-content-center">
-  <ion-text *ngIf="is_my_offer" color="success">
-    Eres socio en esta oferta
-  </ion-text>
-  <ion-col size=12>
-    <ion-button [disabled]="!is_seller" *ngIf="!is_my_offer" (click)="joinOffer()" size="large" shape="round" expand="block" >
-      <ion-icon name="md-people" color="light" size="large"></ion-icon>
-      Asociarme a esta oferta
-    </ion-button>
-  </ion-col>
-
-</ion-row>
-
-
-
-
-</ion-content>
+  </ion-toolbar>
+  
+  <ion-row class="ion-justify-content-center">
+    <div id="map"></div>
+  </ion-row>
+    
+    
+  
+  
+  
+  
+  <ion-row  class="ion-justify-content-center">
+    <ion-text *ngIf="is_my_offer" color="success">
+      Eres socio en esta oferta
+    </ion-text>
+    <ion-col size=12>
+      <ion-button [disabled]="!is_seller" *ngIf="!is_my_offer" (click)="joinOffer()" size="large" shape="round" expand="block" >
+        <ion-icon name="md-people" color="light" size="large"></ion-icon>
+        Asociarme a esta oferta
+      </ion-button>
+    </ion-col>
+  
+  </ion-row>
+  
+  
+  
+  
+  </ion-content>
+  

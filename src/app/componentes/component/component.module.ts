@@ -11,6 +11,9 @@ import { Validators, FormBuilder, FormControl, FormGroup } from '@angular/forms'
 import { InputCodeInfluencerComponent } from '../input-code-influencer/input-code-influencer.component';
 import { GenerateCodeInfluencerComponent } from '../generate-code-influencer/generate-code-influencer.component';
 import { LoginComponent } from '../login/login.component';
+import { CartComponent } from '../cart/cart.component';
+import { EditShopComponent } from '../edit-shop/edit-shop.component';
+import { TypeOfferModalComponent } from '../type-offer-modal/type-offer-modal.component';
 
 
 
@@ -22,15 +25,21 @@ import { LoginComponent } from '../login/login.component';
     InputCodeInfluencerComponent,
     LoginComponent,
     GenerateCodeInfluencerComponent,
+    CartComponent,
+    EditShopComponent,
+    TypeOfferModalComponent
     
   ],
   exports:[
     MenuComponent,
+    CartComponent,
     PopOverProductsComponent,
     NewSellerComponent,
     InputCodeInfluencerComponent,
     GenerateCodeInfluencerComponent,
-    LoginComponent
+    LoginComponent,
+    EditShopComponent,
+    TypeOfferModalComponent
   ],
   imports: [
     CommonModule,

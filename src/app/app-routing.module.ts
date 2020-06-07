@@ -20,7 +20,7 @@ const routes: Routes = [
     loadChildren: () => import('./modals/modal-categories/modal-categories.module').then( m => m.ModalCategoriesPageModule)
   },
   {
-    path: 'offer-details',
+    path: 'offer-details/:offer',
     loadChildren: () => import('./offer-details/offer-details.module').then( m => m.OfferDetailsPageModule)
   },
   {
@@ -96,7 +96,7 @@ const routes: Routes = [
     loadChildren: () => import('./billing-information/billing-information.module').then( m => m.BillingInformationPageModule)
   },
   {
-    path: 'seller-shop',
+    path: 'seller-shop/:seller', 
     loadChildren: () => import('./seller-shop/seller-shop.module').then( m => m.SellerShopPageModule)
   },
   {
@@ -124,7 +124,7 @@ const routes: Routes = [
     loadChildren: () => import('./chat/chat.module').then( m => m.ChatPageModule)
   },
   {
-    path: 'offer-influencers',
+    path: 'offer-influencers/:offer',
     loadChildren: () => import('./offer-influencers/offer-influencers.module').then( m => m.OfferInfluencersPageModule)
   },
 
@@ -134,7 +134,9 @@ const routes: Routes = [
 
 @NgModule({
   imports: [
-    RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules })
+    
+    RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules }),
+    //RouterModule.forRoot(routes, { useHash: true })
   ],
   exports: [RouterModule]
 })

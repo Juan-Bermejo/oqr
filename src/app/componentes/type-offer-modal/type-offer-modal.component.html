@@ -1,0 +1,42 @@
+
+<ion-content padding="true" class="ion-align-items-center">
+
+
+  <ion-col padding size-xs=7  size-sm=7 size-md=7  size-lg=7  size-xl=7 >
+      <div class="cont">
+          <ion-row justify-content-end>
+              <ion-button fill="clear" (click)="dismissModal()"> 
+                  <ion-icon name="md-close" size="large" color="primary"></ion-icon>
+          
+                    
+                  </ion-button>
+          </ion-row>
+        <ion-row>
+          <ion-col size=12>
+
+              
+               
+                  <ion-title style="text-align: center;">
+                    Tipo de oferta
+                  </ion-title>
+                
+               
+                  <ion-item-divider style="text-justify: center" (click)="select('Desuento')" >
+                    <ion-label >Descuentos</ion-label>                
+                  </ion-item-divider>
+                  <ion-item-divider style="text-justify: center" (click)="select('Precio')">
+                      <ion-label >Precios bajos</ion-label>                
+                    </ion-item-divider>
+                    <ion-item-divider style="text-justify: center" (click)="select('Gratis')">
+                        <ion-label >Gratis</ion-label>                
+                      </ion-item-divider>
+  
+           
+            </ion-col>
+                 
+            </ion-row>
+  
+  
+            </div>
+          </ion-col>
+          </ion-content>

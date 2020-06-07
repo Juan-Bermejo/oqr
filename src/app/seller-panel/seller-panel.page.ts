@@ -9,6 +9,7 @@ import { Location } from '../clases/location';
 import { NewSellerComponent } from '../componentes/new-seller/new-seller.component';
 import { NavParamsService } from '../services/nav-params.service';
 import { TokenService } from '../services/token.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-seller-panel',
@@ -32,6 +33,7 @@ shop_name:string;
     private modalctrl: ModalController,
               private dbService: DbService,
               private tokenSrv: TokenService,
+              private router :Router,
             private navParams: NavParamsService) 
             {
 
@@ -106,7 +108,10 @@ console.log(this.seller);
   }
 
 
-
+goToMyShop()
+{
+  this.router.navigateByUrl('seller-shop/' + this.seller._id);
+}
 
 
 }

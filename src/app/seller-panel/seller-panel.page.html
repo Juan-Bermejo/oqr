@@ -2,116 +2,122 @@
 <ion-content padding="true" >
 
    
-        <ion-toolbar>
+    <ion-toolbar>
 
-                <ion-buttons slot="start" collapse="true">
-                  <ion-back-button mode="md" type="button" color="light" icon="md-arrow-back" defaultHref="home">
-                  </ion-back-button>
-                </ion-buttons>
-                  <ion-row justify-content-center>
-                    <ion-col>
-                        <h1 style="color: rgb(41, 171, 226)">
-                            Punto de venta
-                          </h1>
-                    </ion-col> 
-                  </ion-row>
+            <ion-buttons slot="start" collapse="true">
+              <ion-back-button mode="md" type="button" color="light" icon="md-arrow-back" defaultHref="home">
+              </ion-back-button>
+            </ion-buttons>
+              <ion-row justify-content-center>
+                <ion-col>
+                    <h1 style="color: rgb(41, 171, 226)">
+                        Punto de venta
+                      </h1>
+                </ion-col> 
+              </ion-row>
+        
+    </ion-toolbar>
+
+<ion-row class="ion-justify-content-center">
+
+        <ion-item-divider (click)="dataModal()" >
+                <ion-icon size="large" name="md-create" color="primary"></ion-icon>
+                <ion-label>Datos de mi negocio</ion-label>
+                <ion-icon slot="end" src="../../assets/ionicons/chevron-forward-outline.svg"></ion-icon>
+            </ion-item-divider>
+            <ion-item-divider>
             
-        </ion-toolbar>
+                    <ion-label slot="start">Nombre:</ion-label>
+                    <ion-label>{{seller.shop_name}}</ion-label>
+               
+                    <ion-label slot="end"> Cuit: </ion-label>
+                    <ion-label slot="end"> {{seller.cuit}} </ion-label>
 
-    <ion-row class="ion-justify-content-center">
+            </ion-item-divider>
 
-            <ion-item-divider (click)="dataModal()" >
-                    <ion-icon size="large" name="md-create" color="primary"></ion-icon>
-                    <ion-label>Datos de mi negocio</ion-label>
-                    <ion-icon slot="end" src="../../assets/ionicons/chevron-forward-outline.svg"></ion-icon>
-                </ion-item-divider>
-                <ion-item-divider>
-                
-                        <ion-label slot="start">Nombre:</ion-label>
-                        <ion-label>{{seller.shop_name}}</ion-label>
-                   
-                        <ion-label slot="end"> Cuit: </ion-label>
-                        <ion-label slot="end"> {{seller.cuit}} </ion-label>
- 
-                </ion-item-divider>
+            <ion-row class="ion-justify-content-center">
+                    <ion-label> {{seller.category}} </ion-label>
+               </ion-row>
 
-                <ion-row class="ion-justify-content-center">
-                        <ion-label> {{seller.category}} </ion-label>
-                   </ion-row>
+  <ion-item-divider (click)="goTo('my-offers')" >
+      <ion-icon size="large" name="md-cash" color="primary"  color="primary"></ion-icon>
+      <ion-label>Mis ofertas</ion-label>
+      <ion-icon slot="end" src="../../assets/ionicons/chevron-forward-outline.svg"></ion-icon>
+  </ion-item-divider>
 
-      <ion-item-divider (click)="goTo('my-offers')" >
-          <ion-icon size="large" name="md-cash" color="primary"  color="primary"></ion-icon>
-          <ion-label>Mis ofertas</ion-label>
-          <ion-icon slot="end" src="../../assets/ionicons/chevron-forward-outline.svg"></ion-icon>
-      </ion-item-divider>
+  <ion-item-divider (click)="goTo('my-locations') " >
+    <ion-icon size="large" name="md-pin" color="primary"></ion-icon>
+    <ion-label>Mis locaciones</ion-label>
+    <ion-icon slot="end" src="../../assets/ionicons/chevron-forward-outline.svg"></ion-icon>
+</ion-item-divider>
 
-      <ion-item-divider (click)="goTo('my-locations') " >
+  <ion-item-divider (click)="goTo('related-products') " >
+      <ion-icon size="large" name="md-pricetags" color="primary"></ion-icon>
+      <ion-label>Mis productos</ion-label>
+      <ion-icon slot="end" src="../../assets/ionicons/chevron-forward-outline.svg"></ion-icon>
+  </ion-item-divider>
+
+  <ion-item-divider (click)="goToMyShop() " >
         <ion-icon size="large" name="md-pin" color="primary"></ion-icon>
-        <ion-label>Mis locaciones</ion-label>
+        <ion-label>Editar mi shop</ion-label>
         <ion-icon slot="end" src="../../assets/ionicons/chevron-forward-outline.svg"></ion-icon>
     </ion-item-divider>
-   
-      <ion-item-divider (click)="goTo('related-products') " >
-          <ion-icon size="large" name="md-pricetags" color="primary"></ion-icon>
-          <ion-label>Mis productos</ion-label>
-          <ion-icon slot="end" src="../../assets/ionicons/chevron-forward-outline.svg"></ion-icon>
-      </ion-item-divider>
 
-      <ion-item-divider (click)="goTo('offer-list-asociate') " >
-            <ion-icon size="large" name="md-people" color="primary"></ion-icon>
-            <ion-label>Asociarme a una oferta</ion-label>
-            <ion-icon slot="end" src="../../assets/ionicons/chevron-forward-outline.svg"></ion-icon>
-        </ion-item-divider>
-     
-      <ion-item-divider routerDirection="" >
-          <ion-icon size="large" name="md-paper" color="primary"></ion-icon>
-          <ion-label>Datos de facturación</ion-label>
-          <ion-icon slot="end" src="../../assets/ionicons/chevron-forward-outline.svg"></ion-icon>
-      </ion-item-divider>
+  <ion-item-divider (click)="goTo('offer-list-asociate') " >
+        <ion-icon size="large" name="md-people" color="primary"></ion-icon>
+        <ion-label>Asociarme a una oferta</ion-label>
+        <ion-icon slot="end" src="../../assets/ionicons/chevron-forward-outline.svg"></ion-icon>
+    </ion-item-divider>
+ 
+  <ion-item-divider routerDirection="" >
+      <ion-icon size="large" name="md-paper" color="primary"></ion-icon>
+      <ion-label>Datos de facturación</ion-label>
+      <ion-icon slot="end" src="../../assets/ionicons/chevron-forward-outline.svg"></ion-icon>
+  </ion-item-divider>
 
-      <ion-item-divider routerDirection="" >
-          <ion-icon size="large" name="md-notifications" color="primary"></ion-icon>
-          <ion-label>Notificaciones</ion-label>
-          <ion-icon slot="end" src="../../assets/ionicons/chevron-forward-outline.svg"></ion-icon>
-      </ion-item-divider>
+  <ion-item-divider routerDirection="" >
+      <ion-icon size="large" name="md-notifications" color="primary"></ion-icon>
+      <ion-label>Notificaciones</ion-label>
+      <ion-icon slot="end" src="../../assets/ionicons/chevron-forward-outline.svg"></ion-icon>
+  </ion-item-divider>
 
 
-        
+    
 
 
-    </ion-row>
-    <br>
+</ion-row>
+<br>
 
-    <ion-card>
-            * Tienes que tener los datos de tus negocio cargados y almenos una locacion registrada para porder ser un vendedor.
-        </ion-card>
+<ion-card>
+        * Tienes que tener los datos de tus negocio cargados y almenos una locacion registrada para porder ser un vendedor.
+    </ion-card>
 
 
 
 
 <!--
-    <ion-row>
-      <ion-col size=3>
+<ion-row>
+  <ion-col size=3>
+    
+      <img (click)="goTo('new-offer')" style="height: 96px; width: 75px;"  style="height: 100px; width: 75px;"  src="../../assets/iconos/iconos oqr-27.png">
+   
+  </ion-col>
+  <ion-col size=3>
+      
+        <img style="height: 96px; width: 75px;"   src="../../assets/iconos/iconos oqr-28.png">
+     
+    </ion-col>
+    <ion-col size=3>
         
-          <img (click)="goTo('new-offer')" style="height: 96px; width: 75px;"  style="height: 100px; width: 75px;"  src="../../assets/iconos/iconos oqr-27.png">
+          <img style="height: 96px; width: 75px;"   src="../../assets/iconos/iconos oqr-29.png">
        
       </ion-col>
       <ion-col size=3>
           
-            <img style="height: 96px; width: 75px;"   src="../../assets/iconos/iconos oqr-28.png">
+            <img style="height: 96px; width: 75px;"   src="../../assets/iconos/iconos oqr-30.png">
          
         </ion-col>
-        <ion-col size=3>
-            
-              <img style="height: 96px; width: 75px;"   src="../../assets/iconos/iconos oqr-29.png">
-           
-          </ion-col>
-          <ion-col size=3>
-              
-                <img style="height: 96px; width: 75px;"   src="../../assets/iconos/iconos oqr-30.png">
-             
-            </ion-col>
-    </ion-row>
+</ion-row>
 -->
 
 

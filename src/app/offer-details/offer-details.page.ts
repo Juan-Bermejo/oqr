@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, NgZone, HostListener, Renderer, ElementRef } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { NavController, ModalController } from '@ionic/angular';
+import { ActivatedRoute, Router } from '@angular/router';
+import { NavController, ModalController, Platform } from '@ionic/angular';
 import { NavParamsService } from '../services/nav-params.service';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { Product } from '../clases/product';
@@ -28,11 +28,12 @@ import { TokenService } from '../services/token.service';
 export class OfferDetailsPage implements OnInit {
 
 
+  
   current_latitude: number;
   current_longitude: number;
   @ViewChild('AgmMap', {static:false}) AgmMap:AgmMap;
 
-  
+  offerId: string;
   map: Mapboxgl.Map;
   marker: Mapboxgl.Marker;
   is_my_offer: boolean= false;
@@ -60,14 +61,41 @@ export class OfferDetailsPage implements OnInit {
 
 
   constructor(private route: ActivatedRoute, 
+    private platform: Platform,
     public navCtrl: NavController,
     public paramSrv: NavParamsService,
+    private router :Router,
     private geolocation: Geolocation,
     private dbService: DbService,
     private modalController:ModalController,
     private tokenSrv: TokenService,
     private wrapper: ElementRef, private renderer: Renderer
     ) {
+ 
+
+      if (document.URL.indexOf("/") > 0) {
+        let splitURL = document.URL.split("/");
+       console.log("splitUrlLenght: ",splitURL.length);
+       console.log("splitUrl: ",splitURL);
+
+       this.offerId = splitURL[5].split("?")[0];
+      }
+        //this.offerId= this.platform.getQueryParam("offer");
+    console.log("offerId: ",this.offerId);
+        this.dbService.getOffer(this.offerId).toPromise().then((data:any)=>
+      {
+        this.offer= data ;
+        console.log(data)
+      })
+    
+    this.dbService.getOfferLocations(this.offerId).toPromise().then((dataLoc:any)=>
+    { 
+     this.offerLocations= dataLoc.locations;
+     for(let i =0; i< this.offerLocations.length; i++)
+     {
+       this.addMarker(this.offerLocations[i]);
+     }
+    })
       this.getCurrentPosition();
       this.markers= new Array<{}>();
 
@@ -88,86 +116,32 @@ export class OfferDetailsPage implements OnInit {
    // this.getGeoLocation();
 
 
-    if(this.paramSrv.param)
-    {
-      this.offer = this.paramSrv.param.offer;
       
-
-      if(this.seller)
-      {
-        console.log(this.seller)
-      }
-      
-        this.dbService.getOfferLocations(this.offer._id).subscribe((dataLoc:any)=>
+     /*   this.dbService.getOfferLocations(this.offer._id).subscribe((dataLoc:any)=>
       { 
-
        this.offerLocations= dataLoc.locations;
-       
        for(let i =0; i< this.offerLocations.length; i++)
        {
          this.addMarker(this.offerLocations[i]);
        }
-     
-        
-      })
-    
-    }
+      })*/
+
 
 
   }
   
   ionViewDidLoad()
-  {
-    
-  }
-
+  {}
   
 
-  ionViewWillEnter(){
-  
- /*
-    this.map.on('load', async ()=> {
-      
-      this. layers = this.map.getStyle().layers;
-       
-      this. labelLayerId;
-  
-      this.map.addLayer(
-      {
-      id: '3d-buildings',
-      source: 'composite',
-      
-      "source-layer": 'building',
-      filter: ['==', 'extrude', 'true'],
-      type: 'fill-extrusion',
-      minzoom: 15,
-      paint: {
-      "fill-extrusion-color":'#aaa',
-    
-      "fill-extrusion-height": 5,
-      "fill-extrusion-base": 3,
-      "fill-extrusion-opacity":0.6
-      }
-      },
-      this.labelLayerId
-      );
- 
-      });
-
-      */
-  }
+  ionViewWillEnter()
+  {}
 
   ionViewWillLeave()
-  {
-    
-  }
-
-
+  {}
 
   ionViewDidEnter()
-  {
-    
-  }
+  {}
 
 
 
@@ -213,13 +187,13 @@ console.log("locationvendor: ",location.vendor_id);
 
   async selectMarker(sellerId)
   {
-    this.paramSrv.param=
-    {
-      "offer": JSON.stringify(this.offer) ,
-      "seller": sellerId,
-    }
+
     console.log("selected")
-    this.navCtrl.navigateRoot('seller-shop')
+    //this.navCtrl.navigateRoot('seller-shop/'+'%3F'+ 'seller'+'%3D'+sellerId+'%26'+'offer'+'%3D'+this.offerId);
+    //this.navCtrl.navigateRoot('seller-shop/'+'?'+ 'seller'+'='+sellerId+'&'+'offer'+'='+this.offerId);
+   // this.navCtrl.navigateRoot('seller-shop/' + sellerId + '/' + this.offerId);
+   //this.router.navigate(['seller-shop',{seller: sellerId, offer: this.offerId}]);
+   this.router.navigateByUrl('seller-shop/' + sellerId+'?offer='+this.offerId);
 
   }
 
@@ -236,68 +210,81 @@ console.log("locationvendor: ",location.vendor_id);
 
 
 
- async ngAfterViewInit(){
+    async ngAfterViewInit(){
 
-    this.map = new Mapboxgl.Map({
-      accessToken:environment.mapBoxKey,
-      style: 'mapbox://styles/mapbox/light-v10',
-      center: [-58.5733844, -34.6154611],
-      zoom: 15.5,
-      pitch: 45,
-      bearing: -17.6,
-      container: 'map',
-      antialias: false
-      });
-
-      this.map.on('load',async ()=>
+     await navigator.geolocation.getCurrentPosition(position => {
+      this.current_longitude = position.coords.latitude;
+      this.current_latitude = position.coords.longitude;  
+      console.log(" location:", position)
+        },
+      error=>
     {
-      await this.getCurrentPosition();
+      console.log("error location:", error)
+    },
+  {
+  
+  }) //current position
 
-      this.map.flyTo({
-        center: [this.current_latitude, this.current_longitude],
-        essential: true // this animation is considered essential with respect to prefers-reduced-motion
-        });
+        this.map = new Mapboxgl.Map({
+          accessToken:environment.mapBoxKey,
+          style: 'mapbox://styles/mapbox/light-v10',
+          //center: [this.current_longitude, this.current_latitude],
+          center: [-58.5733844, -34.6154611],
+          zoom: 15.5,
+          pitch: 45,
+          bearing: -17.6,
+          container: 'map',
+          antialias: false
+          });
+
+        await this.map.on('load',async ()=>
+          {
+      
+              //this.map.resize();
+              
+          await  this.markers.forEach(async (m)=>
+        {
+          console.log(m)
+      
+             const div = window.document.createElement('div');
+             div.innerHTML = "<h1>Ir al shop</h1>";
+              
+          
+              div.addEventListener('click',async ()=>
+            {
+              
+              this.selectMarker(m.seller)
+            })
+      
+            let popup = new Mapboxgl.Popup()
+                    .setDOMContent(div);
+      
+            let el = document.createElement('div');
+                 
+            let marker = await  new Mapboxgl.Marker()
+                .setPopup(popup)
+                .setLngLat([m.lng, m.lat])
+                .addTo(this.map);
+                this.map.resize();
+      
+        })
 
         this.map.resize();
-      for(let i =0; i <this.markers.length; i++)
-      {console.log(this.markers[i])
 
-       const div = window.document.createElement('div');
-       div.innerHTML = "<h1>Ir al shop</h1>";
-        
-    
-        div.addEventListener('click',async ()=>
-      {
-        
-        this.selectMarker(this.markers[i].seller)
-      })
-
-      let popup = new Mapboxgl.Popup()
-              .setDOMContent(div);
-
-      let el = document.createElement('div');
-           
-      let marker = new Mapboxgl.Marker()
-          .setPopup(popup)
-          .setLngLat([this.markers[i].lng, this.markers[i].lat])
-          .addTo(this.map);
-
-          
-
-            
-           
-      }
+        this.map.flyTo({
+          center: [this.current_latitude, this.current_longitude],
+          essential: true // this animation is considered essential with respect to prefers-reduced-motion
+          });
 
 
-      
-    })
+          })///mapOnload
 
 
 
-  
+    //this.map.resize();
   }
 
-  getCurrentPosition()
+  async getCurrentPosition()
   {
      navigator.geolocation.getCurrentPosition(position => {
       this.current_longitude = position.coords.latitude;

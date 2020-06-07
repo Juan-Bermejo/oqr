@@ -1,0 +1,45 @@
+
+<ion-content padding="true" class="ion-align-items-center">
+
+
+  <ion-col padding size-xs=7  size-sm=7 size-md=7  size-lg=7  size-xl=7 >
+      <div class="cont">
+          <ion-row justify-content-end>
+              <ion-button fill="clear" (click)="dismissModal()"> 
+                  <ion-icon name="md-close" size="large" color="primary"></ion-icon>
+          
+                    
+                  </ion-button>
+          </ion-row>
+        <ion-row>
+          <ion-col size=12>
+              
+               
+                  <ion-title style="text-align: center;">
+                    Modificar mi Shop
+                  </ion-title>
+                
+               <form  method="POST" action="ofertaqr.com/app/services/upload" ></form>
+                  <ion-item-divider>
+                    <ion-label >Cambiar foto de banner</ion-label>
+                    <input type="file" name="image">
+                  </ion-item-divider>
+
+                  <ion-item-divider>
+                      <ion-label >Cambiar mi logo</ion-label>
+                      <input type="file" [(ngModel)]="sellerImg">
+                    </ion-item-divider>
+
+                  <ion-row class=" ion-align-items-end ion-justify-content-center"> <!--esta bien-->
+                    <ion-button shape="round" (click)="enviar()">
+                      Modificar
+                    </ion-button>
+                  </ion-row>
+           
+            </ion-col>
+                 
+            </ion-row>
+  
+            </div>
+          </ion-col>
+          </ion-content>

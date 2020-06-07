@@ -12,11 +12,11 @@ ion-back-button{
 
   }
 
-  img{
+ /* img{
     height: 150px;
     width: 350px;
     border-radius: 20px;
-}
+}*/
 
 
 
@@ -31,14 +31,14 @@ h1{
 }
 
   ion-input{
-      height: 50px;
-      padding-left: 50px;
+    
+     
       border-style: solid;
       border-width: 2px 2px 2px 2px;
       border-color: rgb(41, 171, 226);
       border-radius: 45px;
       color: rgb(41, 171, 226);
-      text-align: center;
+ 
      
       
   }
@@ -50,12 +50,316 @@ h1{
 
   }
 
+  ion-card
+  {
+      border-style: solid;
+      border-width: 2px;
+      border-color: rgb(41, 171, 226);
+      border-radius: 15px;
+      margin: 2px;
+  }
+
+  .img-card
+  {
+      border-radius: 1px;
+      height: 100%;
+  }
+
 
   #mbbx-button {
       height: 50px;
       width: 100px;
     }
+
+    .contenedor
+    {
+        height: 100%;
+    }
+
+    .banner
+    {
+        height: 200px;
+        border-style: solid;
+        border-width: 2px;
+        border-color: rgb(41, 171, 226);;
+        margin-bottom: 80px;
+       /* background-color: orange;*/
+        
+    }
+
+    .img-banner
+    {
+        position: relative;
+        
+       /* -webkit-filter: brightness(90%);
+        filter: brightness(90%);
+        filter: contrast(20%);
+        filter: opacity(70%);*/
+        border-radius: 0px;
+        height: 197px;
+        width: 100%;
+    }
+
+    .img-main-offer
+    {
+        position: relative;
+        
+        /* -webkit-filter: brightness(90%);
+         filter: brightness(90%);
+         filter: contrast(20%);*/
+         border-radius: 0px;
+         width: 100%;
+         z-index: 1000;
+    }
+
+    .card-cont
+    {
+        text-align: center;
+        align-items: center;
+        position: absolute;
+        margin-top: 5px;
+        z-index: 1001;
+        background-color: rgba(0, 0, 0, 0.5);
+ 
+        ion-card-title{
+             font-family: 'roboto-black';
+             text-shadow: 1px 1px 2px black; 
+             
+            
+             color: white;
+
+         }
+         ion-card-subtitle
+         {            
+            font-family: 'roboto-black';
+            text-shadow: 1px 1px 2px black; 
+            
+           
+            color: white;
+
+         }
+
+    }
+
+
+    .shop-name
+    {
+
+        
+        text-align: center;
+       align-items: center;
+       position: absolute;
+       z-index: 1001;
+
+        h1{
+            font-family: 'roboto-black';
+            text-shadow: 1px 1px 2px black; 
+           
+            color: white;
+            font-size: xx-large;
+            
+           
+        }
+        
+    
+
+    }
+
+    .buttons-login-cart
+    {
+        width: 100%;
+        align-items: end;
+        position: absolute;
+        z-index: 1001;   
+    }
+
+    .pepe
+    {
+        display: block;
+    }
+
+    .butn-round
+    {
+     
+        border-radius:50%;
+        background-color: rgb(41, 171, 226);
+        margin-right: 10px;
+        margin-top:5px;
+        
+        
+
+    }
+
+    
+    .red-point
+    {
+        position: absolute;
+        
+        top:3px;
+        left: 0px;
+        height: 25px;
+        width: 25px;
+        background-color: rgb(226, 41, 41);
+        color:white;
+        border-style: solid;
+        border-width: 2px;
+        border-color: rgb(226, 41, 41);
+        border-radius: 50%;
+        padding-left: 5px; 
+        padding-bottom: 1px;
+    }
+    .img-seller
+    {
+        position: absolute;
+        height: 150px;
+        width: 150px;
+        background-color: rgb(255, 255, 255);
+        border-style: solid;
+        border-width: 2px;
+        border-color: rgb(41, 171, 226);
+
+        top: 120px;
+
+        border-radius: 50%;
+        z-index: 1000;
+
+        .seller-photo
+        {
+            
+            height: 148px;
+            width: 148px;
+            border-radius: 50%;
+        }
+    }
   
+
+   /* ion-row
+    {
+        padding: none;
+    }
+    ion-col
+    {
+        padding: none;
+        margin: none;
+        
+    }*/
+
+    .img-offer{
+        max-width: 350px;
+        min-width: 150px;
+        height: 350px;
+        width: 350px;
+        border-radius: 20px;
+    }
+
+    #offer-label{
+      background-color: white;
+      position: absolute;
+      z-index: 1003;
+      top:5px;
+      left: 5px;
+      height: 150px;
+      width: 150px;
+      color:white;
+      border-style: solid;
+      border-width: 2px;
+      border-color: rgb(41, 171, 226);
+      border-radius: 50%;
+      padding-left: 15px; 
+      padding-top: 15px;
+      padding-bottom: none;
+
+    }
+
+    .input-search
+{
+    
+    border-style: solid;
+    border-width: 1px;
+    border-color: rgb(88, 207, 197);
+    font-size: 15px;
+    color: rgb(41, 143, 226);
+    
+}
+
+.item-right
+{
+    position:absolute;
+    padding: 11px;
+    right: 1px;
+ 
+}
+
+
+/*
+ion-fab-button{
+    --background: rgba(255, 255, 255, 0);
+    --color:black;
+    --box-shadow:none;
+   
+    --border-width:1px;
+    --border-color:black;
+    --border-radius:15px;
+    
+    
+  }*/
+ 
+
+ion-fab-button{
+    --background: rgba(255, 255, 255, 0);
+    --color:rgb(41, 143, 226);;
+    --box-shadow:none;
+   
+    --border-width:1px;
+   /* --border-color:black;*/
+    --border-radius:15px;
+    
+    --color-hover:white;
+  }
+
+  @media (max-width: 480px) {
+
+    .banner-offer
+    {
+        max-height: 550px;
+        /*max-width: 50px;*/
+    }
+    .offer-stamp
+    {
+        max-height: 65px;
+        max-width: 65px;
+    }
+
+    .img-offer{
+        max-width: 200px;
+        min-width: 150px;
+        height: 200px;
+        width: 200px;
+        border-radius: 20px;
+    }
+
+    #offer-label{
+        background-color: white;
+        position: absolute;
+        z-index: 1003;
+        top:5px;
+        left: 5px;
+        height: 100px;
+        width: 100px;
+        color:white;
+        border-style: solid;
+        border-width: 2px;
+        border-color: rgb(41, 171, 226);
+        border-radius: 50%;
+        padding-left: 15px; 
+        padding-top: 15px;
+        padding-bottom: none;
+  
+      }
+
+
+    }
+
 
 
 
