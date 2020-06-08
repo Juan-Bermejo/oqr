@@ -518,6 +518,7 @@ async toCart()
 
 async editShop()
 {
+  this.navParams.SetParam=this.seller._id;
   const editModal = await this.modalCtrl.create({
     component:EditShopComponent,
     

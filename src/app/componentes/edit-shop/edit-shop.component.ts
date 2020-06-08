@@ -12,6 +12,7 @@ export class EditShopComponent implements OnInit {
 
   bannerImg: File;
   sellerImg: any;
+  sellerId:string;
 
   constructor(
     private modalCtrl: ModalController,
@@ -42,5 +43,11 @@ export class EditShopComponent implements OnInit {
     })
   }
   ngOnInit() {}
+
+  ionViewWillEnter()
+  {
+    this.sellerId= this.navParams.GetParam;
+    console.log(this.sellerId)
+  }
 
 }
