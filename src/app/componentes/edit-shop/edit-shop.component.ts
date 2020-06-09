@@ -10,7 +10,7 @@ import { DbService } from '../../services/db.service';
 })
 export class EditShopComponent implements OnInit {
 
-  bannerImg: File;
+  bannerImg: File = null;
   sellerImg: any;
   sellerId:string;
 
@@ -22,11 +22,16 @@ export class EditShopComponent implements OnInit {
   
      }
 
+     fileUpl(files: FileList){
+       this.bannerImg = files.item(0);
+     }
+
      enviar()
      { 
        let fd = new FormData();
        fd.append("image",this.bannerImg);
        console.log(this.bannerImg);
+       console.log(fd);
        this.dbs.sendImage(fd).toPromise().then((res:any)=>
       {
         console.log(res);

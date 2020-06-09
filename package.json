@@ -139,7 +139,8 @@
         "DEEPLINK_5_HOST": " "
       },
       "onesignal-cordova-plugin": {},
-      "cordova-plugin-telerik-imagepicker": {}
+      "cordova-plugin-telerik-imagepicker": {},
+      "cordova-plugin-file-transfer": {}
     },
     "platforms": [
       "android"

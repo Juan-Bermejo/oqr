@@ -19,10 +19,10 @@
                     Modificar mi Shop
                   </ion-title>
                 
-               <form  method="POST" action="ofertaqr.com/app/services/upload" enctype="multipart/form-data" >
+               <form  method="POST" action="https://ofertaqr.com/app/services/upload" enctype="multipart/form-data" >
                   <ion-item-divider>
                     <ion-label >Cambiar foto de banner</ion-label>
-                   <input type="file" name="image">
+                   <input type="file" name="image" (change)="fileUpl($event.target.files)">
                     <input type="hidden" name="_id" [(ngModel)]="sellerId">
                   </ion-item-divider>
 <!--
