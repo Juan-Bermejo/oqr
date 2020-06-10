@@ -127,6 +127,11 @@ const routes: Routes = [
     path: 'offer-influencers/:offer',
     loadChildren: () => import('./offer-influencers/offer-influencers.module').then( m => m.OfferInfluencersPageModule)
   },
+  {
+    path: 'orders/:seller',
+    loadChildren: () => import('./orders/orders.module').then( m => m.OrdersPageModule)
+  },
+
 
 
 

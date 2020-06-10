@@ -50,6 +50,7 @@ import { LoginComponent } from './componentes/login/login.component';
 import { CartComponent } from './componentes/cart/cart.component';
 import { EditShopComponent } from './componentes/edit-shop/edit-shop.component';
 import { TypeOfferModalComponent } from './componentes/type-offer-modal/type-offer-modal.component';
+import { ViewOrderComponent } from './componentes/view-order/view-order.component';
 
 export function tokenGetter() {
   return localStorage.getItem('token');
@@ -66,6 +67,7 @@ export function tokenGetter() {
      LoginComponent,
      EditShopComponent,
      CartComponent,
+     ViewOrderComponent,
      TypeOfferModalComponent],
 
   imports: [BrowserModule,

@@ -113,5 +113,10 @@ goToMyShop()
   this.router.navigateByUrl('seller-shop/' + this.seller._id);
 }
 
+goToMyOrders()
+{
+  this.router.navigateByUrl('orders/' + this.seller._id);
+}
+
 
 }

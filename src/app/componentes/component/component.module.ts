@@ -14,6 +14,7 @@ import { LoginComponent } from '../login/login.component';
 import { CartComponent } from '../cart/cart.component';
 import { EditShopComponent } from '../edit-shop/edit-shop.component';
 import { TypeOfferModalComponent } from '../type-offer-modal/type-offer-modal.component';
+import { ViewOrderComponent } from '../view-order/view-order.component';
 
 
 
@@ -27,7 +28,8 @@ import { TypeOfferModalComponent } from '../type-offer-modal/type-offer-modal.co
     GenerateCodeInfluencerComponent,
     CartComponent,
     EditShopComponent,
-    TypeOfferModalComponent
+    TypeOfferModalComponent,
+    ViewOrderComponent
     
   ],
   exports:[
@@ -39,7 +41,8 @@ import { TypeOfferModalComponent } from '../type-offer-modal/type-offer-modal.co
     GenerateCodeInfluencerComponent,
     LoginComponent,
     EditShopComponent,
-    TypeOfferModalComponent
+    TypeOfferModalComponent,
+    ViewOrderComponent
   ],
   imports: [
     CommonModule,

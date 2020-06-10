@@ -13,6 +13,7 @@ export class EditShopComponent implements OnInit {
   bannerImg: File = null;
   sellerImg: any;
   sellerId:string;
+  
 
   constructor(
     private modalCtrl: ModalController,
@@ -30,6 +31,7 @@ export class EditShopComponent implements OnInit {
      { 
        let fd = new FormData();
        fd.append("image",this.bannerImg);
+       fd.append("_id", this.sellerId);
        console.log(this.bannerImg);
        console.log(fd);
        this.dbs.sendImage(fd).toPromise().then((res:any)=>

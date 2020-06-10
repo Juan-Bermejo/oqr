@@ -62,6 +62,11 @@
         <ion-label>Editar mi shop</ion-label>
         <ion-icon slot="end" src="../../assets/ionicons/chevron-forward-outline.svg"></ion-icon>
     </ion-item-divider>
+    <ion-item-divider (click)="goToMyOrders() " >
+            <ion-icon size="large" name="md-pin" color="primary"></ion-icon>
+            <ion-label>Pedidos recibidos</ion-label>
+            <ion-icon slot="end" src="../../assets/ionicons/chevron-forward-outline.svg"></ion-icon>
+        </ion-item-divider>
 
   <ion-item-divider (click)="goTo('offer-list-asociate') " >
         <ion-icon size="large" name="md-people" color="primary"></ion-icon>

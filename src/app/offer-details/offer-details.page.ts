@@ -178,7 +178,7 @@ console.log("locationvendor: ",location.vendor_id);
 
 
   ngOnInit() {
-    this.getCurrentPosition();
+    //this.getCurrentPosition();
     console.log("omInit")
   
   }
