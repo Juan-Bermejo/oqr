@@ -13,6 +13,7 @@ import { Subject, Observable, BehaviorSubject } from 'rxjs';
 
 import { map } from 'rxjs/operators';
 import { Influencer } from '../clases/influencer';
+import { Cart } from '../clases/cart';
 
 @Injectable({
   providedIn: 'root'
@@ -457,11 +458,11 @@ export class DbService {
 
     //CARRITO
 
-    createCart(user_id){
+    createCart(cart: Cart){
       
       let CART_URL = this.URL_SERVER.concat('cart/createCart');
-      
-      return this.http.post(CART_URL, user_id,
+
+      return this.http.post(CART_URL, cart,
         {headers: new HttpHeaders({"Content-Type": "application/json"})});
     }
 
