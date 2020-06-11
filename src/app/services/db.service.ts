@@ -454,6 +454,24 @@ export class DbService {
       let SERVICE_URL = this.URL_SERVER.concat(url);
       return this.http.post(SERVICE_URL, form);
     }
+
+    //CARRITO
+
+    createCart(user_id){
+      
+      let CART_URL = this.URL_SERVER.concat('cart/createCart');
+      
+      return this.http.post(CART_URL, user_id,
+        {headers: new HttpHeaders({"Content-Type": "application/json"})});
+    }
+
+    getCartByUserId(user_id){
+
+      let url = 'cart/getCart'.concat(user_id);
+      let CART_URL = this.URL_SERVER.concat(url);
+
+      return this.http.get(CART_URL);
+    }
   
     /*
 
