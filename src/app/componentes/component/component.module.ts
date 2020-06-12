@@ -15,6 +15,7 @@ import { CartComponent } from '../cart/cart.component';
 import { EditShopComponent } from '../edit-shop/edit-shop.component';
 import { TypeOfferModalComponent } from '../type-offer-modal/type-offer-modal.component';
 import { ViewOrderComponent } from '../view-order/view-order.component';
+import { OfferViewComponent } from '../offer-view/offer-view.component';
 
 
 
@@ -29,7 +30,8 @@ import { ViewOrderComponent } from '../view-order/view-order.component';
     CartComponent,
     EditShopComponent,
     TypeOfferModalComponent,
-    ViewOrderComponent
+    ViewOrderComponent,
+    OfferViewComponent
     
   ],
   exports:[
@@ -42,7 +44,8 @@ import { ViewOrderComponent } from '../view-order/view-order.component';
     LoginComponent,
     EditShopComponent,
     TypeOfferModalComponent,
-    ViewOrderComponent
+    ViewOrderComponent,
+    OfferViewComponent
   ],
   imports: [
     CommonModule,

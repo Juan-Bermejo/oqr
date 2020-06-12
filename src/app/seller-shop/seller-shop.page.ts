@@ -21,6 +21,7 @@ import { LoginComponent } from '../componentes/login/login.component';
 import { EditShopComponent } from '../componentes/edit-shop/edit-shop.component';
 import { ModalCategoriesPage } from '../modals/modal-categories/modal-categories.page';
 import { TypeOfferModalComponent } from '../componentes/type-offer-modal/type-offer-modal.component';
+import { OfferViewComponent } from '../componentes/offer-view/offer-view.component';
 
 
 @Component({
@@ -154,6 +155,7 @@ async toCart()
         cd.price = this.offer_of_seller.price;
         cd.product_id = p._id;
         cd.product_name = p.name;
+        cd.currency = p.currency_price;
         cd.quantity += 1;
         this.cart.details.push(cd)
         this.cart_lenght++;
@@ -218,6 +220,7 @@ async toCart()
       {
         let cd=new CartDetail()
         cd.price = p.price;
+        cd. currency = p.currency_price;
         cd.product_id = p._id;
         cd.product_name = p.name;
         cd.quantity += 1;
@@ -433,6 +436,7 @@ async toCart()
         cd.price = offer.price;
         cd.product_id = offer.one_product[0]._id;
         cd.product_name = offer.one_product[0].name;
+        cd.currency = offer.price_currency;
         cd.quantity += 1;
         this.cart.details.push(cd)
         this.cart_lenght++;
@@ -629,6 +633,24 @@ async categoryFilter(type:string)
 {
   this.aux_offer_list= await this.other_offers.filter(item => item.category.toLowerCase().includes(type.toLowerCase()) );
   this.aux_products_list= await this.products.filter(item => item.category.toLowerCase().includes(type.toLowerCase()) );
+}
+
+
+async viewOffer(offer:Offer)
+{
+  console.log(offer)
+  this.navParams.SetParam = {
+    "offer": offer,
+    "cart": this.cart
+  }
+
+  const offerModal = await this.modalCtrl.create(
+    {
+      component: OfferViewComponent
+    }
+  ) 
+
+  offerModal.present();
 }
 
 

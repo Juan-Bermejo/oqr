@@ -1,9 +1,9 @@
 
-<ion-content padding="true" class="ion-align-items-center">
+<ion-content class="ion-align-items-center">
 
 
-  <!--<ion-col padding size-xs=7  size-sm=7 size-md=7  size-lg=7  size-xl=7 >
-      <div class="cont">-->
+  <ion-col padding size-xs=12  size-sm=11 size-md=11  size-lg=11  size-xl=11 >
+      <div class="cont">
           <ion-row justify-content-end>
               <ion-button fill="clear" (click)="dismissModal()"> 
                   <ion-icon name="md-close" size="large" color="primary"></ion-icon>
@@ -11,6 +11,39 @@
                     
                   </ion-button>
           </ion-row>
+
+          <ion-row class="ion-justify-content-center" >
+              <div *ngIf="message!=''">
+                  
+
+                  <ion-row class="ion-justify-content-center" style="margin-top:150px;" >
+                  <ion-icon *ngIf="ok=='ok'" color="success" size="large" name="md-checkmark-circle"></ion-icon>
+
+                  <ion-icon *ngIf="ok=='no'" color="danger" size="large" name="md-alert"></ion-icon>
+                </ion-row>
+
+                <ion-row class="ion-justify-content-center" >
+                    <ion-text color="primary">{{message}} </ion-text>                
+                  </ion-row>
+              </div>
+          </ion-row>
+        
+          <ion-row *ngIf="spinner" class="ion-justify-content-center" style="margin-top:150px; ">
+              <ion-spinner color="primary" size="large">
+
+                </ion-spinner>
+          </ion-row>
+          <ion-row *ngIf="spinner" class="ion-justify-content-center">
+             <ion-text>Generando pedido...</ion-text>
+          </ion-row>
+
+    
+
+          <div *ngIf="message =='' && spinner == false " >
+
+
+
+
         <ion-row>
           <ion-col size=12>
             <ion-row class="justify-content-start">
@@ -45,14 +78,20 @@
   
   
             <ion-row class=" ion-align-items-end ion-justify-content-center" > <!--esta bien-->
-              <ion-button [disabled]="!cart.details.length" shape="round"  href="https://wa.me/5491140945751?text={{message}}">
+             <!-- <ion-button [disabled]="!cart.details.length" shape="round"  href="https://wa.me/5491140945751?text={{message}}">
                 
                 <ion-icon name="logo-whatsapp"  size="large" > </ion-icon>
   
                 Enviar pedido
+              </ion-button>-->
+              <ion-button (click)="createCart()">
+                Enviar pedido
               </ion-button>
             </ion-row> 
   
-              <!-- </div>
-       </ion-col>-->
+
+            </div>
+
+            </div>
+          </ion-col>
           </ion-content>

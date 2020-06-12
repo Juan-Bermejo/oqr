@@ -36,9 +36,10 @@
 
         <h1>{{seller.shop_name}}</h1>
       </div>
-    
+      
      <!-- <img class="img-banner" src="../../assets/images/{{seller.category}}.jpg">-->
-     <img class="img-banner" src="../../assets/images/Copia de Modern Summer Sale Store Banner - Hecho con PosterMyWall.jpg">
+    <!-- <img class="img-banner" src="../../assets/images/Copia de Modern Summer Sale Store Banner - Hecho con PosterMyWall.jpg">-->
+    <img class="img-banner" src="{{seller.url_images}}">
     <div class="img-seller">
 
       <img class="seller-photo" src="../../assets/logoOfertaCerca/logoBlancoFondoCeleste.jpg" alt="">
@@ -222,12 +223,14 @@
                                      %{{offer.percentage}} de descuento en {{offer.category}}
                                      </ion-card-title>
                                   <ion-row class="ion-justify-content-end">
-                                      <ion-button (click)="addOfferToCart(p)" >
+                                      <ion-button *ngIf="offer.offer_name != 'Descuento'" (click)="addOfferToCart(p)" >
                                           <ion-icon name="md-add"></ion-icon>
                                         </ion-button>
-                                        <ion-button (click)="removeOfferToCart(p)" >
+                                        <ion-button *ngIf="offer.offer_name != 'Descuento'" (click)="removeOfferToCart(p)" >
                                             <ion-icon name="md-remove"></ion-icon>
                                             </ion-button>
+
+                                            <ion-button *ngIf="offer.offer_name=='Descuento'" (click)="viewOffer(offer)" > Ver productos</ion-button>
                                   </ion-row>
                                 </ion-card-content>
                                 </ion-card>
