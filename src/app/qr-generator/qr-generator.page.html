@@ -1,0 +1,21 @@
+
+<ion-content>
+  
+    <ion-toolbar>
+        <ion-buttons slot="start" collapse="true">
+            <ion-back-button mode="md" type="button" color="light" icon="md-arrow-back" defaultHref="home">
+            </ion-back-button>
+          </ion-buttons>
+      <ion-title color="primary">Generador de QR</ion-title>
+    </ion-toolbar>
+  
+  <ion-button (click)="qrGenerator()" expand="block" >
+    Generar banner del Shop
+  </ion-button>
+
+
+    <qrcode [qrdata]="'micodigo'" [width]="256" [errorCorrectionLevel]="'M'" [elementType]="'img'" #qr ></qrcode>
+
+
+
+</ion-content>

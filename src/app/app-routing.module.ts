@@ -130,7 +130,11 @@ const routes: Routes = [
   {
     path: 'orders/:seller',
     loadChildren: () => import('./orders/orders.module').then( m => m.OrdersPageModule)
+  },  {
+    path: 'qr-generator',
+    loadChildren: () => import('./qr-generator/qr-generator.module').then( m => m.QrGeneratorPageModule)
   },
+
 
 
 

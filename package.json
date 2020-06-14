@@ -38,6 +38,7 @@
     "@ionic-native/zbar": "^5.22.0",
     "@ionic/angular": "^4.7.1",
     "angularfire2": "^5.4.2",
+    "angularx-qrcode": "^2.1.2",
     "bootstrap": "^4.4.1",
     "cordova-android": "8.1.0",
     "cordova-instagram-plugin": "^0.5.8",

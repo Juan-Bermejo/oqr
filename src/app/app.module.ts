@@ -53,6 +53,8 @@ import { TypeOfferModalComponent } from './componentes/type-offer-modal/type-off
 import { ViewOrderComponent } from './componentes/view-order/view-order.component';
 import { OfferViewComponent } from './componentes/offer-view/offer-view.component';
 import { ImagePicker } from '@ionic-native/image-picker/ngx';
+import { QRCodeModule } from 'angularx-qrcode';
+
 
 export function tokenGetter() {
   return localStorage.getItem('token');
@@ -88,6 +90,7 @@ export function tokenGetter() {
      ComponentModule,
      HttpClientModule,
      SellerShopPageModule,
+     QRCodeModule,
      FormsModule,
      ReactiveFormsModule,
      JwtModule.forRoot({
