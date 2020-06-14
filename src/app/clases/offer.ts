@@ -8,7 +8,7 @@ export class Offer {
     _id:string;
     offer_name:string;
     products_id: string[];
-    one_product:Product;
+    products:Product[];
     kind:string;
     price_currency:string;
     price: number;
@@ -32,6 +32,7 @@ export class Offer {
         this.sellers= new Array<string>();
         this.locations= new Array<Location>();
         this.products_id= new Array<string>();
+        this.products = new Array<Product>();
     }
     
     public addSeller(sellerId)

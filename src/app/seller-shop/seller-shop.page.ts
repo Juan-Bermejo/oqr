@@ -56,8 +56,10 @@ export class SellerShopPage implements OnInit {
   other_offers:Array<Offer>;
   offer_of_seller:{
     "association_date":number,
+    "offer_products": Product[],
     "offer_id":string,
     "price":number,
+    "commission":number,
     "stock":number
   }
   cart_lenght:number=0;
@@ -145,7 +147,7 @@ async toCart()
         if(this.cart.details[i].product_id == p._id)
         {
           this.cart.details[i].quantity +=1;
-          this.cart.details[i].price += this.offer_of_seller.price;
+          this.cart.details[i].price += this.offer_of_seller.commission;
           flag=true;
         }
       }
@@ -184,13 +186,13 @@ async toCart()
         if(this.cart.details[i].product_id == p._id)
         {
           this.cart.details[i].quantity -= 1;
-          this.cart.details[i].price -= this.offer_of_seller.price;
+          this.cart.details[i].price -= this.offer_of_seller.commission;
           if(this.cart.details[i].quantity == 0)
           {
             this.cart.details.splice(i,1);
             this.cart_lenght--;
           }
-          this.cart.total -= this.offer_of_seller.price;
+          this.cart.total -= this.offer_of_seller.commission;
           this.offerdata.stock += 1;
           
         }
@@ -315,7 +317,7 @@ async toCart()
     this.shop_name= this.seller.shop_name;
     this.cart.vendor_id= this.seller._id;
     this.products = this.dataMarker.products;
-    this.precioanterior =   this.products.find(p=> p._id == this.offerdata.one_product[0]._id);
+    this.precioanterior =   this.products.find(p=> p._id == this.offerdata.products[0]._id);
     console.log(this.precioanterior)
     console.log("vendedor: ", data);
   })
@@ -382,7 +384,7 @@ async toCart()
       {
         this.offerdata = data; 
         
-        this.precioanterior =   this.products.find(p=> p._id == this.offerdata.one_product[0]._id);
+        this.precioanterior =   this.products.find(p=> p._id == this.offerdata.products[0]._id);
         this.offer_of_seller = this.seller.offers.find(of=> of.offer_id == this.offerdata._id)
       }
     })
@@ -414,18 +416,22 @@ async toCart()
 
   }
 
-  addOtherOfferToCart(offer: Offer)
+  async addOtherOfferToCart(offer: Offer)
   {
-    switch(offer.offer_name)
+   /* switch(offer.offer_name)
     {
-      case "Precio":
+      case "Precio":*/
+
+      let offer_seller = await this.seller.offers.find(o => offer._id == o.offer_id);
+      console.log(offer_seller);
+
       let i: any;
       let flag:boolean = false;
       for(i in this.cart.details)
-      {
-        if(this.cart.details[i].offer_id == offer._id)
+      { console.log(offer_seller.offer_id)
+        if(this.cart.details[i].offer_id == offer_seller.offer_id)
         {
-          this.cart.details[i].price += offer.price;
+          this.cart.details[i].price += offer_seller.commission;
           this.cart.details[i].quantity += 1;
           flag=true;
         }
@@ -433,20 +439,23 @@ async toCart()
       if(!flag)
       {
         let cd=new CartDetail()
-        cd.price = offer.price;
-        cd.product_id = offer.one_product[0]._id;
-        cd.product_name = offer.one_product[0].name;
-        cd.currency = offer.price_currency;
+        cd.price = offer_seller.commission;
+        cd.product_id = offer_seller.offer_products[0]._id;
+        cd.product_name = offer_seller.offer_products[0].name;
+        cd.currency = offer.currency_commission;
         cd.quantity += 1;
         this.cart.details.push(cd)
         this.cart_lenght++;
-        this.cart.products.push(offer.one_product[0]);
+        this.cart.products.push(offer_seller.offer_products[0]);
       }
 
-         offer.stock-=1;
+      offer_seller.stock-=1;
 
-         break;
-    }
+      /*   break;
+
+         case "Gratis":
+
+    }*/
 
   }
 
@@ -565,7 +574,7 @@ async filter(input)
 
     if(key)
     {
-      this.aux_offer_list= await this.other_offers.filter(item => item.one_product[0].name.toLowerCase().includes(key) );
+      this.aux_offer_list= await this.other_offers.filter(item => item.products[0].name.toLowerCase().includes(key) );
     }
     else
     {
@@ -638,10 +647,14 @@ async categoryFilter(type:string)
 
 async viewOffer(offer:Offer)
 {
-  console.log(offer)
+  console.log(this.seller)
+  let offer_seller = await this.seller.offers.find(o=>o.offer_id == offer._id);
+console.log(offer_seller)
   this.navParams.SetParam = {
+    "offer_seller": offer_seller,
     "offer": offer,
-    "cart": this.cart
+    "cart": this.cart,
+    "addOfferCart": this.addOtherOfferToCart
   }
 
   const offerModal = await this.modalCtrl.create(

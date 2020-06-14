@@ -3,6 +3,7 @@ import { ModalController } from '@ionic/angular';
 import { Cart } from '../../clases/cart';
 import { NavParamsService } from '../../services/nav-params.service';
 import { DbService } from '../../services/db.service';
+import { CartDetail } from '../../clases/cart-detail';
 
 @Component({
   selector: 'app-cart',
@@ -100,6 +101,19 @@ export class CartComponent implements OnInit {
 
     console.log(this.message_whatsapp);
 
+  }
+
+
+  remove(cd:CartDetail)
+  {
+
+    let index = this.cart.details.findIndex(detail => detail.offer_id == cd.offer_id)
+
+  
+      this.cart.total -= cd.price;
+      this.cart.details.splice(index,1);
+    
+    
   }
 
   ngOnInit() {}

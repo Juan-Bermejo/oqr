@@ -14,10 +14,10 @@
     <img src="../../assets/images/{{offer.category}}.jpg">
 
     <ion-card-title *ngIf="offer.offer_name=='Precio'" style="color: rgba(39, 39, 39, 0.904)">
-            {{offer.one_product[0].name}} a {{offer.price | currency: offer.price_currency}}
+            {{offer.products[0].name}} a {{offer.price | currency: offer.price_currency}}
            </ion-card-title>
            <ion-card-title *ngIf="offer.offer_name=='Gratis'" style="color: black">
-             {{offer.one_product[0].name}} Gratis!
+             {{offer.products[0].name}} Gratis!
              {{offer.description}}
             </ion-card-title>
          <ion-card-title *ngIf="offer.offer_name=='Descuento'" style="color: black">

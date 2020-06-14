@@ -15,7 +15,9 @@ export class Seller {
     offers:Array<{
         "association_date":number,
         "offer_id":string,
+        "offer_products": Product[],
         "price":number,
+        "commission":number,
         "stock":number
       }>;
 

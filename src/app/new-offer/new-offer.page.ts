@@ -362,7 +362,7 @@ export class NewOfferPage implements OnInit {
   {
    
     offer.category = this.category;
-    offer.one_product= this.product;
+    offer.products.push(this.product);
     offer.kind = this.kind;
     offer.currency_commission = this.currency_commission;
     offer.commission = this.commission;
@@ -394,11 +394,11 @@ export class NewOfferPage implements OnInit {
     offer.offer_name= "Descuento";
     offer.sellers_cuantity= offer.sellers.length;
     offer.is_active=false;
-        
-    for(let i=0; i< this.products.length; i++)
+    offer.products= this.products 
+    /*for(let i=0; i< this.products.length; i++)
     {
       offer.products_id.push(this.products[i]._id);
-    }
+    }*/
   }
   if(this.type_offer=='Gratis')
   {
@@ -409,7 +409,7 @@ export class NewOfferPage implements OnInit {
     offer.offer_name = this.type_offer;
     offer.sellers.push(this.seller._id);
     offer.stock=this.stock;
-    offer.one_product= this.product;
+    offer.products.push(this.product);
     offer.views=0;
     offer.sellers_cuantity= offer.sellers.length;
     offer.is_active=false;

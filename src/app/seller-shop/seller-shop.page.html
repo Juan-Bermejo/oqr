@@ -62,7 +62,7 @@
                               <img src="../../assets/iconos/iconos oqr-49.png" style="height: 115px; width: 115px;" class="offer-stamp" >
                            
                           </div>
-                <ion-card padding *ngFor="let p of offerdata.one_product" class="banner-offer">
+                <ion-card padding *ngFor="let p of offerdata.products" class="banner-offer">
                       <ion-row class="ion-justify-content-center">
                       <img class="img-offer" src="../../assets/cafeEnSaquitos.jpg">
                     </ion-row>
@@ -213,17 +213,17 @@
                                   <img class="img-card" src="../../assets/images/{{offer.category}}.jpg" alt="">
                                   <ion-card-content>
                                   <ion-card-title *ngIf="offer.offer_name=='Precio'" style="font-size: medium" >
-                                      {{offer.one_product[0].name}} a {{offer.price | currency: offer.price_currency}}
+                                      {{offer.products[0].name}} a {{offer.price | currency: offer.price_currency}}
                                      </ion-card-title>
                                      <ion-card-title *ngIf="offer.offer_name=='Gratis'" style="font-size: medium">
-                                       {{offer.one_product[0].name}} Gratis!
+                                       {{offer.products[0].name}} Gratis!
                                        {{offer.description}}
                                       </ion-card-title>
                                    <ion-card-title *ngIf="offer.offer_name=='Descuento'" style="font-size: medium" >
                                      %{{offer.percentage}} de descuento en {{offer.category}}
                                      </ion-card-title>
                                   <ion-row class="ion-justify-content-end">
-                                      <ion-button *ngIf="offer.offer_name != 'Descuento'" (click)="addOfferToCart(p)" >
+                                      <ion-button *ngIf="offer.offer_name != 'Descuento'" (click)="addOtherOfferToCart(offer)" >
                                           <ion-icon name="md-add"></ion-icon>
                                         </ion-button>
                                         <ion-button *ngIf="offer.offer_name != 'Descuento'" (click)="removeOfferToCart(p)" >

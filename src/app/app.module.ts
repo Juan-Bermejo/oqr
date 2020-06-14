@@ -52,6 +52,7 @@ import { EditShopComponent } from './componentes/edit-shop/edit-shop.component';
 import { TypeOfferModalComponent } from './componentes/type-offer-modal/type-offer-modal.component';
 import { ViewOrderComponent } from './componentes/view-order/view-order.component';
 import { OfferViewComponent } from './componentes/offer-view/offer-view.component';
+import { ImagePicker } from '@ionic-native/image-picker/ngx';
 
 export function tokenGetter() {
   return localStorage.getItem('token');
@@ -104,6 +105,7 @@ export function tokenGetter() {
     MarkerManager,
     GoogleMapsAPIWrapper,
     Geolocation,
+    ImagePicker,
     HttpClient,
     JwtHelperService,
     Deeplinks,
