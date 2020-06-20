@@ -456,6 +456,12 @@ export class DbService {
       return this.http.post(SERVICE_URL, form);
     }
 
+    sendProductImage(form) {
+      let url = 'products/productimg';
+      let SERVICE_URL = this.URL_SERVER.concat(url);
+      return this.http.post(SERVICE_URL, form);
+    }
+
     //CARRITO
 
     createCart(cart: Cart){
