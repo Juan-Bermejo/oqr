@@ -230,12 +230,10 @@ export class DbService {
       return this.http.get(PRODUCTS_URL);
     }
 
-    createProduct(product: Product, user_id: string) {
+    createProduct(form) {
       let url = 'products/';
-      let data = {"product_data": product, "user_id": user_id}
       let PROD_URL = this.URL_SERVER.concat(url);
-      return this.http.post(PROD_URL , data,
-        {headers: new HttpHeaders({"Content-Type": "application/json"})});
+      return this.http.post(PROD_URL, form);
     }
 
     deleteProduct(product_id:string){
@@ -452,12 +450,6 @@ export class DbService {
 
     sendImage(form) {
       let url = 'services/upload';
-      let SERVICE_URL = this.URL_SERVER.concat(url);
-      return this.http.post(SERVICE_URL, form);
-    }
-
-    sendProductImage(form) {
-      let url = 'products/productimg';
       let SERVICE_URL = this.URL_SERVER.concat(url);
       return this.http.post(SERVICE_URL, form);
     }
