@@ -13,24 +13,27 @@
             %{{offer.percentage}} de descuento en {{offer.category}}
             </ion-title>
 
-            <ion-list>
+           
                 <ion-list-header>
                     <ion-label>Productos</ion-label>
                   </ion-list-header>
-              <ion-item *ngFor="let p of products">
-                <ion-col size=9>
+              <ion-item-divider *ngFor="let p of products">
+                              <ion-col size=8>
                 <ion-label>{{p.name}}</ion-label>
               </ion-col>
-              <ion-col size=3>
-                <ion-button>
-                  <ion-icon (click)="selectProduct(p)" name="md-add" >
+              <ion-col size=2>
+                <ion-button (click)="selectProduct(p)">
+                  <ion-icon name="md-add" >
                   </ion-icon>
                 </ion-button>
-                <ion-button name="md-remove" >
+              </ion-col>
+                <ion-col size=2>
+                <ion-button>
+                  <ion-icon name="md-remove"  ></ion-icon>
                 </ion-button>
               </ion-col>
-              </ion-item>
-            </ion-list>
+                          </ion-item-divider>
+     
 
   
 

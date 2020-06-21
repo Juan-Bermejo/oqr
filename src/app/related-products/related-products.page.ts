@@ -48,6 +48,11 @@ export class RelatedProductsPage implements OnInit {
          if(data)
          {
          // this.array_products.push(data.data.result.product);
+         this.dbserv.checkIsVendor(this.user._id).subscribe((data:any)=>
+         {
+           this.seller= data.vendor_data;
+           this.array_products= this.seller.products;
+         })
          }
         
         

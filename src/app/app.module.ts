@@ -54,6 +54,8 @@ import { ViewOrderComponent } from './componentes/view-order/view-order.componen
 import { OfferViewComponent } from './componentes/offer-view/offer-view.component';
 import { ImagePicker } from '@ionic-native/image-picker/ngx';
 import { QRCodeModule } from 'angularx-qrcode';
+import { FileOpener } from '@ionic-native/file-opener/ngx';
+import { File } from '@ionic-native/file/ngx';
 
 
 export function tokenGetter() {
@@ -113,6 +115,8 @@ export function tokenGetter() {
     JwtHelperService,
     Deeplinks,
     OneSignal,
+    FileOpener,
+    File,
    // BarcodeScanner,
     ZBar,
     NativeGeocoder,

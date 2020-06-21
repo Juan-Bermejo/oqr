@@ -88,7 +88,7 @@ export class CartComponent implements OnInit {
   {
     this.cart = this.navParams.GetParam;
 
-     this.message_whatsapp = "Pedido de Ofertacerca.com: %0A";
+    /* this.message_whatsapp = "Pedido de Ofertacerca.com: %0A";
     let i:any;
     for(i in this.cart.details)
     {
@@ -99,7 +99,7 @@ export class CartComponent implements OnInit {
     }
     this.message_whatsapp += "TOTAL DE LA COMPRA: ARS "+ this.cart.total;
 
-    console.log(this.message_whatsapp);
+    console.log(this.message_whatsapp);*/
 
   }
 

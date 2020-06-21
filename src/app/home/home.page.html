@@ -119,15 +119,9 @@
 
 
 <ion-footer class="ion-justify-content-center">
-<ion-button expand="full" size="large" (click)="inputInfluecerCode()" >
-    Código de influencer
-</ion-button>
 
-
-
-  <!--
-   <ion-row>
-
+   <ion-row class="ion-justify-content-center">
+<!--
       <ion-col padding size=3>
             <img  src="../../assets/iconos/iconos oqr-35.png" alt="">
         </ion-col>
@@ -139,20 +133,26 @@
           <ion-col padding size=3>
               <img src="../../assets/iconos/iconos oqr-37.png" alt="">
             </ion-col>
-    
-            <ion-col padding size=3>
-                <img src="../../assets/iconos/iconos oqr-38.png" alt=""  routerLink="/my-account" >
-              </ion-col>
+          -->
+          
+              <ion-button fill="outline" color="light"  (click)="readBarcode()" >
+                <ion-icon name="md-qr-scanner" color="light" size="large">
+                </ion-icon>
+                Qr Shop
+              </ion-button>
+            
+            
 
-              <ion-col padding size=3>
-                <ion-button fill="clear" (click)="inputInfluecerCode()">
+            
+                <ion-button fill="outline" color="light"  (click)="inputInfluecerCode()">
                     <ion-icon name="md-megaphone" size="large" color="light"></ion-icon>
+                    Código influencer
                 </ion-button>
                
-              </ion-col>
+            
 
    </ion-row>
-   -->
+
 
 
 </ion-footer>

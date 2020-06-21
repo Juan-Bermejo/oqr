@@ -1,0 +1,19 @@
+
+<ion-content>
+
+    <ion-toolbar>
+        <ion-buttons slot="start" collapse="true">
+            <ion-back-button mode="md" type="button" color="light" icon="md-arrow-back" defaultHref="home">
+            </ion-back-button>
+          </ion-buttons>
+      <ion-title color="primary">Leer QR de Shop</ion-title>
+    </ion-toolbar>
+
+    <ion-row class="ion-justify-content-center">
+        <ion-button id="buttonQr"  (click)="readBarcode()" >
+            Escanear código
+              </ion-button>
+    </ion-row>
+
+
+</ion-content>

@@ -4,12 +4,24 @@
 
 <ion-content >
 
+  <!--  <ion-toolbar>
 
+        <ion-buttons slot="start" collapse="true">
+          <ion-back-button mode="md" type="button" color="light" icon="md-arrow-back" defaultHref="home">
+          </ion-back-button>
+        </ion-buttons>
+
+    
+</ion-toolbar>-->
 
   <div class="banner">
       <div class="buttons-login-cart">
         <ion-row>
           <ion-col size=1>
+              
+                  <ion-back-button mode="md" type="button" color="light" icon="md-arrow-back" defaultHref="home">
+                  </ion-back-button>
+               
               <ion-button class="butn-round" *ngIf="!is_logged"  (click)="goToLogin()" > 
                   <ion-icon size="large" color="light" name="md-person" >
  
@@ -21,6 +33,7 @@
      
                       </ion-icon>
                    </ion-button>
+    
           </ion-col>
 
 
@@ -59,7 +72,9 @@
                   <div *ngIf="offerdata.offer_name == 'Precio'"> 
                     <ion-col>
                           <div id="offer-label">
-                              <img src="../../assets/iconos/iconos oqr-49.png" style="height: 115px; width: 115px;" class="offer-stamp" >
+                              <img *ngIf="offerdata.offer_name == 'Precio'" src="../../assets/iconos/precio.png" style="height: 115px; width: 115px;" class="offer-stamp" >
+                              <img *ngIf="offerdata.offer_name == 'Gratis'" src="../../assets/iconos/svg/ICONOS_% descuento.svg" style="height: 115px; width: 115px;" class="offer-stamp" >
+                              <img *ngIf="offerdata.offer_name == 'Descuento'" src="../../assets/iconos/iconos oqr-49.png" style="height: 115px; width: 115px;" class="offer-stamp" >
                            
                           </div>
                 <ion-card padding *ngFor="let p of offerdata.products" class="banner-offer">
@@ -79,10 +94,10 @@
                         </ion-row>
                    
                         <ion-row class="ion-justify-content-end">
-                            <ion-button size="small" (click)="addOfferToCart(p)" >
+                            <ion-button size="small" (click)="addOtherOfferToCart(offerdata)">
                                 <ion-icon size="small" name="md-add"></ion-icon>
                               </ion-button>
-                              <ion-button size="small" (click)="removeOfferToCart(p)" >
+                              <ion-button size="small" (click)="removeOfferToCart(offerdata)" >
                                   <ion-icon size="small" name="md-remove"></ion-icon>
                                   </ion-button>
                         </ion-row>
@@ -92,6 +107,67 @@
                 </ion-card>
                 </ion-col>
                   </div>
+
+                  <div *ngIf="offerdata.offer_name == 'Gratis'"> 
+                      <ion-col>
+                            <div id="offer-label">
+                              <img *ngIf="offerdata.offer_name == 'Gratis'" src="../../assets/iconos/gratis.png" style="height: 115px; width: 115px;" class="offer-stamp" >
+                             
+                            </div>
+                  <ion-card padding *ngFor="let p of offerdata.products" class="banner-offer">
+                        <ion-row class="ion-justify-content-center">
+                        <img class="img-offer" src="../../assets/cafeEnSaquitos.jpg">
+                      </ion-row>
+                        <ion-row>
+                            <ion-card-title>  {{p.name}} Gratis! </ion-card-title>
+                        </ion-row>
+
+                          <ion-row>
+                              <ion-card-subtitle style="text-align: center">{{offerdata.description}} </ion-card-subtitle>
+                          </ion-row>
+                     
+                          <ion-row class="ion-justify-content-end">
+                              <ion-button size="small" (click)="addOtherOfferToCart(offerdata)" >
+                                  <ion-icon size="small" name="md-add"></ion-icon>
+                                </ion-button>
+                                <ion-button size="small" (click)="removeOfferToCart(offerdata)">
+                                    <ion-icon size="small" name="md-remove"></ion-icon>
+                                    </ion-button>
+                          </ion-row>
+                     
+                     
+                  
+                  </ion-card>
+                  </ion-col>
+                    </div>
+
+                    <div *ngIf="offerdata.offer_name == 'Descuento'"> 
+                        <ion-col>
+                              <div id="offer-label">
+                                  <img src="../../assets/iconos/descuento.png" style="height: 115px; width: 115px;" class="offer-stamp" >
+                               
+                              </div>
+                    <ion-card padding class="banner-offer">
+                          <ion-row class="ion-justify-content-center">
+                          <img class="img-offer" src="../../assets/images/{{offerdata.category}}.jpg">
+                        </ion-row>
+                          <ion-row>
+                              <ion-card-title>  %{{offerdata.percentage}} en {{offerdata.category}} </ion-card-title>
+                          </ion-row>
+  
+                            <ion-row>
+                                <ion-card-subtitle style="text-align: center">{{offerdata.description}} </ion-card-subtitle>
+                            </ion-row>
+                       
+                            <ion-row class="ion-justify-content-end">
+                                <ion-button *ngIf="offer.offer_name=='Descuento'" (click)="viewOffer(offer)" > Ver productos</ion-button>
+                            </ion-row>
+                       
+                       
+                    
+                    </ion-card>
+                    </ion-col>
+                      </div>
                 
                 </div>
   </ion-col>
@@ -209,7 +285,14 @@
                        <ion-grid padding="true" *ngSwitchCase="'offers'">
                           <ion-row padding="true" class="ion-justify-content-start">
                            <ion-col size-xs=10 offset-xs=1 offset-sm=0  size-sm=3 size-md=3  size-lg=3  size-xl=3  *ngFor="let offer of aux_offer_list; let i = index ">
-                              <ion-card>
+                              <div id="offer-label-other">
+                                  <img *ngIf="offer.offer_name== 'Descuento'" src="../../assets/iconos/descuento.png" style="height: 65px; width: 65px;" class="offer-stamp-other" >
+                                  <img *ngIf="offer.offer_name== 'Gratis'" src="../../assets/iconos/gratis.png" style="height: 65px; width: 65px;" class="offer-stamp-other" >
+                                  <img *ngIf="offer.offer_name== 'Precio'" src="../../assets/iconos/precio.png" style="height: 65px; width: 65px;" class="offer-stamp-other" >
+                               
+                              </div>
+                            <ion-card>
+ 
                                   <img class="img-card" src="../../assets/images/{{offer.category}}.jpg" alt="">
                                   <ion-card-content>
                                   <ion-card-title *ngIf="offer.offer_name=='Precio'" style="font-size: medium" >
@@ -226,7 +309,7 @@
                                       <ion-button *ngIf="offer.offer_name != 'Descuento'" (click)="addOtherOfferToCart(offer)" >
                                           <ion-icon name="md-add"></ion-icon>
                                         </ion-button>
-                                        <ion-button *ngIf="offer.offer_name != 'Descuento'" (click)="removeOfferToCart(p)" >
+                                        <ion-button *ngIf="offer.offer_name != 'Descuento'" (click)="removeOfferToCart(offer)" >
                                             <ion-icon name="md-remove"></ion-icon>
                                             </ion-button>
 

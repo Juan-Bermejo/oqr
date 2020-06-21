@@ -18,7 +18,8 @@ export class Seller {
         "offer_products": Product[],
         "price":number,
         "commission":number,
-        "stock":number
+        "stock":number,
+        "currency":string
       }>;
 
     constructor() {

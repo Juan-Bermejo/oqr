@@ -60,7 +60,8 @@ export class SellerShopPage implements OnInit {
     "offer_id":string,
     "price":number,
     "commission":number,
-    "stock":number
+    "stock":number,
+    "currency": string,
   }
   cart_lenght:number=0;
 
@@ -177,26 +178,32 @@ async toCart()
     }
 
     }
-    removeOfferToCart(p:Product)
+    removeOfferToCart(offer:Offer)
     {
-      
-      let i:any;
-      for( i in this.cart.details)
+      console.log(offer)
+      let index = this.cart.details.findIndex(d => d.offer_id == offer._id )
+      let indexOfferSeller =this.seller.offers.findIndex(o => o.offer_id == offer._id );
+      let offerSeller = this.seller.offers.find(o => o.offer_id == offer._id );
+      console.log(index)
+      console.log(indexOfferSeller)
+      console.log(offerSeller)
+      if(index > -1)
       {
-        if(this.cart.details[i].product_id == p._id)
+        if(this.cart.details[index].quantity > 1)
         {
-          this.cart.details[i].quantity -= 1;
-          this.cart.details[i].price -= this.offer_of_seller.commission;
-          if(this.cart.details[i].quantity == 0)
-          {
-            this.cart.details.splice(i,1);
-            this.cart_lenght--;
-          }
-          this.cart.total -= this.offer_of_seller.commission;
-          this.offerdata.stock += 1;
-          
+          this.cart.details[index].quantity --;
+          this.cart.total -= offerSeller.commission;
         }
+        if(this.cart.details[index].quantity == 1)
+        {
+          this.cart.details[index].quantity --;
+          this.cart.total -= offerSeller.commission;
+          this.cart.details.splice(index, 1);
+        }
+
       }
+
+
      
       console.log(this.cart)
     }
@@ -211,12 +218,15 @@ async toCart()
       let i:any;
       for(i in this.cart.details)
       {
-        if(this.cart.details[i].product_id == p._id)
-        {
-          this.cart.details[i].quantity +=1;
-          this.cart.details[i].price += p.price;
-          flag=true;
-        }
+
+          if(this.cart.details[i].product_id == p._id  && this.cart.details[i].offer_id == undefined)
+          {
+            this.cart.details[i].quantity +=1;
+            this.cart.details[i].price += p.price;
+            flag=true;
+          }
+        
+
       }
       if(!flag)
       {
@@ -433,23 +443,27 @@ async toCart()
         {
           this.cart.details[i].price += offer_seller.commission;
           this.cart.details[i].quantity += 1;
+          
           flag=true;
         }
       }
       if(!flag)
       {
         let cd=new CartDetail()
+        cd.offer_id = offer_seller.offer_id;
         cd.price = offer_seller.commission;
         cd.product_id = offer_seller.offer_products[0]._id;
         cd.product_name = offer_seller.offer_products[0].name;
-        cd.currency = offer.currency_commission;
+        cd.currency = offer_seller.currency;
         cd.quantity += 1;
         this.cart.details.push(cd)
         this.cart_lenght++;
         this.cart.products.push(offer_seller.offer_products[0]);
       }
-
+      
+      this.cart.total += offer_seller.commission;
       offer_seller.stock-=1;
+      console.log(this.cart)
 
       /*   break;
 

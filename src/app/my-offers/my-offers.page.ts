@@ -5,6 +5,7 @@ import { NavController, ToastController } from '@ionic/angular';
 import { Seller } from '../clases/seller';
 import { NavParamsService } from '../services/nav-params.service';
 import { User } from '../clases/user';
+import { TokenService } from '../services/token.service';
 
 @Component({
   selector: 'app-my-offers',
@@ -20,9 +21,11 @@ export class MyOffersPage implements OnInit {
   constructor(private dbService: DbService,
               private navCtrol: NavController,
               private navParams: NavParamsService,
-              private toastCtrl: ToastController
+              private toastCtrl: ToastController,
+              private token: TokenService
   ) {
-    this.user= JSON.parse(localStorage.getItem("user_data"));
+    
+    this.user = this.token.GetPayLoad().doc;
 
     this.dbService.checkIsVendor(this.user._id).subscribe((data:any)=>
   {

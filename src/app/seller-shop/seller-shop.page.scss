@@ -271,6 +271,26 @@ h1{
 
     }
 
+
+    #offer-label-other{
+        background-color: white;
+        position: absolute;
+        z-index: 1003;
+        top:0px;
+        left: 0px;
+        height: 75px;
+        width: 75px;
+        color:white;
+        border-style: solid;
+        border-width: 2px;
+        border-color: rgb(41, 171, 226);
+        border-radius: 50%;
+        padding-left: 3px; 
+        padding-top: 3px;
+        padding-bottom: none;
+  
+      }
+
     .input-search
 {
     

@@ -27,7 +27,7 @@ export class OfferViewComponent implements OnInit {
     private modalCtrl: ModalController,
     private navParams: NavParamsService,
     private dbService: DbService,
-  private toastController: ToastController) {
+    private toastController: ToastController) {
       this.offer = new Offer();
       this.products = new Array<Product>();
 
@@ -59,41 +59,73 @@ export class OfferViewComponent implements OnInit {
 
     this.offer = data.offer;
     this.cart = data.cart;
-    this.products = data.offer_seller;
+    this.offer_seller = data.offer_seller;
+    this.products = data.offer_seller.offer_products;
     console.log(data.offer_seller);
   console.log(this.products);
+  console.log(data)
  
+}
+
+removeProduct(p:Product)
+{
+let index = this.cart.details.findIndex(item => item.product_id == p._id && item.offer_id == this.offer._id);
+
+if(index != -1)
+{
+  if(this.cart.details[index].quantity > 1)
+  {
+    //this.cart.details[index].price -= this.offer_seller.commission;
+    this.cart.details[index].quantity--;
+  }
+  if(this.cart.details[index].quantity == 1 )
+  {
+    this.cart.details[index].price -= this.offer_seller.commission;
+    this.cart.details[index].quantity--;
+    this.cart.details.splice(index,1);
+  }
+}
 }
 
 selectProduct(p:Product)
 {
-  if(p.stock > 0 )
+ 
+  if(this.offer_seller.stock > 0 )
   {
     let flag:boolean = false;
     let i:any;
 
     for(i in this.cart.details)
     {
-      if(this.cart.details[i].product_id == p._id)
+      if(this.cart.details[i].offer_id == this.offer_seller.offer_id)
       {
-        this.cart.details[i].quantity +=1;
-        this.cart.details[i].price += p.price;
-        flag=true;
+        if(this.cart.details[i].product_id == p._id)
+        {
+          this.cart.details[i].quantity +=1;
+          //this.cart.details[i].price += this.offer_seller.commission;
+          flag=true;
+        }
+        if(flag)
+        {
+          break;
+        }
       }
     }
     if(!flag)
     {
       let cd=new CartDetail()
       cd.price = this.offer_seller.commission;
-      cd. currency = p.currency_price;
+      cd. currency = this.offer.currency_commission;
       cd.product_id = p._id;
       cd.product_name = p.name;
-      cd.offer_id = this.offer._id;
+      cd.offer_id = this.offer_seller.offer_id
       cd.quantity += 1;
+
       this.cart.details.push(cd)
       
       this.cart.products.push(p);
     }
+    
 
 
 

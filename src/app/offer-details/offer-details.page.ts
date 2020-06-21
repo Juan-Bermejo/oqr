@@ -130,20 +130,6 @@ export class OfferDetailsPage implements OnInit {
 
   }
   
-  ionViewDidLoad()
-  {}
-  
-
-  ionViewWillEnter()
-  {}
-
-  ionViewWillLeave()
-  {}
-
-  ionViewDidEnter()
-  {}
-
-
 
   getGeoLocation()
   {
@@ -212,7 +198,7 @@ console.log("locationvendor: ",location.vendor_id);
 
     async ngAfterViewInit(){
 
-     await navigator.geolocation.getCurrentPosition(position => {
+    /* await navigator.geolocation.getCurrentPosition(position => {
       this.current_longitude = position.coords.latitude;
       this.current_latitude = position.coords.longitude;  
       console.log(" location:", position)
@@ -223,7 +209,7 @@ console.log("locationvendor: ",location.vendor_id);
     },
   {
   
-  }) //current position
+  }) *///current position
 
         this.map = new Mapboxgl.Map({
           accessToken:environment.mapBoxKey,
@@ -271,13 +257,30 @@ console.log("locationvendor: ",location.vendor_id);
 
         this.map.resize();
 
-        this.map.flyTo({
+       /* this.map.flyTo({
           center: [this.current_latitude, this.current_longitude],
-          essential: true // this animation is considered essential with respect to prefers-reduced-motion
-          });
+          essential: false // this animation is considered essential with respect to prefers-reduced-motion
+          });*/
 
 
           })///mapOnload
+
+          await navigator.geolocation.getCurrentPosition(position => {
+            this.current_longitude = position.coords.latitude;
+            this.current_latitude = position.coords.longitude;  
+            console.log(" location:", position)
+            this.map.flyTo({
+              center: [this.current_latitude, this.current_longitude],
+              essential: false // this animation is considered essential with respect to prefers-reduced-motion
+              });
+              },
+            error=>
+          {
+            console.log("error location:", error)
+          },
+        {
+        
+        })
 
 
 
@@ -293,6 +296,23 @@ console.log("locationvendor: ",location.vendor_id);
      // this.map.flyTo([this.current_longitude,this.current_latitude])
         })
   }
+
+
+
+
+
+    ionViewDidLoad()
+  {}
+  
+
+  ionViewWillEnter()
+  {}
+
+  ionViewWillLeave()
+  {}
+
+  ionViewDidEnter()
+  {}
 
 
 }

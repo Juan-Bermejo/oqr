@@ -20,6 +20,7 @@ import { ImagePicker, ImagePickerOptions } from '@ionic-native/image-picker/ngx'
 })
 export class AddProductPage implements OnInit {
   
+  file: File;
   photos: any;
   searchText: string;
 spinner:boolean=false;
@@ -71,7 +72,19 @@ spinner:boolean=false;
      }
 
 
-     addPhoto()
+     changeListener($event) : void {
+      this.file = $event.target.files[0];
+      console.log(this.file);
+
+    }
+    
+    addPhoto()
+    {
+      
+      //this.dbService.sendProductImage(fd);
+    }
+
+  /*   addPhoto()
      {
        let options: ImagePickerOptions = {
          maximumImagesCount: 1,
@@ -84,7 +97,7 @@ spinner:boolean=false;
         }
         this.photos= results;
       }, (err) => { });
-     }
+     }*/
 
      addNote(p)
      {
@@ -176,6 +189,13 @@ spinner:boolean=false;
     if( this.category && this.kind &&
     this.currency_price && this.price && this.searchText)
     {
+     /* let fd = new FormData();
+      fd.append("image",this.file);
+
+      this.dbService.sendImage(fd).toPromise().then((res:any)=>
+     {
+       console.log(res);
+     })*/
      
       let p= new Product();
       p.name=this.searchText;
@@ -185,11 +205,20 @@ spinner:boolean=false;
       p.bar_code=this.bar_code;
       p.kind= this.kind;
       p.stock= this.stock;
-      console.log(p);
 
-      this.seller.products.push(p);
+      let fd = new FormData();
+      fd.append("image", this.file);
+      fd.append("product", JSON.stringify(p));
+      fd.append("seller_id", this.seller._id);
 
-      console.log("envio seller: ", this.seller)
+    this.dbService.createProduct(fd).toPromise().then((data:any)=>
+  {
+    console.log(data);
+  })
+
+      //this.seller.products.push(p);
+
+/*
       this.dbService.updateVendor(this.seller).toPromise()
       .then((data:any)=>
     {
@@ -217,7 +246,7 @@ spinner:boolean=false;
   {
     this.spinner=false;
     
-  })//finally
+  })//finally*/
 
     }
 

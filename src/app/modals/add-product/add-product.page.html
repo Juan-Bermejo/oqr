@@ -150,9 +150,10 @@
         
             </ion-col>
 
-            <ion-button (click)="addPhoto()" >
-                Agregar foto
-            </ion-button>
+            <ion-item>
+                <ion-label id="profile_image" color="primary" stacked>Agregar foto</ion-label>
+                <ion-input type="file" accept="image/*" (change)="changeListener($event)"></ion-input>
+              </ion-item>
         
         </ion-row>
   <ion-row justify-content-center>
@@ -162,6 +163,7 @@
   <ion-row justify-content-center>
 
         <ion-spinner *ngIf="spinner" name="crescent" color="primary" ></ion-spinner>
+        
 <ion-button *ngIf="!spinner" shape="round"  (click)="saveProduct()">
 Guardar Producto
 </ion-button>

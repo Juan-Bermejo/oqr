@@ -20,6 +20,8 @@ import { NativeGeocoder, NativeGeocoderResult, NativeGeocoderOptions } from '@io
 import { TokenService } from '../services/token.service';
 import { InputCodeInfluencerComponent } from '../componentes/input-code-influencer/input-code-influencer.component';
 import { LoginComponent } from '../componentes/login/login.component';
+import { ZBar, ZBarOptions } from '@ionic-native/zbar/ngx';
+import { ActivatedRoute } from '@angular/router';
 
 
 @Component({
@@ -61,6 +63,7 @@ export class HomePage implements OnInit {
    nombres:Array<string>;
 
   constructor(private prodSrv:ProductsService,
+    private zbar: ZBar,
     private streamingMedia: StreamingMedia,
      private modalController: ModalController,
      public navCtrl: NavController,
@@ -318,6 +321,55 @@ console.log(offer._id)
   logOut() {
    // this.afAuth.auth.signOut();
     
+  }
+
+
+  async readBarcode()
+  {
+ 
+    let options: ZBarOptions = {
+      flash: 'off',
+      drawSight: false,
+      text_instructions:"Coloque el codigo en el lector.",
+      text_title:"Lector de codigo de barras."
+      
+    }
+
+
+
+     this.zbar.scan(options)
+   .then(result => {
+      console.log(result); // Scanned code
+     
+      
+      this.dbService.getVendorById(result.toString()).toPromise()
+      .then((data:any)=>
+    {
+
+
+        this.router.navigateByUrl('seller-shop/' + result);
+       
+    })
+    .catch((err)=>
+  {
+    const toast = document.createElement('ion-toast');
+    toast.message = 'Código invalido.';
+    toast.duration = 3000;
+    toast.position = "top";
+    document.body.appendChild(toast);
+    return toast.present(); 
+  })
+   })
+   .catch((error:any) => {
+      console.log(error); // Error message
+      const toast = document.createElement('ion-toast');
+      toast.message = 'No se pudo leer el código.';
+      toast.duration = 3000;
+      toast.position = "top";
+      document.body.appendChild(toast);
+      return toast.present(); 
+    })
+  
   }
 
 
