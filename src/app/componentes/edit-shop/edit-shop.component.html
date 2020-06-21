@@ -18,24 +18,43 @@
                     Modificar mi Shop
                   </ion-title>
                 
-               <form  method="POST" action="https://ofertaqr.com/app/services/upload" enctype="multipart/form-data" >
+              <!-- <form  method="POST" action="https://ofertaqr.com/app/services/upload" enctype="multipart/form-data" >-->
                   <ion-item-divider>
                     <ion-label >Cambiar foto de banner</ion-label>
                    <input type="file" name="image" (change)="fileUpl($event.target.files)">
                     <input type="hidden" name="_id" [(ngModel)]="sellerId">
+                    <input type="hidden" name="type" [(ngModel)]="type">
+                    <ion-row class=" ion-align-items-end ion-justify-content-center"> <!--esta bien-->
+                      <ion-button shape="round" (click)="enviar()">
+                        Modificar banner
+                      </ion-button>
+                    </ion-row>
                   </ion-item-divider>
+
+             <!-- <form  method="POST" action="https://ofertaqr.com/app/services/upload" enctype="multipart/form-data" >-->
+                    <ion-item-divider>
+                      <ion-label >Cambiar foto de banner</ion-label>
+                     <input type="file" name="imageProfile" (change)="fileUplProfile($event.target.files)">
+                      <input type="hidden" name="_id" [(ngModel)]="sellerId">
+                      <input type="hidden" name="type" [(ngModel)]="type" value="banner">
+                      <ion-row class=" ion-align-items-end ion-justify-content-center"> <!--esta bien-->
+                        <ion-button shape="round" (click)="enviarProfile()">
+                          Modificar banner
+                        </ion-button>
+                      </ion-row>
+                    </ion-item-divider>
 <!--
                   <ion-item-divider>
                       <ion-label >Cambiar mi logo</ion-label>
                       <input type="file" [(ngModel)]="sellerImg" name="imageSeller">
                     </ion-item-divider>
 -->
-                  <ion-row class=" ion-align-items-end ion-justify-content-center"> <!--esta bien-->
+                <ion-row class=" ion-align-items-end ion-justify-content-center"> <!--esta bien-->
                     <ion-button shape="round" (click)="enviar()">
-                      Modificar
+                      Modificar banner
                     </ion-button>
                   </ion-row>
-                </form>
+               <!--   </form>-->
            
             </ion-col>
                  

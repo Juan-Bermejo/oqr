@@ -19,7 +19,8 @@ export class Seller {
         "price":number,
         "commission":number,
         "stock":number,
-        "currency":string
+        "currency":string,
+        "product_image": string
       }>;
 
     constructor() {

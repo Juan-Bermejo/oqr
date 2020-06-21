@@ -62,6 +62,7 @@ export class SellerShopPage implements OnInit {
     "commission":number,
     "stock":number,
     "currency": string,
+    "product_image":string
   }
   cart_lenght:number=0;
 

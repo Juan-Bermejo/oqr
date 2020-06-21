@@ -246,7 +246,8 @@
                                           <ion-col size-xs=10 offset-xs=1 offset-sm=0  size-sm=3 size-md=3  size-lg=3  size-xl=3 *ngFor="let prod of aux_products_list; let i = index " >
                                           
                                              <ion-card>
-                                              <img class="img-card" src="../../assets/images/{{prod.category}}.jpg" alt="">
+                                               
+                                              <img class="img-card" src="{{prod.product_image}}" alt="">
                                       
                                               <ion-card-content>
                                                   <ion-card-title style="font-size: medium">

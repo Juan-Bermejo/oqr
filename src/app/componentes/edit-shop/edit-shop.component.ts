@@ -11,6 +11,7 @@ import { DbService } from '../../services/db.service';
 export class EditShopComponent implements OnInit {
 
   bannerImg: File = null;
+  profileImg: File = null;
   sellerImg: any;
   sellerId:string;
   
@@ -27,17 +28,36 @@ export class EditShopComponent implements OnInit {
        this.bannerImg = files.item(0);
      }
 
+     fileUplProfile(files: FileList){
+      this.profileImg = files.item(0);
+    }
+
      enviar()
      { 
        let fd = new FormData();
        fd.append("image",this.bannerImg);
        fd.append("_id", this.sellerId);
+       fd.append("type", "banner");
        console.log(this.bannerImg);
        console.log(fd);
        this.dbs.sendImage(fd).toPromise().then((res:any)=>
       {
         console.log(res);
       })
+     }
+
+     enviarProfile()
+     {
+      let fd = new FormData();
+      fd.append("image",this.profileImg);
+      fd.append("_id", this.sellerId);
+      fd.append("type", "profile");
+      console.log(this.bannerImg);
+      console.log(fd);
+      this.dbs.sendImage(fd).toPromise().then((res:any)=>
+     {
+       console.log(res);
+     })
      }
   
 

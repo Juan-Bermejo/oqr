@@ -19,6 +19,9 @@
     <ion-list>
         <ion-list-header>Mis productos relacionados</ion-list-header>
         <ion-item *ngFor="let p of array_products">
+            <ion-thumbnail  slot="start">
+                <img src="{{p.product_image}}">
+            </ion-thumbnail>
             {{p.name}}
             {{p.price | currency: p.currency_price}}
             <ion-label color="primary" slot="end">Modificar</ion-label>
