@@ -131,11 +131,10 @@ export class DbService {
 
     //OFFER SERVICES
 
-    createOffer(offer: Offer) {
+    createOffer(form) {
       let url = 'offers/';
       let OFFER_URL = this.URL_SERVER.concat(url);
-      return this.http.post(OFFER_URL, offer,
-        {headers: new HttpHeaders({"Content-Type": "application/json"})});
+      return this.http.post(OFFER_URL, form);
     }
 
     getOffer(offer_id: string) {
