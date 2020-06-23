@@ -25,6 +25,7 @@ import { SelectRelatedProductsPage } from '../modals/select-related-products/sel
 })
 export class NewOfferPage implements OnInit {
   
+  offerImg: File = null;
  // @ViewChild('slider',{ read: true, static: false }) private slider: IonSlides;
  @ViewChild('slides', {static: true}) slides: IonSlides;
 
@@ -312,6 +313,11 @@ export class NewOfferPage implements OnInit {
   }
 
 
+  fileUpl(files: FileList){
+    this.offerImg = files.item(0);
+    
+  }
+
 
   saveOffer()
   {
@@ -436,7 +442,11 @@ export class NewOfferPage implements OnInit {
 
   saveOfferDB(offer)
   {
-    this.dbService.createOffer(offer)
+    let fd = new FormData();
+    fd.append("offer", JSON.stringify(offer));
+    fd.append("image", this.offerImg);
+
+    this.dbService.createOffer(fd)
       .subscribe((data: any) => {
         if(data.status == 200) {
 

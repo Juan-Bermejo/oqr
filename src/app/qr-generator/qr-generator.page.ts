@@ -58,7 +58,7 @@ export class QrGeneratorPage implements OnInit {
     this.dbs.checkIsVendor(this.user._id).toPromise().then((data:any)=>
   {
     this.seller= data.vendor_data;
-    this.miQrText = this.seller._id//"ofertacerca.com/#/seller-shop/" + this.seller._id;
+    this.miQrText = "https://ofertacerca.com/#/seller-shop/" + this.seller.shop_name;
   })
   }
 

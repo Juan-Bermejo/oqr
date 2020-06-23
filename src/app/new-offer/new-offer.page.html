@@ -235,6 +235,15 @@ Producto
                       </ion-item-divider>
 
                     </div>
+                    <ion-row>
+                        <!--ACA SE AGREGA LA FOTO-->
+
+                        <ion-button fill="outline" id="loadFileXml2" value="loadXml2" onclick="document.getElementById('file').click();" >
+                                Seleccionar imagen
+                              </ion-button>
+                              <div *ngIf="offerImg">{{offerImg.name}}</div>
+                              <input type="file" style="display:none;" id="file"  (change)="fileUpl($event.target.files)"/>
+                    </ion-row>
                   <ion-row class="ion-justify-content-center">
                       <h4>Agrega una breve descripción de tu oferta</h4>
                     </ion-row>

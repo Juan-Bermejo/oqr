@@ -9,6 +9,7 @@ import { MapsAPILoader } from '@agm/core';
 import { Seller } from '../../clases/seller';
 import * as Mapboxgl from 'mapbox-gl';
 import { environment } from '../../../environments/environment';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -55,6 +56,7 @@ public searchElementRef: ElementRef;
     private nativeGeocoder: NativeGeocoder,
     private dbService: DbService,
     private toast: ToastController,
+    private router :Router,
     
    ) {
 
@@ -161,7 +163,8 @@ public searchElementRef: ElementRef;
        this.dbService.updateVendor(this.seller).toPromise().then((data)=>
       {
         console.log(data);
-        this.dismissModal();
+        //this.dismissModal();
+        this.router.navigateByUrl('my-locations')
       })
         
       })

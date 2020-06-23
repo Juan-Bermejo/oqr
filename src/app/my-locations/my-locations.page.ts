@@ -27,10 +27,10 @@ export class MyLocationsPage implements OnInit {
     console.log(this.myLocations)
   })
   
-    this.dbService.getLocation(this.user.shops[0]).toPromise().then((data:any)=>{
+   /* this.dbService.getLocation(this.user.shops[0]).toPromise().then((data:any)=>{
       console.log(data);
       this.myLocations=data.location_data;
-    })
+    })*/
 
    }
 
@@ -46,6 +46,15 @@ export class MyLocationsPage implements OnInit {
     })*/
 this.navCtrl.navigateRoot('add-location');
     
+  }
+
+  ionViewWillEnter()
+  {
+    this.dbService.checkIsVendor(this.user._id).toPromise().then((data:any)=>
+    {
+      this.myLocations = data.vendor_data.location;
+      console.log(this.myLocations)
+    })
   }
 
   ngOnInit() {

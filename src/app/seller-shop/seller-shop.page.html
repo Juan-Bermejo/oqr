@@ -19,8 +19,6 @@
         <ion-row>
           <ion-col size=1>
               
-                  <ion-back-button mode="md" type="button" color="light" icon="md-arrow-back" defaultHref="home">
-                  </ion-back-button>
                
               <ion-button class="butn-round" *ngIf="!is_logged"  (click)="goToLogin()" > 
                   <ion-icon size="large" color="light" name="md-person" >
@@ -52,13 +50,24 @@
       
      <!-- <img class="img-banner" src="../../assets/images/{{seller.category}}.jpg">-->
     <!-- <img class="img-banner" src="../../assets/images/Copia de Modern Summer Sale Store Banner - Hecho con PosterMyWall.jpg">-->
-    <img class="img-banner" src="{{seller.url_images}}">
+    <img class="img-banner" src="{{seller.banner_img}}">
     <div class="img-seller">
 
-      <img class="seller-photo" src="../../assets/logoOfertaCerca/logoBlancoFondoCeleste.jpg" alt="">
+      <img class="seller-photo" src="{{seller.profile_img}}">
     </div>
   </ion-row>
   </div>
+
+  <ion-toolbar>
+
+      <ion-buttons slot="start" collapse="true" color="primary">
+        <ion-back-button mode="md" type="button" color="primary" icon="md-arrow-back" defaultHref="">
+        </ion-back-button>
+        <ion-label color="primary">Atras</ion-label>
+      </ion-buttons>
+
+  
+</ion-toolbar>
 
 
 

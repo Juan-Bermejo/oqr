@@ -148,17 +148,25 @@ export class OfferDetailsPage implements OnInit {
 
 
    addMarker(location:Location) {
-console.log("locationvendor: ",location.vendor_id);
-    this.markers.push(
-      {
-        location: location,
-        lat: location.latitude,
-         lng: location.longitude,
-         address:location.address,
-          alpha: 1,
-          seller: location.vendor_id,
-         // icon: "../../../assets/iconos/User-Blue-icon.png"
-        });
+     
+console.log("locationvendor: ",location);
+this.dbService.getVendorById(location.vendor_id).toPromise().then((data:any)=>
+{
+  console.log("prueba vendor: ", data)
+  this.markers.push(
+    {
+      location: location,
+      lat: location.latitude,
+       lng: location.longitude,
+       address:location.address,
+        alpha: 1,
+        sellerName: data.shop_name,
+        seller: location.vendor_id,
+        img: data.profile_img
+       // icon: "../../../assets/iconos/User-Blue-icon.png"
+      });
+})
+
   }
 
 
@@ -174,7 +182,7 @@ console.log("locationvendor: ",location.vendor_id);
   async selectMarker(sellerId)
   {
 
-    console.log("selected")
+    console.log("selected: ", this.seller)
     //this.navCtrl.navigateRoot('seller-shop/'+'%3F'+ 'seller'+'%3D'+sellerId+'%26'+'offer'+'%3D'+this.offerId);
     //this.navCtrl.navigateRoot('seller-shop/'+'?'+ 'seller'+'='+sellerId+'&'+'offer'+'='+this.offerId);
    // this.navCtrl.navigateRoot('seller-shop/' + sellerId + '/' + this.offerId);
@@ -233,13 +241,14 @@ console.log("locationvendor: ",location.vendor_id);
           console.log(m)
       
              const div = window.document.createElement('div');
-             div.innerHTML = "<h1>Ir al shop</h1>";
+             console.log("marker: ",m)
+             div.innerHTML = "<img src='"+m.img+"'/>";
               
           
               div.addEventListener('click',async ()=>
             {
               
-              this.selectMarker(m.seller)
+              this.selectMarker(m.sellerName)
             })
       
             let popup = new Mapboxgl.Popup()

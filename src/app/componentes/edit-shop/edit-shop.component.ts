@@ -26,10 +26,13 @@ export class EditShopComponent implements OnInit {
 
      fileUpl(files: FileList){
        this.bannerImg = files.item(0);
+       
      }
 
      fileUplProfile(files: FileList){
+      
       this.profileImg = files.item(0);
+      console.log(this.profileImg)
     }
 
      enviar()

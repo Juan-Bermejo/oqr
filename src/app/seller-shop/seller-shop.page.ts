@@ -365,8 +365,9 @@ async toCart()
 
 
 
-      this.dbService.getVendorById(this.sellerName).subscribe((data:any)=>
+      this.dbService.getVendorByName(this.sellerName).subscribe((data:any)=>
       {
+        this.sellerId = data._id;
         this.seller= data;
         console.log("vendedor: ", this.seller)
         this.dataMarker= data;

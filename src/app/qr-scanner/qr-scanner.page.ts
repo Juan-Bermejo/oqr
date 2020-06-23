@@ -10,6 +10,8 @@ import { DbService } from '../services/db.service';
 })
 export class QrScannerPage implements OnInit {
 
+  sellerName:string;
+
   constructor(private zbar: ZBar,private router :Router, private dbService: DbService) { }
 
   goTo(seller_id)
@@ -34,14 +36,14 @@ export class QrScannerPage implements OnInit {
      this.zbar.scan(options)
    .then(result => {
       console.log(result); // Scanned code
-     
-      
-      this.dbService.getVendorById(result.toString()).toPromise()
+     let sn = this.decode(result);
+     console.log(sn);
+      this.dbService.getVendorByName(sn.toString()).toPromise()
       .then((data:any)=>
     {
 
 
-        this.router.navigateByUrl('seller-shop/' + result);
+        this.router.navigateByUrl('seller-shop/' + sn );
        
     })
     .catch((err)=>
@@ -66,6 +68,12 @@ export class QrScannerPage implements OnInit {
   
   }
 
+
+  private decode (url:string)
+  {
+    let sn = url.split("/")[5];
+    return sn
+  }
   ngOnInit() {
   }
 

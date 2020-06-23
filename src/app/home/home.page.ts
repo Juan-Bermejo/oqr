@@ -340,14 +340,15 @@ console.log(offer._id)
      this.zbar.scan(options)
    .then(result => {
       console.log(result); // Scanned code
-     
+      let sn = result.split("/")[5];
+      console.log(sn)
       
-      this.dbService.getVendorById(result.toString()).toPromise()
+      this.dbService.getVendorByName(sn.toString()).toPromise()
       .then((data:any)=>
     {
 
 
-        this.router.navigateByUrl('seller-shop/' + result);
+        this.router.navigateByUrl('seller-shop/' + sn);
        
     })
     .catch((err)=>
