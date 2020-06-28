@@ -169,6 +169,7 @@ export class NewOfferPage implements OnInit {
         {
           this.category != undefined &&
           this.kind != undefined &&
+          this.offerImg != null &&
           this.product != undefined /*&&
           this.description != undefined*/
           ? this.lockUnlockSwipe() : this.slides.lockSwipeToNext(true)
@@ -176,6 +177,7 @@ export class NewOfferPage implements OnInit {
         if(this.type_offer == 'Descuento')
         {
           this.category != undefined &&
+          this.offerImg != null &&
           this.products != undefined /*&&
           this.description != undefined*/
           ? this.lockUnlockSwipe() : this.slides.lockSwipeToNext(true)
@@ -183,6 +185,7 @@ export class NewOfferPage implements OnInit {
         if(this.type_offer == 'Gratis')
         {
           this.category != undefined &&
+          this.offerImg != null &&
           this.kind != undefined &&
           this.product != undefined &&
           this.description != undefined

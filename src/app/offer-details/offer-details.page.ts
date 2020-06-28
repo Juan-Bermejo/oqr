@@ -242,7 +242,15 @@ this.dbService.getVendorById(location.vendor_id).toPromise().then((data:any)=>
       
              const div = window.document.createElement('div');
              console.log("marker: ",m)
-             div.innerHTML = "<img src='"+m.img+"'/>";
+             if(m.img)
+             {
+              div.innerHTML = "<img src='"+m.img+"'/>";
+             }
+             else{
+              div.innerHTML = "<img src='../../assets/logoOfertaCerca/logoCelesteFondoBlanco.jpg'/>";
+             }
+             
+             div.className ="img-seller";
               
           
               div.addEventListener('click',async ()=>

@@ -50,10 +50,13 @@
       
      <!-- <img class="img-banner" src="../../assets/images/{{seller.category}}.jpg">-->
     <!-- <img class="img-banner" src="../../assets/images/Copia de Modern Summer Sale Store Banner - Hecho con PosterMyWall.jpg">-->
-    <img class="img-banner" src="{{seller.banner_img}}">
+    <img *ngIf="!seller.banner_img" class="img-banner" src="../../assets/logoOfertaCerca/fondoBanner.png">
+    <img *ngIf="seller.banner_img" class="img-banner" src="{{seller.banner_img}}">
     <div class="img-seller">
 
-      <img class="seller-photo" src="{{seller.profile_img}}">
+        <img *ngIf="!seller.profile_img" class="seller-photo" src="../../assets/logoOfertaCerca/logoCelesteFondoBlanco.jpg">
+
+      <img *ngIf="seller.profile_img" class="seller-photo" src="{{seller.profile_img}}">
     </div>
   </ion-row>
   </div>

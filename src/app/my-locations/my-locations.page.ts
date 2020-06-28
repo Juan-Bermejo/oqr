@@ -5,6 +5,7 @@ import { AddLocationPage } from '../modals/add-location/add-location.page';
 import { Location } from '../clases/location';
 import { DbService } from '../services/db.service';
 import { TokenService } from '../services/token.service';
+import { Seller } from '../clases/seller';
 
 @Component({
   selector: 'app-my-locations',
@@ -13,7 +14,8 @@ import { TokenService } from '../services/token.service';
 })
 export class MyLocationsPage implements OnInit {
 
-  public user:User;
+  private user:User;
+  private seller: Seller;
   myLocations;
 
   constructor(private modalController: ModalController,
@@ -52,10 +54,29 @@ this.navCtrl.navigateRoot('add-location');
 
   ionViewWillEnter()
   {
+    this.user= this.token.GetPayLoad().doc
+
     this.dbService.checkIsVendor(this.user._id).toPromise().then((data:any)=>
     {
+      this.seller = data.vendor_data;
       this.myLocations = data.vendor_data.location;
       console.log(this.myLocations)
+    })
+  }
+
+
+  deleteLocation(location: Location)
+  {
+     let index = this.seller.location.findIndex( l => location.id == l.id)
+    this.seller.location.splice(index,1);
+    
+    this.dbService.updateVendor(this.seller).toPromise().then((data:any)=>
+    {
+      console.log(data);
+      this.seller = data.vendor_data;
+      this.myLocations = data.vendor_data.location;
+      
+      
     })
   }
 
