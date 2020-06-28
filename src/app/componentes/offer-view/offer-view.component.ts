@@ -6,6 +6,7 @@ import { Offer } from '../../clases/offer';
 import { Product } from '../../clases/product';
 import { DbService } from '../../services/db.service';
 import { CartDetail } from '../../clases/cart-detail';
+import { Seller } from '../../clases/seller';
 
 @Component({
   selector: 'app-offer-view',
@@ -21,6 +22,7 @@ export class OfferViewComponent implements OnInit {
   offer: Offer;
   products: Product[];
   offer_seller:any;
+  seller:Seller;
 
 
   constructor(
@@ -60,7 +62,26 @@ export class OfferViewComponent implements OnInit {
     this.offer = data.offer;
     this.cart = data.cart;
     this.offer_seller = data.offer_seller;
-    this.products = data.offer_seller.offer_products;
+    let auxP:Product[] = new Array<Product>();
+     auxP = data.offer_seller.offer_products;
+    this.seller = data.seller;
+    console.log(this.seller)
+
+    let i:any;
+    let j: any;
+    this.products = new Array<Product>();
+  for (i in this.seller.products)
+  {
+    console.log(this.seller.products[i])
+    for(j in auxP)
+    {
+      if(this.seller.products[i]._id == auxP[j]._id)
+      {
+        this.products.push(this.seller.products[i])
+      }
+    }
+  }
+
     console.log(data.offer_seller);
   console.log(this.products);
   console.log(data)
@@ -70,7 +91,7 @@ export class OfferViewComponent implements OnInit {
 removeProduct(p:Product)
 {
 let index = this.cart.details.findIndex(item => item.product_id == p._id && item.offer_id == this.offer._id);
-
+console.log(index);
 if(index != -1)
 {
   if(this.cart.details[index].quantity > 1)
@@ -82,9 +103,12 @@ if(index != -1)
   {
     this.cart.details[index].price -= this.offer_seller.commission;
     this.cart.details[index].quantity--;
+    this.cart.total -= this.offer_seller.commission;
     this.cart.details.splice(index,1);
   }
+  //this.cart.total -= this.offer_seller.commission;
 }
+console.log(this.cart)
 }
 
 selectProduct(p:Product)
@@ -113,6 +137,7 @@ selectProduct(p:Product)
     }
     if(!flag)
     {
+      console.log("adentro");
       let cd=new CartDetail()
       cd.price = this.offer_seller.commission;
       cd. currency = this.offer.currency_commission;
@@ -122,7 +147,8 @@ selectProduct(p:Product)
       cd.quantity += 1;
 
       this.cart.details.push(cd)
-      
+      this.cart.currency= this.offer.currency_commission;
+      this.cart.total += this.offer_seller.commission;
       this.cart.products.push(p);
     }
     
@@ -131,8 +157,8 @@ selectProduct(p:Product)
 
     console.log(this.cart)
 
-    this.cart.currency= this.offer.currency_commission;
-    this.cart.total += this.offer_seller.commission;
+    /*this.cart.currency= this.offer.currency_commission;
+    this.cart.total += this.offer_seller.commission;*/
     p.stock -= 1;
     console.log(this.cart)
   }

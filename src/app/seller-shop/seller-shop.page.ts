@@ -67,16 +67,17 @@ export class SellerShopPage implements OnInit {
   cart_lenght:number=0;
 
   constructor(private modalCtrl:ModalController,
-    private platform: Platform,
-    private activatedRoute: ActivatedRoute,
+              private platform: Platform,
+              private activatedRoute: ActivatedRoute,
               private dbService:DbService,
               private navParams: NavParamsService,
               private router :Router,
               private toastController: ToastController,
-            private postService:PostService,
-          private navCtrl: NavController,
-          private iab: InAppBrowser,
-          private token: TokenService) { 
+              private postService:PostService,
+              private navCtrl: NavController,
+              private iab: InAppBrowser,
+              private token: TokenService) { 
+
             this.aux_offer_list = new Array<Offer>();
             this.aux_products_list = new Array<Product>();
             this.other_offers = new Array<Offer>();
@@ -85,7 +86,7 @@ export class SellerShopPage implements OnInit {
             this.seller= new Seller();
             this.cart= new Cart();
 
-            this,dbService.getLogged$().subscribe((data)=>
+           /* this,dbService.getLogged$().subscribe((data)=>
           {
             this.is_logged = data;
             if(this.is_logged)
@@ -93,13 +94,13 @@ export class SellerShopPage implements OnInit {
               this.user = token.GetPayLoad().doc;
               this.cart.user_id= this.user_id;
               this.user_id=this.user._id;
-              this.user._id == this.seller._id ? 
+              this.user._id == this.seller.owner ? 
               this.is_my_offer = true : this.is_my_offer = false;
               console.log(this.is_my_offer);
 
             }
 
-          })
+          })*/
             
               }               /* FIN DEL CONSTRUCTOR */
 
@@ -313,27 +314,9 @@ async toCart()
 
   ngOnInit() {
 
-    
-  if(this.navParams.param)
-  {
-   this.offer=  this.navParams.param.offer; 
-   this.sellerId= this.navParams.param.seller;
   
-   console.log (this.navParams.param.seller);
+  
 
-   this.dbService.getVendorById (this.sellerId).subscribe((data:any)=>
-  {
-    this.seller= data;
-    this.dataMarker= data;
-    this.shop_name= this.seller.shop_name;
-    this.cart.vendor_id= this.seller._id;
-    this.products = this.dataMarker.products;
-    this.precioanterior =   this.products.find(p=> p._id == this.offerdata.products[0]._id);
-    console.log(this.precioanterior)
-    console.log("vendedor: ", data);
-  })
-  }
-  else{
     /*
 
     if (document.URL.indexOf("?") > 0) {
@@ -375,15 +358,17 @@ async toCart()
         this.cart.vendor_id= this.seller._id;
         this.products = this.dataMarker.products;
         this.aux_products_list= this.products;
+
+        this.dbService.getOffersByVendor(this.sellerId).subscribe((data:any)=>
+        {
+          this.other_offers = data.offers_data;
+          this.aux_offer_list = this.other_offers;
+          console.log(data);
+    
+        })
       })
 
-      this.dbService.getOffersByVendor(this.sellerName).subscribe((data:any)=>
-    {
-      this.other_offers = data.offers_data;
-      this.aux_offer_list = this.other_offers;
-      console.log(data);
 
-    })
 
       this.dbService.getOffer(this.offerId).subscribe((data:any)=>
     {
@@ -408,7 +393,7 @@ async toCart()
       
     
 
-  }
+  
 
   this.dbService.getLogged$().subscribe((data)=>
   {
@@ -670,7 +655,8 @@ console.log(offer_seller)
     "offer_seller": offer_seller,
     "offer": offer,
     "cart": this.cart,
-    "addOfferCart": this.addOtherOfferToCart
+    "addOfferCart": this.addOtherOfferToCart,
+    "seller": this.seller
   }
 
   const offerModal = await this.modalCtrl.create(
@@ -683,6 +669,24 @@ console.log(offer_seller)
 }
 
 
+ionViewWillEnter()
+{
+  this.dbService.getLogged$().subscribe((data)=>
+  {
+    this.is_logged = data;
+    
+    if(this.is_logged)
+    {
+      this.user = this.token.GetPayLoad().doc;
+      this.cart.user_id= this.user_id;
+      this.user_id=this.user._id;
+      this.user._id == this.seller.owner ? 
+      this.is_my_offer = true : this.is_my_offer = false;
+      console.log(this.is_my_offer);
 
+    }
+
+  })
+}
 
 }

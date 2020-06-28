@@ -445,6 +445,7 @@ export class NewOfferPage implements OnInit {
     let fd = new FormData();
     fd.append("offer", JSON.stringify(offer));
     fd.append("image", this.offerImg);
+    console.log(fd.get("image"));
 
     this.dbService.createOffer(fd)
       .subscribe((data: any) => {

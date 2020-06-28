@@ -94,7 +94,7 @@
               <ion-item (click)="goToOfferDetails(item)" lines="none" >
          
                  
-                  <img class="img-list" src="../../assets/images/{{item.category}}.jpg">
+                  <img class="img-list" src="{{item.offer_img}}">
         
                   <h4 class="col-sm-12" *ngIf="item.offer_name=='Precio'" style="color: aliceblue; background-color: rgba(0, 0, 0, 0.541); left: 2px;">
                      {{item.products[0].name}} a {{item.price | currency: item.price_currency}}

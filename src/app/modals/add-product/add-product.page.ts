@@ -10,6 +10,7 @@ import { Seller } from '../../clases/seller';
 import { Subscription } from 'rxjs';
 import { TokenService } from '../../services/token.service';
 import { ImagePicker, ImagePickerOptions } from '@ionic-native/image-picker/ngx';
+import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 
 //import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 
@@ -20,19 +21,19 @@ import { ImagePicker, ImagePickerOptions } from '@ionic-native/image-picker/ngx'
 })
 export class AddProductPage implements OnInit {
   
-  file: File;
+  //file: File;
   photos: any;
-  searchText: string;
+//  searchText: string;
 spinner:boolean=false;
   countries: Object;
- name:string;
- category:string;
- currency_price:string;
- price:number;
+ //name:string;
+// category:string;
+ //currency_price:string;
+// price:number;
  messaje:string;
  kind:string="Producto";
- stock:number;
- bar_code:number;
+ //stock:number;
+ //bar_code:number;
  user:User;
  seller:Seller;
  product:Product;
@@ -40,13 +41,14 @@ spinner:boolean=false;
  dbProducts:Array<Product>;
  prod_subcribe:Subscription;
  spinnerAC:boolean=false;
+currencyF:string;
 
   constructor(private modalController: ModalController,
     private imagePicker: ImagePicker,
     private zbar: ZBar,
     private dbService:DbService,
     private tokenSrv: TokenService,
-    //private barcodeScanner: BarcodeScanner,
+    private builder: FormBuilder,
     private countrySrv:CountriesService) {
       this.prod_subcribe= new Subscription()
       this.product= new Product();
@@ -72,8 +74,63 @@ spinner:boolean=false;
      }
 
 
+     category = new FormControl('', [
+      Validators.required
+    ]);
+  
+    price = new FormControl('', [
+      Validators.required
+    ]);
+
+    currency_price = new FormControl('', [
+      Validators.required
+    ]);
+
+    searchText = new FormControl('', [
+      Validators.required
+    ]);
+
+
+
+  
+  
+    name= new FormControl('', [
+      Validators.required
+    ]);
+
+    stock = new FormControl('', [
+      Validators.required
+    ]);
+
+    file = new FormControl('', [
+      Validators.required
+    ]);
+
+    bar_code = new FormControl('', [
+      
+    ]);
+
+    
+  
+  
+    registroForm: FormGroup = this.builder.group({
+      category: this.category,
+      price: this.price,
+      currency_price: this.currency_price,
+      stock: this.stock,
+      name: this.name,
+      file: this.file,
+      searchText: this.searchText,
+      barcode: this.bar_code
+      
+
+  
+    });
+
+
      changeListener($event) : void {
-      this.file = $event.target.files[0];
+     // this.file = $event.target.files[0];
+     this.registroForm.controls['file'].setValue($event.target.files[0])
       console.log(this.file);
 
     }
@@ -102,8 +159,10 @@ spinner:boolean=false;
      addNote(p)
      {
       this.product= p;
-      this.searchText= p.name;
-      this.name=p.name;
+      
+      this.registroForm.controls['searchText'].setValue(p.name);
+   
+      this.registroForm.controls['name'].setValue(p.name);
       this.aux_product_list= new Array<Product>();
       console.log(this.product);
      }
@@ -119,10 +178,10 @@ spinner:boolean=false;
        }
   
        
-       let key = this.searchText//input.detail.value
+       let key = this.registroForm.value.searchText// this.searchText.//input.detail.value
        //let key = input.detail.value
-       console.log(key)
-       if(key != undefined && key != "" && key != null && key != this.product.name && this.searchText.length > 3 )
+       console.log(this.registroForm)
+       if(key != undefined && key != "" && key != null && key != this.product.name && this.registroForm.value.searchText.length > 3  )
        {
 
         this.spinnerAC=true;
@@ -141,7 +200,7 @@ spinner:boolean=false;
 
   
        }
-       if( key == undefined || key == "" || key == null || key == this.product.name || this.searchText == this.product.name || this.searchText.length < 3 )
+       if( key == undefined || key == "" || key == null || key == this.product.name || this.registroForm.value.searchText == this.product.name ||this.registroForm.value.searchText.length < 3 )
        {
          console.log("hola")
         this.spinnerAC=false;
@@ -169,7 +228,8 @@ spinner:boolean=false;
      modal.present();
      modal.onDidDismiss().then((data)=>{
 
-      this.category = data.data.result.category;
+    //  this.category.setValue(data.data.result.category);
+      this.registroForm.controls['category'].setValue(data.data.result.category);
       
     })
   }
@@ -186,8 +246,8 @@ spinner:boolean=false;
   {
     this.spinner=true;
 
-    if( this.category && this.kind &&
-    this.currency_price && this.price && this.searchText)
+    if( this.registroForm.value.category && this.kind &&
+      this.registroForm.value.currency_price && this.registroForm.value.price && this.registroForm.value.searchText)
     {
      /* let fd = new FormData();
       fd.append("image",this.file);
@@ -198,23 +258,30 @@ spinner:boolean=false;
      })*/
      
       let p= new Product();
-      p.name=this.searchText;
-      p.currency_price= this.currency_price;
-      p.price=this.price;
-      p.category=this.category;
-      p.bar_code=this.bar_code;
+      p.name=this.registroForm.value.searchText;
+      p.currency_price= this.registroForm.value.currency_price;
+      p.price=this.registroForm.value.price;
+      p.category=this.registroForm.value.category;
+      p.bar_code=this.registroForm.value.bar_code;
       p.kind= this.kind;
-      p.stock= this.stock;
+      p.stock= this.registroForm.value.stock;
+      console.log(p)
 
       let fd = new FormData();
-      fd.append("image", this.file);
+      fd.append("image", this.registroForm.value.file);
       fd.append("product", JSON.stringify(p));
       fd.append("seller_id", this.seller._id);
 
     this.dbService.createProduct(fd).toPromise().then((data:any)=>
   {
     console.log(data);
-  })
+
+    if(data.status == 200)
+    {
+      this.spinner =false;
+      this.dismissModal();
+    }
+  }) 
 
       //this.seller.products.push(p);
 
@@ -294,7 +361,8 @@ this.zbar.scan(options)
 this.zbar.scan(options)
    .then(result => {
       console.log(result); // Scanned code
-      this.bar_code=result;
+     // this.registroForm.value.bar_code=result;
+      this.registroForm.controls['bar_code'].setValue(result);
       
       this.dbService.checkProductByCode(result.toString()).subscribe((data:any)=>
     {
@@ -308,7 +376,8 @@ this.zbar.scan(options)
         return toast.present(); 
       }
       else{
-        this.searchText= data.product.name;
+        this.registroForm.controls['searchText'].setValue(data.product.name);
+       // this.registroForm.value.searchText= data.product.name;
        
       }
     })
@@ -316,6 +385,17 @@ this.zbar.scan(options)
    .catch(error => {
       console.log(error); // Error message
    });
+  }
+
+  probar()
+  {
+    console.log(this.registroForm)
+  }
+
+  addCurrency(value)
+  {
+    this.registroForm.controls['currency_price'].setValue(value);
+console.log(value)
   }
 
 }

@@ -132,6 +132,28 @@ h1{
     
 }
 
+ion-thumbnail 
+{
+    --size:150px;
+    img{
+        height: 150px;
+        width: 150px;
+    }
+}
+
+@media (max-width: 480px) {
+
+    ion-thumbnail 
+{
+    --size:115px;
+    img{
+        height: 115px;
+        width: 115px;
+    }
+}
+}
+
+
 
 
 

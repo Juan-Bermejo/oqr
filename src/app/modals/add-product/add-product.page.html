@@ -1,5 +1,6 @@
 
 <ion-content padding="true">
+        <form [formGroup]="registroForm">
     <ion-row justify-content-end>
             <h3>Ingrese un nuevo producto</h3>
         <ion-button fill="clear" (click)="dismissModal()"> 
@@ -14,7 +15,7 @@
 
   <ion-row justify-content-center>
     <ion-col size=11>
-        <ion-input (click)="ModalCategories()" readonly placeholder="Seleccione una categoria." [(ngModel)]="category" >
+        <ion-input (click)="ModalCategories()" readonly placeholder="Seleccione una categoria." name="category" [formControl]="category" required >
             <span class="item-right">
                 <ion-icon slot="end" src="../../assets/ionicons/chevron-down-outline.svg">
                 </ion-icon>
@@ -42,6 +43,7 @@
         Servicio
         <ion-icon *ngIf="kind=='Servicio'" name="md-checkmark" slot="end" color="light"></ion-icon>
         </ion-button>
+        <ion-button (click)="probar()">Probar</ion-button>
        
         
 </ion-row>
@@ -51,7 +53,7 @@
         
           <ion-col size=11 >
         
-              <ion-input  type="number" [(ngModel)]="bar_code" readonly placeholder="Escanea el código de barras.">
+              <ion-input  type="number"  name="bar_code" [formControl]="bar_code"  readonly placeholder="Escanea el código de barras.">
                     <span class="item-right">
                             <ion-button fill="clear" (click)="readBarcode()">
                                 <ion-icon slot="end" size="large" name="md-barcode" color="primary">
@@ -74,12 +76,13 @@
 <ion-row class="ion-justify-content-center">
     
         <div class="autocomplete">
-               
+               <!--  [(ngModel)]="searchText"-->
               <ion-input
-                  [(ngModel)]="searchText"
+                
                   (ionChange)="filter($event)"
                   (ionBlur)="removeFocus()"
                   placeholder="Busca el producto."
+                  name="searchText" [formControl]="searchText" required 
                   
                  >
                  <span>
@@ -122,9 +125,9 @@
   <ion-row align-items-center>
       <ion-col justify-content-center offset=1 size="10">
           
-          <ion-input type="number" placeholder="Ingresa el importe." [(ngModel)]="price">
+          <ion-input type="number" placeholder="Ingresa el importe." name="price" [formControl]="price" >
               <span>
-                  <ion-select (ionChange)="currency_commission=prod_currency" [(ngModel)]="currency_price" class="select-currency" placeholder="Moneda">
+                  <ion-select (ionChange)="currency_commission=prod_currency" name="currency_price" [formControl]="currency_price"  class="select-currency" placeholder="Moneda">
                       <ion-select-option *ngFor="let c of countries" >
                         {{c.currencies[0].code}}
                       </ion-select-option>
@@ -143,7 +146,7 @@
         
           <ion-col size=11 >
         
-              <ion-input  type="number" [(ngModel)]="stock">
+              <ion-input  type="number" name="stock" [formControl]="stock" >
         
                 </ion-input>
         
@@ -164,10 +167,10 @@
 
         <ion-spinner *ngIf="spinner" name="crescent" color="primary" ></ion-spinner>
         
-<ion-button *ngIf="!spinner" shape="round"  (click)="saveProduct()">
+<ion-button *ngIf="!spinner" shape="round"  (click)="saveProduct()" [disabled]="!registroForm.valid">
 Guardar Producto
 </ion-button>
   </ion-row>
 
-
+</form>
 </ion-content>

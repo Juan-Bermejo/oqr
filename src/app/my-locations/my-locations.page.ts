@@ -4,6 +4,7 @@ import { ModalController, NavController } from '@ionic/angular';
 import { AddLocationPage } from '../modals/add-location/add-location.page';
 import { Location } from '../clases/location';
 import { DbService } from '../services/db.service';
+import { TokenService } from '../services/token.service';
 
 @Component({
   selector: 'app-my-locations',
@@ -17,9 +18,10 @@ export class MyLocationsPage implements OnInit {
 
   constructor(private modalController: ModalController,
      private dbService: DbService,
-    private navCtrl: NavController) {
+    private navCtrl: NavController,
+  private token: TokenService) {
 
-    this.user= JSON.parse(localStorage.getItem("user_data"));
+    this.user= this.token.GetPayLoad().doc
 
     this.dbService.checkIsVendor(this.user._id).toPromise().then((data:any)=>
   {

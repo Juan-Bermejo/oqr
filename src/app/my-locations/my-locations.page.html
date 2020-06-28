@@ -23,9 +23,13 @@
 <div class="container">
 <ion-card>
     <div *ngIf="myLocations">
-        <ion-item-divider *ngFor="let l of myLocations">
-          {{l.address}} {{l.city}} {{l.country}}
-        </ion-item-divider>
+        <ion-list>
+            <ion-item *ngFor="let l of myLocations">
+                <ion-icon name="md-pin" color="primary" slot="start"></ion-icon>  <ion-label> {{l.address}} {{l.city}} {{l.country}}</ion-label>  
+                <ion-icon name="md-trash" slot="end" color="danger" ></ion-icon>
+            </ion-item>
+        </ion-list>
+
       </div>
 </ion-card>
 </div>

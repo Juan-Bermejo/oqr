@@ -110,7 +110,7 @@ console.log(this.seller);
 
 goToMyShop()
 {
-  this.router.navigateByUrl('seller-shop/' + this.seller._id);
+  this.router.navigateByUrl('seller-shop/' + this.seller.shop_name);
 }
 
 goToMyOrders()

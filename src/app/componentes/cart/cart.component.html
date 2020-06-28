@@ -54,10 +54,21 @@
               </ion-button>
             </ion-row>
               
-               
-                  <ion-title style="text-align: center;">
+            <ion-row>
+                <ion-title style="text-align: center;">
                     Mi Carrito
                   </ion-title>
+
+                  <ion-chip style="text-align: right;" name="outline" size="large" color=primary>
+                    <ion-label size="large" color="success">
+                        Total: {{cart.total | currency }}
+                    </ion-label>
+                     
+                    </ion-chip >
+            </ion-row>
+
+               
+
                 
                
                   <ion-item-divider *ngFor="let d of cart.details">

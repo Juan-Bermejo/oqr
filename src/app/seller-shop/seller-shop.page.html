@@ -26,7 +26,7 @@
                   </ion-icon>
                </ion-button>
 
-               <ion-button class="butn-round"  (click)="editShop()" > 
+               <ion-button *ngIf="is_my_offer" class="butn-round"  (click)="editShop()" > 
                       <ion-icon size="large" color="light" name="md-create" >
      
                       </ion-icon>
@@ -66,6 +66,26 @@
         <ion-label color="primary">Atras</ion-label>
       </ion-buttons>
 
+<div style="float: right; margin-right: 40px;">
+  <ion-col size=6>
+      <ion-card padding class="delivery">
+
+        <ion-row size=4 class="ion-align-item-center">
+        
+        <img src="../../assets/iconos/svg/ICONOS_delivery.svg" style=" height: 50px; width: 50px; float: left;">
+          
+          <ion-label style="align-self: center" *ngIf="seller.delivery" color="success">Con delivery </ion-label>
+          <ion-label style="align-self: center" *ngIf="!seller.delivery" color="danger">Sin delivery </ion-label>
+            
+        </ion-row>
+
+
+        </ion-card>
+  </ion-col>
+
+
+</div>
+
   
 </ion-toolbar>
 
@@ -88,7 +108,7 @@
                           </div>
                 <ion-card padding *ngFor="let p of offerdata.products" class="banner-offer">
                       <ion-row class="ion-justify-content-center">
-                      <img class="img-offer" src="../../assets/cafeEnSaquitos.jpg">
+                      <img class="img-offer" src="{{offerdata.offer_img}}">
                     </ion-row>
                       <ion-row>
                           <ion-card-title>  {{p.name}} </ion-card-title>
@@ -125,7 +145,7 @@
                             </div>
                   <ion-card padding *ngFor="let p of offerdata.products" class="banner-offer">
                         <ion-row class="ion-justify-content-center">
-                        <img class="img-offer" src="../../assets/cafeEnSaquitos.jpg">
+                        <img class="img-offer" src="{{offerdata.offer_img}}">
                       </ion-row>
                         <ion-row>
                             <ion-card-title>  {{p.name}} Gratis! </ion-card-title>
@@ -158,7 +178,7 @@
                               </div>
                     <ion-card padding class="banner-offer">
                           <ion-row class="ion-justify-content-center">
-                          <img class="img-offer" src="../../assets/images/{{offerdata.category}}.jpg">
+                          <img class="img-offer" src="{{offerdata.offer_img}}">
                         </ion-row>
                           <ion-row>
                               <ion-card-title>  %{{offerdata.percentage}} en {{offerdata.category}} </ion-card-title>
@@ -303,7 +323,7 @@
                               </div>
                             <ion-card>
  
-                                  <img class="img-card" src="../../assets/images/{{offer.category}}.jpg" alt="">
+                                  <img class="img-card" src="{{offer.offer_img}}" alt="">
                                   <ion-card-content>
                                   <ion-card-title *ngIf="offer.offer_name=='Precio'" style="font-size: medium" >
                                       {{offer.products[0].name}} a {{offer.price | currency: offer.price_currency}}

@@ -327,7 +327,7 @@ ion-fab-button{
 
 ion-fab-button{
     --background: rgba(255, 255, 255, 0);
-    --color:rgb(41, 143, 226);;
+    --color:rgb(41, 143, 226);
     --box-shadow:none;
    
     --border-width:1px;
@@ -335,6 +335,14 @@ ion-fab-button{
     --border-radius:15px;
     
     --color-hover:white;
+  }
+
+  .delivery
+  {
+    border-style: solid;
+     border-width: 2px;
+     border-color: rgb(41, 171, 226);
+
   }
 
   @media (max-width: 480px) {

@@ -6,7 +6,7 @@
 
 ion-content
 {
-    --background: rgb(255, 255, 255);
+    --background: rgba(255, 255, 255, 0.253);
     
     
 }
@@ -25,10 +25,11 @@ ion-content
 
 .cont
 {
-    margin-top:7%;
-    height: 70%;
-    margin-left: 15%;
-    margin-right: 15%;
+    /*margin-top:7%;
+    /* height: 70%;
+   /* margin-left: 15%;
+    margin-right: 15%;*/
+    width: 90%;
     
     background-color: rgb(255, 255, 255);
     border-style: solid;
@@ -41,10 +42,10 @@ ion-content
     
     
         ion-content{
-            margin-top:7%;
+          /*   margin-top:7%;
             height: 70%;
             margin-left: 15%;
-            margin-right: 15%;
+            margin-right: 15%;*/
             
             background-color: rgb(255, 255, 255);
             border-style: solid;
