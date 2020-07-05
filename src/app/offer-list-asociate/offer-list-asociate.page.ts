@@ -6,6 +6,8 @@ import { Offer } from '../clases/offer';
 import { DbService } from '../services/db.service';
 import { Seller } from '../clases/seller';
 import { User } from '../clases/user';
+import { TokenService } from '../services/token.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-offer-list-asociate',
@@ -29,29 +31,14 @@ export class OfferListAsociatePage implements OnInit {
      public navCtrl: NavController,
      private ParamSrv: NavParamsService,
      private menu: MenuController,
-    private dbServ:DbService) {
+     private dbServ:DbService,
+     private router: Router,
+    private token: TokenService) {
 
       this.search_tool=false;
-      this.user=this.dbServ.user_data;
+     
       this.aux_offer_list= new Array();
-      this.dbServ.getAllOffers().subscribe((data: Offer[])=>{
-        this.offer_list=data;
-       this.aux_offer_list=this.offer_list;
-      })
 
-      this.dbServ.checkIsVendor(this.user._id).subscribe((data:any)=>
-    {
-      this.seller=data.vendor_data;
-      console.log(data.vendor_data)
-    })
-
-
-
-
-
-    setTimeout(() => {
-      this.notification=true;
-    }, 3000);
   }
 
    async presentModal() {
@@ -93,8 +80,27 @@ export class OfferListAsociatePage implements OnInit {
     "seller":this.seller
   }
 
-  this.navCtrl.navigateForward(['asociate-offer']);
+  //this.navCtrl.navigateForward(['asociate-offer']);
+  this.router.navigateByUrl('asociate-offer/'+offer._id);
   
+  }
+
+  ionViewWillEnter()
+  {
+
+    this.user = this.token.GetPayLoad().doc;
+
+    this.dbServ.getAllOffers().subscribe((data: Offer[])=>{
+      this.offer_list=data;
+     this.aux_offer_list=this.offer_list;
+     console.log(this.aux_offer_list)
+    })
+
+    this.dbServ.checkIsVendor(this.user._id).subscribe((data:any)=>
+    {
+      this.seller=data.vendor_data;
+      console.log(data.vendor_data)
+    })
   }
 
   

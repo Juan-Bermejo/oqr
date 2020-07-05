@@ -15,6 +15,7 @@ import { CountriesService } from '../services/countries.service';
 })
 export class AsociateOfferPage implements OnInit {
 
+  offerId: string;
   is_my_offer: boolean;
   user:User;
   offer:Offer;
@@ -26,6 +27,7 @@ export class AsociateOfferPage implements OnInit {
   myStock:number;
   checkTimeDiscount:boolean;
   is_logged=false;
+  average_commission:number; 
 
   constructor(private modalController: ModalController,
     private countrySrv:CountriesService,
@@ -44,7 +46,7 @@ export class AsociateOfferPage implements OnInit {
     if(token.GetPayLoad())
     {
      // this.user= JSON.parse(localStorage.getItem("user_data"));
-      this.user= token.GetPayLoad().doc;
+      this.user = token.GetPayLoad().doc;
     }
 
     this.offer=this.ParamSrv.param.offer;
@@ -133,6 +135,20 @@ export class AsociateOfferPage implements OnInit {
 
     ionViewWillEnter()
     {
+
+      if (document.URL.indexOf("/") > 0) {
+
+        let splitURL = document.URL.split("/");
+
+            this.offerId = splitURL[5].split("?")[0];
+      }
+        
+        this.dbServ.getOffer(this.offerId).toPromise().then((data:any)=>
+      {
+        this.offer = data ;
+
+      })
+      
       this.dbServ.checkIsVendor(this.user._id).subscribe((data:any)=>
     {
       for(let i =0; i< this.offer.sellers.length; i++)
@@ -146,6 +162,14 @@ export class AsociateOfferPage implements OnInit {
       }
       
     })
+
+    for (let i in this.offer.sellers)
+    {
+      if(this.offer.sellers[i] == this.seller._id)
+      {
+        this.is_my_offer = true;
+      }
+    }
       this.countrySrv.getCountries().subscribe((c)=>{
         this.countries= c;
         console.log(c);

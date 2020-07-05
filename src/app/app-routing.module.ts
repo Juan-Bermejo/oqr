@@ -104,7 +104,7 @@ const routes: Routes = [
     loadChildren: () => import('./offer-list-asociate/offer-list-asociate.module').then( m => m.OfferListAsociatePageModule)
   },
   {
-    path: 'asociate-offer',
+    path: 'asociate-offer/:offer',
     loadChildren: () => import('./asociate-offer/asociate-offer.module').then( m => m.AsociateOfferPageModule)
   },
   {
@@ -130,7 +130,8 @@ const routes: Routes = [
   {
     path: 'orders/:seller',
     loadChildren: () => import('./orders/orders.module').then( m => m.OrdersPageModule)
-  },  {
+  },
+  {
     path: 'qr-generator',
     loadChildren: () => import('./qr-generator/qr-generator.module').then( m => m.QrGeneratorPageModule)
   },

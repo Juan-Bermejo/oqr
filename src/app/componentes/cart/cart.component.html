@@ -1,8 +1,10 @@
 
-<ion-content class="ion-align-items-center">
+<ion-content padding="true" class="ion-align-items-center">
+    <ion-row class="ion-justify-content-center" style="height: 90%;">
+      
 
 
-  <ion-col padding size-xs=12  size-sm=11 size-md=11  size-lg=11  size-xl=11 >
+ <!-- <ion-col padding size-xs=12  size-sm=11 size-md=11  size-lg=11  size-xl=11 >-->
       <div class="cont">
           <ion-row justify-content-end>
               <ion-button fill="clear" (click)="dismissModal()"> 
@@ -69,22 +71,31 @@
 
                
 
-                
+                <ion-list>
                
-                  <ion-item-divider *ngFor="let d of cart.details">
-                    <ion-button fill="clear" (click)="remove(d)" >
-                      <ion-icon name="md-close" ></ion-icon>
-                    </ion-button>
-                    <ion-label >{{d.product_name}}</ion-label>
-                    <ion-note slot="end" color="primary">
-                        x{{d.quantity}}
-                      </ion-note>
-                    <ion-note size="large" slot="end" color="primary">
-                      {{d.price | currency: d.currency}}
-                    </ion-note>
+                  <ion-item *ngFor="let d of cart.details">
+                    <ion-col size=1 (click)="remove(d)"  >
+                     
+                            <ion-icon color="danger" name="md-close" ></ion-icon>
+                         
+                    </ion-col>
+                    <ion-col size=6>
+                        {{d.product_name}}
+                    </ion-col>
+                    <ion-col size=2>
+                        <ion-note color="primary">
+                            x{{d.quantity}}
+                          </ion-note>
+                    </ion-col>
+                    <ion-col size=3>
+                        <ion-note size="large" color="primary">
+                            {{d.price | currency: d.currency}}
+                          </ion-note>
+                    </ion-col>
+
                     
-                  </ion-item-divider>
-  
+                  </ion-item>
+                </ion-list>
            
             </ion-col>
                  
@@ -107,5 +118,6 @@
             </div>
 
             </div>
-          </ion-col>
+          <!--</ion-col>-->
+        </ion-row>
           </ion-content>

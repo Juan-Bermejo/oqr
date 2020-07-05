@@ -287,18 +287,18 @@
                                                        </ion-card-title>
                                       
                                                        <ion-row>
-                                                         <ion-col size=4>
+                                                         <ion-col size=2>
                                                             <ion-button size="small" (click)="addProductToCart(prod)" >
                                                                 <ion-icon name="md-add"></ion-icon>
                                                               </ion-button>
                                                              </ion-col>
-                                                             <ion-col size=4>
+                                                             <ion-col size=2 offset=1>
                                                               <ion-button size="small" (click)="removeProductToCart(prod)" >
                                                                   <ion-icon name="md-remove"></ion-icon>
                                                                 </ion-button>
                                                                </ion-col>
-                                                         <ion-col size=4>
-                                                            <ion-chip size="small"  color="primary" outline style="font-size: x-small; margin-left: 0px;">
+                                                         <ion-col size=6 offset=1>
+                                                            <ion-chip size="large"  color="success" outline style=" margin-left: 0px;">
                                                         
                                                                 {{prod.price | currency: prod.currency_price}}
                                                               </ion-chip>

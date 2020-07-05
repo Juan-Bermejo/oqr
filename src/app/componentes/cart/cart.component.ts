@@ -4,6 +4,8 @@ import { Cart } from '../../clases/cart';
 import { NavParamsService } from '../../services/nav-params.service';
 import { DbService } from '../../services/db.service';
 import { CartDetail } from '../../clases/cart-detail';
+import { TokenService } from '../../services/token.service';
+import { User } from '../../clases/user';
 
 @Component({
   selector: 'app-cart',
@@ -17,11 +19,14 @@ export class CartComponent implements OnInit {
   message:string= '';
   spinner: boolean = false;
   ok:string="";
+  is_logged:boolean;
+ 
 
   constructor(
     private dbs: DbService,
     private modalCtrl: ModalController,
-    private navParams: NavParamsService) {
+    private navParams: NavParamsService,
+    private token: TokenService) {
 
       this.cart = new Cart();
 
@@ -38,6 +43,9 @@ export class CartComponent implements OnInit {
      {
        this.spinner =true;
      
+       if(this.is_logged)
+       {
+
        setTimeout(() => {
 
         this.dbs.createCart(this.cart).toPromise().then((data:any)=>
@@ -50,6 +58,9 @@ export class CartComponent implements OnInit {
             this.message = "El pedido fue creado con exito."
             this.ok= "ok";
             this.cart = new Cart();
+            this.cart.user_id = this.token.GetPayLoad().doc;
+            
+            
           }
           else{
             this.spinner = false;
@@ -66,6 +77,14 @@ export class CartComponent implements OnInit {
       })
          
        }, 1000);
+
+      }
+      else
+      {
+        this.spinner = false;
+        this.message = "Tienes que iniciar sesión para comprar.";
+        this.ok = "no";
+      }
 
 
      }
@@ -87,6 +106,11 @@ export class CartComponent implements OnInit {
   ionViewWillEnter()
   {
     this.cart = this.navParams.GetParam;
+
+    this.dbs.getLogged$().toPromise().then((data:any)=>
+  {
+    this.is_logged = data;
+  })
 
     /* this.message_whatsapp = "Pedido de Ofertacerca.com: %0A";
     let i:any;
