@@ -1,19 +1,26 @@
 
 <ion-content padding="true">
-        <form [formGroup]="registroForm">
-    <ion-row justify-content-end>
-            <h3>Ingrese un nuevo producto</h3>
-        <ion-button fill="clear" (click)="dismissModal()"> 
-            <ion-icon name="md-close" size="large" color="primary"></ion-icon>  
-            </ion-button>
+      
+    <ion-row>
+        <ion-col padding size=8 offset=2>
+                <ion-title color="primary">Nuevo producto</ion-title>
+        </ion-col>
+
+        <ion-col size=2>
+                <ion-button  fill="clear" (click)="dismissModal()"> 
+                        <ion-icon name="md-close" size="large" color="primary"></ion-icon>  
+                        </ion-button>
+        </ion-col>
+            
+
     </ion-row>
-
-
-    <ion-row justify-content-center>               
-        <h4>Selecciona la categoria del producto</h4>
+<ion-card padding>
+    <form [formGroup]="registroForm">
+    <ion-row class="ion-justify-content-center">               
+        <ion-label>Selecciona la categoria del producto</ion-label>
 </ion-row >
 
-  <ion-row justify-content-center>
+  <ion-row class="ion-justify-content-center">
     <ion-col size=11>
         <ion-input (click)="ModalCategories()" readonly placeholder="Seleccione una categoria." name="category" [formControl]="category" required >
             <span class="item-right">
@@ -27,36 +34,36 @@
   </ion-row>
 
 
-  <ion-row justify-content-center>               
-      <h4>¿Qué tipo de producto quieres ofertar?</h4>
+  <ion-row class="ion-justify-content-center">               
+      <ion-label>¿Qué tipo de producto quieres ofertar?</ion-label>
 </ion-row >
 
 <ion-row class="ion-justify-content-center">
     
-    <ion-button class="btn-king" (click)="kind='Producto'">
+    <ion-button class="btn-king" (click)="kind='Producto'" size="small">
     Producto
     <ion-icon *ngIf="kind=='Producto'" name="md-checkmark" slot="end" color="light"></ion-icon>
     </ion-button>
    
     
-        <ion-button class="btn-king" (click)="kind='Servicio'">
+        <ion-button class="btn-king" (click)="kind='Servicio'" size="small">
         Servicio
         <ion-icon *ngIf="kind=='Servicio'" name="md-checkmark" slot="end" color="light"></ion-icon>
         </ion-button>
-        <ion-button (click)="probar()">Probar</ion-button>
+       <!-- <ion-button (click)="probar()">Probar</ion-button>-->
        
         
 </ion-row>
 
         
-        <ion-row justify-content-center *ngIf="kind=='Producto'">
+        <ion-row class="ion-justify-content-center" *ngIf="kind=='Producto'">
         
           <ion-col size=11 >
         
-              <ion-input  type="number"  name="bar_code" [formControl]="bar_code"  readonly placeholder="Escanea el código de barras.">
+              <ion-input style="font-size: small" type="number"  name="bar_code" [formControl]="bar_code"  placeholder="Escanea el código de barras.">
                     <span class="item-right">
                             <ion-button fill="clear" (click)="readBarcode()">
-                                <ion-icon slot="end" size="large" name="md-barcode" color="primary">
+                                <ion-icon slot="end"  name="md-barcode" color="primary">
                                 </ion-icon>
                             </ion-button>
                             
@@ -68,8 +75,8 @@
         
         </ion-row>
 
-<ion-row justify-content-center>
-<h4 >Ingrese el nombre del producto</h4>
+<ion-row class="ion-justify-content-center">
+<ion-label >Ingrese el nombre del producto</ion-label>
 
 </ion-row>
 
@@ -117,17 +124,17 @@
 
 </ion-row>-->
 
-<ion-row justify-content-center>
-    <h4 *ngIf="kind == 'Producto'">Ingrese el precio del producto</h4>
-    <h4 *ngIf="kind == 'Servicio'">Ingrese el precio del servicio</h4>
+<ion-row class="ion-justify-content-center" style="margin-top: 20px;">
+    <ion-label *ngIf="kind == 'Producto'">Ingrese el precio del producto</ion-label>
+    <ion-label *ngIf="kind == 'Servicio'">Ingrese el precio del servicio</ion-label>
   </ion-row>
 
-  <ion-row align-items-center>
-      <ion-col justify-content-center offset=1 size="10">
+  <ion-row class="ion-justify-content-center">
+      <ion-col class="ion-justify-content-center"  size="10">
           
           <ion-input type="number" placeholder="Ingresa el importe." name="price" [formControl]="price" >
               <span>
-                  <ion-select (ionChange)="currency_commission=prod_currency" name="currency_price" [formControl]="currency_price"  class="select-currency" placeholder="Moneda">
+                  <ion-select #select  *ngIf="seller" name="currency_price" [formControl]="currency_price"  class="select-currency" placeholder="Moneda"  >
                       <ion-select-option *ngFor="let c of countries" >
                         {{c.currencies[0].code}}
                       </ion-select-option>
@@ -137,8 +144,8 @@
         </ion-col>
   </ion-row>
 
-  <ion-row justify-content-center>
-        <h4 >Ingrese el stock del producto</h4>
+  <ion-row class="ion-justify-content-center">
+        <ion-label >Ingrese el stock del producto</ion-label>
         
         </ion-row>
         
@@ -154,16 +161,16 @@
             </ion-col>
 
             <ion-item>
-                <ion-label id="profile_image" color="primary" stacked>Agregar foto</ion-label>
+                <ion-label id="profile_image" color="primary" stacked>Foto</ion-label>
                 <ion-input type="file" accept="image/*" (change)="changeListener($event)"></ion-input>
               </ion-item>
         
         </ion-row>
-  <ion-row justify-content-center>
+  <ion-row class="ion-justify-content-center" >
       <ion-text color="danger" >{{messaje}} </ion-text>
   </ion-row>
 
-  <ion-row justify-content-center>
+  <ion-row class="ion-justify-content-center" >
 
         <ion-spinner *ngIf="spinner" name="crescent" color="primary" ></ion-spinner>
         
@@ -173,4 +180,5 @@ Guardar Producto
   </ion-row>
 
 </form>
+</ion-card>
 </ion-content>

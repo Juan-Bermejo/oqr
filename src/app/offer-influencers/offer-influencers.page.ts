@@ -18,36 +18,40 @@ export class OfferInfluencersPage implements OnInit {
 
   constructor(private navParams: NavParamsService,
   private navCtrl: NavController,
-private dbService:DbService) {
-  console.log(document.URL )
-  console.log(document.URL.indexOf("%3F") )
+  private dbService:DbService) {}
+
+
+
+
+   goTo(influencerId)
+   {
+
+    let params = this.offerId;
+
+    if(influencerId != undefined)
+    {
+      params += "?influencer=" + influencerId;
+    }
+
+     this.navCtrl.navigateRoot("offer-details/" + params );
+   
+   }
+
+   ionViewWillEnter()
+   {
   
-    if (document.URL.indexOf("%3F") > 0) {
-      let splitURL = document.URL.split("%3F");
-      let splitParams = splitURL[1].split("&");
-      let i: any;
-      for (i in splitParams){
-        let singleURLParam = splitParams[i].split('%3D');
-        if (singleURLParam[0] == "offer"){
-          this.offerId = singleURLParam[1];
-        }
-      }
-  
+    if (document.URL.indexOf("/") > 0) {
+      let splitURL = document.URL.split("/");
+      console.log(splitURL)
+     this.offerId = splitURL[5].split("?")[0];
+    }
+
       this.dbService.getOffer(this.offerId).toPromise().then((data:any)=>
     {
       this.offer= data ;
       console.log(data)
     })
-  }
-   }
-
-   goTo()
-   {
-     this.navParams.param =
-     {
-       "offer": this.offer
-     }
-     this.navCtrl.navigateRoot("offer-details");
+  
    }
 
   ngOnInit() {

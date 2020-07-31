@@ -23,6 +23,7 @@ export class OfferListAsociatePage implements OnInit {
   search_tool:boolean;
   seller:Seller;
   user:User;
+
   
 
    
@@ -88,10 +89,10 @@ export class OfferListAsociatePage implements OnInit {
   ionViewWillEnter()
   {
 
-    this.user = this.token.GetPayLoad().doc;
+    this.user = this.token.GetPayLoad().usuario;
 
-    this.dbServ.getAllOffers().subscribe((data: Offer[])=>{
-      this.offer_list=data;
+    this.dbServ.getAllOffers(false).subscribe((data: any)=>{
+      this.offer_list=data.offers;
      this.aux_offer_list=this.offer_list;
      console.log(this.aux_offer_list)
     })

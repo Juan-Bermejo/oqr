@@ -16,6 +16,8 @@ import { EditShopComponent } from '../edit-shop/edit-shop.component';
 import { TypeOfferModalComponent } from '../type-offer-modal/type-offer-modal.component';
 import { ViewOrderComponent } from '../view-order/view-order.component';
 import { OfferViewComponent } from '../offer-view/offer-view.component';
+import { RangoComponent } from '../rango/rango.component';
+import { AsociateOfferModalComponent } from '../asociate-offer-modal/asociate-offer-modal.component';
 
 
 
@@ -31,7 +33,9 @@ import { OfferViewComponent } from '../offer-view/offer-view.component';
     EditShopComponent,
     TypeOfferModalComponent,
     ViewOrderComponent,
-    OfferViewComponent
+    OfferViewComponent,
+    RangoComponent,
+    AsociateOfferModalComponent
     
   ],
   exports:[
@@ -45,7 +49,9 @@ import { OfferViewComponent } from '../offer-view/offer-view.component';
     EditShopComponent,
     TypeOfferModalComponent,
     ViewOrderComponent,
-    OfferViewComponent
+    OfferViewComponent,
+    RangoComponent,
+    AsociateOfferModalComponent
   ],
   imports: [
     CommonModule,

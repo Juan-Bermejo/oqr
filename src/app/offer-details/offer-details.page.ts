@@ -29,6 +29,9 @@ export class OfferDetailsPage implements OnInit {
 
 
   
+  locations_data: any;
+  dataloc: any[];
+  offerVendors: any;
   current_latitude: number;
   current_longitude: number;
   @ViewChild('AgmMap', {static:false}) AgmMap:AgmMap;
@@ -50,7 +53,7 @@ export class OfferDetailsPage implements OnInit {
   myLat;
   mylong;
   array_products: Product[];
-  offerLocations:Location[];
+  offerLocations:any[];
   offer_sellers:string[];
   my_offer:boolean=true;
   seller:Seller;
@@ -58,6 +61,7 @@ export class OfferDetailsPage implements OnInit {
   zoom:number;
   influencer_id:string;
   is_logged:boolean=false;
+
 
 
   constructor(private route: ActivatedRoute, 
@@ -72,6 +76,10 @@ export class OfferDetailsPage implements OnInit {
     private wrapper: ElementRef, private renderer: Renderer
     ) {
  
+      this.markers= new Array<{}>();
+      this.offerVendors= new Array<any>();
+      this.locations_data= JSON.parse(localStorage.getItem("location_data"));
+
 
       if (document.URL.indexOf("/") > 0) {
         let splitURL = document.URL.split("/");
@@ -80,31 +88,31 @@ export class OfferDetailsPage implements OnInit {
 
        this.offerId = splitURL[5].split("?")[0];
       }
-        //this.offerId= this.platform.getQueryParam("offer");
-    console.log("offerId: ",this.offerId);
+
+
         this.dbService.getOffer(this.offerId).toPromise().then((data:any)=>
       {
         this.offer= data ;
         console.log(data)
       })
     
-    this.dbService.getOfferLocations(this.offerId).toPromise().then((dataLoc:any)=>
+
+    this.dbService.getOfferLocations(this.offerId, this.locations_data.town, this.locations_data.suburb).toPromise().then((dataLoc:any)=>
     { 
-     this.offerLocations= dataLoc.locations;
-     for(let i =0; i< this.offerLocations.length; i++)
+      console.log("data locations: ", dataLoc)
+      
+     for(let i =0; i< dataLoc.vendors.length; i++)
      {
-       this.addMarker(this.offerLocations[i]);
+      console.log(dataLoc.vendors[i])
+       this.addMarker(dataLoc.vendors[i]);
      }
     })
       this.getCurrentPosition();
-      this.markers= new Array<{}>();
-
-      this.offerLocations= new Array<Location>();
      
       this.dbService.getLogged$().subscribe((logged_check)=>
     {
       this.is_logged=logged_check;
-      this.is_logged ? this.user= tokenSrv.GetPayLoad().doc: this.user= null;
+      this.is_logged ? this.user= tokenSrv.GetPayLoad().usuario: this.user= null;
       console.log(this.user);
     })
 
@@ -113,19 +121,6 @@ export class OfferDetailsPage implements OnInit {
       this.is_seller= data;
     })
      
-   // this.getGeoLocation();
-
-
-      
-     /*   this.dbService.getOfferLocations(this.offer._id).subscribe((dataLoc:any)=>
-      { 
-       this.offerLocations= dataLoc.locations;
-       for(let i =0; i< this.offerLocations.length; i++)
-       {
-         this.addMarker(this.offerLocations[i]);
-       }
-      })*/
-
 
 
   }
@@ -147,25 +142,27 @@ export class OfferDetailsPage implements OnInit {
   }
 
 
-   addMarker(location:Location) {
-     
-console.log("locationvendor: ",location);
-this.dbService.getVendorById(location.vendor_id).toPromise().then((data:any)=>
-{
-  console.log("prueba vendor: ", data)
+   addMarker(data:any) {
+
+    console.log(data)
+
   this.markers.push(
     {
-      location: location,
-      lat: location.latitude,
-       lng: location.longitude,
-       address:location.address,
+      //location: location,
+      lat: data.location.latitude,
+       lng: data.location.longitude,
+       address:data.location.address,
         alpha: 1,
-        sellerName: data.shop_name,
-        seller: location.vendor_id,
-        img: data.profile_img
+        sellerName: data.vendedor.shop_name,
+        seller: data.vendedor._id,
+        img: data.vendedor.profile_img
        // icon: "../../../assets/iconos/User-Blue-icon.png"
       });
-})
+  
+
+
+
+
 
   }
 
@@ -187,11 +184,22 @@ this.dbService.getVendorById(location.vendor_id).toPromise().then((data:any)=>
     //this.navCtrl.navigateRoot('seller-shop/'+'?'+ 'seller'+'='+sellerId+'&'+'offer'+'='+this.offerId);
    // this.navCtrl.navigateRoot('seller-shop/' + sellerId + '/' + this.offerId);
    //this.router.navigate(['seller-shop',{seller: sellerId, offer: this.offerId}]);
-   this.router.navigateByUrl('seller-shop/' + sellerId+'?offer='+this.offerId);
+   //this.router.navigateByUrl('seller-shop/' + sellerId+'?offer='+this.offerId);
+  
+   if(this.influencer_id)
+   {
+    this.router.navigateByUrl('offer-land-pange/' + this.offerId +'?seller='+ sellerId + '&influencer=' + this.influencer_id);
+   }
+   else{
+
+    this.router.navigateByUrl('offer-land-pange/' + this.offerId +'?seller='+ sellerId);
+
+   }
+   
 
   }
 
-
+  
   joinOffer()
   {
     this.paramSrv.param=
@@ -206,19 +214,6 @@ this.dbService.getVendorById(location.vendor_id).toPromise().then((data:any)=>
 
     async ngAfterViewInit(){
 
-    /* await navigator.geolocation.getCurrentPosition(position => {
-      this.current_longitude = position.coords.latitude;
-      this.current_latitude = position.coords.longitude;  
-      console.log(" location:", position)
-        },
-      error=>
-    {
-      console.log("error location:", error)
-    },
-  {
-  
-  }) *///current position
-
         this.map = new Mapboxgl.Map({
           accessToken:environment.mapBoxKey,
           style: 'mapbox://styles/mapbox/light-v10',
@@ -231,17 +226,19 @@ this.dbService.getVendorById(location.vendor_id).toPromise().then((data:any)=>
           antialias: false
           });
 
+          
+
         await this.map.on('load',async ()=>
           {
-      
-              //this.map.resize();
-              
+             
+                
+             
           await  this.markers.forEach(async (m)=>
         {
-          console.log(m)
+          
       
              const div = window.document.createElement('div');
-             console.log("marker: ",m)
+            
              if(m.img)
              {
               div.innerHTML = "<img src='"+m.img+"'/>";
@@ -272,12 +269,8 @@ this.dbService.getVendorById(location.vendor_id).toPromise().then((data:any)=>
       
         })
 
+        
         this.map.resize();
-
-       /* this.map.flyTo({
-          center: [this.current_latitude, this.current_longitude],
-          essential: false // this animation is considered essential with respect to prefers-reduced-motion
-          });*/
 
 
           })///mapOnload
@@ -299,9 +292,6 @@ this.dbService.getVendorById(location.vendor_id).toPromise().then((data:any)=>
         
         })
 
-
-
-    //this.map.resize();
   }
 
   async getCurrentPosition()
@@ -309,8 +299,7 @@ this.dbService.getVendorById(location.vendor_id).toPromise().then((data:any)=>
      navigator.geolocation.getCurrentPosition(position => {
       this.current_longitude = position.coords.latitude;
       this.current_latitude = position.coords.longitude;
- 
-     // this.map.flyTo([this.current_longitude,this.current_latitude])
+
         })
   }
 

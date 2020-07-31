@@ -35,24 +35,22 @@
 
     <ion-slides #slides pager="false" [options]="slideOpts" id="slide" (ionSlideWillChange)="setIndex()" >
 
-            <ion-slide class= "ion-align-items-center">
-                    <div class="container">
+            <ion-slide>
+                    <div >
 
-
-                            
                         
                             <ion-row class="ion-justify-content-center">               
                                     <h4>¿Que tipo de oferta quieres hacer?</h4>
                             </ion-row>
 
                             <ion-row class="ion-justify-content-center">
-                                    <ion-col size=6>
+                                    <ion-col size=12>
                                     <ion-button class="btn-king" (click)="type_offer='Descuento'">
                                     Descuento
                                     <ion-icon *ngIf="type_offer=='Descuento'" name="md-checkmark" slot="end" color="light"></ion-icon>
                                     </ion-button>
                                     </ion-col>
-                                    <ion-col size=6>
+                                    <ion-col size=12>
                                         <ion-button class="btn-king" (click)="type_offer='Precio'">
                                         Precio fijo
                                         <ion-icon *ngIf="type_offer=='Precio'" name="md-checkmark" slot="end" color="light"></ion-icon>
@@ -89,7 +87,7 @@
 
 
                     <ion-row class="ion-justify-content-center">               
-                            <h4>Selecciona la categoria del {{kind}}</h4>
+                            <ion-label>Categoria</ion-label>
                     </ion-row >
 
                       <ion-row class="ion-justify-content-center">
@@ -200,7 +198,7 @@ Producto
   
                     <ion-row *ngIf="type_offer!='Descuento' " class="ion-justify-content-center">
                           <ion-col size=11>
-                              <ion-input (click)="ModalRelatedProducts()" readonly placeholder="Seleccione los productos." [(ngModel)]="product.name"  >
+                              <ion-input (click)="ModalRelatedProducts()" readonly placeholder="Seleccione los productos." [(ngModel)]="product.product_ref.name"  >
                                   <span class="item-right">
                                       <ion-icon slot="end" src="../../assets/ionicons/chevron-down-outline.svg">
                                       </ion-icon>
@@ -213,8 +211,8 @@ Producto
 
                   <div *ngIf="type_offer=='Descuento'" >
 
-                  <ion-row>
-                      <h4>Seleccióne los productos relacionados que desea ofertar</h4>
+                  <ion-row class="ion-justify-content-center">
+                      <ion-label>Seleccióne los productos</ion-label>
                   </ion-row>
 
                   <ion-row  class="ion-justify-content-center">
@@ -230,9 +228,24 @@ Producto
 
                       </ion-row>
 
-                      <ion-item-divider *ngFor="let p of products">
-                        {{p.name}}
-                      </ion-item-divider>
+                      <ion-list>
+                          <ion-list-header>
+                              Productos Seleciconados
+                          </ion-list-header>
+                          <ion-item *ngFor="let p of products">
+                              <ion-thumbnail slot="start">
+                                <img src="{{p.product_image}}" alt="">
+                              </ion-thumbnail>
+                              <ion-label class="ion-text-wrap">
+                                    {{p.product_ref.name}}
+                              </ion-label>
+
+                          </ion-item>
+                      </ion-list>
+                     <!-- <ion-item-divider *ngFor="let p of products">
+
+                        {{p.product_ref.name}}
+                      </ion-item-divider>-->
 
                     </div>
                     <ion-row>

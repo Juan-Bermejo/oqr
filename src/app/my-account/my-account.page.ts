@@ -19,6 +19,7 @@ export class MyAccountPage implements OnInit {
   public is_influencer:boolean=false;
   seller_check:boolean;
   influencer_check:boolean;
+  is_maker;
   
 
   constructor(private dbService: DbService,
@@ -31,7 +32,7 @@ export class MyAccountPage implements OnInit {
     this.getIs_seller();
     this.getIs_influencer();
 
-    this.user=this.tokenServ.GetPayLoad().doc;
+    this.user=this.tokenServ.GetPayLoad().usuario;
     console.log(this.user)
    // this.user= JSON.parse(localStorage.getItem("user_data")) ;
   

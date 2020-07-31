@@ -6,12 +6,16 @@ export class Seller {
 
     _id: string;
     shop_name:string;
+    currency:string;
     owner:string;
     registration_date:number;
     cuit:number;
     category:string;
     location:Location[];
     products:Product[];
+    profile_img;
+    delivery;
+    banner_img;
     offers:Array<{
         "association_date":number,
         "offer_id":string,

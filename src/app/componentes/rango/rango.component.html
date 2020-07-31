@@ -1,0 +1,45 @@
+
+<ion-content padding="true">
+
+    <ion-row class="ion-justify-content-end">
+        <ion-button fill="clear" (click)="dismissModal()"> 
+            <ion-icon name="md-close" size="large" color="primary"></ion-icon>
+    
+              
+            </ion-button>
+    </ion-row>
+
+
+<ion-row class="ion-justify-content-center">
+    <ion-title>
+      Ingrese el rango de busqueda
+    </ion-title>
+
+  </ion-row>
+
+
+  <ion-row class="ion-justify-content-center">
+      <p style="text-align: center">
+          Seleccióne el radio en el que se buscaran las ofertas de su zona.
+        </p>
+  </ion-row>
+
+
+
+
+    <ion-item>
+      <ion-range min="1" max="50"  pin="true"  color="secondary">
+          <ion-label slot="start">1 Km</ion-label>
+          <ion-label slot="end">50 Km</ion-label>
+      </ion-range>
+    </ion-item>
+
+    <ion-row class="ion-justify-content-center">
+      <ion-button shape="round">
+        APLICAR
+      </ion-button>
+    </ion-row>
+
+
+
+</ion-content>

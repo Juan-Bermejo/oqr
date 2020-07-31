@@ -7,6 +7,7 @@ import { RouterModule } from '@angular/router';
 import { HomePage } from './home.page';
 import { FilterPipe } from '../filter.pipe';
 import { PipesModuleModule } from '../pipes-module/pipes-module.module';
+import { RemovePipePipe } from '../pipes/remove-pipe.pipe';
 
 
 @NgModule({
@@ -22,6 +23,7 @@ import { PipesModuleModule } from '../pipes-module/pipes-module.module';
       }
     ])
   ],
-  declarations: [HomePage]
+  declarations: [HomePage,
+  RemovePipePipe]
 })
 export class HomePageModule {}

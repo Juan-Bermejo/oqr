@@ -25,15 +25,22 @@ export class MyOffersPage implements OnInit {
               private token: TokenService
   ) {
     
-    this.user = this.token.GetPayLoad().doc;
+    this.user = this.token.GetPayLoad().usuario;
 
     this.dbService.checkIsVendor(this.user._id).subscribe((data:any)=>
   {
     this.dbService.getOffersByVendor(data.vendor_data._id).subscribe((offers_data:any)=>
   {
-    this.data_offers = offers_data.offers_data;
-    console.log(data.vendor_data._id);
-    console.log(this.data_offers)
+    console.log(offers_data);
+    if(offers_data.ok)
+    {
+      this.data_offers = offers_data.offers_data; 
+    }
+    else
+    {
+      console.log("no hay ofertas");
+    }
+
    
   })
   })

@@ -8,6 +8,7 @@ import { PostService } from '../services/post.service';
 import { Offer } from '../clases/offer';
 import { User } from '../clases/user';
 import { DbService } from '../services/db.service';
+import { TokenService } from '../services/token.service';
 
 
 @Component({
@@ -29,19 +30,16 @@ export class PromoteOfferPage implements OnInit {
   messajeInsta="";
   user:User;
   is_logged:boolean=false;
+  offer_id;
+  offer_img;
 
   constructor(private route: ActivatedRoute, 
     public navCtrl: NavController,
     public paramSrv: NavParamsService,
     private postSrv: PostService,
+    private token: TokenService,
     private dbService: DbService) {
 
-      this.dbService.getLogged$().subscribe((logged_check)=>
-      {
-        this.is_logged=logged_check;
-      })
-
-this.user= JSON.parse(localStorage.getItem("user_data"));
   this.offer=new Offer();
     this.spinner=false;
     this.spinnerTT=false;
@@ -50,7 +48,23 @@ this.user= JSON.parse(localStorage.getItem("user_data"));
    }
 
   ngOnInit() {
+    if (document.URL.indexOf("/") > 0) {
+      let splitURL = document.URL.split("/");
+      console.log(splitURL)
+     this.offer_id = splitURL[5].split("?")[0];
+   this.dbService.getOffer(this.offer_id).toPromise().then((data:any)=>
+  {
+    this.offer = data;
+  })
     
+    this.dbService.getLogged$().subscribe((logged_check)=>
+    {
+      this.is_logged=logged_check;
+    })
+
+    this.user= this.token.GetPayLoad().usuario;
+
+  }
 
   }
 
@@ -167,6 +181,28 @@ this.user= JSON.parse(localStorage.getItem("user_data"));
 
       
     }, 1000);*/
+  }
+
+  async ionViewWillEnter()
+  {
+
+    if (document.URL.indexOf("/") > 0) {
+      let splitURL = document.URL.split("/");
+      console.log(splitURL)
+     this.offer_id = splitURL[5].split("?")[0];
+  await this.dbService.getOffer(this.offer_id).toPromise().then((data:any)=>
+  {
+    this.offer = data;
+  })
+    
+    this.dbService.getLogged$().subscribe((logged_check)=>
+    {
+      this.is_logged=logged_check;
+    })
+
+    this.user= this.token.GetPayLoad().usuario;
+
+  }
   }
 
 }

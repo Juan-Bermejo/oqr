@@ -4,6 +4,7 @@ import { MenuController, NavController, ModalController } from '@ionic/angular';
 import { NavParamsService } from '../services/nav-params.service';
 import { Offer } from '../clases/offer';
 import { DbService } from '../services/db.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-offer-list-search',
@@ -17,6 +18,7 @@ export class OfferListSearchPage implements OnInit {
   busqueda:string;
   notification:boolean=false;
   search_tool:boolean;
+  busqeda;
 
    
 
@@ -24,6 +26,7 @@ export class OfferListSearchPage implements OnInit {
      public navCtrl: NavController,
      private ParamSrv: NavParamsService,
      private menu: MenuController,
+     private router: Router,
     private dbServ:DbService) {
       this.search_tool=false;
       this.aux_offer_list= new Array();
@@ -76,7 +79,8 @@ export class OfferListSearchPage implements OnInit {
   {
     
   this.ParamSrv.param=offer
-  this.navCtrl.navigateForward(['promote-offer']);
+  this.router.navigateByUrl('promote-offer/' + offer._id);
+  
   
   }
 

@@ -5,6 +5,8 @@ import { Seller } from '../../clases/seller';
 import { ModalCategoriesPage } from '../../modals/modal-categories/modal-categories.page';
 import { FormBuilder, FormControl, Validators, FormGroup } from '@angular/forms';
 import { TokenService } from '../../services/token.service';
+import { CountriesService } from '../../services/countries.service';
+
 
 
 @Component({
@@ -14,18 +16,22 @@ import { TokenService } from '../../services/token.service';
 })
 export class NewSellerComponent implements OnInit {
 
+  countries: Object;
   userLocation: any;
   user_data: any;
   seller: Seller;
   spinner:boolean=false;
   is_seller:boolean=false;
 
+  currency_commission;
+  prod_currency= "ars";
 
   constructor(private navCtrl: NavController,
               private modalctrl: ModalController,
               private dbService: DbService,
               private builder: FormBuilder,
               private navParams: NavParams,
+              private countrySrv:CountriesService,
             private token: TokenService) {
 
                 if(this.navParams.get("seller"))
@@ -42,7 +48,7 @@ export class NewSellerComponent implements OnInit {
                 }
 
                 
-                this.user_data=token.GetPayLoad().doc;
+                this.user_data=token.GetPayLoad().usuario;
                 console.log(this.user_data);
                 this.seller.owner=this.user_data._id;
                 this.dbService.getLocation(this.user_data._id).subscribe((locs:any)=>
@@ -64,6 +70,9 @@ export class NewSellerComponent implements OnInit {
     Validators.required
   ]);
 
+  currency = new FormControl('', [
+    Validators.required
+  ]);
 
 
   shop_name = new FormControl('', [
@@ -75,6 +84,7 @@ export class NewSellerComponent implements OnInit {
     category: this.category,
     cuit: this.cuit,
     shop_name: this.shop_name,
+    currency: this.currency
 
   });
 
@@ -88,6 +98,7 @@ export class NewSellerComponent implements OnInit {
      this.seller.cuit = this.registroForm.value.cuit;
      this.seller.location = this.registroForm.value.location;
      this.seller.shop_name = this.registroForm.value.shop_name;
+     this.seller.currency = this.registroForm.value.currency;
      
      setTimeout(() => {
 
@@ -143,6 +154,14 @@ export class NewSellerComponent implements OnInit {
 
        'dismissed': true
      })
+   }
+
+   ionViewWillEnter()
+   {
+    this.countrySrv.getCountries().subscribe((c)=>{
+      this.countries= c;
+      console.log(c);
+    })
    }
 
 

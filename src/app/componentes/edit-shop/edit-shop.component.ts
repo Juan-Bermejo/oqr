@@ -14,6 +14,7 @@ export class EditShopComponent implements OnInit {
   profileImg: File = null;
   sellerImg: any;
   sellerId:string;
+  type;
   
 
   constructor(

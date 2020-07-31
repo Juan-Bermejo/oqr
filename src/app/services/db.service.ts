@@ -20,6 +20,11 @@ import { Cart } from '../clases/cart';
 })
 export class DbService {
 
+   headers = new HttpHeaders({
+    'x-token': localStorage.getItem('token')
+  });
+
+  pagina=0;
   selectedUser: User;
   users: User[];
   public is_seller:boolean=false;
@@ -33,7 +38,8 @@ export class DbService {
   public is_logged: boolean = false;
   public user_data;
 
-  readonly URL_SERVER = 'https://ofertaqr.com/app/';
+  //readonly URL_SERVER = 'https://ofertaqr.com/app/';
+  readonly URL_SERVER = 'https://ofertaqr.com/';
 
   constructor(private http: HttpClient) {
    // this.is_seller=false;
@@ -43,6 +49,8 @@ export class DbService {
     this.selectedUser = new User();
 
    }
+
+
 
     addUser(user: User) {
       let url = 'users';
@@ -98,15 +106,21 @@ export class DbService {
 
     createInfluencer(inf_data: Influencer){
       let INFL_URL = this.URL_SERVER.concat('influencers/');
+      const headers = new HttpHeaders({
+        'x-token': localStorage.getItem('token')
+      });
       return this.http.post(INFL_URL, inf_data,
-        {headers: new HttpHeaders({"Content-Type": "application/json"})});
+        {headers});
     }
 
     getInfluencerByUser(user_id: string){
       let INFL_URL = this.URL_SERVER.concat('influencers/getinf');
       let data = {'user_id': user_id}
+      const headers = new HttpHeaders({
+        'x-token': localStorage.getItem('token')
+      });
       return this.http.post(INFL_URL, data,
-        {headers: new HttpHeaders({"Content-Type": "application/json"})});
+        {headers});
     }
 
     getInfluencersByOffer(offer_id: string){
@@ -137,6 +151,8 @@ export class DbService {
       return this.http.post(OFFER_URL, form);
     }
 
+
+
     getOffer(offer_id: string) {
       let url = 'offers/'.concat(offer_id);
       if(offer_id != ''){
@@ -146,54 +162,74 @@ export class DbService {
       }
     }
 
-    getAllOffers() {
-      let url = 'offers/';
+    getOfferVendorProducts( offer_id :string, vendor_id: string){
+
+      let url = 'offers/offervendorproducts'
+      let data = {
+        "offer_id": offer_id,
+        "vendor_id": vendor_id}
+        console.log(data)
       let OFFER_URL = this.URL_SERVER.concat(url);
-      return this.http.get(OFFER_URL);
+      return this.http.post(OFFER_URL, data,
+      {headers: new HttpHeaders({"Content-Type": "application/json"})});
+    }
+
+    getAllOffers(pull: boolean = false) {
+      let url = 'offers/';
+
+      if (pull) {
+        this.pagina = 0;
+      }
+  
+      this.pagina++;
+      
+      let OFFER_URL = this.URL_SERVER.concat(url);
+      return this.http.get(OFFER_URL+ `/?pagina=${this.pagina}`);
     }
 
     getOffersByVendor(vendor_id: string){
-      let url = 'offers/vendoroffers'
+      let url = 'offersv/vendoroffers'
       let data = {"vendor_id": vendor_id}
       let OFFER_URL = this.URL_SERVER.concat(url);
       return this.http.post(OFFER_URL, data,
       {headers: new HttpHeaders({"Content-Type": "application/json"})});
     }
 
-    getOfferLocations(offer_id: string){
+    getOfferLocations(offer_id: string, locality:string, sublocality:string){
       let url = 'offers/getofferlocations'
-      let data = {"offer_id": offer_id}
+      let data = {
+        "offer_id": offer_id,
+        "locality": locality,
+        "sub_locality": sublocality
+    }
       let OFFER_URL = this.URL_SERVER.concat(url);
       return this.http.post(OFFER_URL, data,
         {headers: new HttpHeaders({"Content-Type": "application/json"})});
     }
 
-    nearOffers(locality: string, sub_locality: string){
+    nearOffers(locality: string, sub_locality: string, pull: boolean = false){
       let url = 'offers/nearoffers'
+
+      if (pull) {
+        this.pagina = 0;
+      }
+  
+      this.pagina++;
+      
       let data = {
         "locality": locality,
         "sub_locality": sub_locality
       }
       let OFFER_URL = this.URL_SERVER.concat(url);
-      return this.http.post(OFFER_URL, data,
+      return this.http.post<any>(OFFER_URL + `/?pagina=${this.pagina}`, data,
         {headers: new HttpHeaders({"Content-Type": "application/json"})});
     }
 
-    joinToOffer(user_id:string, offer_id:string, commission:number, currency:string, stock:number, percentage:number, time_discount:number, add_products:boolean){
-      let url = 'offers/jointooffer'
-      let data = {
-        "user_id": user_id, 
-        "offer_id": offer_id,
-        "commission": commission,
-        "currency": currency,
-        "stock": stock,
-        "percentage": percentage,
-        "time_discount": time_discount,
-        "add_products": add_products
-      }
-      let OFFER_URL = this.URL_SERVER.concat(url);
-      return this.http.post(OFFER_URL, data,
-        {headers: new HttpHeaders({"Content-Type": "application/json"})});
+    joinToOffer(data){
+
+        let url = 'offers/jointooffer'
+        let OFFER_URL = this.URL_SERVER.concat(url);
+        return this.http.post(OFFER_URL, data);
     }
 
     dropOffer(user_id: string, offer_id: string){
@@ -230,9 +266,12 @@ export class DbService {
     }
 
     createProduct(form) {
-      let url = 'products/';
+      let url = 'products';
+      const headers = new HttpHeaders({
+        'x-token':localStorage.getItem('token')
+      });
       let PROD_URL = this.URL_SERVER.concat(url);
-      return this.http.post(PROD_URL, form);
+      return this.http.post(PROD_URL, form, {headers});
     }
 
     deleteProduct(product_id:string){
@@ -244,12 +283,20 @@ export class DbService {
     //PRODUCT REFERENCE
     
 
-    getFilterProducts(name: string){
+    getFilterProducts(name: string, tipo:string){
       let url = 'prodref/filter';
-      let data = {"name": name}
+      let data = {"name": name,
+                  "tipo": tipo}
       let PROD_REF_URL = this.URL_SERVER.concat(url);
       return this.http.post(PROD_REF_URL, data,
         {headers: new HttpHeaders({"Content-Type": "application/json"})});
+    }
+
+    getProductsVendor(vendorId)
+    {
+      let url = 'products/vendorproducts';
+      let PROD_REF_URL = this.URL_SERVER.concat(url);
+      return this.http.get(PROD_REF_URL +"/"+ vendorId);
     }
 
     //LINKS SERVICES
@@ -283,7 +330,7 @@ export class DbService {
     //LOCATION SERVICES
 
     saveLocation(location_data: Location) {
-      let url = 'services/locations/';
+      let url = 'locations/';
       var LOC_URL = this.URL_SERVER.concat(url.toString());
       return this.http.post(LOC_URL, location_data,
         {headers: new HttpHeaders({"Content-Type": "application/json"})});
@@ -379,9 +426,12 @@ export class DbService {
 
     addVendor(seller: Seller) {
       let url = 'vendors/';
+      const headers = new HttpHeaders({
+        'x-token': localStorage.getItem('token')
+      });
       var VEND_URL = this.URL_SERVER.concat(url.toString());
       return this.http.post(VEND_URL , seller,
-        {headers: new HttpHeaders({"Content-Type": "application/json"})});
+        {headers});
     }
 
     getVendorByName(shop_name: string){
@@ -402,9 +452,13 @@ export class DbService {
     checkIsVendor(user_id: string) {
       let url = 'vendors/checkisvendor'
       let data = {"user_id": user_id}
+      const headers = new HttpHeaders({
+        'x-token': localStorage.getItem('token')
+      });
+    
       var URL = this.URL_SERVER.concat(url.toString());
       return this.http.post(URL, data,
-        {headers: new HttpHeaders({"Content-Type": "application/json"})});
+        {headers});
     }
 
     deleteVendor(vendor_id: string){

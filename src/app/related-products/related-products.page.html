@@ -22,8 +22,8 @@
             <ion-thumbnail  slot="start">
                 <img src="{{p.product_image}}">
             </ion-thumbnail>
-            {{p.name}}
-            {{p.price | currency: p.currency_price}}
+            {{p.product_ref.name}}
+            <!--{{p.price | currency: p.currency_price}}-->
             <ion-label color="primary" slot="end">Modificar</ion-label>
 
         </ion-item>

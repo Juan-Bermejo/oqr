@@ -21,7 +21,7 @@ export class RelatedProductsPage implements OnInit {
 
   constructor(private modalCtrl: ModalController, private dbserv: DbService, private token: TokenService) {
     this.array_products= new Array<Product>();
-    this.user=this.token.GetPayLoad().doc;
+    this.user=this.token.GetPayLoad().usuario;
     this.dbserv.checkIsVendor(this.user._id).subscribe((data:any)=>
   {
     this.seller= data.vendor_data;
@@ -51,7 +51,11 @@ export class RelatedProductsPage implements OnInit {
          this.dbserv.checkIsVendor(this.user._id).subscribe((data:any)=>
          {
            this.seller= data.vendor_data;
-           this.array_products= this.seller.products;
+          
+                if(data)
+                {
+                  this.cargarProductos();
+                }
          })
          }
         
@@ -62,17 +66,35 @@ export class RelatedProductsPage implements OnInit {
 
    ionViewWillEnter()
    {
-    this.user=this.token.GetPayLoad().doc;
+    this.user=this.token.GetPayLoad().usuario;
     this.dbserv.checkIsVendor(this.user._id).subscribe((data:any)=>
   {
     this.seller= data.vendor_data;
-    this.array_products= this.seller.products;
+    //this.array_products= this.seller.products;
     console.log("seller: ",this.seller)
+
+    if(data)
+    {
+      this.cargarProductos();
+    }
+
   })
+
 
    }
 
   ngOnInit() {
+  }
+
+  cargarProductos()
+  {
+    this.dbserv.getProductsVendor(this.seller._id)
+    .toPromise()
+    .then((data:any)=>
+  {
+    this.array_products = data.data;
+    console.log(data);
+  })
   }
 
 }

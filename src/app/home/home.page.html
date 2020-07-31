@@ -1,128 +1,156 @@
+<ion-toolbar>
+  <ion-row>
 
-  <ion-toolbar>
-    <ion-row>
+    <ion-col size="2">
+      <!-- <ion-button *ngIf="!logged" color="success" expand="block" shape="round" (click)="goToLogIn()">Log In</ion-button>-->
+      <ion-buttons>
+        <ion-menu-button color="primary" menu="first"></ion-menu-button>
+      </ion-buttons>
 
-        <ion-col size="2">
-         <!-- <ion-button *ngIf="!logged" color="success" expand="block" shape="round" (click)="goToLogIn()">Log In</ion-button>-->
-          <ion-buttons>
-            <ion-menu-button color="primary" menu="first"></ion-menu-button>
-          </ion-buttons> 
-        
-         
-        </ion-col>
-          
-      
-      <ion-col size=8 >
-          <ion-input class="input-location">
-                <ion-icon style="padding-left: 10px;" color="medium" name="md-pin" ></ion-icon>
-            </ion-input>
-      </ion-col>
 
-      <ion-col size=1 >
-        <div *ngIf="is_logged" >
+    </ion-col>
+
+
+    <ion-col size=8>
+      <ion-input class="input-location">
+        <ion-icon style="padding-left: 10px;" color="medium" name="md-pin"></ion-icon>
+      </ion-input>
+    </ion-col>
+
+    <ion-col size=1>
+      <div *ngIf="is_logged">
         <ion-icon *ngIf="notification" size="large" name="md-alert" color="danger"></ion-icon>
         <ion-icon *ngIf="!notification" size="large" color="primary" name="md-notifications"></ion-icon>
       </div>
-        <ion-button *ngIf="!is_logged" fill="clear" (click)="goToLogin()" >
-          <ion-icon name="md-person" color="primary" size="large" ></ion-icon>
-        </ion-button>
-      </ion-col>
+      <ion-button *ngIf="!is_logged" fill="clear" (click)="goToLogin()">
+        <ion-icon name="md-person" color="primary" size="large"></ion-icon>
+      </ion-button>
+    </ion-col>
 
-    </ion-row>
+  </ion-row>
 
-    <ion-row>
-        <ion-col size=10 offset=1>
-          
-          <ion-input class="input-search" (ionChange)="filter($event)" placeholder="¿Qué estas buscando?" color="primary" [(ngModel)]="busqueda" >
-            <span>
-                  <ion-icon style="padding-left: 10px;" size="large" name="md-search" color="primary-shade">
-                    </ion-icon>
-            </span>
-            <span class="item-right">
-              <ion-button style="
+  <ion-row>
+    <ion-col size=10 offset=1>
+
+      <ion-input class="input-search" (ionChange)="filter($event)" placeholder="¿Qué estas buscando?" color="primary" [(ngModel)]="busqueda">
+        <span>
+          <ion-icon style="padding-left: 10px;" size="large" name="md-search" color="primary-shade">
+          </ion-icon>
+        </span>
+        <span class="item-right">
+          <ion-button style="
               border-left-style: solid;
               border-left-width: 1px;
-              border-left: 'primary';" fill="clear" (click)="searchTools()" >
-                  <ion-icon color="primary" name="md-options">
-                    </ion-icon>
+              border-left: 'primary';" fill="clear" (click)="searchTools()">
+            <ion-icon color="primary" name="md-options">
+            </ion-icon>
 
-              </ion-button>
+          </ion-button>
 
-            </span>
-    
-          </ion-input>
-        
-        </ion-col>
-      </ion-row>
-     
+        </span>
 
-          <ion-row *ngIf="search_tool" justify-content-center>
-            
+      </ion-input>
 
-                <ion-button shape="round" color="primary" (click)="categoryFilter()">
-                  Categoria
-                </ion-button>
-
-                <ion-button shape="round" color="primary" (click)="getGeoLocation()">
-                    Cerca de mi
-                  </ion-button>
-           
-              
-                  <ion-button shape="round" color="primary" >
-                      fecha
-                    </ion-button>
-             
-                    <ion-button shape="round" color="primary">
-                         precio
-                      </ion-button>
-                 
-               
-            </ion-row>
-    
-
-      
-     
-  </ion-toolbar>
+    </ion-col>
+  </ion-row>
 
 
-  <ion-content padding="true">
+  <ion-row *ngIf="search_tool" justify-content-center>
 
 
-      <ion-list>
-        <ion-row>
-          <ion-col size-xs=12 size-sm=3 size-md=3  size-lg=3  size-xl=3 *ngFor="let item of aux_offer_list; let i = index ">
-              <ion-item (click)="goToOfferDetails(item)" lines="none" >
-         
-                 
-                  <img class="img-list" src="{{item.offer_img}}">
-        
-                  <h4 class="col-sm-12" *ngIf="item.offer_name=='Precio'" style="color: aliceblue; background-color: rgba(0, 0, 0, 0.541); left: 2px;">
-                     {{item.products[0].name}} a {{item.price | currency: item.price_currency}}
-                    </h4>
-                    <h4 class="col-sm-12" *ngIf="item.offer_name=='Gratis'" style="color: aliceblue; background-color: rgba(0, 0, 0, 0.541); left: 2px;">
-                      {{item.products[0].name}} Gratis!
-                      {{item.description}}
-                     </h4>
-                  <h4 class="col-sm-12" *ngIf="item.offer_name=='Descuento'" style="color: aliceblue; background-color: rgba(0, 0, 0, 0.541); left: 2px;">
-                    %{{item.percentage}} de descuento en {{item.category}}
-                    </h4>
-              
+    <ion-button shape="round" color="primary" (click)="categoryFilter()">
+      Categoria
+    </ion-button>
+
+    <ion-button shape="round" color="primary" (click)="recargarOffer(event,2)" (click)="loading='cargando'">
+      Cerca de mi
+    </ion-button>
+
+
+    <ion-button shape="round" color="primary">
+      fecha
+    </ion-button>
+
+    <ion-button shape="round" color="primary">
+      precio
+    </ion-button>
+
+
+  </ion-row>
+
+
+
+
+</ion-toolbar>
+
+
+<ion-content padding="true" [scrollEvents]="true" overflow-scroll="false">
+
+  <ion-refresher slot="fixed" (ionRefresh)="recargarOffer($event, 1)" (ionRefresh)="loading='cargando'" >
+    <ion-refresher-content> </ion-refresher-content>
+  </ion-refresher>  
+
+  <ng-container *ngIf="loading=== 'ok'">
+
+
+    <ion-list>
+      <ion-row>
+
+        <ng-container *ngIf="habilitado === 1">
+          <ion-col size-xs=12 size-sm=3 size-md=3 size-lg=3 size-xl=3 *ngFor="let item of aux_offer_list; let i = index ">
+            <ion-item (click)="goToOfferDetails(item)"  lines="none">
+
+              <img class="img-list" src="{{item.offer_img}}">
+
+
+              <h4 class="col-sm-12" style="color: aliceblue; background-color: rgba(0, 0, 0, 0.541); left: 2px;">
+                {{item.titulo}}
+              </h4>
+
+
             </ion-item>
-    
           </ion-col>
-    
+
+        </ng-container>
+
+        <ng-container *ngIf="habilitado === 2">
+          <ion-col size-xs=12 size-sm=3 size-md=3 size-lg=3 size-xl=3 *ngFor="let item of aux_offer_list | removePipe; let i = index ">
+            <ion-item (click)="goToOfferDetails(item.oferta)" lines="none">
+
+              <img class="img-list" src="{{item.oferta.offer_img}}">
+
+
+              <h4 class="col-sm-12" style="color: aliceblue; background-color: rgba(0, 0, 0, 0.541); left: 2px;">
+                {{item.oferta.titulo}}
+              </h4>
+
+
+            </ion-item>
+          </ion-col>
+        </ng-container>
+
+
       </ion-row>
-      </ion-list>
-    
-    
-    
-    </ion-content>
+    </ion-list>
+
+  </ng-container>
+
+  <ion-infinite-scroll [disabled]="habilitado !== 1 " threshold="100px" (ionInfinite)="getAllOffers($event)">
+    <ion-infinite-scroll-content> </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+
+  <ion-infinite-scroll [disabled]="habilitado !== 2 " threshold="100px" (ionInfinite)="loadPageOffer($event)">
+    <ion-infinite-scroll-content> </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+
+
+</ion-content>
 
 
 <ion-footer class="ion-justify-content-center">
 
-   <ion-row class="ion-justify-content-center">
-<!--
+  <ion-row class="ion-justify-content-center">
+    <!--
       <ion-col padding size=3>
             <img  src="../../assets/iconos/iconos oqr-35.png" alt="">
         </ion-col>
@@ -135,26 +163,30 @@
               <img src="../../assets/iconos/iconos oqr-37.png" alt="">
             </ion-col>
           -->
-          
-              <ion-button fill="outline" color="light"  (click)="readBarcode()" >
-                <ion-icon name="md-qr-scanner" color="light" size="large">
-                </ion-icon>
-                Qr Shop
-              </ion-button>
-            
-            
 
-            
-                <ion-button fill="outline" color="light"  (click)="inputInfluecerCode()">
-                    <ion-icon name="md-megaphone" size="large" color="light"></ion-icon>
-                    Código influencer
-                </ion-button>
-               
-            
+    <ion-button fill="outline" color="light" (click)="readBarcode()">
+      <ion-icon name="md-qr-scanner" color="light" size="large">
+      </ion-icon>
 
-   </ion-row>
+    </ion-button>
+
+    <ion-button fill="outline" color="light" (click)="rangoDeBusqueda()">
+      <ion-icon src="../../assets/iconos/street-view-solid.svg" size="large" color="light"></ion-icon>
+
+    </ion-button>
+
+
+
+
+    <ion-button fill="outline" color="light" (click)="inputInfluecerCode()">
+      <ion-icon name="md-megaphone" size="large" color="light"></ion-icon>
+
+    </ion-button>
+
+
+
+  </ion-row>
 
 
 
 </ion-footer>
-

@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { ModalController, IonSelect } from '@ionic/angular';
 import { ModalCategoriesPage } from '../modal-categories/modal-categories.page';
 import { CountriesService } from '../../services/countries.service';
 import { Product } from '../../clases/product';
@@ -21,6 +21,7 @@ import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms'
 })
 export class AddProductPage implements OnInit {
   
+  @ViewChild('select', { static: false }) select: IonSelect;
   //file: File;
   photos: any;
 //  searchText: string;
@@ -55,11 +56,13 @@ currencyF:string;
       this.dbProducts= new Array<Product>();
       this.aux_product_list= new Array<Product>();
       
-      this.user=this.tokenSrv.GetPayLoad().doc;
+      this.user=this.tokenSrv.GetPayLoad().usuario;
       this.dbService.checkIsVendor(this.user._id).subscribe((data:any)=>
       {
         this.seller=data.vendor_data;
+        console.log(this.seller)
       })
+
 
      /* this.dbService.getFilterProducts("").toPromise() .then((data:any)=>
     {
@@ -91,11 +94,16 @@ currencyF:string;
     ]);
 
 
+    seller_id = new FormControl('', [
+     
+    ]);
+
+
 
   
   
     name= new FormControl('', [
-      Validators.required
+      //Validators.required
     ]);
 
     stock = new FormControl('', [
@@ -121,8 +129,8 @@ currencyF:string;
       name: this.name,
       file: this.file,
       searchText: this.searchText,
-      barcode: this.bar_code
-      
+      barcode: this.bar_code,
+      seller_id: this.seller_id
 
   
     });
@@ -131,6 +139,7 @@ currencyF:string;
      changeListener($event) : void {
      // this.file = $event.target.files[0];
      this.registroForm.controls['file'].setValue($event.target.files[0])
+     //this.registroForm.patchValue({file: $event.target.files[0]})
       console.log(this.file);
 
     }
@@ -185,10 +194,10 @@ currencyF:string;
        {
 
         this.spinnerAC=true;
-       this.prod_subcribe = this.dbService.getFilterProducts(key).subscribe( (data:any)=>
-        {console.log(this.prod_subcribe.closed)
-          this.aux_product_list = data;
-          console.log(data);
+        this.prod_subcribe = this.dbService.getFilterProducts(key, this.kind).subscribe( (data:any)=>
+        {
+          this.aux_product_list = data.data;
+          
           
           this.spinnerAC=false
         })
@@ -268,21 +277,30 @@ currencyF:string;
       console.log(p)
 
       let fd = new FormData();
+    
       fd.append("image", this.registroForm.value.file);
       fd.append("product", JSON.stringify(p));
       fd.append("seller_id", this.seller._id);
 
+      console.log(this.registroForm.value.file);
+      ///this.registroForm.controls['seller_id'].setValue(this.seller._id);
+     
     this.dbService.createProduct(fd).toPromise().then((data:any)=>
   {
     console.log(data);
 
-    if(data.status == 200)
+    if(data.ok)
     {
       this.spinner =false;
       this.dismissModal();
     }
+    else{
+      this.spinner =false;
+      this.messaje="No se pudo completar la operación.";
+    }
+    
   }) 
-
+  
       //this.seller.products.push(p);
 
 /*
@@ -396,6 +414,14 @@ this.zbar.scan(options)
   {
     this.registroForm.controls['currency_price'].setValue(value);
 console.log(value)
+  }
+
+
+  ionViewWillEnter()
+  {
+    setTimeout(() => {
+      this.select.value = this.seller.currency;
+    }, 1000);
   }
 
 }

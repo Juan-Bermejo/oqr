@@ -8,26 +8,20 @@
 </ion-toolbar>
 
 
-<ion-content>
+<ion-content *ngIf="offer">
 
 <ion-card padding>
   <ion-row class="ion-justify-content-center">
       <img src="../../assets/images/{{offer.category}}.jpg">
     </ion-row>
     <ion-row class="ion-justify-content-center">
-      <ion-card-title *ngIf="offer.offer_name=='Precio'" style="color: rgba(39, 39, 39, 0.904)">
-          {{offer.one_product[0].name}} a {{offer.price | currency: offer.price_currency}}
+      <ion-card-title style="color: rgba(39, 39, 39, 0.904)">
+          {{offer.titulo}}
          </ion-card-title>
-         <ion-card-title *ngIf="offer.offer_name=='Gratis'" style="color: black">
-           {{offer.one_product[0].name}} Gratis!
-           {{offer.description}}
-          </ion-card-title>
-       <ion-card-title *ngIf="offer.offer_name=='Descuento'" style="color: black">
-         %{{offer.percentage}} de descuento en {{offer.category}}
-         </ion-card-title>
+
         </ion-row>
         <ion-row class="ion-justify-content-center">
-        <ion-card-subtitle *ngIf="offer.offer_name!='Gratis'" style="color: black">
+        <ion-card-subtitle style="color: black">
             {{offer.description}}
            </ion-card-subtitle>
            </ion-row>
@@ -48,7 +42,7 @@
           <ion-label>Cantidad de vendedores</ion-label>
           <ion-note slot="end">              
             <ion-badge>
-              {{offer.sellers_cuantity}} 
+              <!-- {{offer.sellers_cuantity}}  -->
           </ion-badge>
              </ion-note>
       </ion-item>
@@ -64,7 +58,7 @@
             <ion-label>Comision total</ion-label>
             <ion-note slot="end"> 
                 <ion-badge>
-                      {{offer.commission * offer.sellers_cuantity * offer.stock}}
+                      <!-- {{offer.commission * offer.sellers_cuantity * offer.stock}} -->
                 </ion-badge>
             </ion-note>
           </ion-item>

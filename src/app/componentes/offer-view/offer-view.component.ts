@@ -7,6 +7,7 @@ import { Product } from '../../clases/product';
 import { DbService } from '../../services/db.service';
 import { CartDetail } from '../../clases/cart-detail';
 import { Seller } from '../../clases/seller';
+import { CartComponent } from '../cart/cart.component';
 
 @Component({
   selector: 'app-offer-view',
@@ -188,6 +189,24 @@ async createToast()
   )
 }
 
+
+async toCart()
+{
+  this.navParams.SetParam = this.cart;
+  
+  const modalCart= await this.modalCtrl.create({
+    component: CartComponent
+  })
+  modalCart.present();
+  modalCart.onDidDismiss().then((data)=>{
+ 
+   this.cart = data.data.result.cart;
+  // this.cart_lenght = this.cart.details.length;
+   
+   console.log(this.cart);
+   
+ })
+}
   
 
   ngOnInit()

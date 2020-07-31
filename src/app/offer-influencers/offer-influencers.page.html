@@ -13,16 +13,16 @@
         
         </ion-list>
         </div>
-        <div *ngIf="!influencers">
+        <div class="align-center" *ngIf="!influencers">
           <ion-row class="ion-justify-content-center">
-              <ion-title style="color: rgba(190, 190, 190, 0.322); text-align: center">
+              <ion-title style="color: rgba(109, 109, 109, 0.753); text-align: center">
                   Nadie esta promocionando esta oferta.
                 </ion-title>
           </ion-row>
         </div>
           <div *ngIf="!influencers">
               <ion-row class="ion-justify-content-center">
-                  <ion-button expand="block" shape="round" (click)="goTo()" >
+                  <ion-button expand="block" shape="round" (click)="goTo('false')" >
                     Ver oferta
                   </ion-button>
               </ion-row>

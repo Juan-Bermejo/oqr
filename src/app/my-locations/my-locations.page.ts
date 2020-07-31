@@ -23,7 +23,7 @@ export class MyLocationsPage implements OnInit {
     private navCtrl: NavController,
   private token: TokenService) {
 
-    this.user= this.token.GetPayLoad().doc
+    this.user= this.token.GetPayLoad().usuario
 
     this.dbService.checkIsVendor(this.user._id).toPromise().then((data:any)=>
   {
@@ -54,12 +54,13 @@ this.navCtrl.navigateRoot('add-location');
 
   ionViewWillEnter()
   {
-    this.user= this.token.GetPayLoad().doc
+    this.user= this.token.GetPayLoad().usuario
 
     this.dbService.checkIsVendor(this.user._id).toPromise().then((data:any)=>
     {
       this.seller = data.vendor_data;
       this.myLocations = data.vendor_data.location;
+
       console.log(this.myLocations)
     })
   }
@@ -78,6 +79,11 @@ this.navCtrl.navigateRoot('add-location');
       
       
     })
+  }
+
+  modificarLocation(l: Location)
+  {
+    
   }
 
   ngOnInit() {

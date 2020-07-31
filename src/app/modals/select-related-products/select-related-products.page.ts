@@ -6,6 +6,7 @@ import { Product } from '../../clases/product';
 import { NavParamsService } from '../../services/nav-params.service';
 import { ModalController } from '@ionic/angular';
 import { AddProductPage } from '../add-product/add-product.page';
+import { TokenService } from '../../services/token.service';
 
 @Component({
   selector: 'app-select-related-products',
@@ -15,17 +16,19 @@ import { AddProductPage } from '../add-product/add-product.page';
 export class SelectRelatedProductsPage implements OnInit {
 
   category:string;
+  array_products:Product[];
   seller:Seller;
   user:User;
   all:boolean= false;
   products: {"selected","product"}[];
-  selected_products: Product[];
+  selected_products: any[];
   type_offer:string;
   selected:Product;
   
   constructor(private dbService: DbService, 
      private modalCtrl:ModalController,
-     private paramServ: NavParamsService) {
+     private paramServ: NavParamsService,
+    private token: TokenService) {
 
       this.selected= new Product();
       this.selected_products= new Array<Product>();
@@ -34,28 +37,9 @@ export class SelectRelatedProductsPage implements OnInit {
     this.category = this.paramServ.param.category;
 
 
-    this.user= JSON.parse(localStorage.getItem("user_data"));
-
-    this.dbService.checkIsVendor(this.user._id).toPromise().then( (data:any)=>
-    {
-    this.seller = data.vendor_data;
-   
-
-    let p_filtred =  this.seller.products.filter(p=>p.category == this.category);
-
-    this.products = p_filtred.map((p)=>
-  {
-    return {
-      "product":p,
-      "selected":false
-    } 
-  })
-
-    });
-
    }
 
-   addProduct(prod:Product, index)
+   addProduct(prod:any, index)
    {
      switch(this.type_offer)
      {
@@ -63,7 +47,7 @@ export class SelectRelatedProductsPage implements OnInit {
 
       this.products[index].selected=!this.products[index].selected;
 
-      let iSearch = this.selected_products.findIndex((p) => p.name == prod.name);
+      let iSearch = this.selected_products.findIndex((p) => p.product_ref.name == prod.product_ref.name);
  
       if(iSearch > -1)
       {
@@ -168,14 +152,14 @@ export class SelectRelatedProductsPage implements OnInit {
        modal.onDidDismiss().then((data)=>{
       
 
-        this.dbService.checkIsVendor(this.user._id).toPromise().then( (data:any)=>
+        this.dbService.checkIsVendor(this.user._id).toPromise().then( async (data:any)=>
         {
         this.seller = data.vendor_data;
        
     
-        let p_filtred =  this.seller.products.filter(p=>p.category == this.category);
+        let p_filtred =  this.array_products.filter(p=>p.category == this.category);
     
-        this.products = p_filtred.map((p)=>
+        this.products = await p_filtred.map((p)=>
       {
         return {
           "product":p,
@@ -186,11 +170,12 @@ export class SelectRelatedProductsPage implements OnInit {
         });
         
       })
+      console.log(this.products);
     
    }
 
 
-   dismissModal(category_selected)
+   dismissModal()
    {
      if(this.type_offer != "Descuento")
      {
@@ -216,6 +201,48 @@ export class SelectRelatedProductsPage implements OnInit {
 
 
   ngOnInit() {
+  }
+
+  ionViewWillEnter()
+  {
+    this.user= this.token.GetPayLoad().usuario;
+
+    this.dbService.checkIsVendor(this.user._id).toPromise().then( (data:any)=>
+    {
+
+    if(data)
+    {
+      this.seller = data.vendor_data;
+
+      this.cargarProductos();
+    }
+   
+
+    });
+  }
+
+
+  cargarProductos()
+  {
+    this.dbService.getProductsVendor(this.seller._id)
+    .toPromise()
+    .then((data:any)=>
+  {
+    this.array_products = data.data;
+    //console.log(this.array_products);
+
+    let p_filtred =  this.array_products.filter(p=>p.category == this.category);
+    console.log(p_filtred);
+    this.products = p_filtred.map((p)=>
+  {
+    return {
+      "product":p,
+      "selected":false
+            } 
+
+  })
+
+  })
   }
 
 }

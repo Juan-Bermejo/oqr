@@ -1,0 +1,239 @@
+<ion-content>
+
+    <!--  <ion-toolbar>
+  
+          <ion-buttons slot="start" collapse="true">
+            <ion-back-button mode="md" type="button" color="light" icon="md-arrow-back" defaultHref="home">
+            </ion-back-button>
+          </ion-buttons>
+  
+      
+  </ion-toolbar>-->
+
+    <div class="banner">
+        <div class="buttons-login-cart">
+            <ion-row>
+                <ion-col size=1>
+
+
+                    <ion-button class="butn-round" *ngIf="!is_logged" (click)="goToLogin()">
+                        <ion-icon size="large" color="light" name="md-person">
+
+                        </ion-icon>
+                    </ion-button>
+
+                    <ion-button *ngIf="is_my_offer" class="butn-round" (click)="editShop()">
+                        <ion-icon size="large" color="light" name="md-create">
+
+                        </ion-icon>
+                    </ion-button>
+
+                </ion-col>
+
+
+
+            </ion-row>
+
+
+        </div>
+        <ion-row class="ion-justify-content-center">
+
+
+            <div class="shop-name">
+
+                <h1>{{seller.shop_name}}</h1>
+            </div>
+
+            <!-- <img class="img-banner" src="../../assets/images/{{seller.category}}.jpg">-->
+            <!-- <img class="img-banner" src="../../assets/images/Copia de Modern Summer Sale Store Banner - Hecho con PosterMyWall.jpg">-->
+            <img *ngIf="!seller.banner_img" class="img-banner" src="../../assets/logoOfertaCerca/fondoBanner.png">
+            <img *ngIf="seller.banner_img" class="img-banner" src="{{seller.banner_img}}">
+            <div class="img-seller">
+
+                <img *ngIf="!seller.profile_img" class="seller-photo" src="../../assets/logoOfertaCerca/logoCelesteFondoBlanco.jpg">
+
+                <img *ngIf="seller.profile_img" class="seller-photo" src="{{seller.profile_img}}">
+            </div>
+        </ion-row>
+    </div>
+
+
+
+    <!--      back button     -->
+    <ion-toolbar>
+
+        <ion-buttons slot="start" collapse="true" color="primary">
+            <ion-back-button mode="md" type="button" color="primary" icon="md-arrow-back" defaultHref="">
+            </ion-back-button>
+            <ion-label color="primary">Atras</ion-label>
+        </ion-buttons>
+    </ion-toolbar>
+
+
+
+
+    <!--      Card de oferta    -->
+
+
+
+    <ion-row class="ion-justify-content-center">
+
+        <ion-col size-xs=9 size-sm=6 size-md=6 size-lg=6 size-xl=6>
+            <div *ngIf="offerdata != undefined">
+<!-- 
+                <div *ngIf="offerdata.offer_name == 'Precio'">
+                    <ion-col>
+                        <div id="offer-label">
+                            <img *ngIf="offerdata.offer_name == 'Precio'" src="../../assets/iconos/precio.png" style="height: 115px; width: 115px;" class="offer-stamp">
+                      
+                        </div>
+                        <ion-card padding *ngFor="let p of offerdata.products" class="banner-offer">
+                            <ion-row class="ion-justify-content-center">
+                                <img class="img-offer" src="{{offerdata.offer_img}}">
+                            </ion-row>
+                            <ion-row>
+                                <ion-card-title> {{p.name}} </ion-card-title>
+                            </ion-row>
+                            <ion-card-subtitle color="success">
+                                {{offerdata.price | currency:offerdata.price_currency}}
+                            </ion-card-subtitle>
+                            <ion-note size="small" color="danger" style="text-decoration:line-through;"> {{precioanterior.price | currency:offerdata.price_currency}} </ion-note>
+
+                            <ion-row>
+                                <ion-card-subtitle style="text-align: center"> {{offerdata.description}} </ion-card-subtitle>
+                            </ion-row>
+
+                            <ion-row class="ion-justify-content-end">
+                                <ion-button size="small" (click)="addOtherOfferToCart(offerdata)">
+                                    <ion-icon size="small" name="md-add"></ion-icon>
+                                </ion-button>
+                                <ion-button size="small" (click)="removeOfferToCart(offerdata)">
+                                    <ion-icon size="small" name="md-remove"></ion-icon>
+                                </ion-button>
+                            </ion-row>
+
+
+
+                        </ion-card>
+                    </ion-col>
+                </div> -->
+
+
+
+              
+                    <ion-col>
+                        <div id="offer-label">
+                            <img src="../../assets/iconos/descuento.png" style="height: 115px; width: 115px;" class="offer-stamp">
+
+                        </div>
+                        <ion-card padding class="banner-offer">
+                            <ion-row class="ion-justify-content-center">
+                                <img class="img-offer" src="{{offerdata.offer_img}}">
+                            </ion-row>
+                            <ion-row>
+                                <ion-card-title> %{{offerdata.percentage}} en {{offerdata.category}} </ion-card-title>
+                            </ion-row>
+
+                            <ion-row>
+                                <ion-card-subtitle style="text-align: center">{{offerdata.description}} </ion-card-subtitle>
+                            </ion-row>
+
+                            <ion-row class="ion-justify-content-end">
+                                <ion-button *ngIf="offerdata.offer_name=='Descuento'" (click)="viewOffer(offerdata)"> Ver productos</ion-button>
+                            </ion-row>
+
+
+
+                        </ion-card>
+                    </ion-col>
+              
+
+            </div>
+        </ion-col>
+
+
+        <!--      Condiciones de la oferta      -->
+        <ion-col size-xs=12 size-sm=3 size-md=3 size-lg=3 size-xl=3 style="float: right;">
+            <div style=" margin-right: 10px;">
+
+                <ion-card padding class="delivery">
+
+                    <ion-list>
+
+                        <ion-item style="font-size: 15px;">
+                            <ion-avatar slot="start">
+                                <img src="../../assets/iconos/svg/ICONOS_delivery.svg">
+                            </ion-avatar>
+                            <ion-label style="align-self: center" *ngIf="seller.delivery" color="success">Con delivery </ion-label>
+                            <ion-checkbox *ngIf="seller.delivery"></ion-checkbox>
+                            <ion-label style="align-self: center" *ngIf="!seller.delivery" color="danger">Sin delivery </ion-label>
+                            <ion-checkbox *ngIf="!seller.delivery"></ion-checkbox>
+                        </ion-item>
+
+                        <ion-item style="font-size: 15px;">
+                            <ion-avatar slot="start">
+                                <img src="../../assets/iconos/svg/ICONOS_espera y ten mas descuento.svg">
+                            </ion-avatar>
+                            <ion-label style="align-self: center" *ngIf="seller.delivery" color="success">Retiro programado </ion-label>
+                            <ion-checkbox *ngIf="seller.delivery"></ion-checkbox>
+                            <ion-label style="align-self: center" *ngIf="!seller.delivery" color="danger">Sin retiro programado </ion-label>
+                            <ion-checkbox *ngIf="!seller.delivery"></ion-checkbox>
+
+
+                        </ion-item>
+                    </ion-list>
+
+
+                </ion-card>
+
+
+
+            </div>
+        </ion-col>
+
+
+
+        <!--      Fin ondiciones de la oferta      -->
+
+
+    </ion-row>
+
+
+
+
+
+
+    <!--     Fin card de oferta    -->
+
+
+
+
+
+
+
+    <!--<ion-checkbox (ionChange)="selectProd(prod, $event)" slot="start"></ion-checkbox>-->
+
+
+
+
+
+</ion-content>
+
+<ion-fab vertical="bottom" horizontal="end">
+    <div *ngIf="cart.details.length > 0" class="red-point" style="z-index: 1000">
+        {{cart.details.length}}
+    </div>
+    <ion-fab-button (click)="toCart()">
+        <ion-icon size="large" name="md-cart"></ion-icon>
+    </ion-fab-button>
+    <ion-fab-button>
+        <ion-icon name="md-share" size="large"></ion-icon>
+    </ion-fab-button>
+    <ion-fab-button>
+        <ion-icon name="md-heart" size="large"></ion-icon>
+    </ion-fab-button>
+    <ion-fab-button>
+        <ion-icon name="md-chatboxes" size="large"></ion-icon>
+    </ion-fab-button>
+
+</ion-fab>

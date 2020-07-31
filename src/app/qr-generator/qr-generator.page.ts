@@ -19,6 +19,7 @@ export class QrGeneratorPage implements OnInit {
 
   @ViewChild('qr', {static: true}) qr;
 
+  url;
   seller: Seller;
   user: User;
   miQrText: string = "holis";
@@ -54,7 +55,7 @@ export class QrGeneratorPage implements OnInit {
 
   ionViewWillEnter()
   {
-    this.user = this.token.GetPayLoad().doc;
+    this.user = this.token.GetPayLoad().usuario;
     this.dbs.checkIsVendor(this.user._id).toPromise().then((data:any)=>
   {
     this.seller= data.vendor_data;

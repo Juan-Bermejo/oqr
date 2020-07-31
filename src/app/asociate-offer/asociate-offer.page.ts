@@ -28,6 +28,13 @@ export class AsociateOfferPage implements OnInit {
   checkTimeDiscount:boolean;
   is_logged=false;
   average_commission:number; 
+  stock;
+  time_value;
+  time_type;
+  commision;
+  prod_currency;
+  check_time_discount;
+  currency_commission;
 
   constructor(private modalController: ModalController,
     private countrySrv:CountriesService,
@@ -46,29 +53,9 @@ export class AsociateOfferPage implements OnInit {
     if(token.GetPayLoad())
     {
      // this.user= JSON.parse(localStorage.getItem("user_data"));
-      this.user = token.GetPayLoad().doc;
+      this.user = token.GetPayLoad().usuario;
     }
-
-    this.offer=this.ParamSrv.param.offer;
-    this.myCommission = this.offer.commission;
     
-    if(this.ParamSrv.param.seller)
-    {
-      console.log(this.seller);
-      this.seller=this.ParamSrv.param.seller;
-
-
-      for(let i =0; i< this.offer.sellers.length; i++)
-      {
-        if(this.offer.sellers[i] == this.seller._id)
-        { 
-          console.log(this.offer.sellers[i])
-          console.log(this.seller._id)
-          this.is_my_offer=true;
-        }
-      }
-
-    }
 
 
    
@@ -98,15 +85,18 @@ export class AsociateOfferPage implements OnInit {
           }, {
             text: 'Confirmar',
             handler: () => {
+
               let time_discount: number;
               this.checkTimeDiscount ? time_discount = Date.now() : time_discount = -1;
-             this.dbServ.joinToOffer(
-               this.user._id,this.offer._id, 
-              this.myCommission, 
-              this.currencyCommission,
-              this.myStock,
-              0,
-              time_discount,false).subscribe((data:any)=>
+              let fd = new FormData();
+              fd.append("vendor_id", JSON.stringify(this.seller._id));
+              fd.append("location", JSON.stringify(this.seller.location));
+              fd.append("vendor_stock", this.stock);
+              fd.append("offer", JSON.stringify(this.offer));
+              fd.append("offer_id", this.offer._id);  ///despues cambiar
+             // fd.append("asociatePage", "true");  
+
+             this.dbServ.joinToOffer(fd).subscribe((data:any)=>
               {
                 console.log(data)
               })
@@ -135,41 +125,54 @@ export class AsociateOfferPage implements OnInit {
 
     ionViewWillEnter()
     {
+      this.user = this.token.GetPayLoad().usuario;
 
       if (document.URL.indexOf("/") > 0) {
 
         let splitURL = document.URL.split("/");
 
             this.offerId = splitURL[5].split("?")[0];
+            console.log(this.offerId)
       }
+
+
         
         this.dbServ.getOffer(this.offerId).toPromise().then((data:any)=>
       {
-        this.offer = data ;
+        console.log(data)
+
+      if(data)
+      {
+        this.offer = data;
+      }
+          
+        
+      
 
       })
       
       this.dbServ.checkIsVendor(this.user._id).subscribe((data:any)=>
     {
-      for(let i =0; i< this.offer.sellers.length; i++)
-      {
-        if(this.offer.sellers[i] == data.vendor_data._id)
-        { 
-          console.log(this.offer.sellers[i])
+      this.seller = data.vendor_data;
+      // for(let i =0; i< this.offer.sellers.length; i++)
+      // {
+      //   if(this.offer.sellers[i] == data.vendor_data._id)
+      //   { 
+      //     console.log(this.offer.sellers[i])
           
-          this.is_my_offer=true;
-        }
-      }
+      //     this.is_my_offer=true;
+      //   }
+      // }
       
     })
 
-    for (let i in this.offer.sellers)
-    {
-      if(this.offer.sellers[i] == this.seller._id)
-      {
-        this.is_my_offer = true;
-      }
-    }
+    // for (let i in this.offer.sellers)
+    // {
+    //   if(this.offer.sellers[i] == this.seller._id)
+    //   {
+    //     this.is_my_offer = true;
+    //   }
+    // }
       this.countrySrv.getCountries().subscribe((c)=>{
         this.countries= c;
         console.log(c);

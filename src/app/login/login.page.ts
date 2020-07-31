@@ -31,6 +31,7 @@ export class LoginPage implements OnInit {
   user : Observable<firebase.User>;
   user_token:User;
   data_token:any;
+  formLogin;
 
   constructor(private navCtrl: NavController, 
               private menu: MenuController,
@@ -82,15 +83,14 @@ export class LoginPage implements OnInit {
     this.dbService.checkLogin(this.user_name.value, this.password.value)
       .subscribe((data: any) => {
         console.log(data)
-        if(data.status == 200) {
+        if(data.ok) {
 
       
           localStorage.setItem("token", data.token);
        
           this.data_token = this.tokenServ.GetPayLoad();
-          console.log(this.data_token)
-          console.log(this.data_token.doc)
-          this.user_token = this.data_token.doc;
+
+          this.user_token = this.data_token.usuario;
             this.dbService.is_logged = true;
             this.dbService.user_id = this.user_token._id;
             this.dbService.user_data = this.user_token;
@@ -126,7 +126,7 @@ export class LoginPage implements OnInit {
 
         }
 
-        if(data.status == 401) {
+        if(!data.ok) {
           const toast = document.createElement('ion-toast');
           toast.message = 'Usuario o contraseña incorrecto';
           toast.duration = 2000;
@@ -211,24 +211,29 @@ export class LoginPage implements OnInit {
   async directLoginOne(){
    await this.dbService.checkLogin("amorelli", "1111")
       .subscribe(async (data: any) => {
-        console.log(data)
-        if(data.status == 200) {
+        console.log("data login: ", data);
+       
+        if(data.ok) {
 
         localStorage.setItem("token", data.token);
        
         this.data_token = this.tokenServ.GetPayLoad();
-        console.log(this.data_token)
-        console.log(this.data_token.doc)
-        this.user_token = this.data_token.doc;
+
+          this.user_token = this.data_token.usuario;
           this.dbService.is_logged = true;
           this.dbService.user_id = this.user_token._id;
           this.dbService.user_data = this.user_token;
           
        
           this.dbService.setLogged(true);
+
           this.registroForm.reset();
+
+          console.log("enttro en OK")
        await   this.dbService.checkIsVendor(this.user_token._id).subscribe((dataSeller:any)=>
-        { console.log(dataSeller)
+        { 
+          console.log("rta checkisvendor: ", dataSeller)
+
           if(dataSeller.vendor_data._id)
           {
             this.dbService.setIsSeller$(true);
@@ -255,7 +260,7 @@ export class LoginPage implements OnInit {
 
         }
 
-        if(data.status == 401) {
+        if(!data.ok) {
           const toast = document.createElement('ion-toast');
           toast.message = 'Usuario o contraseña incorrecto';
           toast.duration = 2000;

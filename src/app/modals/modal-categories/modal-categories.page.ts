@@ -16,43 +16,20 @@ import { TokenService } from '../../services/token.service';
 })
 export class ModalCategoriesPage implements OnInit {
 
-  seller: Seller;
+  seller_data: Seller;
   user: User;
   array_products: any[];
   list_cat = categories;
   aux_list_cat;
+  busqeda:string;
 
   constructor(public modalCtrl: ModalController, 
     private navCtrl: NavController,
     private dbserv:DbService,
     private paramServ: NavParamsService,
-    private token: TokenService) {
-
-      if(this.paramServ.param != undefined && this.paramServ.param.seller)
-      {
-        console.log(this.paramServ.param.seller)
-        this.seller= this.paramServ.param.seller;
-        this.array_products= new Array<Product>();
-        this.user=this.token.GetPayLoad().doc;
-
-        this.array_products= this.seller.products;
-        this.aux_list_cat= this.list_cat.filter((cat)=>
-      {
-          if( this.array_products.find(prod=>prod.category == cat.name) )
-          {
-            return cat;
-          }
-      }) 
-   
-      console.log(this.aux_list_cat)
-      }
-      else{
-        this.aux_list_cat= new Array();
-        this.aux_list_cat= this.sortList(this.list_cat);
-      }
+    private token: TokenService) { }
 
 
-   }
   
   dismissModal(category_selected)
   {
@@ -86,6 +63,64 @@ export class ModalCategoriesPage implements OnInit {
       return a.name.toLowerCase().localeCompare(b.name.toLowerCase());
     
     });
+  }
+
+  ionViewWillEnter()
+  {
+
+     if(this.paramServ.param != undefined && this.paramServ.param.seller)
+      {
+        this.user=this.token.GetPayLoad().usuario;
+
+        this.array_products= new Array<Product>();
+
+        this.dbserv.checkIsVendor(this.user._id)
+        .toPromise()
+        .then((dataUser:any)=>
+      {
+        if(dataUser.ok)
+        {
+          console.log(dataUser.vendor_data)
+          this.seller_data = dataUser.vendor_data;
+          
+          this.dbserv.getProductsVendor(dataUser.vendor_data._id)
+          .toPromise()
+          .then((data:any)=>
+        {
+          console.log(data);
+            this.array_products = data.data;
+           
+      
+            if(data)
+            {
+              this.aux_list_cat= this.list_cat.filter((cat)=>
+              {
+                  if( this.array_products.find(prod=>prod.category == cat.name) )
+                  {
+                    return cat;
+                  }
+              })
+            }
+          
+        })
+        }
+      })
+        console.log(this.paramServ.param.seller)
+       
+      }
+      else{
+        this.aux_list_cat= new Array();
+        this.aux_list_cat= this.sortList(this.list_cat);
+      }
+    
+  }
+
+  cargarProductos()
+  { 
+   
+
+    
+
   }
 
 

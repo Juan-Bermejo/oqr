@@ -58,7 +58,7 @@ export class CartComponent implements OnInit {
             this.message = "El pedido fue creado con exito."
             this.ok= "ok";
             this.cart = new Cart();
-            this.cart.user_id = this.token.GetPayLoad().doc;
+            this.cart.user_id = this.token.GetPayLoad().usuario;
             
             
           }

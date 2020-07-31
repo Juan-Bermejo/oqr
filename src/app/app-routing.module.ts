@@ -56,7 +56,7 @@ const routes: Routes = [
     loadChildren: () => import('./offer-list-search/offer-list-search.module').then( m => m.OfferListSearchPageModule)
   },
   {
-    path: 'promote-offer',
+    path: 'promote-offer/:offer',
     loadChildren: () => import('./promote-offer/promote-offer.module').then( m => m.PromoteOfferPageModule)
   },
   {
@@ -139,6 +139,11 @@ const routes: Routes = [
     path: 'qr-scanner',
     loadChildren: () => import('./qr-scanner/qr-scanner.module').then( m => m.QrScannerPageModule)
   },
+  {
+    path: 'offer-land-pange/:offer',
+    loadChildren: () => import('./offer-land-pange/offer-land-pange.module').then( m => m.OfferLandPangePageModule)
+  },
+
 
 
 

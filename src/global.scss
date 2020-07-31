@@ -26,6 +26,11 @@
 @import "~@ionic/angular/css/flex-utils.css";
 
 
+.mapboxgl-ctrl-bottom-left,
+.mapboxgl-ctrl-bottom-right {
+  display: none !important;
+}
+
 @font-face {
     font-family: 'roboto-bold';
     src: url('./assets/fuentes/Roboto-Bold.ttf');

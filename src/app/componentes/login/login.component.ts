@@ -75,55 +75,53 @@ export class LoginComponent implements OnInit {
     setTimeout(() => {
 
       this.dbService.checkLogin(this.user_name.value, this.password.value)
-      .subscribe((data: any) => {
+      .subscribe(async (data: any) => {
         console.log(data)
-        if(data.status == 200) {
+        if(data.ok) {
 
-      
-          localStorage.setItem("token", data.token);
+        localStorage.setItem("token", data.token);
        
-          this.data_token = this.tokenServ.GetPayLoad();
-          console.log(this.data_token)
-          console.log(this.data_token.doc)
-          this.user_token = this.data_token.doc;
-            this.dbService.is_logged = true;
-            this.dbService.user_id = this.user_token._id;
-            this.dbService.user_data = this.user_token;
-            
-         
-            this.dbService.setLogged(true);
-            this.registroForm.reset();
-            this.dbService.checkIsVendor(this.user_token._id).subscribe((dataSeller:any)=>
-          { console.log(dataSeller)
-            if(dataSeller.vendor_data._id)
-            {
-              this.dbService.setIsSeller$(true);
-            }
-            else{
-              this.dbService.setIsSeller$(false);
-            }
-          })
-  
-          this.dbService.getInfluencerByUser(this.user_token._id).subscribe((dataInfluencer: any)=>
-        {
-          console.log("Is_ influencer", dataInfluencer)
-  
-          if(dataInfluencer.influencer_data)
+        this.data_token = this.tokenServ.GetPayLoad();
+ 
+        this.user_token = this.data_token.usuario;
+          this.dbService.is_logged = true;
+          this.dbService.user_id = this.data_token._id;
+          this.dbService.user_data = this.user_token;
+          
+       
+          this.dbService.setLogged(true);
+          this.registroForm.reset();
+       await   this.dbService.checkIsVendor(this.user_token._id).subscribe((dataSeller:any)=>
+        { console.log(dataSeller)
+          if(dataSeller.vendor_data._id)
           {
-            this.dbService.setIsInfluencer$(true);
+            this.dbService.setIsSeller$(true);
           }
           else{
-            this.dbService.setIsInfluencer$(false);
+            this.dbService.setIsSeller$(false);
           }
         })
+
+      await  this.dbService.getInfluencerByUser(this.user_token._id).subscribe((dataInfluencer: any)=>
+      {
+        console.log("Is_ influencer", dataInfluencer)
+
+        if(dataInfluencer.influencer_data)
+        {
+          this.dbService.setIsInfluencer$(true);
+        }
+        else{
+          this.dbService.setIsInfluencer$(false);
+        }
+      })
          
-          //this.loginRedirect();
-          this.dismissModal();
-          this.spinner= false;
+         // this.loginRedirect();
+         this.dismissModal();
+         this.spinner= false;
 
         }
 
-        if(data.status == 401) {
+        if(!data.ok) {
           const toast = document.createElement('ion-toast');
           toast.message = 'Usuario o contraseña incorrecto';
           toast.duration = 2000;
@@ -216,16 +214,15 @@ export class LoginComponent implements OnInit {
       await this.dbService.checkLogin("amorelli", "1111")
       .subscribe(async (data: any) => {
         console.log(data)
-        if(data.status == 200) {
+        if(data.ok) {
 
         localStorage.setItem("token", data.token);
        
         this.data_token = this.tokenServ.GetPayLoad();
-        console.log(this.data_token)
-        console.log(this.data_token.doc)
-        this.user_token = this.data_token.doc;
+ 
+        this.user_token = this.data_token.usuario;
           this.dbService.is_logged = true;
-          this.dbService.user_id = this.user_token._id;
+          this.dbService.user_id = this.data_token._id;
           this.dbService.user_data = this.user_token;
           
        
@@ -261,7 +258,7 @@ export class LoginComponent implements OnInit {
 
         }
 
-        if(data.status == 401) {
+        if(!data.ok) {
           const toast = document.createElement('ion-toast');
           toast.message = 'Usuario o contraseña incorrecto';
           toast.duration = 2000;

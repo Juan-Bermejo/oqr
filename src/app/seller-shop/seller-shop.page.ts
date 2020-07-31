@@ -65,6 +65,7 @@ export class SellerShopPage implements OnInit {
     "product_image":string
   }
   cart_lenght:number=0;
+  busqueda;
 
   constructor(private modalCtrl:ModalController,
               private platform: Platform,
@@ -91,7 +92,7 @@ export class SellerShopPage implements OnInit {
             this.is_logged = data;
             if(this.is_logged)
             {
-              this.user = token.GetPayLoad().doc;
+              this.user = token.GetPayLoad().usuario;
               this.cart.user_id= this.user_id;
               this.user_id=this.user._id;
               this.user._id == this.seller.owner ? 
@@ -352,7 +353,7 @@ async toCart()
       {
         this.sellerId = data._id;
         this.seller= data;
-        console.log("vendedor: ", this.seller)
+        console.log("vendedor: ", data)
         this.dataMarker= data;
         this.shop_name= this.seller.shop_name;
         this.cart.vendor_id= this.seller._id;
@@ -400,7 +401,7 @@ async toCart()
     this.is_logged = data;
     if(this.is_logged)
     {
-      this.user = this.token.GetPayLoad().doc;
+      this.user = this.token.GetPayLoad().usuario;
       this.cart.user_id= this.user_id;
       this.user_id=this.user._id;
       this.user._id == this.seller._id ? 
@@ -677,7 +678,7 @@ ionViewWillEnter()
     
     if(this.is_logged)
     {
-      this.user = this.token.GetPayLoad().doc;
+      this.user = this.token.GetPayLoad().usuario;
       this.cart.user_id= this.user_id;
       this.user_id=this.user._id;
       this.user._id == this.seller.owner ? 
@@ -685,8 +686,9 @@ ionViewWillEnter()
       console.log(this.is_my_offer);
 
     }
-
   })
+
+
 }
 
 }

@@ -10,6 +10,8 @@ import { Seller } from '../../clases/seller';
 import * as Mapboxgl from 'mapbox-gl';
 import { environment } from '../../../environments/environment';
 import { Router } from '@angular/router';
+import { TokenService } from '../../services/token.service';
+import { LocationService } from '../../services/location.service';
 
 
 @Component({
@@ -57,12 +59,14 @@ public searchElementRef: ElementRef;
     private dbService: DbService,
     private toast: ToastController,
     private router :Router,
+    private token: TokenService,
+    private locationServ: LocationService
     
    ) {
 
     this.getCurrentPosition();
 
-    this.user= JSON.parse(localStorage.getItem('user_data'));
+    this.user= this.token.GetPayLoad().usuario;
     this.dbService.checkIsVendor(this.user._id).subscribe((data:any)=>
   {
     this.seller= data.vendor_data;
@@ -96,11 +100,13 @@ public searchElementRef: ElementRef;
   getGeoCoderCoord()
   {
     
-    this.nativeGeocoder.forwardGeocode(this.address, this.options)
-  .then((result: NativeGeocoderResult[]) => { 
-    
-    this.latitude= parseFloat(result[0].latitude);
-     this.longitude= parseFloat(result[0].longitude);
+    this.locationServ.getLatLong(this.address).toPromise()
+  .then((result:any) => { 
+    console.log(result);
+    this.latitude= parseFloat(result.features[0].geometry.coordinates[1]);
+     this.longitude= parseFloat(result.features[0].geometry.coordinates[0]);
+     console.log(this.latitude)
+     console.log(this.longitude)
 
      this.current_latitude=this.latitude;
      this.current_longitude=this.longitude;
@@ -139,33 +145,55 @@ public searchElementRef: ElementRef;
 
   addLocation()
   {
-    console.log(this.latitude)
+    
     if(this.latitude != undefined && this.longitude != undefined )
     {
 
-      this.getGeoCoderAddress(this.latitude, this.longitude).then(()=>{
-
+      this.locationServ.reverse(this.latitude, this.longitude).toPromise()
+      .then((dataL:any)=>{
+        console.log(dataL)
         let l= new Location();
         l.address=this.address;
-        l.city= this.location_data.locality
-        l.country=this.location_data.countryName;
+        l.city= dataL.address.town;
+        l.country=dataL.address.country;
         l.latitude=this.latitude;
         l.longitude= this.longitude;
-        l.province=this.location_data.administrativeArea;
-        l.subLocality= this.location_data.subLocality;
-        l.vendor_id=this.user.shops[0];
+        l.province=dataL.address.state;
+        l.subLocality= dataL.address.suburb;
+        l.vendor_id=this.seller._id;
   
        console.log(this.location_data)
        console.log(l);
-       this.seller.location.push(l);
+ 
+
+       this.dbService.saveLocation(l).toPromise().then((data:any)=>
+      {
+        console.log(data);
+
+        if(data.ok)
+        {
+          this.dismissModal();
+          this.router.navigateByUrl('my-locations');
+        }
+        else{
+
+          this.toast.create(
+            {
+              message:"No se pudo guardar la locacion.",
+              color:"danger"
+            }
+          )
+          
+        }
+      })
 
 
-       this.dbService.updateVendor(this.seller).toPromise().then((data)=>
+    /*   this.dbService.updateVendor(this.seller).toPromise().then((data)=>
       {
         console.log(data);
         //this.dismissModal();
         this.router.navigateByUrl('my-locations')
-      })
+      })*/
         
       })
 
@@ -331,7 +359,7 @@ public searchElementRef: ElementRef;
           essential: true // this animation is considered essential with respect to prefers-reduced-motion
           });
 
-          this. marker = new Mapboxgl.Marker()
+          this.marker = await new Mapboxgl.Marker()
           .setLngLat([ this.current_latitude, this.current_longitude ])
           .addTo(this.map);
 

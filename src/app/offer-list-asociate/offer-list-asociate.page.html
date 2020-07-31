@@ -18,7 +18,7 @@
 
         <ion-col size=10 >
           
-            <ion-input class="input-search" (ionChange)="filter($event)" placeholder="¿Qué estas buscando?" color="primary" [(ngModel)]="busqeda" >
+            <ion-input class="input-search" (ionChange)="filter($event)" placeholder="¿Qué estas buscando?" color="primary" [(ngModel)]="busqueda" >
               <span>
                     <ion-icon style="padding-left: 10px;" size="large" name="md-search" color="primary-shade">
                       </ion-icon>
@@ -63,18 +63,10 @@
         
                 <img class="img-list" src="{{offer.offer_img}}">
         
-                <ion-card-title class="col-sm-12" *ngIf="offer.offer_name=='Precio'" >
-                    {{offer.products[0].name}} a {{offer.price | currency: offer.price_currency}}
+                <ion-card-title class="col-sm-12"  >
+                    {{offer.titulo}}
                    </ion-card-title>
-                   <ion-card-title class="col-sm-12" *ngIf="offer.offer_name=='Gratis'" >
-                     {{offer.products[0].name}} Gratis!
-                  
-                    </ion-card-title>
-                 <ion-card-title class="col-sm-12" *ngIf="offer.offer_name=='Descuento'" >
-                   %{{offer.percentage}} de descuento en {{offer.category}}
-                   </ion-card-title>
-                
-                    <ion-card-subtitle color="dark">{{offer.description}}</ion-card-subtitle>
+
                   </ion-card-content>
         
                       <ion-row>

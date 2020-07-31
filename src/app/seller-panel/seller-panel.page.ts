@@ -38,7 +38,7 @@ shop_name:string;
             {
 
                 this.seller= new Seller();
-                this.user_data=this.tokenSrv.GetPayLoad().doc;
+                this.user_data=this.tokenSrv.GetPayLoad().usuario;
 
                 this.dbService.checkIsVendor(this.user_data._id).subscribe((data:any)=>
               {
@@ -117,6 +117,8 @@ goToMyOrders()
 {
   this.router.navigateByUrl('orders/' + this.seller._id);
 }
+
+
 
 
 }

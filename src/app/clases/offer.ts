@@ -6,9 +6,12 @@ import { Product } from './product';
 export class Offer {
 
     _id:string;
+    data_id: string;
+    titulo:string;
     offer_name:string;
     products_id: string[];
-    products:Product[];
+    products:any[];
+    offer_img;
     kind:string;
     price_currency:string;
     price: number;
@@ -25,6 +28,7 @@ export class Offer {
     percentage:number;
     time_discount:number;
     is_active:boolean;
+    date;
 
     constructor()
     {
@@ -32,7 +36,7 @@ export class Offer {
         this.sellers= new Array<string>();
         this.locations= new Array<Location>();
         this.products_id= new Array<string>();
-        this.products = new Array<Product>();
+        this.products = new Array<any>();
     }
     
     public addSeller(sellerId)

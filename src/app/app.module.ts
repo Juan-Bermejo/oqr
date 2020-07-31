@@ -10,7 +10,6 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
-import { ScrollbarStyleDirective } from './scrollbar-style.directive';
 
 import { AgmCoreModule, MarkerManager, GoogleMapsAPIWrapper, MapsAPILoader } from '@agm/core';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
@@ -56,6 +55,9 @@ import { ImagePicker } from '@ionic-native/image-picker/ngx';
 import { QRCodeModule } from 'angularx-qrcode';
 import { FileOpener } from '@ionic-native/file-opener/ngx';
 import { File } from '@ionic-native/file/ngx';
+import { RangoComponent } from './componentes/rango/rango.component';
+import { AsociateOfferModalComponent } from './componentes/asociate-offer-modal/asociate-offer-modal.component';
+import { RemovePipePipe } from './pipes/remove-pipe.pipe';
 
 
 export function tokenGetter() {
@@ -64,7 +66,7 @@ export function tokenGetter() {
 
 
 @NgModule({
-  declarations: [AppComponent, ScrollbarStyleDirective],
+  declarations: [AppComponent],
   entryComponents: [
     PopOverProductsComponent,
      NewSellerComponent, 
@@ -75,6 +77,8 @@ export function tokenGetter() {
      CartComponent,
      ViewOrderComponent,
      TypeOfferModalComponent,
+     RangoComponent,
+     AsociateOfferModalComponent,
      OfferViewComponent],
 
   imports: [BrowserModule,

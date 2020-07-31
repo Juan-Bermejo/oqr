@@ -1,0 +1,71 @@
+<ion-content padding="true">
+
+  <ion-row class="ion-justify-content-end">
+    <ion-button fill="clear" (click)="dismiss()">
+      <ion-icon name="md-close" size="large" color="primary"></ion-icon>
+
+
+    </ion-button>
+  </ion-row>
+
+
+  <ion-row class="ion-justify-contetn-center">
+    <ion-title style="text-align: center" color="primary">
+      Oferta existente
+    </ion-title>
+  </ion-row>
+
+
+  <p>
+    La oferta que intentas crear ya existe.
+  </p>
+
+
+
+
+
+  <ion-list>
+
+
+    <ion-item>
+      <ion-col size=6>
+        <ion-label>
+          Estado:
+        </ion-label>
+      </ion-col>
+
+      <ion-col size=6>
+        <ion-label color="warning" *ngIf="!data.ofertaExistente.is_active">
+          En proceso
+        </ion-label>
+        <ion-label color="success" *ngIf="data.ofertaExistente.is_active">
+          {{estado}}
+        </ion-label>
+      </ion-col>
+
+
+    </ion-item>
+
+    <ion-item>
+      <ion-col size=9>
+        <ion-label>
+          Comision promedio:
+        </ion-label>
+      </ion-col>
+
+      <ion-col size=3>
+        <ion-label>
+          {{data.ofertaExistente.commission | currency}}
+        </ion-label>
+      </ion-col>
+
+
+    </ion-item>
+
+  </ion-list>
+
+  <ion-row class="ion-justify-content-end">
+    <ion-button (click)="joinOffer()">Unirme</ion-button>
+    <ion-button (click)="dismiss()">Cancelar</ion-button>
+  </ion-row>
+</ion-content>

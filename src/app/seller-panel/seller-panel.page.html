@@ -5,7 +5,7 @@
     <ion-toolbar>
 
             <ion-buttons slot="start" collapse="true">
-              <ion-back-button mode="md" type="button" color="light" icon="md-arrow-back" defaultHref="home">
+              <ion-back-button mode="md" type="button" color="primary" icon="md-arrow-back" defaultHref="home">
               </ion-back-button>
             </ion-buttons>
               <ion-row justify-content-center>
@@ -21,7 +21,12 @@
 <ion-row class="ion-justify-content-center">
 
         <ion-item-divider (click)="dataModal()" >
-                <ion-icon size="large" name="md-create" color="primary"></ion-icon>
+            
+            <ion-avatar slot="start">
+                <img *ngIf="seller.profile_img"  src="{{seller.profile_img}}" >
+                <img *ngIf="!seller.profile_img" src="../../assets/logoOfertaCerca/logoBlancoFondoCeleste.jpg" >
+              
+            </ion-avatar>
                 <ion-label>Datos de mi negocio</ion-label>
                 <ion-icon slot="end" src="../../assets/ionicons/chevron-forward-outline.svg"></ion-icon>
             </ion-item-divider>
@@ -40,53 +45,71 @@
                </ion-row>
 
   <ion-item-divider (click)="goTo('my-offers')" >
+      <ion-avatar slot="start">
       <ion-icon size="large" name="md-cash" color="primary"  color="primary"></ion-icon>
+    </ion-avatar>
       <ion-label>Mis ofertas</ion-label>
       <ion-icon slot="end" src="../../assets/ionicons/chevron-forward-outline.svg"></ion-icon>
   </ion-item-divider>
 
   <ion-item-divider (click)="goTo('my-locations') " >
+        <ion-avatar slot="start">
     <ion-icon size="large" name="md-pin" color="primary"></ion-icon>
+</ion-avatar>
     <ion-label>Mis locaciones</ion-label>
     <ion-icon slot="end" src="../../assets/ionicons/chevron-forward-outline.svg"></ion-icon>
 </ion-item-divider>
 
   <ion-item-divider (click)="goTo('related-products') " >
+        <ion-avatar slot="start">
       <ion-icon size="large" name="md-pricetags" color="primary"></ion-icon>
+      </ion-avatar>
       <ion-label>Mis productos</ion-label>
       <ion-icon slot="end" src="../../assets/ionicons/chevron-forward-outline.svg"></ion-icon>
   </ion-item-divider>
 
   <ion-item-divider (click)="goToMyShop() " >
+        <ion-avatar slot="start">
         <ion-icon size="large" src="../../assets/ionicons/store-solid.svg" color="primary"></ion-icon>
+        </ion-avatar>
         <ion-label>Mi shop</ion-label>
         <ion-icon slot="end" src="../../assets/ionicons/chevron-forward-outline.svg"></ion-icon>
     </ion-item-divider>
     <ion-item-divider (click)="goToMyOrders() " >
+            <ion-avatar slot="start">
             <ion-icon size="large" name="md-clipboard" color="primary"></ion-icon>
+            </ion-avatar>
             <ion-label>Pedidos recibidos</ion-label>
             <ion-icon slot="end" src="../../assets/ionicons/chevron-forward-outline.svg"></ion-icon>
         </ion-item-divider>
         <ion-item-divider (click)="goTo('qr-generator') " >
+                <ion-avatar slot="start">
                 <ion-icon size="large" src="../../assets/ionicons/qr-code.svg" color="primary"></ion-icon>
+                </ion-avatar>
                 <ion-label>Generar QR de mi shop</ion-label>
                 <ion-icon slot="end" src="../../assets/ionicons/chevron-forward-outline.svg"></ion-icon>
             </ion-item-divider>
 
   <ion-item-divider (click)="goTo('offer-list-asociate') " >
+        <ion-avatar slot="start">
         <ion-icon size="large" name="md-people" color="primary"></ion-icon>
+        </ion-avatar>
         <ion-label>Asociarme a una oferta</ion-label>
         <ion-icon slot="end" src="../../assets/ionicons/chevron-forward-outline.svg"></ion-icon>
     </ion-item-divider>
  
   <ion-item-divider routerDirection="" >
+        <ion-avatar slot="start">
       <ion-icon size="large" name="md-paper" color="primary"></ion-icon>
+      </ion-avatar>
       <ion-label>Datos de facturación</ion-label>
       <ion-icon slot="end" src="../../assets/ionicons/chevron-forward-outline.svg"></ion-icon>
   </ion-item-divider>
 
   <ion-item-divider routerDirection="" >
+      <ion-avatar slot="start">
       <ion-icon size="large" name="md-notifications" color="primary"></ion-icon>
+    </ion-avatar>
       <ion-label>Notificaciones</ion-label>
       <ion-icon slot="end" src="../../assets/ionicons/chevron-forward-outline.svg"></ion-icon>
   </ion-item-divider>

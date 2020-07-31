@@ -104,7 +104,7 @@ export class MenuComponent{
   ngAfterViewInit()
   {/*
 
-    let user:User = this.tokenServ.GetPayLoad().doc._id
+    let user:User = this.tokenServ.GetPayLoad().usuario._id
     this.getIs_logged();
     this.getIs_seller();
     this.getIs_influencer();
@@ -113,7 +113,7 @@ export class MenuComponent{
     
      this.dbService.setLogged(true);
 
-      localStorage.setItem("user_data", JSON.stringify(this.tokenServ.GetPayLoad().doc));
+      localStorage.setItem("user_data", JSON.stringify(this.tokenServ.GetPayLoad().usuario));
 
       this.dbService.checkIsVendor(user._id).subscribe((dataSeller:any)=>
       { 
@@ -165,9 +165,9 @@ export class MenuComponent{
     
      this.dbService.setLogged(true);
 
-      localStorage.setItem("user_data", JSON.stringify(this.tokenServ.GetPayLoad().doc));
+     // localStorage.setItem("user_data", JSON.stringify(this.tokenServ.GetPayLoad().usuario));
 
-      this.dbService.checkIsVendor(this.tokenServ.GetPayLoad().doc._id).subscribe((dataSeller:any)=>
+      this.dbService.checkIsVendor(this.tokenServ.GetPayLoad().usuario._id).subscribe((dataSeller:any)=>
       { 
         if(dataSeller.vendor_data._id)
         {
@@ -182,16 +182,21 @@ export class MenuComponent{
 
 
 
-      this.dbService.getInfluencerByUser(this.tokenServ.GetPayLoad().doc._id).subscribe((dataInfluencer:any)=>
+      this.dbService.getInfluencerByUser(this.tokenServ.GetPayLoad().usuario._id).subscribe((dataInfluencer:any)=>
       { 
-        if(dataInfluencer.influencer_data._id)
+        if(dataInfluencer)
         {
-          this.dbService.setIsInfluencer$(true);
-          
+         
+          if(dataInfluencer.ok)
+          {
+            this.dbService.setIsInfluencer$(true);
+            
+          }
+          else{
+            this.dbService.setIsInfluencer$(false);
+          }
         }
-        else{
-          this.dbService.setIsInfluencer$(false);
-        }
+
         
       })
       

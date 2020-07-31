@@ -25,7 +25,7 @@ export class GenerateCodeInfluencerComponent implements OnInit {
 
      ionViewWillEnter()
      {
-      this.user=this.tokenServ.GetPayLoad().doc;
+      this.user=this.tokenServ.GetPayLoad().usuario;
      }
 
 

@@ -16,6 +16,9 @@ import { Seller } from '../clases/seller';
 import { ZBar, ZBarOptions } from '@ionic-native/zbar/ngx';
 import { Product } from '../clases/product';
 import { SelectRelatedProductsPage } from '../modals/select-related-products/select-related-products.page';
+import { Token } from '@angular/compiler';
+import { TokenService } from '../services/token.service';
+import { AsociateOfferModalComponent } from '../componentes/asociate-offer-modal/asociate-offer-modal.component';
 
 
 @Component({
@@ -34,6 +37,8 @@ export class NewOfferPage implements OnInit {
     speed: 400,
   };
 
+  time_type;
+  time_value;
   user_id: string;
   user_data: User;
   check_time_discount:boolean;
@@ -45,7 +50,7 @@ export class NewOfferPage implements OnInit {
   user:User;
   index:number=0;
   id: number;
-  product: Product;
+  product: any;
   price: number;
   stock: number;
   currency_commission:string;
@@ -62,7 +67,7 @@ export class NewOfferPage implements OnInit {
   region:Array<string>;
   countries;
   currencies;
-  products:Product[];
+  products:any[];
   brand:string;
   barcode:number;
   offer_exist:boolean=true;
@@ -79,15 +84,18 @@ export class NewOfferPage implements OnInit {
     private ParamSrv: NavParamsService,
     private alertCtrl: AlertController,
     private zbar: ZBar,
-    private dbService: DbService )
+    private dbService: DbService,
+  private token: TokenService )
      {
        this.prod_subcribe= new Subscription()
-       this.product= new Product();
+       this.product= {
+        "product_ref":""
+       }
        this.products= new Array<Product>();
       this.aux_product_list= new Array<Product>();
        
        
-      this.user= JSON.parse(localStorage.getItem("user_data"));
+      this.user = token.GetPayLoad().usuario;
       this.kind="Producto";
       this.countrySrv.getCountries().subscribe((c)=>{
         this.countries= c;
@@ -97,7 +105,14 @@ export class NewOfferPage implements OnInit {
 
       this.dbService.checkIsVendor(this.user._id).subscribe((data:any)=>
     {
-      this.seller=data.vendor_data;
+      if(data)
+      {
+        this.seller=data.vendor_data;
+        this.currency_commission = this.seller.currency;
+        this.prod_currency = this.seller.currency;
+        console.log(this.seller)
+      }
+
     })
    }
 
@@ -126,7 +141,7 @@ export class NewOfferPage implements OnInit {
      console.log(key)
      if(key != undefined && key != "" && key != null && key != this.product.name )
      {
-     this.prod_subcribe = this.dbService.getFilterProducts(key).subscribe( (data:any)=>
+     this.prod_subcribe = this.dbService.getFilterProducts(key, this.kind).subscribe( (data:any)=>
       {console.log(this.prod_subcribe.closed)
         this.aux_product_list = data;
         console.log(data);
@@ -309,8 +324,20 @@ export class NewOfferPage implements OnInit {
      modal.present();
      modal.onDidDismiss().then((data)=>{
       console.log(data.data)
-      this.products = data.data.result.products;
-      this.product = data.data.result.product;
+
+      if(this.type_offer == "Descuento")
+      {
+        this.products = data.data.result.products
+      }
+      else{
+        this.products[0]=data.data.result.product;
+        this.product =data.data.result.product;
+      }
+      /*data.data.products ? 
+      this.products = data.data.result.products :
+      this.products.push(data.data.result.product) ;*/
+      console.log(this.products)
+     
       
     })
   }
@@ -367,11 +394,14 @@ export class NewOfferPage implements OnInit {
 
   let offer = new Offer()
   this.check_time_discount ? offer.time_discount = Date.now() : offer.time_discount=0;
+
   if(this.type_offer=='Precio')
   {
    
+    offer.titulo = this.product.product_ref.name + " a " + this.prod_currency + this.price;
+
     offer.category = this.category;
-    offer.products.push(this.product);
+   // offer.products.push(this.product);
     offer.kind = this.kind;
     offer.currency_commission = this.currency_commission;
     offer.commission = this.commission;
@@ -379,16 +409,21 @@ export class NewOfferPage implements OnInit {
     offer.price_currency = this.prod_currency;
     offer.description = this.description;
     offer.offer_name = this.type_offer;
-    offer.sellers.push(this.seller._id);
+    offer.products = this.products;
+    offer.products[0].product_ref.name = this.products[0].product_ref.name.toLowerCase();
+
+    //offer.sellers.push(this.seller._id);
     offer.stock=this.stock;
     offer.views=0;
-    offer.sellers_cuantity= offer.sellers.length;
+   // offer.sellers_cuantity= offer.sellers.length;
     offer.offer_name= "Precio"
     offer.is_active=false;
-    offer.products_id.push(this.product._id);
+    //offer.products_id.push(this.product._id);
   }
   if(this.type_offer=='Descuento')
   {
+    offer.titulo = "% "+ this.percentage + " en " + this.category;
+
     offer.category = this.category;
     offer.currency_commission = this.currency_commission;
     offer.commission = this.commission;
@@ -396,12 +431,12 @@ export class NewOfferPage implements OnInit {
     offer.description = this.description;
     offer.offer_name = this.type_offer;
     
-    offer.sellers.push(this.seller._id);
+   // offer.sellers.push(this.seller._id);
     offer.stock=this.stock;
-    //offer.products_id.push(this.product._id); 
+    
     offer.views=0;
     offer.offer_name= "Descuento";
-    offer.sellers_cuantity= offer.sellers.length;
+   // offer.sellers_cuantity= offer.sellers.length;
     offer.is_active=false;
     offer.products= this.products 
     /*for(let i=0; i< this.products.length; i++)
@@ -411,16 +446,21 @@ export class NewOfferPage implements OnInit {
   }
   if(this.type_offer=='Gratis')
   {
+
+    offer.titulo = this.product.product_ref.name+ " Gratis";
     offer.category = this.category;
     offer.currency_commission = this.currency_commission;
     offer.commission = this.commission;
     offer.description = this.description;
     offer.offer_name = this.type_offer;
-    offer.sellers.push(this.seller._id);
+    offer.products = this.products;
+    offer.products[0].product_ref.name = this.products[0].product_ref.name.toLowerCase() ;
+    
+    //offer.sellers.push(this.seller._id);
     offer.stock=this.stock;
-    offer.products.push(this.product);
+   // offer.products.push(this.product);
     offer.views=0;
-    offer.sellers_cuantity= offer.sellers.length;
+   // offer.sellers_cuantity= offer.sellers.length;
     offer.is_active=false;
         
 
@@ -428,7 +468,7 @@ export class NewOfferPage implements OnInit {
 
   console.log(offer)
 
-  
+ 
 
     this.saveOfferDB(offer);
 
@@ -446,13 +486,18 @@ export class NewOfferPage implements OnInit {
   saveOfferDB(offer)
   {
     let fd = new FormData();
+    fd.append("vendor_id", JSON.stringify(this.seller._id));
+    fd.append("location", JSON.stringify(this.seller.location));
     fd.append("offer", JSON.stringify(offer));
     fd.append("image", this.offerImg);
-    console.log(fd.get("image"));
+    console.log(this.seller.location);
 
-    this.dbService.createOffer(fd)
-      .subscribe((data: any) => {
-        if(data.status == 200) {
+  
+
+  this.dbService.createOffer(fd)
+      .toPromise().then(async (data: any) => {
+        console.log(data);
+        if(data.ok && !data.data) {
 
           this.dbService.offer_id = data.id;
           const toast = document.createElement('ion-toast');
@@ -463,19 +508,77 @@ export class NewOfferPage implements OnInit {
           return toast.present();
 
         }
-        this.spinner=false;
-      });
 
-    this.dbService.updateUser(this.dbService.user_id, this.dbService.offer_id)
-      .subscribe((data: any) => {
-        if(data.status == 200) {
+        if( data.ok && data.data)
+        {
+          fd.delete("image");
+          fd.append("vendor_stock", offer.stock);
+          fd.append("offer_id", data.data._id);
 
-          this.navCtrl.navigateRoot('home');
-          console.log('ok');
+          this.ParamSrv.SetParam = 
+          {
+            "ofertaExistente": data.data,
+            "fd": fd
+          }
 
+          const asociateModal = await this.modalController.create({
+            component: AsociateOfferModalComponent,
+            cssClass: "modal-rango",
+            componentProps: {
+              "ofertaExistente":data.data,
+              fd: fd
+            }
+          })
+
+          asociateModal.present();
+
+          // const alert = await this.alertCtrl.create({
+
+          //   backdropDismiss:true,
+          //   header: "Ya exíste una oferta similar.",
+          //   subHeader:  "Esta oferta esta en proceso, tomaremos su comision para generar la comision promedio." + this.currency_commission + this.commission,
+          //   message: "¿Quieres unirte a la oferta?.",
+            
+    
+          //   buttons: [
+          //     {
+          //       text: 'Cancelar',
+          //       role: 'cancel',
+          //       cssClass: 'parimary',
+                
+          //       handler: () => {
+    
+          //       }
+          //     }, {
+          //       text: 'Unirse.',
+          //       handler: () => {
+          //
+          //         fd.delete("image");
+          //         fd.append("offer_id", data.data._id);
+
+          //          console.log(fd);
+
+          //          this.dbService.joinToOffer(fd)
+          //          .toPromise()
+          //          .then((dataJoin:any)=>
+          //         {
+          //           console.log(dataJoin)
+          //         })
+          //       }
+          //     }
+          //   ]
+          // });
+      
+          // await alert.present();
         }
+        this.spinner=false;
+      })
+      .catch((err:any)=>
+    {
+      this.spinner = false;
+    })
 
-      });
+
   }
 
   ngOnInit() {
