@@ -14,6 +14,35 @@
   
   </ion-toolbar>
   
+  <ion-chip *ngIf="influencer" outline color="primary" >
+    <ion-avatar *ngIf="influencer.profile_img">
+      <img src="{{influencer.profile_img}}" alt="">
+    </ion-avatar>
+
+    <ion-avatar *ngIf="!influencer.profile_img">
+        <img src="../../assets/logoOfertaCerca/logoCelesteFondoBlancoChico.jpg" alt="">
+      </ion-avatar>
+
+      <ion-label>
+        {{influencer.code}}
+      </ion-label>
+
+  </ion-chip>
+
+  <div *ngIf="offer">
+ 
+    <ion-text class="ion-text-wrap">
+        <h2>
+            {{offer.titulo}}
+        </h2>
+    </ion-text>
+
+    <p>
+      {{offer.description}}
+    </p>
+  
+
+</div>
   <ion-row class="ion-justify-content-center">
     <div id="map"></div>
   </ion-row>

@@ -15,6 +15,11 @@ export class Seller {
     products:Product[];
     profile_img;
     delivery;
+    desde:string;
+    hasta:string;
+    retiro:boolean;
+    efectivo:boolean;
+    tarjeta:boolean;
     banner_img;
     offers:Array<{
         "association_date":number,

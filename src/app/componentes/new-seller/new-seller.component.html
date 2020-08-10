@@ -14,11 +14,11 @@
     </ion-row>
     
 
-    <form [formGroup]="registroForm" (ngSubmit)="saveSeller()">
+    <form [formGroup]="registroForm">
 
         <ion-row class="ion-justify-content-center">
             <ion-col class="ion-justify-content-center" size="10" >
-                <h4>Nombre</h4>
+                <ion-label>Nombre</ion-label>
             </ion-col>
 
             <ion-col size=10 >
@@ -27,7 +27,7 @@
           </ion-row>
 
           <ion-row class="ion-justify-content-center">               
-              <h4>Selecciona tu categoria</h4>
+              <ion-label>Selecciona tu categoria</ion-label>
             </ion-row >
 
         <ion-row class="ion-justify-content-center">
@@ -45,7 +45,7 @@
 
         <ion-row class="ion-justify-content-center">
                 <ion-col class="ion-justify-content-center" size="10" >
-                    <h4>Seleccione su moneda</h4>
+                    <ion-label>Seleccione su moneda</ion-label>
                 </ion-col>
     
                 <ion-col size=10 >
@@ -57,10 +57,11 @@
                 </ion-col>
               </ion-row>
 
+
         
             <ion-row class="ion-justify-content-center">
                 <ion-col class="ion-justify-content-center" size="10" >
-                    <h4>Cuit</h4>
+                    <ion-label>Cuit</ion-label>
                 </ion-col>
     
                 <ion-col size=10 >
@@ -68,15 +69,57 @@
                 </ion-col>
               </ion-row>
 
-              <ion-row class="ion-justify-content-center">
-                <ion-spinner *ngIf="spinner" name="crescent">
 
-                </ion-spinner>
-                <ion-button type="submit" *ngIf="!spinner" shape="round" expand="block" [disabled]="!registroForm.valid">
-                  Guardar datos
-                </ion-button>
-              </ion-row>
+              <ion-row class="ion-justify-content-center">
+                    <ion-col class="ion-justify-content-center" size="10" >
+                        <ion-label>Horario de atención</ion-label>
+                    </ion-col>
+        
+                    <ion-col size=5 >
+                          
+                            <ion-datetime displayFormat="HH:mm"  placeholder="Desde" name="desde" [formControl]="desde" required></ion-datetime>
+                            
+                    
+                    </ion-col>
+                    <ion-col size=5 >
+                            <ion-datetime displayFormat="HH:mm"  placeholder="Hasta" name="hasta" [formControl]="hasta" required></ion-datetime>
+                        </ion-col>
+                  </ion-row>
+
             </form>
+
+            <ion-list>
+                    <ion-list-header>Condiciónes de pago</ion-list-header>
+                    <ion-item>
+                      <ion-label>Efectivo</ion-label>
+                      <ion-checkbox [(ngModel)]="efectivo" ></ion-checkbox>
+                    </ion-item>
+                    <ion-item>
+                          <ion-label>Tarjeta</ion-label>
+                          <ion-checkbox [(ngModel)]="tarjeta"  ></ion-checkbox>
+                      </ion-item>
+                </ion-list>
+
+              <ion-list>
+                  <ion-list-header>Condiciónes de entrega</ion-list-header>
+                  <ion-item>
+                    <ion-label>Delivery</ion-label>
+                    <ion-checkbox [(ngModel)]="delivery" ></ion-checkbox>
+                  </ion-item>
+                  <ion-item>
+                        <ion-label>Retiro de sucursal</ion-label>
+                        <ion-checkbox [(ngModel)]="retiro"  ></ion-checkbox>
+                    </ion-item>
+              </ion-list>
+
+              <ion-row class="ion-justify-content-center">
+                    <ion-spinner *ngIf="spinner" name="crescent">
+    
+                    </ion-spinner>
+                    <ion-button  *ngIf="!spinner" shape="round" expand="block" (click)="saveSeller()" [disabled]="!registroForm.valid">
+                      Guardar datos
+                    </ion-button>
+                  </ion-row>
 
 </ion-content>
 

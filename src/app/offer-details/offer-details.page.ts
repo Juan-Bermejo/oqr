@@ -29,6 +29,8 @@ export class OfferDetailsPage implements OnInit {
 
 
   
+  influencer: any;
+  user_data: any;
   locations_data: any;
   dataloc: any[];
   offerVendors: any;
@@ -87,7 +89,17 @@ export class OfferDetailsPage implements OnInit {
        console.log("splitUrl: ",splitURL);
 
        this.offerId = splitURL[5].split("?")[0];
+       this.influencer_id = splitURL[5].split("?")[1].split("=")[1];
+       console.log(this.influencer_id)
       }
+
+      this.dbService.getInfByCode(this.influencer_id).subscribe((data:any)=>{
+        console.log(data)
+        if(data.ok)
+        {
+          this.influencer = data.influencer;
+        }
+      })
 
 
         this.dbService.getOffer(this.offerId).toPromise().then((data:any)=>
@@ -304,21 +316,6 @@ export class OfferDetailsPage implements OnInit {
   }
 
 
-
-
-
-    ionViewDidLoad()
-  {}
-  
-
-  ionViewWillEnter()
-  {}
-
-  ionViewWillLeave()
-  {}
-
-  ionViewDidEnter()
-  {}
 
 
 }

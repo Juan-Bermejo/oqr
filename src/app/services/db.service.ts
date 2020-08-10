@@ -50,6 +50,40 @@ export class DbService {
 
    }
 
+   cargarSaldo(data)
+   {
+    let TRAN_URL = this.URL_SERVER.concat('transaction');
+    const headers = new HttpHeaders({
+      'x-token': localStorage.getItem('token')
+    });
+    return this.http.post(TRAN_URL, data,
+      {headers});
+   }
+
+   getTransactions()
+   {
+    let url = 'transaction/transactions';
+    const headers = new HttpHeaders({
+      'x-token': localStorage.getItem('token')
+    });
+    let USER_URL = this.URL_SERVER.concat(url);
+    return this.http.get(USER_URL,
+      {headers});
+   }
+
+   apipagos()
+   {
+     return this.http.get("https://api.mobbex.com/p/sources/list/e39a00df-ab28-41ec-87dc-1641802c3ab1");
+   }
+
+
+   pago()
+   {
+    let url = 'pagos/checkout';
+    let USER_URL = this.URL_SERVER.concat(url);
+    return this.http.post(USER_URL, {"user_id":"hola mundis!"},
+      {headers: new HttpHeaders({"Content-Type": "application/json"})});
+   }
 
 
     addUser(user: User) {
@@ -104,12 +138,19 @@ export class DbService {
 
     //INFLUENCER SERVICES
 
-    createInfluencer(inf_data: Influencer){
+    getInfByCode(code: string){
+      let INFL_URL = this.URL_SERVER.concat('influencers/getinfbycode');
+      let data = {'code': code}
+
+      return this.http.post(INFL_URL, data);
+    }
+
+    createInfluencer(data){
       let INFL_URL = this.URL_SERVER.concat('influencers/');
       const headers = new HttpHeaders({
         'x-token': localStorage.getItem('token')
       });
-      return this.http.post(INFL_URL, inf_data,
+      return this.http.post(INFL_URL, data,
         {headers});
     }
 
@@ -130,14 +171,18 @@ export class DbService {
         {headers: new HttpHeaders({"Content-Type": "application/json"})});
     }
 
-    promoteOffer(user_id: string, offer: Offer){
+    getOffersInf(code: string){
+      let INFL_URL = this.URL_SERVER.concat('influencers/getoffersinf');
+      let data = {'code': code}
+      return this.http.post(INFL_URL, data,
+        {headers: new HttpHeaders({"Content-Type": "application/json"})});
+    }
+
+    promoteOffer(user_id: string, offer: string){
       let INFL_URL = this.URL_SERVER.concat('influencers/promote');
       let data = {
-        "user_id": user_id,
-        "offer_id": offer._id,
-        "product": offer.offer_name,
-        "category": offer.category,
-        "comission": offer.commission,
+        "influencer_id": user_id,
+        "offer_id": offer
       }
       return this.http.post(INFL_URL, data,
         {headers: new HttpHeaders({"Content-Type": "application/json"})});
@@ -219,6 +264,25 @@ export class DbService {
       let data = {
         "locality": locality,
         "sub_locality": sub_locality
+      }
+      let OFFER_URL = this.URL_SERVER.concat(url);
+      return this.http.post<any>(OFFER_URL + `/?pagina=${this.pagina}`, data,
+        {headers: new HttpHeaders({"Content-Type": "application/json"})});
+    }
+
+
+    nearOffersRadio(latitud: number, longitud: number, pull: boolean = false){
+      let url = 'offers/nearoffersn'
+
+      if (pull) {
+        this.pagina = 0;
+      }
+  
+      this.pagina++;
+      
+      let data = {
+        "lat": latitud,
+        "lon": longitud
       }
       let OFFER_URL = this.URL_SERVER.concat(url);
       return this.http.post<any>(OFFER_URL + `/?pagina=${this.pagina}`, data,
@@ -462,9 +526,14 @@ export class DbService {
     }
 
     deleteVendor(vendor_id: string){
-      let url = 'vendors/'.concat(vendor_id);
+      let url = 'vendors/delete';
       let VEND_URL = this.URL_SERVER.concat(url);
-      return this.http.delete(VEND_URL);
+
+      const headers = new HttpHeaders({
+        'x-token': localStorage.getItem('token')
+      });
+
+      return this.http.post(VEND_URL, {"vendor_id": vendor_id}, {headers});
     }
 
     //PURCHASES SERVICES
@@ -502,7 +571,7 @@ export class DbService {
     //IMAGES
 
     sendImage(form) {
-      let url = 'services/upload';
+      let url = 'vendors/upload';
       let SERVICE_URL = this.URL_SERVER.concat(url);
       return this.http.post(SERVICE_URL, form);
     }

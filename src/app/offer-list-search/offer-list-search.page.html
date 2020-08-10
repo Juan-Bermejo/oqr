@@ -65,22 +65,16 @@
     </ion-col>
 
     <ion-col size=8>
-        <ion-card-title color="primary" *ngIf="offer.offer_name=='Precio'">
-            {{offer.products[0].name}} a {{offer.price | currency: offer.price_currency}}
-           </ion-card-title>
-           <ion-card-title color="primary" *ngIf="offer.offer_name=='Gratis'">
-             {{offer.products[0].name}} Gratis!
-            
-            </ion-card-title>
-         <ion-card-title color="primary" *ngIf="offer.offer_name=='Descuento'">
-           %{{offer.percentage}} de descuento en {{offer.category}}
+
+         <ion-card-title color="primary" >
+           {{offer.titulo}}
            </ion-card-title>
 
         
             <ion-card-subtitle color="dark">{{offer.description}}</ion-card-subtitle>
      
 
-              <ion-row justify-content-start style="height: 80%">
+              <ion-row justify-content-start >
              
                       <ion-col size=4 class="ion-align-self-end">  
                         <ion-chip outline color="primary">

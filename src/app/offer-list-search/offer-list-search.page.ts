@@ -32,8 +32,8 @@ export class OfferListSearchPage implements OnInit {
       this.aux_offer_list= new Array();
 
 
-      this.dbServ.getAllOffers().subscribe((data: Offer[])=>{
-        this.offer_list=data;
+      this.dbServ.getAllOffers(false).subscribe((data: any)=>{
+        this.offer_list=data.offers;
         console.log(this.offer_list)
        this.aux_offer_list=this.offer_list;
       })
@@ -60,7 +60,7 @@ export class OfferListSearchPage implements OnInit {
     
     if(key)
     {
-     // this.aux_offer_list= await this.offer_list.filter(item => item.product.toLowerCase().includes(key) );
+      this.aux_offer_list= await this.offer_list.filter(item => item.titulo.toLowerCase().includes(key) );
     }
     else
     {
@@ -77,7 +77,7 @@ export class OfferListSearchPage implements OnInit {
 
   async goToOfferDetails(offer)
   {
-    
+    console.log(offer)
   this.ParamSrv.param=offer
   this.router.navigateByUrl('promote-offer/' + offer._id);
   

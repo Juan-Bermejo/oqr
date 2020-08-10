@@ -12,6 +12,9 @@ ion-back-button{
    
 
   }
+  ion-back-button{
+    --background:rgb(41, 171, 226);
+}
 
  /* img{
     height: 150px;
@@ -253,8 +256,8 @@ h1{
     .img-offer{
         max-width: 350px;
         min-width: 150px;
-        height: 350px;
-        width: 350px;
+        height:250px;
+        width: 250px;
         border-radius: 20px;
     }
 
@@ -264,8 +267,8 @@ h1{
       z-index: 1003;
       top:5px;
       left: 5px;
-      height: 150px;
-      width: 150px;
+      height: 85px;
+      width: 85px;
       color:white;
       border-style: solid;
       border-width: 2px;
@@ -275,6 +278,17 @@ h1{
       padding-top: 15px;
       padding-bottom: none;
 
+    }
+
+    .offer-stamp
+    {
+        position: absolute;
+        top:1px;
+        left: 1px;
+        height: 80px;
+      width: 80px;
+
+        
     }
 
 
@@ -381,8 +395,12 @@ ion-fab-button{
     }
     .offer-stamp
     {
-        max-height: 65px;
-        max-width: 65px;
+        // max-height: 65px;
+        // max-width: 65px;
+        top: 3px;
+        left: 3px;
+        height: 90px;
+        width: 90px;
     }
 
     .img-offer{
@@ -412,9 +430,9 @@ ion-fab-button{
   
       }
 
-      ion-label{
-          font-size: xx-small;
-      }
+    //   ion-label{
+    //       font-size: xx-small;
+    //   }
 
 
     }

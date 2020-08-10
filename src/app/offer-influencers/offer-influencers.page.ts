@@ -45,7 +45,17 @@ export class OfferInfluencersPage implements OnInit {
       console.log(splitURL)
      this.offerId = splitURL[5].split("?")[0];
     }
+    console.log(this.offerId);
 
+    this.dbService.getInfluencersByOffer(this.offerId).subscribe((data:any)=>
+  {
+    console.log(data);
+    if(data.ok)
+    {
+      this.influencers = data.data
+    }
+    
+  })
       this.dbService.getOffer(this.offerId).toPromise().then((data:any)=>
     {
       this.offer= data ;

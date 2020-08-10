@@ -15,6 +15,7 @@ export class EditShopComponent implements OnInit {
   sellerImg: any;
   sellerId:string;
   type;
+  photoSelectedBanner: string | ArrayBuffer;
   
 
   constructor(
@@ -26,6 +27,11 @@ export class EditShopComponent implements OnInit {
      }
 
      fileUpl(files: FileList){
+       console.log(files);
+      const reader = new FileReader();
+      reader.onload = e => this.photoSelectedBanner = reader.result;
+      reader.readAsDataURL(files[0]);
+      
        this.bannerImg = files.item(0);
        
      }
@@ -46,7 +52,11 @@ export class EditShopComponent implements OnInit {
        console.log(fd);
        this.dbs.sendImage(fd).toPromise().then((res:any)=>
       {
-        console.log(res);
+        if(res.ok)
+        {
+          console.log(res);
+        }
+        
       })
      }
 
@@ -60,7 +70,10 @@ export class EditShopComponent implements OnInit {
       console.log(fd);
       this.dbs.sendImage(fd).toPromise().then((res:any)=>
      {
-       console.log(res);
+      if(res.ok)
+        {
+          console.log(res);
+        }
      })
      }
   
@@ -70,8 +83,11 @@ export class EditShopComponent implements OnInit {
     
     this.modalCtrl.dismiss({
 
-      'dismissed': true
+      'dismissed': true,
     })
+
+    
+    
   }
   ngOnInit() {}
 

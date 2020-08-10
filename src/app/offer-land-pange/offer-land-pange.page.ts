@@ -108,6 +108,26 @@ export class OfferLandPangePage implements OnInit {
             
               }               /* FIN DEL CONSTRUCTOR */
 
+
+pago()
+{
+
+  let json ={
+    quantity: this.offerdata.commission * -1,
+    currency: this.offerdata.currency_commission,
+    method: "compra",
+    offer_id: this.offerdata._id
+  }
+
+  this.dbService.cargarSaldo(json).subscribe(data=>
+  {
+    
+
+    console.log(data);
+  })
+  
+}
+
 ionViewDidEnter()
 {
 
@@ -519,7 +539,7 @@ async toCart()
 {
   const modal = await this.modalCtrl.create({
     component: LoginComponent,
-    cssClass:"modal"
+    cssClass:"modal-login"
     
   });
    modal.present();
@@ -652,20 +672,18 @@ async categoryFilter(type:string)
 
 async viewOffer(offer:Offer)
 {
-  console.log(this.seller)
-  let offer_seller = await this.seller.offers.find(o=>o.offer_id == offer._id);
-console.log(offer_seller)
+ 
   this.navParams.SetParam = {
-    "offer_seller": offer_seller,
-    "offer": offer,
-    "cart": this.cart,
-    "addOfferCart": this.addOtherOfferToCart,
+    "products": this.products,
+    "offer": this.offerdata,
     "seller": this.seller
   }
 
   const offerModal = await this.modalCtrl.create(
     {
-      component: OfferViewComponent
+      component: OfferViewComponent,
+      cssClass: "modal-offer-products"
+      
     }
   ) 
 
@@ -702,11 +720,6 @@ ionViewWillEnter()
    
   }
 
-//   this.dbService.getOffer(this.offerId).toPromise().then((data:any)=>
-// {
-//   this.offerdata = data;
-
-// })
 
 this.dbService.getVendorByName(this.sellerName)
 .toPromise()

@@ -32,6 +32,7 @@ export class PromoteOfferPage implements OnInit {
   is_logged:boolean=false;
   offer_id;
   offer_img;
+  influencer:any;
 
   constructor(private route: ActivatedRoute, 
     public navCtrl: NavController,
@@ -48,10 +49,12 @@ export class PromoteOfferPage implements OnInit {
    }
 
   ngOnInit() {
+    
     if (document.URL.indexOf("/") > 0) {
       let splitURL = document.URL.split("/");
       console.log(splitURL)
      this.offer_id = splitURL[5].split("?")[0];
+
    this.dbService.getOffer(this.offer_id).toPromise().then((data:any)=>
   {
     this.offer = data;
@@ -172,19 +175,34 @@ export class PromoteOfferPage implements OnInit {
 
 
   promoteOffer()
-  {/*
+  {
+    console.log(this.influencer)
+    console.log(this.offer_id)
     this.spinner = true;
-
-    setTimeout(() => {
-
-      this.dbService
-
-      
-    }, 1000);*/
+    this.dbService.promoteOffer(this.influencer._id,this.offer_id)
+    .subscribe((data:any)=>
+  {
+    if(data.ok)
+    {
+      console.log(data);
+      this.spinner = false;
+    }
+  })
   }
 
   async ionViewWillEnter()
   {
+
+    this.dbService.getInfluencerByUser(this.user._id)
+    .subscribe((data:any)=>
+  {
+    if(data)
+    {
+      this.influencer = data.influencer_data;
+    }
+    
+  })
+
 
     if (document.URL.indexOf("/") > 0) {
       let splitURL = document.URL.split("/");

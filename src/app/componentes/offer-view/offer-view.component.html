@@ -1,10 +1,9 @@
 
 
-<ion-content padding="true" class="ion-align-items-center">
-<ion-row class="ion-justify-content-center" style="height: 80%;">
+<ion-content padding="true">
 
 
-  <div class="cont">
+
           <ion-row class="ion-justify-content-end" padding>
               <ion-button fill="clear" (click)="dismissModal()"> 
                   <ion-icon name="md-close" size="large" color="primary"></ion-icon>
@@ -13,36 +12,11 @@
 
 
 
-          <ion-title style="font-size: medium" >
+          <ion-title style="font-size: medium; text-align: center" >
             %{{offer.percentage}} de descuento en {{offer.category}}
             </ion-title>
 
-           <!---
-                <ion-list-header>
-                    <ion-label>Productos</ion-label>
-                  </ion-list-header>
-              <ion-item-divider *ngFor="let p of products">
-                  <ion-thumbnail slot="start">
-                      <img src="{{p.product_image}}">
-                    </ion-thumbnail>
-                              <ion-col size=6>
-                                  
-                <ion-label>{{p.name}}</ion-label>
-              </ion-col>
-              <ion-col size=2>
-                <ion-button (click)="selectProduct(p)">
-                  <ion-icon name="md-add" >
-                  </ion-icon>
-                </ion-button>
-              </ion-col>
-                <ion-col size=2>
-                <ion-button>
-                  <ion-icon name="md-remove"  ></ion-icon>
-                </ion-button>
-              </ion-col>
-                          </ion-item-divider>
 
-                        -->
                           <ion-list>
                               <ion-list-header>Productos seleccionados</ion-list-header>
                               <ion-item *ngFor="let p of products">
@@ -50,28 +24,28 @@
                                       <img src="{{p.product_image}}">
                                   </ion-thumbnail>
                                   <ion-col size=4>
-                                      <ion-label class="ion-text-wrap" style="font-size: small">
-                                          {{p.name}}
+                                      <ion-label class="ion-text-wrap" style="font-size: x-small">
+                                          {{p.product_ref.name}}
                                       </ion-label>
                                     </ion-col>
                                   
                               
                                  
 
-                                      <ion-col size=2>
-                                  <ion-label  color="danger" style="text-decoration:line-through;" style="font-size: small">
+                                      <ion-col size=4>
+                                  <ion-label  color="danger" style="text-decoration:line-through; font-size: small">
                                       {{p.price | currency}}
                                   </ion-label>
                                   </ion-col>
-                                  <ion-col size=2>
-                                  <ion-label color="success" style="font-size: small">
-                                      {{(p.price - p.price *( offer.percentage / 100)) | currency}}
+                                  <ion-col size=4>
+                                  <ion-label color="success" >
+                                      {{p.price - (p.price *( offer.percentage / 100)) | currency }}
 
                                      
                                   </ion-label>
                                   
                                   </ion-col >
-                                  <ion-col size=4 >
+                                  <!-- <ion-col size=4 >
                                   <ion-button (click)="selectProduct(p)">
                                       <ion-icon name="md-add" >
                                       </ion-icon>
@@ -79,17 +53,17 @@
                                     <ion-button (click)="removeProduct(p)">
                                         <ion-icon name="md-remove"  ></ion-icon>
                                       </ion-button>
-                                    </ion-col>
+                                    </ion-col> -->
                               </ion-item>
                             
                           </ion-list>
      
-                        </div>
+                    
   
-                      </ion-row>
+               
           </ion-content>
 
-          <ion-fab vertical="bottom" horizontal="end">
+          <!-- <ion-fab vertical="bottom" horizontal="end">
               <div *ngIf="cart.details.length > 0" class="red-point" style="z-index: 1000">
                       {{cart.details.length}}
                       </div>
@@ -101,5 +75,5 @@
           <ion-fab-button><ion-icon name="md-chatboxes" size="large"></ion-icon></ion-fab-button>
         
         </ion-fab>
-     
+      -->
     

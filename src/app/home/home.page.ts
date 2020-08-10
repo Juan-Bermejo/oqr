@@ -220,7 +220,7 @@ this.getGeoCoderAddress(this.latitude, this.longitude, 2);
 
     
 
-    this.dbService.nearOffers( this.location_data.town, this.location_data.suburb, pull
+    this.dbService.nearOffersRadio( this.location_data.latitude, this.location_data.longitude, pull
     ).subscribe(responde=>
   {
     console.log(responde)
@@ -270,9 +270,12 @@ this.getGeoCoderAddress(this.latitude, this.longitude, 2);
     .then((result:any) =>{ 
 
       this.location_data= result.address;
+      this.location_data.latitude= lat;
+      this.location_data.longitude= long;
 
       // this.myAddress=result[0].thoroughfare + " " + result[0].subThoroughfare +", "+ result[0].locality
       // +", "+result[0].countryName;
+
 
       localStorage.setItem("location_data", JSON.stringify(this.location_data));
      
@@ -303,7 +306,7 @@ async inputInfluecerCode()
 {
   const modal = await this.modalController.create({
     component: InputCodeInfluencerComponent,
-    cssClass:"modal"
+    cssClass:"modal-influencer-code"
     
   });
    modal.present();
@@ -320,7 +323,7 @@ async goToLogin()
 {
   const modal = await this.modalController.create({
     component: LoginComponent,
-    cssClass:"modal"
+    cssClass:"modal-login"
     
   });
    modal.present();

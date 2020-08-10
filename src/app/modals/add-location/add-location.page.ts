@@ -12,6 +12,7 @@ import { environment } from '../../../environments/environment';
 import { Router } from '@angular/router';
 import { TokenService } from '../../services/token.service';
 import { LocationService } from '../../services/location.service';
+import { parse } from 'url';
 
 
 @Component({
@@ -151,8 +152,9 @@ public searchElementRef: ElementRef;
 
       this.locationServ.reverse(this.latitude, this.longitude).toPromise()
       .then((dataL:any)=>{
-        console.log(dataL)
-        let l= new Location();
+   
+        console.log(this.address)
+        let l = new Location();
         l.address=this.address;
         l.city= dataL.address.town;
         l.country=dataL.address.country;
@@ -161,9 +163,10 @@ public searchElementRef: ElementRef;
         l.province=dataL.address.state;
         l.subLocality= dataL.address.suburb;
         l.vendor_id=this.seller._id;
+
+        l.location=[l.latitude, l.longitude];
+
   
-       console.log(this.location_data)
-       console.log(l);
  
 
        this.dbService.saveLocation(l).toPromise().then((data:any)=>

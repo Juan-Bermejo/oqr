@@ -61,31 +61,11 @@ export class OfferViewComponent implements OnInit {
     let data: any = this.navParams.GetParam;
 
     this.offer = data.offer;
-    this.cart = data.cart;
-    this.offer_seller = data.offer_seller;
-    let auxP:Product[] = new Array<Product>();
-     auxP = data.offer_seller.offer_products;
+    this.products = data.products;
     this.seller = data.seller;
-    console.log(this.seller)
-
-    let i:any;
-    let j: any;
-    this.products = new Array<Product>();
-  for (i in this.seller.products)
-  {
-    console.log(this.seller.products[i])
-    for(j in auxP)
-    {
-      if(this.seller.products[i]._id == auxP[j]._id)
-      {
-        this.products.push(this.seller.products[i])
-      }
-    }
-  }
-
-    console.log(data.offer_seller);
-  console.log(this.products);
-  console.log(data)
+    console.log(this.products)
+    console.log(this.offer)
+  
  
 }
 

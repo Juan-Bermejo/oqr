@@ -1,5 +1,5 @@
 
-<ion-content>
+<ion-content padding="true">
     <ion-toolbar>
         <ion-buttons slot="start" collapse="true">
             <ion-back-button mode="md" type="button" color="light" icon="md-arrow-back" defaultHref="seller-panel">
@@ -9,25 +9,55 @@
     </ion-toolbar>
 
     <div *ngIf="influencers">
-        <ion-list *ngFor="let c of influencers">
-        
-        </ion-list>
+
+        <ion-card *ngFor="let i of influencers" class="ion-activatable" (click)="goTo(i.influencer.code)">
+                <ion-ripple-effect></ion-ripple-effect>
+            <ion-row class="ion-align-items-center" >
+                <ion-col size=4>
+
+                        <ion-avatar  *ngIf="i.influencer.profile_img" >
+                                <img src="{{i.influencer.profile_img}}" alt="">
+                            </ion-avatar>
+
+                            <ion-avatar  *ngIf="!i.influencer.profile_img" >
+                                    <img src="../../assets/logoOfertaCerca/logoCelesteFondoBlancoChico.jpg" alt="">
+                                </ion-avatar>
+
+                </ion-col>
+
+                <ion-col size=8>
+                        <ion-label style="font-size: 18px;">
+                                {{i.influencer.code}}
+                            </ion-label>
+                    </ion-col>
+
+            </ion-row>
+
+
+                </ion-card>
+                
+
         </div>
-        <div class="align-center" *ngIf="!influencers">
-          <ion-row class="ion-justify-content-center">
+
+
+        <div class="cont-center" *ngIf="!influencers">
+                <ion-row class="justify-content-center">
+
               <ion-title style="color: rgba(109, 109, 109, 0.753); text-align: center">
                   Nadie esta promocionando esta oferta.
                 </ion-title>
-          </ion-row>
-        </div>
-          <div *ngIf="!influencers">
-              <ion-row class="ion-justify-content-center">
-                  <ion-button expand="block" shape="round" (click)="goTo('false')" >
+            </ion-row>
+
+     
+        
+                <ion-row class="justify-content-center" style="justify-content: center">
+                  <ion-button  shape="round" (click)="goTo('false')" >
                     Ver oferta
                   </ion-button>
-              </ion-row>
-        
-        </div>
+                </ion-row>
+    </div>
+
+
 
 
 </ion-content>

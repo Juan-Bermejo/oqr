@@ -32,7 +32,7 @@ import { OfferViewComponent } from '../componentes/offer-view/offer-view.compone
 export class SellerShopPage implements OnInit {
 
   search_tool: boolean;
-  aux_products_list: Product[];
+  aux_products_list=[];
   aux_offer_list: any;
   precioanterior: Product;
   type_view:string="products";
@@ -41,7 +41,7 @@ export class SellerShopPage implements OnInit {
   offerId:string;
   user:User;
   user_id:string;
-  products:Product[];
+  products=[];
   foto:string;
    dataMarker:Seller;
    shop_name:string;
@@ -104,6 +104,10 @@ export class SellerShopPage implements OnInit {
           })*/
             
               }               /* FIN DEL CONSTRUCTOR */
+
+
+
+
 
 ionViewDidEnter()
 {
@@ -213,8 +217,8 @@ async toCart()
 
 
 
-  addProductToCart(p:Product)
-  { console.log(p);
+  addProductToCart(p:any)
+  { 
     if(p.stock > 0 )
     {
       let flag:boolean = false;
@@ -222,7 +226,7 @@ async toCart()
       for(i in this.cart.details)
       {
 
-          if(this.cart.details[i].product_id == p._id  && this.cart.details[i].offer_id == undefined)
+          if(this.cart.details[i].product_id == p.product_ref._id  && this.cart.details[i].offer_id == undefined)
           {
             this.cart.details[i].quantity +=1;
             this.cart.details[i].price += p.price;
@@ -236,8 +240,8 @@ async toCart()
         let cd=new CartDetail()
         cd.price = p.price;
         cd. currency = p.currency_price;
-        cd.product_id = p._id;
-        cd.product_name = p.name;
+        cd.product_id = p.product_ref._id;
+        cd.product_name = p.product_ref.name;
         cd.quantity += 1;
         this.cart.details.push(cd)
         this.cart_lenght++;
@@ -291,12 +295,12 @@ async toCart()
     console.log(this.cart)
   }
 
-  removeProductToCart(p: Product)
+  removeProductToCart(p: any)
   {
     let i:any;
     for( i in this.cart.details)
     {
-      if(this.cart.details[i].product_id == p._id)
+      if(this.cart.details[i].product_id == p.product_ref._id)
       {
         this.cart.details[i].quantity -= 1;
         this.cart.details[i].price -= p.price;
@@ -360,36 +364,45 @@ async toCart()
         this.products = this.dataMarker.products;
         this.aux_products_list= this.products;
 
-        this.dbService.getOffersByVendor(this.sellerId).subscribe((data:any)=>
-        {
-          this.other_offers = data.offers_data;
-          this.aux_offer_list = this.other_offers;
-          console.log(data);
+        this
+        .dbService.getProductsVendor(this.seller._id).toPromise()
+        .then((dbProds:any)=>
+      {
+        console.log(dbProds)
+        this.products = dbProds.data;
+        this.aux_products_list = dbProds.data;
+      })
+
+        // this.dbService.getOffersByVendor(this.sellerId).subscribe((data:any)=>
+        // {
+        //   this.other_offers = data.offers_data;
+        //   this.aux_offer_list = this.other_offers;
+        //   console.log(data);
     
-        })
+        // })
       })
 
 
 
-      this.dbService.getOffer(this.offerId).subscribe((data:any)=>
-    {
-      this.offer= data ;
+    //   this.dbService.getOffer(this.offerId).subscribe((data:any)=>
+    // {
+    //   this.offer= data ;
       
-      console.log("oferta psada por parametro: ", this.offer)
-      data.sellers.map((s:Seller)=>
-    {
-      if(s._id==this.sellerId)
-      {
-        this.offerdata = data; 
+    //   console.log("oferta psada por parametro: ", this.offer)
+    //   data.sellers.map((s:Seller)=>
+    // {
+    //   if(s._id==this.sellerId)
+    //   {
+    //     this.offerdata = data; 
         
-        this.precioanterior =   this.products.find(p=> p._id == this.offerdata.products[0]._id);
-        this.offer_of_seller = this.seller.offers.find(of=> of.offer_id == this.offerdata._id)
-      }
-    })
+    //     this.precioanterior =   this.products.find(p=> p._id == this.offerdata.products[0]._id);
+    //     this.offer_of_seller = this.seller.offers.find(of=> of.offer_id == this.offerdata._id)
+    //   }
+    // })
 
-      console.log( this.offer_of_seller)
-      console.log("offer data: ",this.offerdata)
-    })
+    //   console.log( this.offer_of_seller)
+    //   console.log("offer data: ",this.offerdata)
+    // })
 
       
     
@@ -564,7 +577,7 @@ async filter(input)
 
     if(key)
     {
-      this.aux_products_list= await this.products.filter(item => item.name.toLowerCase().includes(key) );
+      this.aux_products_list= await this.products.filter(item => item.name.product_ref.toLowerCase().includes(key) );
     }
     else
     {
@@ -687,6 +700,8 @@ ionViewWillEnter()
 
     }
   })
+
+
 
 
 }

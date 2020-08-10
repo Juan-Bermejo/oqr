@@ -8,132 +8,133 @@
   </ion-toolbar>
 
 
-<ion-content>
+<ion-content padding="true">
 
-  <ion-card padding>
-      <ion-row>
-          <ion-col size=4>
-                <img  src="{{offer.offer_img}}">
-          </ion-col>
-
-          <ion-col size=8>
-                <ion-card-title color="primary" *ngIf="offer.offer_name=='Precio'" >
-                        {{offer.products[0].name}} a {{offer.price | currency: offer.price_currency}}
-                       </ion-card-title>
-                       <ion-card-title color="primary" *ngIf="offer.offer_name=='Gratis'" >
-                         {{offer.products[0].name}} Gratis!
-                         {{offer.description}}
-                        </ion-card-title>
-                     <ion-card-title color="primary" *ngIf="offer.offer_name=='Descuento'" >
-                       %{{offer.percentage}} de descuento en {{offer.category}}
-                       </ion-card-title>
-                
+    <div *ngIf="offer">
+            <ion-card padding>
+                    <ion-row>
+                        <ion-col size=4 size-xs=12 size-sm=4 size-md=4 size-lg=4 size-xl=4>
+                              <img  src="{{offer.offer_img}}">
+                        </ion-col>
+              
+                        <ion-col size=8 size-xs=12 size-sm=8 size-md=8 size-lg=8 size-xl=8>
+              
+                                   <ion-card-title color="primary" >
+                                    {{offer.titulo}}
+                                     </ion-card-title>
+                              
+                                   
+                                    <ion-card-subtitle  style="color: black">
+                                        {{offer.description}}
+                                       </ion-card-subtitle>
+                              
+                                       <ion-list>
+                    
+                                              <ion-item>
+                                                  <ion-label>Fecha de publicacion</ion-label>
+                                                  <ion-note slot="end">
+                                      
+                                                        {{offer.date}} 
+                                          
+                                                  </ion-note>
+                                              </ion-item>
+                                              <ion-item>
+                                                  <ion-label>Cantidad de vendedores</ion-label>
+                                                  <ion-note slot="end">              
+                                                    <ion-badge>
+                                                      {{offer.sellers_cuantity}} 
+                                                  </ion-badge>
+                                                     </ion-note>
+                                              </ion-item>
+                                              <ion-item>
+                                                  <ion-label>Comision por venta</ion-label>
+                                                  <ion-note slot="end"> 
+                                                      <ion-badge>
+                                                          {{offer.commission}} 
+                                                      </ion-badge>
+                                                     </ion-note>
+                                                </ion-item>
+                                                <ion-item>
+                                                    <ion-label>Comision total</ion-label>
+                                                    <ion-note slot="end"> 
+                                                        <ion-badge>
+                                                              {{offer.commission * offer.sellers_cuantity * offer.stock}}
+                                                        </ion-badge>
+                                                    </ion-note>
+                                                  </ion-item>
+                                                  </ion-list>
+              
+                                                  <ion-button *ngIf="!spinner" expand="block" shape="round" (click)="promoteOffer()" >
+                                                          <ion-icon name="md-megaphone" slot="start" ></ion-icon>
+                                                    Quiero patrocinar esta oferta
+                                                      </ion-button>
+              
+                                                      <ion-spinner *ngIf="spinner" >
+              
+                                                      </ion-spinner>
+                          
+                        </ion-col>
+                    </ion-row>
                      
-                      <ion-card-subtitle *ngIf="offer.offer_name!='Gratis'" style="color: black">
-                          {{offer.description}}
-                         </ion-card-subtitle>
-                
-                         <ion-list>
-      
-                                <ion-item>
-                                    <ion-label>Fecha de publicacion</ion-label>
-                                    <ion-note slot="end">
-                        
-                                          {{offer.date}} 
-                            
-                                    </ion-note>
-                                </ion-item>
-                                <ion-item>
-                                    <ion-label>Cantidad de vendedores</ion-label>
-                                    <ion-note slot="end">              
-                                      <ion-badge>
-                                        {{offer.sellers_cuantity}} 
-                                    </ion-badge>
-                                       </ion-note>
-                                </ion-item>
-                                <ion-item>
-                                    <ion-label>Comision por venta</ion-label>
-                                    <ion-note slot="end"> 
-                                        <ion-badge>
-                                            {{offer.commission}} 
-                                        </ion-badge>
-                                       </ion-note>
-                                  </ion-item>
-                                  <ion-item>
-                                      <ion-label>Comision total</ion-label>
-                                      <ion-note slot="end"> 
-                                          <ion-badge>
-                                                {{offer.commission * offer.sellers_cuantity * offer.stock}}
-                                          </ion-badge>
-                                      </ion-note>
-                                    </ion-item>
-                                    </ion-list>
+              
+              
+              
+              <!--
+                          <ion-row>
+                                  <ion-input type="text" placeholder="Ingresa el link de tu video." [(ngModel)]="link" >
+                                          <span>
+                                              <ion-icon size="large" name="logo-facebook"></ion-icon>
+                                          </span>
+                                      </ion-input>
+              
+                                      <ion-spinner *ngIf="spinner" name="crescent" color="primary" ></ion-spinner>
+              
+                                      <ion-button *ngIf="!spinner" (click)="addLink()"> <ion-icon name="md-add" ></ion-icon></ion-button>
+                          
+                          </ion-row>
+                          <p style="text-align: center; color: rgba(196, 70, 70, 0.774)"> {{messaje}} </p>
+              
+                          <ion-row>
+                              <ion-input type="text" placeholder="Ingresa el link de tu video." [(ngModel)]="tiktok_link" >
+                                      <span>
+                                          <ion-icon size="large" src="../../assets/ionicons/tiktok-icon.svg"></ion-icon>
+                                      </span>
+                                  </ion-input>
+              
+                                  <ion-spinner *ngIf="spinnerTT" name="crescent" color="primary" ></ion-spinner>
+              
+                                  <ion-button *ngIf="!spinnerTT" (click)="addTikTokLink()"> <ion-icon name="md-add" ></ion-icon></ion-button>
+                      
+                      </ion-row>
+                      <p style="text-align: center; color: rgba(196, 70, 70, 0.774)"> {{messajeTT}} </p>
+              
+              
+                      <ion-row>
+                              <ion-input type="text" placeholder="Ingresa el link de tu video." [(ngModel)]="insta_link" >
+                                      <span>
+                                          <ion-icon size="large" name="logo-instagram"></ion-icon>
+                                      </span>
+                                  </ion-input>
+              
+                                <ion-spinner *ngIf="spinnerTT" name="crescent" color="primary" ></ion-spinner>
+              
+                                  <ion-button (click)="addInstagramLink()"> <ion-icon name="md-add" ></ion-icon></ion-button>
+                      
+                      </ion-row>
+                      <p style="text-align: center; color: rgba(196, 70, 70, 0.774)"> {{messajeTT}} </p>
+              -->
+                </ion-card>
+    </div>
 
-                                    <ion-button expand="block" shape="round" (click)="promoteOffer()" >
-                                            <ion-icon name="md-megaphone" slot="start" ></ion-icon>
-                                      Quiero patrocinar esta oferta
-                                        </ion-button>
-            
-          </ion-col>
-      </ion-row>
-       
-
-
-
-<!--
-            <ion-row>
-                    <ion-input type="text" placeholder="Ingresa el link de tu video." [(ngModel)]="link" >
-                            <span>
-                                <ion-icon size="large" name="logo-facebook"></ion-icon>
-                            </span>
-                        </ion-input>
-
-                        <ion-spinner *ngIf="spinner" name="crescent" color="primary" ></ion-spinner>
-
-                        <ion-button *ngIf="!spinner" (click)="addLink()"> <ion-icon name="md-add" ></ion-icon></ion-button>
-            
-            </ion-row>
-            <p style="text-align: center; color: rgba(196, 70, 70, 0.774)"> {{messaje}} </p>
-
-            <ion-row>
-                <ion-input type="text" placeholder="Ingresa el link de tu video." [(ngModel)]="tiktok_link" >
-                        <span>
-                            <ion-icon size="large" src="../../assets/ionicons/tiktok-icon.svg"></ion-icon>
-                        </span>
-                    </ion-input>
-
-                    <ion-spinner *ngIf="spinnerTT" name="crescent" color="primary" ></ion-spinner>
-
-                    <ion-button *ngIf="!spinnerTT" (click)="addTikTokLink()"> <ion-icon name="md-add" ></ion-icon></ion-button>
-        
-        </ion-row>
-        <p style="text-align: center; color: rgba(196, 70, 70, 0.774)"> {{messajeTT}} </p>
-
-
-        <ion-row>
-                <ion-input type="text" placeholder="Ingresa el link de tu video." [(ngModel)]="insta_link" >
-                        <span>
-                            <ion-icon size="large" name="logo-instagram"></ion-icon>
-                        </span>
-                    </ion-input>
-
-                  <ion-spinner *ngIf="spinnerTT" name="crescent" color="primary" ></ion-spinner>
-
-                    <ion-button (click)="addInstagramLink()"> <ion-icon name="md-add" ></ion-icon></ion-button>
-        
-        </ion-row>
-        <p style="text-align: center; color: rgba(196, 70, 70, 0.774)"> {{messajeTT}} </p>
--->
-  </ion-card>
 
 
   
-
+<!-- 
       <ion-fab vertical="bottom" horizontal="end" slot="fixed">
         <ion-fab-button>
           <ion-icon size="large" color="light" name="md-videocam"></ion-icon>
         </ion-fab-button>
-      </ion-fab>
+      </ion-fab> -->
 
 </ion-content>
 

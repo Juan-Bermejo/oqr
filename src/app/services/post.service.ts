@@ -54,4 +54,9 @@ export class PostService {
 
   }
 
+  pago()
+  {
+    
+  }
+
 }

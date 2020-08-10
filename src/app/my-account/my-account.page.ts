@@ -89,21 +89,26 @@ export class MyAccountPage implements OnInit {
   {
      this.dbService.checkIsVendor(this.user._id).subscribe((data:any)=>
   { this.seller_check=false;
-    this.dbService.deleteVendor(data.vendor_data._id).subscribe((dataDelete)=>
-  { 
-    this.toastCtrl.create({
-      message:"Ya no eres un vendedor.",
-      animated:true,
-      position:"top",
-      color:"success"
-    
+    this.dbService.deleteVendor(data.vendor_data._id).subscribe((dataDelete:any)=>
+  {  console.log("Data delete: ", dataDelete)
+
+    if(dataDelete.ok)
+    {
+      this.toastCtrl.create({
+        message:"Ya no eres un vendedor.",
+        animated:true,
+        position:"top",
+        color:"success"
       
-    }).then(()=>
-  {
-    this.is_seller=false;
-    this.dbService.setIsSeller$(this.is_seller);
-    console.log("proceso finalizado")
-  })
+        
+      }).then(()=>
+    {
+      this.is_seller=false;
+      this.dbService.setIsSeller$(this.is_seller);
+      console.log("proceso finalizado")
+    })
+    }
+
   })
   });
   //sub.unsubscribe();
@@ -132,16 +137,17 @@ export class MyAccountPage implements OnInit {
 
    toInfluencer()
    {
-    if(!this.is_influencer)
-    {
-     this.ModalCodeInfluencer()
-    }
-    else
-    {
+    this.ModalCodeInfluencer()
+    // if(!this.is_influencer)
+    // {
+    //  this.ModalCodeInfluencer()
+    // }
+    // else
+    // {
 
-     this.deleteConfirm();
+    //  //this.deleteConfirm();
 
-    }
+    // }
    }
 
 
@@ -164,7 +170,7 @@ export class MyAccountPage implements OnInit {
      const modal = await this.modalctrl.create({
        component: GenerateCodeInfluencerComponent,
  
-       cssClass:"modal"
+       cssClass:"modal-login"
        
      });
       modal.present();

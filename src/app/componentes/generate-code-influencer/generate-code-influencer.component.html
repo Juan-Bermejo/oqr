@@ -1,8 +1,5 @@
 <ion-content padding="true" class="ion-align-items-center">
 
-
-
-    <div class="cont col-sm-10">
   
   
   <ion-row justify-content-end>
@@ -12,18 +9,63 @@
             
           </ion-button>
   </ion-row>
+
+<ion-row class="ion-justify-content-center">
+
+    <ion-col size="10">
+    <ion-title color="primary">
+        Foto de perfil.
+           </ion-title>
+          </ion-col>
+  
+</ion-row>
+  <ion-row>
+<ion-item-divider>
+
+    <ion-button fill="outline" id="loadFileXml" value="loadXml" onclick="document.getElementById('file').click();" >
+      Seleccionar imagen
+    </ion-button>
+    <input type="file" style="display:none;" id="file" (change)="fileUpl($event.target.files)"/>
+  
+    <div *ngIf="profileImg">{{profileImg.name}}</div>
+  </ion-item-divider>
+  </ion-row>
+
+
+  <ion-row>
+    <ion-item-divider>
+    <ion-col>
+      <ion-label>
+        Selecciona una categoria
+      </ion-label>
+      
+      <ion-input (click)="ModalCategories()" readonly placeholder="Seleccione una categoria." [(ngModel)]="category" >
+          <span class="item-right">
+              <ion-icon slot="end" src="../../assets/ionicons/chevron-down-outline.svg">
+              </ion-icon>
+          </span>
+             
+            </ion-input>
+    </ion-col>
+  </ion-item-divider>
+  </ion-row>
+  <p>Esto es importante para avisarte cuando se cree una oferta de tu interes</p>
+
   
         <ion-row class="ion-justify-content-center">
+          <ion-item-divider>
           <ion-col size="10">
               <ion-title color="primary">
              Código de influencer.
                 </ion-title>
                 <p>
                   Elije un código para identificarte como influencer.
-                  Por medio de este código los usuarios podran acceder a las ofertas que estes promocionando.
+                </p>
+                <p>
+                    Por medio de este código los usuarios podran acceder a las ofertas que estes promocionando.
                 </p>
           </ion-col>
-  
+        </ion-item-divider>
             </ion-row>
             
             <ion-row class="ion-justify-content-center">
@@ -36,12 +78,12 @@
   
             <ion-row class="ion-justify-content-center">
               <ion-spinner *ngIf="spinner" ></ion-spinner>
-              <ion-button *ngIf="!spinner"  shape="round" expand="block" (click)="influencerCanal()"  >
+              <ion-button *ngIf="!spinner"  shape="round" expand="block" (click)="createInfluencer()"  >
                 Ingresar
               </ion-button>
             </ion-row>
   
-    </div>
+
   
   
   

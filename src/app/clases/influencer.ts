@@ -6,5 +6,6 @@ export class Influencer {
     balance:number;
     ranking:number;
     sales:number;
+    profile_img:string;
     
 }

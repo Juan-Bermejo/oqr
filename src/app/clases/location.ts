@@ -9,4 +9,10 @@ export class Location {
     province: string;
     city: string;
     subLocality:string;
+    location;
+
+    constructor()
+    {
+        this.location = new Array();
+    }
 }

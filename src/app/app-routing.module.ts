@@ -142,7 +142,11 @@ const routes: Routes = [
   {
     path: 'offer-land-pange/:offer',
     loadChildren: () => import('./offer-land-pange/offer-land-pange.module').then( m => m.OfferLandPangePageModule)
+  },  {
+    path: 'billetera',
+    loadChildren: () => import('./billetera/billetera.module').then( m => m.BilleteraPageModule)
   },
+
 
 
 

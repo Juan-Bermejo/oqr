@@ -31,7 +31,7 @@
                     <input type="file" style="display:none;" id="file" (change)="fileUpl($event.target.files)"/>
                     <div *ngIf="bannerImg">{{bannerImg.name}}</div>
                     
-
+                      <img *ngIf="photoSelectedBanner" src="{{photoSelectedBanner}}" alt="">
 
                     <input type="hidden" name="_id" [(ngModel)]="sellerId">
                     <input type="hidden" name="type" [(ngModel)]="type">
