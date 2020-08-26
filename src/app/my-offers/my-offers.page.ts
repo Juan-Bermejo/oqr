@@ -29,6 +29,8 @@ export class MyOffersPage implements OnInit {
 
     this.dbService.checkIsVendor(this.user._id).subscribe((data:any)=>
   {
+    this.seller = data.vendor_data;
+
     this.dbService.getOffersByVendor(data.vendor_data._id).subscribe((offers_data:any)=>
   {
     console.log(offers_data);
@@ -50,17 +52,24 @@ export class MyOffersPage implements OnInit {
 
                async desAssociate(offerId)
                {
-                 this.dbService.dropOffer(this.user._id,offerId).subscribe((data:any)=>
+                 this.dbService.dropOffer(this.seller._id,offerId).subscribe((data:any)=>
                {
-                 const toast = document.createElement('ion-toast');
-                 toast.message = 'Ya no eres socio de esta oferta';
-                 toast.duration = 2000;
-                 toast.color= "primary";
-                 toast.position="top";
-                 document.body.appendChild(toast);
-                 return toast.present(); 
+                 console.log(data)
+                 if(data.ok)
+                 {
+                  const toast = document.createElement('ion-toast');
+                  toast.message = 'Ya no eres socio de esta oferta';
+                  toast.duration = 2000;
+                  toast.color= "primary";
+                  toast.position="top";
+                  document.body.appendChild(toast);
+                  return toast.present(); 
+                 }
+
                })
                }
+
+              
 
   
 deleteOffer(offer_id)

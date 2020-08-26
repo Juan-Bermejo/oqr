@@ -63,6 +63,7 @@ export class OfferDetailsPage implements OnInit {
   zoom:number;
   influencer_id:string;
   is_logged:boolean=false;
+  selected_vendor:any;
 
 
 
@@ -238,6 +239,8 @@ export class OfferDetailsPage implements OnInit {
           antialias: false
           });
 
+
+
           
 
         await this.map.on('load',async ()=>
@@ -253,7 +256,8 @@ export class OfferDetailsPage implements OnInit {
             
              if(m.img)
              {
-              div.innerHTML = "<img src='"+m.img+"'/>";
+              div.innerHTML = " <ion-row> <img src='"+m.img+"'/> </ion-row>"+
+               "<ion-row> <ion-col size=3> <img src='../../assets/images/delivery.png'/>  </ion-row>";
              }
              else{
               div.innerHTML = "<img src='../../assets/logoOfertaCerca/logoCelesteFondoBlanco.jpg'/>";
@@ -270,27 +274,38 @@ export class OfferDetailsPage implements OnInit {
       
             let popup = new Mapboxgl.Popup()
                     .setDOMContent(div);
-      
-            let el = document.createElement('div');
+                    
+            const el = document.createElement('div');
+
+           
                  
             let marker = await  new Mapboxgl.Marker()
                 .setPopup(popup)
                 .setLngLat([m.lng, m.lat])
-                .addTo(this.map);
+                .addTo(this.map)
+                marker.getElement().addEventListener('click', ()=>
+              {
+                console.log("hola", m)
+              })
                 this.map.resize();
       
         })
+
+      
 
         
         this.map.resize();
 
 
-          })///mapOnload
+          })
+
+
+
 
           await navigator.geolocation.getCurrentPosition(position => {
             this.current_longitude = position.coords.latitude;
             this.current_latitude = position.coords.longitude;  
-            console.log(" location:", position)
+            
             this.map.flyTo({
               center: [this.current_latitude, this.current_longitude],
               essential: false // this animation is considered essential with respect to prefers-reduced-motion

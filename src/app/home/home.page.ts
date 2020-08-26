@@ -205,24 +205,21 @@ this.getGeoCoderAddress(this.latitude, this.longitude, 2);
 
     //this.getGeoLocation();
 
-    
-   
 
-
-
-    
     localStorage.setItem("user_data", JSON.stringify(this.tokenServ.GetPayLoad().usuario));
     
   }
 
+
+
+  
+
   loadPageOffer(event?, pull: boolean = false )
   {
 
-    
-
     this.dbService.nearOffersRadio( this.location_data.latitude, this.location_data.longitude, pull
     ).subscribe(responde=>
-  {
+    {
     console.log(responde)
     if(responde)
     {

@@ -18,6 +18,7 @@ export class Seller {
     desde:string;
     hasta:string;
     retiro:boolean;
+    telefono;
     efectivo:boolean;
     tarjeta:boolean;
     banner_img;

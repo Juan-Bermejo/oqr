@@ -1,0 +1,28 @@
+
+
+<ion-row class="ion-justify-content-center" >
+    <div *ngIf="data">
+        
+
+        <ion-row class="ion-justify-content-center" style="margin-top:150px;" >
+        <ion-icon color="success" size="large" name="md-checkmark-circle"></ion-icon>
+      </ion-row>
+
+      <ion-row *ngIf="!spinner" class="ion-justify-content-center" >
+          <ion-text color="primary">{{data.mensaje}} </ion-text>                
+        </ion-row>
+        <ion-row *ngIf="!spinner" class="ion-justify-content-center">
+          <ion-button fill="clear" color="primary" (click)="volver()" >Volver</ion-button>
+        </ion-row>
+    </div>
+</ion-row>
+
+<ion-row *ngIf="spinner" class="ion-justify-content-center" style="margin-top:150px; ">
+    <ion-spinner color="primary" size="large">
+
+      </ion-spinner>
+</ion-row>
+<ion-row *ngIf="spinner" class="ion-justify-content-center">
+   <ion-text>Generando pedido...</ion-text>
+</ion-row>
+

@@ -11,23 +11,33 @@
 </ion-row>
 
       <ion-row class="ion-justify-content-center">
-        <ion-col size="10">
-            <ion-title style="text-align: center" color="primary">
+        
+            <ion-title style="text-align: center " class="text-wrap" color="primary">
            Código de influencer.
               </ion-title>
-        </ion-col>
+        
 
           </ion-row>
           
           <ion-row class="ion-justify-content-center">
               <ion-col size="10">
-                  <ion-input placeholder="Ingresa el codigo aquí">
+                  <ion-input placeholder="Ingresa el codigo aquí" [(ngModel)]="influencer_code" >
                     </ion-input>
+                </ion-col>
+          </ion-row>
+
+          <ion-row *ngIf="msj != '' " class="ion-justify-content-center">
+              <ion-col size="10" style="text-align: center">
+                  <ion-label class="text-wrap" color="danger" > {{msj}} </ion-label>
                 </ion-col>
            
           </ion-row>
 
-          <ion-row class="ion-justify-content-center">
+          <ion-row *ngIf="spinner" class="ion-justify-content-center">
+            <ion-spinner color="primary"></ion-spinner>
+            </ion-row>
+
+          <ion-row *ngIf="!spinner" class="ion-justify-content-center">
             <ion-button shape="round" expand="block" (click)="influencerCanal()" >
               Buscar
             </ion-button>

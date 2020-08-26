@@ -1,0 +1,137 @@
+
+
+<ion-content>
+
+
+    <header>
+
+        <div class="header_top">
+            <div class="container">
+                <p class="left"><a href="tel:61298211354"><ion-icon color="light" src="../../assets/images/phone-volume-solid.svg"> </ion-icon> 44 5678 9943 20</a></p>
+                <p class="right">
+                <ion-button (click)="toRegistro()" fill="clear" color="light" *ngIf="!is_logged"><img src="../../assets/images/icon1.png" alt="" > Registration</ion-button>
+                <ion-button (click)="toLogin()" fill="clear" color="light" *ngIf="!is_logged"><img src="../../assets/images/icon2.png" alt="" > log In</ion-button>
+                <ion-button  fill="clear" color="light" *ngIf="is_logged"><img src="../../assets/images/icon3.png" alt="" > Checkout </ion-button>
+                <ion-button (click)="goTo()" fill="clear" color="light" *ngIf="is_logged"><img src="../../assets/images/icon4.png" alt="" > My Account</ion-button>
+                </p>
+            </div>
+        </div>
+  
+  </header>
+
+  <div class="map_sec">
+    <div id="map" class="full_width"></div>
+    <!-- <ng-container *ngIf="!loading">
+        <ion-spinner color="primary"></ion-spinner>
+      </ng-container> -->
+  </div>
+  <div class="location_sec">
+    <div class="container">
+      <h3>Selecciona un vendedor en el mapa.
+        <!-- <button class="select_btn" (click)="selectVendor()">select this location</button> -->
+      </h3>
+      <p *ngIf="selected_vendor" class="address">
+        <img src="../../assets/images/pin.jpg" alt="">{{selected_vendor.location_data.address}} </p>
+    </div>
+  </div>
+  <div>
+    <div class="container" *ngIf="selected_vendor">
+      <div class="row banner_img justify-content-center">
+        <img class="vendor_img" *ngIf="selected_vendor.vendor_data.profile_img" src="{{selected_vendor.vendor_data.profile_img}}" alt="">
+        <img class="vendor_img" *ngIf="!selected_vendor.vendor_data.profile_img" src="../../assets/logoOfertaCerca/logoBlancoFondoCeleste.jpg" alt="">
+        <!-- <div class="col-sm-5">
+                  <div class="row">
+                      <div class="col-xs-6"><img src="../../assets/images/banner_img2.jpg" alt="" ></div>
+                        <div class="col-xs-6"><img src="../../assets/images/banner_img3.jpg" alt="" ></div>
+                        <div class="col-xs-6"><img src="../../assets/images/banner_img4.jpg" alt="" ></div>
+                        <div class="col-xs-6"><img src="../../assets/images/banner_img5.jpg" alt="" ></div>
+                    </div>
+                </div> -->
+      </div>
+    </div>
+  </div>
+
+  <div class="container" *ngIf="selected_vendor">
+    <div class="banner_btm">
+      <h2>{{selected_vendor.vendor_data.shop_name}}</h2>
+      <div class="reviews">
+        <i class="fas fa-star"></i>
+        <i class="fas fa-star"></i>
+        <i class="fas fa-star"></i>
+        <i class="fas fa-star"></i>
+        <i class="fas fa-star"></i>
+        <p>651 Delivery Reviews</p>
+      </div>
+      <p>
+        <img src="../../assets/images/map.png" alt=""> {{selected_vendor.location_data.address}}</p>
+      <p>
+        <img src="../../assets/images/phone.png" alt=""> +44 5678 9943 20</p>
+      <p>
+        <img src="../../assets/images/time.png" alt=""> Open Now - 9:30am - 11pm</p>
+      <p>
+        <img src="../../assets/images/delivery.png" alt=""> Servicio de delivery:
+        <ion-icon name="md-checkmark" color="success"></ion-icon>
+      </p>
+      <p>
+        <img src="../../assets/images/payment.png" alt=""> Payment Method: Cash, Credit Crad, Debit Card</p>
+    </div>
+  </div>
+
+  <div *ngIf="offer" class="item_details">
+    <div class="container">
+      <h3>Detalle de la Oferta</h3>
+      <div class="row row_equal">
+        <div class="col-sm-8">
+          <div class="details_left">
+            <div class="icons_holder">
+              <a href="#">
+                <i class="far fa-edit"></i>
+              </a>
+              <a href="#">
+                <i class="far fa-trash-alt"></i>
+              </a>
+            </div>
+            <div class="item_img">
+              <img src="{{offer.offer_img}}" alt="">
+            </div>
+            <div class="item_text">
+              <h4> {{offer.titulo}} </h4>
+              <p> {{offer.description}} </p>
+              <h5> {{offer.commission | currency}} </h5>
+              <div class="qty_box">
+                Qty:
+                <input type="text" [(ngModel)]="quantity">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="details_right">
+            <ion-item-divider class="ion-align-items-center">
+            <ion-label>Mi Saldo:</ion-label>
+            <ion-chip  color="success" slot="end" (click)="toBilletera()" >
+              {{saldo | currency}} 
+            </ion-chip>
+          </ion-item-divider>
+            <hr>
+            <p>Subtotal :
+              <span>{{offer.commission * quantity}}</span>
+            </p>
+            <p>Shipping :
+              <span>$0.00</span>
+            </p>
+            <p>Total :
+              <span>{{offer.commission * quantity | currency}}</span>
+            </p>
+            <hr>
+            <p>Continue Shopping
+              <i class="fas fa-long-arrow-alt-right"></i>
+            </p>
+            <ion-button expand="block" color="success" [disabled]="!selected_vendor" class="checkout_btn" (click)="pago()" >Reservar Oferta</ion-button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</ion-content>

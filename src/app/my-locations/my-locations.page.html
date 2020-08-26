@@ -27,10 +27,8 @@
             <ion-item >
                 <ion-icon name="md-pin" color="primary" slot="start"></ion-icon>  
                 <ion-label> Mi locación </ion-label>  
-                <ion-button fill="outline"  color="danger" (click)="deleteLocation(myLocations)" >
-                        <ion-icon name="md-trash" color="danger" ></ion-icon>
-                </ion-button>
-                <ion-button fill="outline"  color="success" (click)="deleteLocation(myLocations)" >
+
+                <ion-button fill="outline"  color="success" routerLink="/add-location" >
                         <ion-icon name="md-create" color="success" ></ion-icon>
                 </ion-button>
                 
@@ -65,6 +63,6 @@
 </ion-card>
 </div>
 </ion-content>
-<ion-footer>
+<ion-footer *ngIf="!myLocations">
     <ion-button shape="round" expand="block" routerLink="/add-location" > Agregar locacion</ion-button>
 </ion-footer>

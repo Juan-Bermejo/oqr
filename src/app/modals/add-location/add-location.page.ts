@@ -273,7 +273,7 @@ public searchElementRef: ElementRef;
 
   dismissModal()
   {
-    this.modalCtrl.dismiss()
+    //this.modalCtrl.dismiss()
   }
 
   

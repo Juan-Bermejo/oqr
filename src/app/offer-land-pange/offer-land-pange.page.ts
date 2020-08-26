@@ -22,6 +22,7 @@ import { EditShopComponent } from '../componentes/edit-shop/edit-shop.component'
 import { ModalCategoriesPage } from '../modals/modal-categories/modal-categories.page';
 import { TypeOfferModalComponent } from '../componentes/type-offer-modal/type-offer-modal.component';
 import { OfferViewComponent } from '../componentes/offer-view/offer-view.component';
+import { BilleteraComponent } from '../componentes/billetera/billetera.component';
 
 
 
@@ -33,6 +34,8 @@ import { OfferViewComponent } from '../componentes/offer-view/offer-view.compone
 export class OfferLandPangePage implements OnInit {
 
 
+  loading = "loading";
+  saldo:number;
   search_tool: boolean;
   aux_products_list: Product[];
   aux_offer_list: any;
@@ -669,6 +672,24 @@ async categoryFilter(type:string)
   this.aux_products_list= await this.products.filter(item => item.category.toLowerCase().includes(type.toLowerCase()) );
 }
 
+  async toBilletera()
+{
+  const billeteraModal = await this.modalCtrl.create(
+    {
+      component: BilleteraComponent,
+      cssClass: "modal-offer-products"
+      
+    }
+  ) 
+
+  billeteraModal.present()
+  billeteraModal.onDidDismiss()
+  .then()
+  {
+    this.traerSaldo();
+  }
+}
+
 
 async viewOffer(offer:Offer)
 {
@@ -691,8 +712,26 @@ async viewOffer(offer:Offer)
 }
 
 
+traerSaldo()
+{
+  this.dbService.getTransactions().subscribe((data:any)=>
+  {
+    console.log(data)
+    if(data.ok)
+    {
+     
+      this.saldo = data.total;
+     
+    }
+    
+  })
+}
+
 ionViewWillEnter()
 {
+
+
+
   this.dbService.getLogged$().subscribe((data)=>
   {
     this.is_logged = data;
@@ -705,6 +744,8 @@ ionViewWillEnter()
       this.user._id == this.seller.owner ? 
       this.is_my_offer = true : this.is_my_offer = false;
       console.log(this.is_my_offer);
+      this.traerSaldo();
+
 
     }
 
@@ -726,6 +767,7 @@ this.dbService.getVendorByName(this.sellerName)
 .then((data_vendor:any)=>
 {
   this.seller = data_vendor;
+  console.log(this.seller);
 
   if(this.offerId && data_vendor)
 {
@@ -734,7 +776,7 @@ this.dbService.getVendorByName(this.sellerName)
 {
   console.log(data)
   if(data.ok)
-  {
+  { this.loading = "ok";
     this.products = data.products;
     this.offerdata = data.offervendor.offer_id;
     console.log("offervendor: ", this.offer);

@@ -49,9 +49,21 @@
   }
 
 .modal-wrapper{
-    background: rgba(255, 255, 255, 0.582) !important;
+    background: rgb(255, 255, 255) !important;
+    z-index: 5000;
+}
+
+.spinnerCenter {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  -webkit-transform: translate(-50%, -50%);
 }
 
 
+.modal {
+  display: flex !important;
+  }
 
 $primary: rgb(41,171,226);

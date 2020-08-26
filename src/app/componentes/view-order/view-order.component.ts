@@ -5,6 +5,7 @@ import { ModalController } from '@ionic/angular';
 import { DbService } from '../../services/db.service';
 import { Seller } from '../../clases/seller';
 
+
 @Component({
   selector: 'app-view-order',
   templateUrl: './view-order.component.html',
@@ -14,7 +15,9 @@ export class ViewOrderComponent implements OnInit {
 
   seller_id: string;
   seller: Seller;
-  order: Order;
+  order: any;
+
+
 
   constructor(private dbService: DbService,
   private modal: ModalController,
@@ -25,8 +28,8 @@ export class ViewOrderComponent implements OnInit {
 
   ionViewWillEnter()
   {
-    /*this.order= this.paramServ.GetParam;
-    console.log(this.order)*/
+   // this.order= this.paramServ.GetParam;
+
   }
 
   dismissModal()
@@ -38,9 +41,25 @@ export class ViewOrderComponent implements OnInit {
     })
   }
 
+
+  closeTrabsaction()
+  {
+    this.dbService.closeTransaction(this.order._id, this.order.vendor_id )
+    .toPromise()
+    .then((data:any)=>
+  {
+    if(data.ok)
+    {
+      this.order.status="finalizada";
+    }
+    
+  })
+   
+  }
+
   ngOnInit() {
     this.order= this.paramServ.GetParam;
-    console.log(this.order.cart.details)
+    console.log(this.order)
   }
 
 }

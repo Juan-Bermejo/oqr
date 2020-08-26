@@ -18,6 +18,11 @@ import { ViewOrderComponent } from '../view-order/view-order.component';
 import { OfferViewComponent } from '../offer-view/offer-view.component';
 import { RangoComponent } from '../rango/rango.component';
 import { AsociateOfferModalComponent } from '../asociate-offer-modal/asociate-offer-modal.component';
+import { BilleteraComponent } from '../billetera/billetera.component';
+import { RegistroComponent } from '../registro/registro.component';
+import { LoadingComponent } from '../loading/loading.component';
+import { MensajeComponent } from '../mensaje/mensaje.component';
+import { RespuestaReservaComponent } from '../respuesta-reserva/respuesta-reserva.component';
 
 
 
@@ -35,11 +40,17 @@ import { AsociateOfferModalComponent } from '../asociate-offer-modal/asociate-of
     ViewOrderComponent,
     OfferViewComponent,
     RangoComponent,
-    AsociateOfferModalComponent
+    AsociateOfferModalComponent,
+    BilleteraComponent,
+    RegistroComponent,
+    LoadingComponent,
+    MensajeComponent,
+    RespuestaReservaComponent
     
   ],
   exports:[
     MenuComponent,
+    BilleteraComponent,
     CartComponent,
     PopOverProductsComponent,
     NewSellerComponent,
@@ -51,7 +62,11 @@ import { AsociateOfferModalComponent } from '../asociate-offer-modal/asociate-of
     ViewOrderComponent,
     OfferViewComponent,
     RangoComponent,
-    AsociateOfferModalComponent
+    AsociateOfferModalComponent,
+    RegistroComponent,
+    LoadingComponent,
+    MensajeComponent,
+    RespuestaReservaComponent
   ],
   imports: [
     CommonModule,

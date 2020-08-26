@@ -14,50 +14,43 @@ import { Seller } from '../clases/seller';
 })
 export class MyLocationsPage implements OnInit {
 
-  private user:User;
+  private user: User;
   private seller: Seller;
   myLocations;
 
   constructor(private modalController: ModalController,
-     private dbService: DbService,
+    private dbService: DbService,
     private navCtrl: NavController,
-  private token: TokenService) {
+    private token: TokenService) {
 
-    this.user= this.token.GetPayLoad().usuario
+    this.user = this.token.GetPayLoad().usuario
 
-    this.dbService.checkIsVendor(this.user._id).toPromise().then((data:any)=>
-  {
-    this.myLocations = data.vendor_data.location;
-    console.log(this.myLocations)
-  })
-  
-   /* this.dbService.getLocation(this.user.shops[0]).toPromise().then((data:any)=>{
-      console.log(data);
-      this.myLocations=data.location_data;
-    })*/
-
-   }
-
-   async ModalNewLocation() {
-    /*const modal = await this.modalController.create({
-      component: AddLocationPage,
-      cssClass:"modal"
+    this.dbService.checkIsVendor(this.user._id).toPromise().then((data: any) => {
+      if(data.ok)
+      {
+        this.myLocations = data.vendor_data.location;
+      }
       
-    });
-     modal.present();
-     modal.onDidDismiss().then((data)=>{
+      
+    })
 
-    })*/
-this.navCtrl.navigateRoot('add-location');
-    
+    /* this.dbService.getLocation(this.user.shops[0]).toPromise().then((data:any)=>{
+       console.log(data);
+       this.myLocations=data.location_data;
+     })*/
+
   }
 
-  ionViewWillEnter()
-  {
-    this.user= this.token.GetPayLoad().usuario
+  async ModalNewLocation() {
 
-    this.dbService.checkIsVendor(this.user._id).toPromise().then((data:any)=>
-    {
+    this.navCtrl.navigateRoot('add-location');
+
+  }
+
+  ionViewWillEnter() {
+    this.user = this.token.GetPayLoad().usuario
+
+    this.dbService.checkIsVendor(this.user._id).toPromise().then((data: any) => {
       this.seller = data.vendor_data;
       this.myLocations = data.vendor_data.location;
 
@@ -66,24 +59,22 @@ this.navCtrl.navigateRoot('add-location');
   }
 
 
-  deleteLocation(location: Location)
-  {
-     let index = this.seller.location.findIndex( l => location.id == l.id)
-    this.seller.location.splice(index,1);
+  deleteLocation(location: Location) {
     
-    this.dbService.updateVendor(this.seller).toPromise().then((data:any)=>
-    {
+    let index = this.seller.location.findIndex(l => location.id == l.id)
+    this.seller.location.splice(index, 1);
+
+    this.dbService.updateVendor(this.seller).toPromise().then((data: any) => {
       console.log(data);
       this.seller = data.vendor_data;
       this.myLocations = data.vendor_data.location;
-      
-      
+
+
     })
   }
 
-  modificarLocation(l: Location)
-  {
-    
+  modificarLocation(l: Location) {
+
   }
 
   ngOnInit() {

@@ -13,12 +13,15 @@ import { Router } from '@angular/router';
 })
 export class OfferListSearchPage implements OnInit {
 
+  loading: string;
   offer_list: Offer[];
   aux_offer_list:Array<any>;
   busqueda:string;
   notification:boolean=false;
   search_tool:boolean;
   busqeda;
+  public event: Event;
+  habilitado: number = 1;
 
    
 
@@ -32,17 +35,7 @@ export class OfferListSearchPage implements OnInit {
       this.aux_offer_list= new Array();
 
 
-      this.dbServ.getAllOffers(false).subscribe((data: any)=>{
-        this.offer_list=data.offers;
-        console.log(this.offer_list)
-       this.aux_offer_list=this.offer_list;
-      })
 
-
-
-    setTimeout(() => {
-      this.notification=true;
-    }, 3000);
   }
 
    async presentModal() {
@@ -56,16 +49,16 @@ export class OfferListSearchPage implements OnInit {
 
  async filter(input)
   {
-    let key = input.detail.value
+    // let key = input.detail.value
     
-    if(key)
-    {
-      this.aux_offer_list= await this.offer_list.filter(item => item.titulo.toLowerCase().includes(key) );
-    }
-    else
-    {
-      this.aux_offer_list=this.offer_list;
-    }
+    // if(key)
+    // {
+    //   this.aux_offer_list= await this.offer_list.filter(item => item.titulo.toLowerCase().includes(key) );
+    // }
+    // else
+    // {
+    //   this.aux_offer_list=this.offer_list;
+    // }
 
   }
 
@@ -84,9 +77,93 @@ export class OfferListSearchPage implements OnInit {
   
   }
 
+
+  ionViewWillEnter()
+  {
+    this.loading= "cargando";
+    this.recargarOffer(this.event, 1);
+  }
+
+
+loadPageOffer(event?, pull: boolean = false )
+{
+
+  //   this.dbServ.nearOffersRadio( this.location_data.latitude, this.location_data.longitude, pull
+  //   ).subscribe(responde=>
+  //   {
+  //   console.log(responde)
+  //   if(responde)
+  //   {
+  //     this.aux_offer_list.push(...responde.offers);
+  //     this.loading = "ok";
+
+  //     console.log(this.aux_offer_list)
+  
+  //     if (event) {
+  //       event.target.complete();
+  //     }
+  
+  //     if(responde.length === 0)
+  //     {
+  //       this.habilitado = 0;
+  //     }
+  //   }
+
+  // })
+  }
+
+
+  getAllOffers( event?, pull: boolean = false )
+{
+  
+this.dbServ.getAllOffersInf(pull).toPromise()
+.then((offerData:any)=>
+{
+console.log(offerData);
+  if(offerData.ok)
+  {
+    this.aux_offer_list.push(...offerData.offers);
+    this.loading = "ok";
+
+    console.log(this.aux_offer_list)
+
+    if (event) {
+      event.target.complete();
+    }
+
+    if(offerData.length === 0)
+    {
+      this.habilitado = 0;
+    }
+  }
+})
+}
+
+  recargarOffer(event, habilitado) {
+
+    
+    if(habilitado == 1)
+    {
+      this.getAllOffers(event, true)
+    }
+    if(habilitado == 2)
+    {
+      this.loadPageOffer(event, true);
+    }
+
+    this.aux_offer_list= [];
+   
+    this.habilitado = habilitado;
+
+    console.log(this.habilitado)
+    //this.aux_offer_list= [];
+  }
+
+
   
 
   ngOnInit() {
+    
   }
 
 }

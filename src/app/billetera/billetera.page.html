@@ -1,97 +1,151 @@
+<ion-content>
 
 
-<ion-content padding="true">
 
-    <ion-toolbar>
+  <div class="jumbotron jumbotron-fluid">
+    <div class="container">
+      <p class="lead">Saldo:</p>
+      <h1 class="display-4">{{total | currency}}</h1>
 
-        <ion-buttons slot="start" collapse="true">
-          <ion-back-button mode="md" type="button" color="primary" icon="md-arrow-back" defaultHref="home">
-          </ion-back-button>
-        </ion-buttons>
-          <ion-row  class="ion-justify-content-center">
-     
-                <h1 style="color: rgb(41, 171, 226)">
-                   Billetera
-                  </h1>
-          
-          </ion-row>
-          
+    </div>
+  </div>
+
+  <ion-segment [(ngModel)]="view">
+    <ion-segment-button value="lista">
+
+      <ion-button fill="outline" expand="block" size="large">
+        <ion-icon slot="icon-only" src="../../assets/iconos/billetera/list.svg" size="large"></ion-icon>
+
+
+      </ion-button>
+
+    </ion-segment-button>
+
+    <ion-segment-button value="carga">
+
+
+      <ion-button fill="outline" expand="block" size="large">
+        <ion-icon slot="icon-only" src="../../assets/iconos/billetera/increase (1).svg" size="large"></ion-icon>
+
+      </ion-button>
+
+
+    </ion-segment-button>
+
+    <ion-segment-button value="ticket">
+
+      <ion-button fill="outline" expand="block" size="large">
+        <ion-icon src="../../assets/iconos/billetera/file (1).svg" size="large"></ion-icon>
+
+      </ion-button>
+
+    </ion-segment-button>
+  </ion-segment>
+
+  <div [ngSwitch]="view">
+
+    <div *ngSwitchCase="'lista'">
+
+
+      <div *ngIf="transactions">
+
+        <ion-item *ngFor="let t of transactions">
+
+          <ion-col size=3>
+            <ion-thumbnail>
+              <img *ngIf=" !t.offer" src="../../assets/logoOfertaCerca/logoCelesteFondoBlancoChico.jpg">
+              <img *ngIf=" t.offer && t.offer.offer_img" src="{{t.offer.offer_img}}">
+            </ion-thumbnail>
+          </ion-col>
+
+          <ion-col size=6>
+            <ion-label class="ion-text-wrap" style="font-size: small"> {{t.fecha | date: ' d/M/y h:mm a' }} </ion-label>
+          </ion-col>
+          <ion-col size=3>
+            <ion-label class="ion-text-wrap" *ngIf="t.quantity > 0" color="success"> {{t.quantity | currency}} </ion-label>
+            <ion-label class="ion-text-wrap" *ngIf="t.quantity < 0" color="danger"> {{t.quantity | currency}} </ion-label>
+          </ion-col>
+
+        </ion-item>
+
+      </div>
+    </div>
+
+
+    <div *ngSwitchCase="'carga'">
+        <ion-row class="ion-justify-content-end">
+          <ion-icon name="md-close" color="primary" size="large" (click)="carga = false"></ion-icon>
+        </ion-row>
     
-</ion-toolbar>
-
-
-
-
-<div *ngIf="!carga"> 
-
-    <h1>Total: {{total}}</h1>
-
-<div *ngIf="transactions">
-
-  <ion-item *ngFor="let t of transactions">
-
-<ion-col size=3>
-    <ion-thumbnail>
-        <img *ngIf=" !t.offer" src="../../assets/logoOfertaCerca/logoCelesteFondoBlancoChico.jpg" >
-        <img *ngIf=" t.offer && t.offer.offer_img" src="{{t.offer.offer_img}}" >
-      </ion-thumbnail>
-</ion-col>
-
-<ion-col size=6>
-    <ion-label class="ion-text-wrap" style="font-size: small"> {{t.fecha | date: ' d/M/y h:mm a' }} </ion-label>
-</ion-col>
-<ion-col size=3>
-    <ion-label class="ion-text-wrap" *ngIf="t.quantity > 0" color="success"> {{t.quantity | currency}} </ion-label>
-    <ion-label class="ion-text-wrap"  *ngIf="t.quantity < 0" color="danger"> {{t.quantity | currency}} </ion-label>
-  </ion-col>
-
-
-   
-   
-  </ion-item>
-
-</div>
-
-
-</div>
-
-<div *ngIf="carga">
-  <ion-row class="ion-justify-content-end">
-    <ion-icon name="md-close" color="primary" size="large" (click)="carga = false" ></ion-icon>
-  </ion-row>
-
-  <ion-item lines="inset">
-      <ion-label position="floating" color="tertiary" class="text_floating font_seis">Cantidad:
-        </ion-label>
+        <ion-item lines="inset">
+          <ion-label position="floating" color="tertiary" class="text_floating font_seis">Cantidad:
+          </ion-label>
+    
+    
+          <ion-input type="number" [(ngModel)]="quantity" placeholder="Cantidad"> </ion-input>
+        </ion-item>
+    
+    
+        <ion-item lines="none">
+          <ion-label position="floating" color="tertiary" class="text_floating font_seis">Metodos de pago:
+          </ion-label>
+          <ion-select [(ngModel)]="method" multiple="false" cancelText="Cancelar" interface="alert">
+            <ion-select-option *ngFor="let metodo of metodosPago" value="{{metodo.source.name}}">
+              <ion-thumbnail>
+                <img src="{{metodo.view.subgroup_logo}}" alt="">
+              </ion-thumbnail>
+    
+              {{metodo.source.name}}
+            </ion-select-option>
+          </ion-select>
+        </ion-item>
+    
+        <ion-button (click)="cargar()">
+          Cargar
+        </ion-button>
+    
+      </div>
       
 
-      <ion-input type="number" [(ngModel)]="quantity" placeholder="Cantidad" > </ion-input>
-  </ion-item>
+
+      <div *ngSwitchCase="'ticket'">
+
+          <ion-button expand="block"  fill="outline" id="loadFileXml" value="loadXml" onclick="document.getElementById('seleccionArchivos').click();">
+              <ion-icon  name="create" size="large" slot="start" ></ion-icon>
+              Subir foto de ticket
+            </ion-button>
+
+            <input type="file" id="seleccionArchivos" accept="image/*" style="display:none;"  (change)="fileUpl($event.target.files)" />
+
+    
+            <div style="text-align: center">
+                <img *ngIf="fotoSeleccionada" src="{{fotoSeleccionada}}" class="foto" alt="">
+              </div>
+
+              <ion-footer>
+                  <ion-button expand="block" (click)="Guardar()" [disabled]="!foto" >
+                    Cambiar
+                  </ion-button>
+                </ion-footer>
+        
+        </div>
+
+        
+
+  </div> 
   
 
-  <ion-item lines="none">
-      <ion-label position="floating" color="tertiary" class="text_floating font_seis">Metodos de pago:
-      </ion-label>
-      <ion-select  [(ngModel)]="method" multiple="false" cancelText="Cancelar" interface="alert"
-        >
-        <ion-select-option *ngFor="let metodo of metodosPago" value="{{metodo.source.name}}">
-          <ion-thumbnail>
-              <img src="{{metodo.view.subgroup_logo}}" alt="">
-          </ion-thumbnail>
-         
-          {{metodo.source.name}}
-        </ion-select-option>
-      </ion-select>
-    </ion-item>
-
-    <ion-button (click)="cargar()" >
-      Cargar
-    </ion-button>
-
-</div>
+  
+  
 
 
-<!-- <ion-row style="height: 20%; background-color: rgba(255, 246, 246, 0.459)" align-items-center justify-content-center>
+
+
+
+
+
+
+  <!-- <ion-row style="height: 20%; background-color: rgba(255, 246, 246, 0.459)" align-items-center justify-content-center>
     <ion-title style="text-align: center"> Saldo: </ion-title>
 </ion-row>
 
@@ -105,8 +159,8 @@
 
 </ion-content>
 
-<ion-footer>
+<!-- <ion-footer>
     <ion-button *ngIf="!carga" (click)="carga = true" expand="block" size="large">
         Cargar saldo
       </ion-button>
-</ion-footer>
+</ion-footer> -->

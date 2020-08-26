@@ -33,7 +33,7 @@ export class OfferInfluencersPage implements OnInit {
       params += "?influencer=" + influencerId;
     }
 
-     this.navCtrl.navigateRoot("offer-details/" + params );
+     this.navCtrl.navigateRoot("offer/" + params );
    
    }
 

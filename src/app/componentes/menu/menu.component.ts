@@ -63,7 +63,7 @@ export class MenuComponent{
 {
   const modal = await this.modalController.create({
     component: LoginComponent,
-    cssClass:"modal"
+    cssClass:"modal-login"
     
   });
    modal.present();

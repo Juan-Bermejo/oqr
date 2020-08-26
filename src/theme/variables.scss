@@ -2,6 +2,7 @@
 // http://ionicframework.com/docs/theming/
 
 /** Ionic CSS Variables **/
+
 :root {
   /** primary **/
   --ion-color-primary: rgb(41, 171, 226);
@@ -101,7 +102,7 @@
 
 .modal-influencer-code
 {
-  --height:35%;
+  --height:40%;
   --width: 70%;
   --border-style: solid;
   --border-width: 2px;
@@ -112,6 +113,16 @@
 {
   --height:85%;
   --width: 80%;
+  --border-style: solid;
+  --border-width: 2px;
+  --border-color: rgb(41, 171, 226);
+  --border-radius: 25px;
+}
+
+.registro-modal
+{
+  --height:95%;
+  --width: 95%;
   --border-style: solid;
   --border-width: 2px;
   --border-color: rgb(41, 171, 226);

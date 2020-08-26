@@ -19,60 +19,64 @@ import { Router } from '@angular/router';
 })
 export class SellerPanelPage implements OnInit {
 
+  
   public user_data: User;
-  seller:Seller
-
-cuit:number;
-category:string;
-shop_name:string;
+  seller: Seller
+  products = false;
+  cuit: number;
+  category: string;
+  shop_name: string;
   public name: string = '';
   public user_name: string = '';
-  userLocation:string[];
+  userLocation = null;
 
   constructor(private navCtrl: NavController,
     private modalctrl: ModalController,
-              private dbService: DbService,
-              private tokenSrv: TokenService,
-              private router :Router,
-            private navParams: NavParamsService) 
-            {
+    private dbService: DbService,
+    private tokenSrv: TokenService,
+    private router: Router,
+    private navParams: NavParamsService) {
 
-                this.seller= new Seller();
-                this.user_data=this.tokenSrv.GetPayLoad().usuario;
+    this.seller = new Seller();
+    this.user_data = this.tokenSrv.GetPayLoad().usuario;
 
-                this.dbService.checkIsVendor(this.user_data._id).subscribe((data:any)=>
-              {
-                console.log(data)
-                this.seller= data.vendor_data;
-              })
+    this.dbService.checkIsVendor(this.user_data._id).subscribe((data: any) => {
+      if (data.ok) {
+        this.seller = data.vendor_data;
+        if (data.vendor_data.location != null) {
+          this.userLocation = data.vendor_data.location;
+        }
 
-                this.seller.owner=this.user_data._id;
+      }
 
-                this.dbService.getLocation(this.user_data._id).subscribe((locs:any)=>
-              { console.log(locs)
-                this.userLocation= locs.location_data.map((loc:any) => {
-                 return loc._id;
-                });
-              })
-                
-   }
 
-  goTo(path:string)
-  {
+    })
+
+    this.seller.owner = this.user_data._id;
+
+    //   this.dbService.getLocation(this.user_data._id).subscribe((locs:any)=>
+    // { console.log(locs)
+    //   this.userLocation= locs.location_data.map((loc:any) => {
+    //    return loc._id;
+    //   });
+    // })
+
+  }
+
+  goTo(path: string) {
     this.navCtrl.navigateRoot(path);
   }
 
-  saveSeller()
-  {
-    this.user_data.role="seller";
-   
-    this.seller.category=this.category;
-    this.seller.cuit= this.cuit;
-   // this.seller.location= this.userLocation;
-    this.seller.shop_name= this.shop_name;
-    
-console.log(this.seller);
-    this.dbService.addVendor(this.seller).subscribe((data)=>{
+  saveSeller() {
+    this.user_data.role = "seller";
+
+    this.seller.category = this.category;
+    this.seller.cuit = this.cuit;
+    // this.seller.location= this.userLocation;
+    this.seller.shop_name = this.shop_name;
+
+    console.log(this.seller);
+    this.dbService.addVendor(this.seller).subscribe((data) => {
       console.log(data)
     })
   }
@@ -81,44 +85,68 @@ console.log(this.seller);
 
   }
 
-  async dataModal()
-  {
+  async dataModal() {
     const modal = await this.modalctrl.create({
       component: NewSellerComponent,
 
-      cssClass:"modal",
+      cssClass: "modal",
       componentProps:
-      {
-        "seller":this.seller
-      }
+        {
+          "seller": this.seller
+        }
 
-      
+
     });
-     modal.present();
-     modal.onDidDismiss().then((data)=>{
-      
+    modal.present();
+    modal.onDidDismiss().then((data) => {
+
     })
   }
 
-  ionViewWillEnter(){
-    this.user_data = JSON.parse(localStorage.getItem("user_data"));
+  ionViewWillEnter() {
+    this.user_data = this.tokenSrv.GetPayLoad().usuario;
 
     this.name = this.user_data.name;
     this.user_name = this.user_data.user_name;
+
+    if(this.seller._id)
+    {
+      this.dbService.getProductsVendor(this.seller._id)
+      .subscribe((data:any)=>
+    {
+      console.log(data)
+      if(data.ok && data.data.length >= 1)
+      {
+        this.products = true;
+      }
+    })
+    }
+
   }
 
 
-goToMyShop()
-{
-  this.router.navigateByUrl('seller-shop/' + this.seller.shop_name);
-}
+  goToMyShop() {
+    this.router.navigateByUrl('shop/' + this.seller.shop_name);
+  }
 
-goToMyOrders()
-{
-  this.router.navigateByUrl('orders/' + this.seller._id);
-}
+  goToMyOrders() {
+    this.router.navigateByUrl('orders/' + this.seller._id);
+  }
 
 
+
+
+  openNav() {
+    document.getElementById("mySidenav").style.width = "250px";
+    document.getElementById("content-seller").style.backgroundColor = "rgba(0,0,0,0.4)";
+
+  }
+  
+   closeNav() {
+    document.getElementById("mySidenav").style.width = "0";
+
+    document.body.style.backgroundColor = "white";
+  }
 
 
 }

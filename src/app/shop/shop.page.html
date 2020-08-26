@@ -1,0 +1,163 @@
+<ion-toolbar>
+    <ion-row>
+        <ion-col size="2">
+            <ion-buttons>
+                <ion-menu-button color="light" menu="first"></ion-menu-button>
+            </ion-buttons>
+        </ion-col>
+
+        <ion-col *ngIf="!is_logged" size="2">
+                <ion-button (click)="toRegistro()" fill="clear" color="light">
+                <ion-icon src="../../assets/images/icon1.png"></ion-icon> Registration
+                </ion-button>
+        </ion-col>
+
+        <ion-col size="2">
+            
+        </ion-col>
+
+        <ion-col size="2">
+            
+        </ion-col>
+    </ion-row>
+</ion-toolbar>
+
+
+<!-- <div class="header_top">
+    <div class="container">
+        <p class="left">
+            <a href="tel:61298211354">
+                <ion-icon color="light" src="../../assets/images/phone-volume-solid.svg"> </ion-icon> 44 5678 9943 20</a>
+        </p>
+        <div class="right">
+            <ion-button (click)="toRegistro()" fill="clear" color="light" *ngIf="!is_logged">
+                <img src="../../assets/images/icon1.png" alt=""> Registration</ion-button>
+            <ion-button (click)="toLogin()" fill="clear" color="light" *ngIf="!is_logged">
+                <img src="../../assets/images/icon2.png" alt=""> log In</ion-button>
+            <ion-button fill="clear" color="light" *ngIf="is_logged">
+                <img src="../../assets/images/icon3.png" alt=""> Checkout </ion-button>
+            <ion-button (click)="goTo()" fill="clear" color="light" *ngIf="is_logged">
+                <img src="../../assets/images/icon4.png" alt=""> My Account</ion-button>
+
+        </div>
+
+    </div>
+</div> -->
+
+
+
+<ion-content>
+
+
+
+    <div id="banner">
+        <div class="container">
+            <div class="row banner_img" *ngIf="seller">
+                <div class="col-sm-7">
+                    <img *ngIf="seller.profile_img" class="seller_img" src="{{seller.profile_img}}" alt="">
+                    <img *ngIf="!seller.profile_img" class="seller_img" src="../../assets/logoOfertaCerca/logoCelesteFondoBlancoChico.jpg" alt="">
+                </div>
+                <div class="col-sm-5">
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <img src="../../assets/images/banner_img2.jpg" alt="">
+                        </div>
+                        <div class="col-xs-6">
+                            <img src="../../assets/images/banner_img3.jpg" alt="">
+                        </div>
+                        <div class="col-xs-6">
+                            <img src="../../assets/images/banner_img4.jpg" alt="">
+                        </div>
+                        <div class="col-xs-6">
+                            <img src="../../assets/images/banner_img5.jpg" alt="">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="banner_btm">
+            <h2>{{seller.shop_name}}</h2>
+            <div class="reviews">
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <p>651 Delivery Reviews</p>
+            </div>
+            <p>
+                <img src="../../assets/images/map.png" alt=""> 14/23 Golf Club Road, Australia </p>
+            <p>
+                <img src="../../assets/images/phone.png" alt=""> {{seller.telefono}} </p>
+            <p>
+                <img src="../../assets/images/time.png" alt=""> Open Now - 9:30am - 11pm</p>
+            <p>
+                <img src="../../assets/images/delivery.png" alt=""> Delivery Services: Delivery and Pickp both</p>
+            <p>
+                <img src="../../assets/images/payment.png" alt=""> Payment Method: Cash, Credit Crad, Debit Card</p>
+        </div>
+    </div>
+    <div class="product_sec">
+        <div class="container">
+            <div class="offer_sec">
+                <div class="row">
+                    <div class="col-sm-3 col-xs-6">
+                        <img src="../../assets/images/offer1.jpg" alt="">
+                    </div>
+                    <div class="col-sm-3 col-xs-6">
+                        <img src="../../assets/images/offer2.jpg" alt="">
+                    </div>
+                    <div class="col-sm-3 col-xs-6">
+                        <img src="../../assets/images/offer3.jpg" alt="">
+                    </div>
+                    <div class="col-sm-3 col-xs-6">
+                        <img src="../../assets/images/offer4.jpg" alt="">
+                    </div>
+                </div>
+            </div>
+            <div class="product_content">
+                <div class="row">
+                    <div class="col-md-3 col-sm-6" *ngFor="let p of aux_products_list">
+                        <div class="product_box">
+                            <div class="product_img">
+                                <p>
+                                    <img style="height: 200px;" src="{{p.product_image}}" alt="">
+                                </p>
+                            </div>
+                            <h3 class="text-wrap"> {{p.product_ref.name}}</h3>
+                            <p>It is a long established fact that a reader will It is a long established fact that a reader
+                                will </p>
+                            <h5>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <span>(25 reviews)</span>
+                            </h5>
+                            <h4>
+                                <span>${{p.price}}</span> ${{p.price}}</h4>
+                            <a href="#" class="btn2">Agregar</a>
+                        </div>
+                    </div>
+
+
+                </div>
+                <div class="offer_sec">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <img src="../../assets/images/offer5.jpg" alt="">
+                        </div>
+                        <div class="col-sm-6">
+                            <img src="../../assets/images/offer6.jpg" alt="">
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</ion-content>

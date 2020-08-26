@@ -1,0 +1,121 @@
+<ion-content padding="true">
+
+
+    <ion-toolbar>
+        <ion-row class="ion-justify-content-end">
+            <ion-button fill="clear" (click)="dismissModal()">
+                <ion-icon name="md-close" size="large" color="primary"></ion-icon>
+
+            </ion-button>
+        </ion-row>
+
+        <ion-row>
+            <div class="jumbotron">
+                <p class="lead">Total</p>
+                <h1 class="display-4">{{total}}</h1>
+
+            </div>
+        </ion-row>
+
+    </ion-toolbar>
+    <ion-row>
+        <ion-col size="4">
+            <ion-button (click)="carga = !carga" size="large">
+                Transacciones
+            </ion-button>
+        </ion-col>
+
+        <ion-col size="4">
+            <ion-button (click)="carga = !carga" size="large">
+                Foto ticket
+            </ion-button>
+        </ion-col>
+
+        <ion-col size="4">
+            <ion-button (click)="carga = !carga" size="large">
+                Cargar saldo
+            </ion-button>
+        </ion-col>
+
+    </ion-row>
+
+
+
+
+    <div *ngIf="!carga">
+
+        <h1>Total: {{total}}</h1>
+
+        <div *ngIf="transactions">
+
+            <ion-item *ngFor="let t of transactions">
+
+                <ion-col size=3>
+                    <ion-thumbnail>
+                        <img *ngIf=" !t.offer" src="../../assets/logoOfertaCerca/logoCelesteFondoBlancoChico.jpg">
+                        <img *ngIf=" t.offer && t.offer.offer_img" src="{{t.offer.offer_img}}">
+                    </ion-thumbnail>
+                </ion-col>
+
+                <ion-col size=6>
+                    <ion-label class="ion-text-wrap" style="font-size: small"> {{t.fecha | date: ' d/M/y h:mm a' }} </ion-label>
+                </ion-col>
+                <ion-col size=3>
+                    <ion-label class="ion-text-wrap" *ngIf="t.quantity > 0" color="success"> {{t.quantity | currency}} </ion-label>
+                    <ion-label class="ion-text-wrap" *ngIf="t.quantity < 0" color="danger"> {{t.quantity | currency}} </ion-label>
+                </ion-col>
+            </ion-item>
+        </div>
+
+
+    </div>
+
+    <div *ngIf="carga">
+
+        <ion-item lines="inset">
+            <ion-label position="floating" color="tertiary" class="text_floating font_seis">Cantidad:
+            </ion-label>
+
+
+            <ion-input type="number" [(ngModel)]="quantity" placeholder="Cantidad"> </ion-input>
+        </ion-item>
+
+
+        <ion-item lines="none">
+            <ion-label position="floating" color="tertiary" class="text_floating font_seis">Metodos de pago:
+            </ion-label>
+            <ion-select [(ngModel)]="method" multiple="false" cancelText="Cancelar" interface="alert">
+                <ion-select-option *ngFor="let metodo of metodosPago" value="{{metodo.source.name}}">
+                    <ion-thumbnail>
+                        <img src="{{metodo.view.subgroup_logo}}" alt="">
+                    </ion-thumbnail>
+
+                    {{metodo.source.name}}
+                </ion-select-option>
+            </ion-select>
+        </ion-item>
+
+        <ion-button (click)="cargar()">
+            Cargar
+        </ion-button>
+
+        <ion-button (click)="carga = false">
+            cancelar
+        </ion-button>
+
+    </div>
+
+
+    <!-- <ion-row style="height: 20%; background-color: rgba(255, 246, 246, 0.459)" align-items-center justify-content-center>
+    <ion-title style="text-align: center"> Saldo: </ion-title>
+</ion-row>
+
+<ion-row style="height: 40%; background-color: rgba(255, 246, 246, 0.459)" align-items-center justify-content-center>
+    <h1 style="color: rgba(84, 236, 70, 0.938); font-size:100px; text-align: center;">{{saldo | currency}}</h1>
+</ion-row> -->
+
+
+
+
+
+</ion-content>

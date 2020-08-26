@@ -3,6 +3,7 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { 
   AuthGuardService as AuthGuard 
 } from './services/auth-guard.service';
+import { MyOffersPage } from './my-offers/my-offers.page';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -26,6 +27,7 @@ const routes: Routes = [
   {
     path: 'seller-panel',
     loadChildren: () => import('./seller-panel/seller-panel.module').then( m => m.SellerPanelPageModule)
+    //children: [{path: "/my-offers", component: MyOffersPage}]
   },
   {
     path: 'new-offer',
@@ -142,10 +144,24 @@ const routes: Routes = [
   {
     path: 'offer-land-pange/:offer',
     loadChildren: () => import('./offer-land-pange/offer-land-pange.module').then( m => m.OfferLandPangePageModule)
-  },  {
+  },
+  {
     path: 'billetera',
     loadChildren: () => import('./billetera/billetera.module').then( m => m.BilleteraPageModule)
   },
+  {
+    path: 'shop/:seller',
+    loadChildren: () => import('./shop/shop.module').then( m => m.ShopPageModule)
+  },
+  {
+    path: 'offer/:offer',
+    loadChildren: () => import('./offer/offer.module').then( m => m.OfferPageModule)
+  },  {
+    path: 'vendor-panel',
+    loadChildren: () => import('./vendor-panel/vendor-panel.module').then( m => m.VendorPanelPageModule)
+  },
+
+
 
 
 

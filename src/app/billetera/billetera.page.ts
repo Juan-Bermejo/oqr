@@ -17,6 +17,9 @@ export class BilleteraPage implements OnInit {
   method;
   quantity=0;
   carga:boolean = false;
+  view = "lista";
+  foto:File = null;
+  fotoSeleccionada: string | ArrayBuffer;
 
 
 
@@ -27,6 +30,20 @@ export class BilleteraPage implements OnInit {
 
     this.user=this.token.GetPayLoad().usuario;
    }
+
+
+   fileUpl(files: FileList)
+   {
+     const reader = new FileReader();
+     reader.onload = e => this.fotoSeleccionada = reader.result;
+     reader.readAsDataURL(files[0]);
+ 
+     this.foto= files.item(0);
+     console.log(this.foto);
+ 
+   }
+
+   
 
   pagar()
   {

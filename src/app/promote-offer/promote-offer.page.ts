@@ -18,6 +18,7 @@ import { TokenService } from '../services/token.service';
 })
 export class PromoteOfferPage implements OnInit {
 
+  total_vendors: number;
   offer:Offer;
   link:string;
   tiktok_link:string;
@@ -33,6 +34,7 @@ export class PromoteOfferPage implements OnInit {
   offer_id;
   offer_img;
   influencer:any;
+  join:boolean = false;
 
   constructor(private route: ActivatedRoute, 
     public navCtrl: NavController,
@@ -55,17 +57,18 @@ export class PromoteOfferPage implements OnInit {
       console.log(splitURL)
      this.offer_id = splitURL[5].split("?")[0];
 
-   this.dbService.getOffer(this.offer_id).toPromise().then((data:any)=>
-  {
-    this.offer = data;
-  })
-    
-    this.dbService.getLogged$().subscribe((logged_check)=>
-    {
-      this.is_logged=logged_check;
-    })
+  //  this.dbService.getOffer(this.offer_id).toPromise().then((data:any)=>
+  // {
+  //   if(data.ok)
+  //   {
+  //     this.offer = data.offer;
+  //     this.total_vendors= data.total;
 
-    this.user= this.token.GetPayLoad().usuario;
+  //   }
+  // })
+
+
+  
 
   }
 
@@ -173,6 +176,24 @@ export class PromoteOfferPage implements OnInit {
 
   }
 
+   traerOferta()
+  {
+     this.dbService.getOfferInf(this.offer_id, this.influencer._id).toPromise().then((data:any)=>
+    {
+      console.log(data);
+      
+      if(data.ok)
+      {
+        this.offer = data.offer;
+        this.total_vendors= data.total_vendors;
+        this.join = data.join
+
+      }
+
+
+    })
+  }
+
 
   promoteOffer()
   {
@@ -185,33 +206,63 @@ export class PromoteOfferPage implements OnInit {
     if(data.ok)
     {
       console.log(data);
+      this.traerOferta();
       this.spinner = false;
     }
+  })
+  }
+
+
+  removePromote()
+  {
+    this.dbService.removePromete(this.influencer._id, this.offer_id).toPromise()
+    .then((data:any)=>
+  {
+    console.log(data);
+    this.traerOferta();
+    this.spinner = false;
   })
   }
 
   async ionViewWillEnter()
   {
 
-    this.dbService.getInfluencerByUser(this.user._id)
-    .subscribe((data:any)=>
-  {
-    if(data)
-    {
-      this.influencer = data.influencer_data;
-    }
-    
-  })
-
-
     if (document.URL.indexOf("/") > 0) {
       let splitURL = document.URL.split("/");
       console.log(splitURL)
      this.offer_id = splitURL[5].split("?")[0];
-  await this.dbService.getOffer(this.offer_id).toPromise().then((data:any)=>
-  {
-    this.offer = data;
-  })
+
+     this.dbService.getLogged$().subscribe((logged_check)=>
+     {
+       this.is_logged=logged_check;
+     })
+ 
+     this.user= this.token.GetPayLoad().usuario;
+
+     this.dbService.getInfluencerByUser(this.user._id)
+     .subscribe((data:any)=>
+   {
+     if(data)
+     {
+       this.influencer = data.influencer_data;
+
+        this.dbService.getOfferInf(this.offer_id, this.influencer._id).toPromise().then((data:any)=>
+       {
+         console.log(data);
+         
+         if(data.ok)
+         {
+           this.offer = data.offer;
+           this.total_vendors= data.total_vendors;
+           this.join = data.join
+   
+         }
+   
+   
+       })
+     }
+     
+   })
     
     this.dbService.getLogged$().subscribe((logged_check)=>
     {

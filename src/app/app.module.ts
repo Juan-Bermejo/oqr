@@ -58,6 +58,11 @@ import { File } from '@ionic-native/file/ngx';
 import { RangoComponent } from './componentes/rango/rango.component';
 import { AsociateOfferModalComponent } from './componentes/asociate-offer-modal/asociate-offer-modal.component';
 import { RemovePipePipe } from './pipes/remove-pipe.pipe';
+import { BilleteraComponent } from './componentes/billetera/billetera.component';
+import { RegistroComponent } from './componentes/registro/registro.component';
+import { LoadingComponent } from './componentes/loading/loading.component';
+import { MensajeComponent } from './componentes/mensaje/mensaje.component';
+import { RespuestaReservaComponent } from './componentes/respuesta-reserva/respuesta-reserva.component';
 
 
 export function tokenGetter() {
@@ -79,6 +84,11 @@ export function tokenGetter() {
      TypeOfferModalComponent,
      RangoComponent,
      AsociateOfferModalComponent,
+     BilleteraComponent,
+     RegistroComponent,
+     LoadingComponent,
+     MensajeComponent,
+     RespuestaReservaComponent,
      OfferViewComponent],
 
   imports: [BrowserModule,

@@ -1,10 +1,28 @@
-.cont
-{
-    position: absolute;
-    top: 50%;
-    left: 48%;
-}
+
 
 ion-thumbnail{
     --size: 75px;
+}
+
+ion-toolbar{
+    --background: #1957d2;
+    height: 22%;
+}
+.jumbotron
+{
+    background-color: #1957d2;
+    color: white;
+    text-align: center;
+}
+
+.icon
+{
+    height: 50px;
+    width: 50px;
+}
+
+.foto
+{
+    height: 80%;
+    width: 80%;
 }

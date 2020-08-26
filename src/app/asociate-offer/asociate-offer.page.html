@@ -12,7 +12,7 @@
 
 <ion-card padding>
   <ion-row class="ion-justify-content-center">
-      <img src="../../assets/images/{{offer.category}}.jpg">
+      <img src="{{offer.offer_img}}">
     </ion-row>
     <ion-row class="ion-justify-content-center">
       <ion-card-title style="color: rgba(39, 39, 39, 0.904)">
@@ -34,7 +34,7 @@
           <ion-label>Fecha de publicacion</ion-label>
           <ion-note slot="end">
 
-                {{offer.date}} 
+                {{offer.fecha | date: ' d/M/y h:mm a'}} 
   
           </ion-note>
       </ion-item>
@@ -42,7 +42,7 @@
           <ion-label>Cantidad de vendedores</ion-label>
           <ion-note slot="end">              
             <ion-badge>
-              <!-- {{offer.sellers_cuantity}}  -->
+               {{total_vendors}} 
           </ion-badge>
              </ion-note>
       </ion-item>
@@ -50,7 +50,7 @@
           <ion-label>Comision por venta</ion-label>
           <ion-note slot="end"> 
               <ion-badge>
-                  {{offer.commission}} 
+                  {{offer.commission * total_vendors}} 
               </ion-badge>
              </ion-note>
         </ion-item>
@@ -74,9 +74,9 @@
 Ingresa la comision que quieres pagar
 </ion-title>
 <ion-item-divider>        
-            <ion-input type="number" placeholder="Ingresa el importe." [(ngModel)]="commision">
+            <ion-input type="number" placeholder="Ingresa el importe." [(ngModel)]="commission">
                 <span>
-                    <ion-select (ionChange)="currency_commission=prod_currency" [(ngModel)]="prod_currency" class="select-currency" placeholder="Moneda">
+                    <ion-select (ionChange)="currency_commission=prod_currency" [(ngModel)]="prod_currency" class="select-currency" placeholder="Moneda" readonly>
                         <ion-select-option *ngFor="let c of countries" >
                           {{c.currencies[0].code}}
                         </ion-select-option>

@@ -1,5 +1,21 @@
 
-<ion-content padding="true" >
+
+        <!-- <div id="mySidenav" class="sidenav">
+                <a href="#" class="closebtn" (click)="closeNav()">&times;</a>
+                <a href="#">About</a>
+                <a href="#">Services</a>
+                <a href="#">Clients</a>
+                <a href="#">Contact</a>
+              </div>
+              
+              <h2>Animated Sidenav Example</h2>
+              <p>Click on the element below to open the side navigation menu.</p>
+              <span style="font-size:30px;cursor:pointer" (click)="openNav()">&#9776; open</span> -->
+
+<ion-content padding="true" id="content-seller" >
+
+
+
 
    
     <ion-toolbar>
@@ -90,7 +106,7 @@
                 <ion-icon slot="end" src="../../assets/ionicons/chevron-forward-outline.svg"></ion-icon>
             </ion-item-divider>
 
-  <ion-item-divider (click)="goTo('offer-list-asociate') " >
+  <ion-item-divider *ngIf="userLocation" (click)="goTo('offer-list-asociate') " >
         <ion-avatar slot="start">
         <ion-icon size="large" name="md-people" color="primary"></ion-icon>
         </ion-avatar>
@@ -127,31 +143,6 @@
 
 
 
-
-<!--
-<ion-row>
-  <ion-col size=3>
-    
-      <img (click)="goTo('new-offer')" style="height: 96px; width: 75px;"  style="height: 100px; width: 75px;"  src="../../assets/iconos/iconos oqr-27.png">
-   
-  </ion-col>
-  <ion-col size=3>
-      
-        <img style="height: 96px; width: 75px;"   src="../../assets/iconos/iconos oqr-28.png">
-     
-    </ion-col>
-    <ion-col size=3>
-        
-          <img style="height: 96px; width: 75px;"   src="../../assets/iconos/iconos oqr-29.png">
-       
-      </ion-col>
-      <ion-col size=3>
-          
-            <img style="height: 96px; width: 75px;"   src="../../assets/iconos/iconos oqr-30.png">
-         
-        </ion-col>
-</ion-row>
--->
 
 
 </ion-content>

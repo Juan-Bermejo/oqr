@@ -9,6 +9,8 @@ import { Facebook } from '@ionic-native/facebook/ngx';
 import { DbService } from '../../services/db.service';
 import { TokenService } from '../../services/token.service';
 import { Observable } from 'rxjs';
+import { RegisterPage } from '../../register/register.page';
+import { RegistroComponent } from '../registro/registro.component';
 
 @Component({
   selector: 'app-login',
@@ -296,12 +298,23 @@ export class LoginComponent implements OnInit {
       });
   }
 
-  register_page() {
+  async register_page() {
     
-    this.navCtrl.navigateRoot('register').then(()=>
-  {
-    this.dismissModal()
-  })
+  //   this.navCtrl.navigateRoot('register').then(()=>
+  // {
+  //   this.dismissModal()
+  // })
+  this.dismissModal()
+
+  const registro= await this.modalCtrl.create(
+    {
+      component: RegistroComponent,
+      cssClass: "registro-modal"
+    }
+  )
+
+  registro.present();
+
   }
 
   resetForm(form?: NgForm) {

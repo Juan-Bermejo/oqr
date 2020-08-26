@@ -1,17 +1,23 @@
+<ion-header>
+  <ion-toolbar>
 
-
-<ion-content >
-    <ion-toolbar>
-
-        <ion-buttons slot="start" collapse="true">
-            <ion-back-button color="light" icon="md-arrow-back" defaultHref="home">
-            </ion-back-button>
-            </ion-buttons>
-
-
-
-
+    <ion-buttons slot="start" collapse="true">
+        <ion-back-button color="light" icon="md-arrow-back" defaultHref="home">
+        </ion-back-button>
+        </ion-buttons>
 </ion-toolbar>
+</ion-header>
+
+
+
+
+<ion-content padding="true" [scrollEvents]="true" overflow-scroll="false">
+
+  <ion-refresher slot="fixed" (ionRefresh)="recargarOffer($event, 1)" (ionRefresh)="loading='cargando'" >
+    <ion-refresher-content> </ion-refresher-content>
+  </ion-refresher>  
+
+
 
     <ion-row class="ion-justify-content-center">
 
@@ -54,7 +60,12 @@
         
     </ion-row>
 
+    <ng-container *ngIf="loading=== 'ok'">
+
 <ion-list>
+
+
+    <ng-container *ngIf="habilitado === 1">
   <ion-card *ngFor="let offer of aux_offer_list" (click)="goToOfferDetails(offer)" >
   
 <ion-row>
@@ -73,7 +84,6 @@
         
             <ion-card-subtitle color="dark">{{offer.description}}</ion-card-subtitle>
      
-
               <ion-row justify-content-start >
              
                       <ion-col size=4 class="ion-align-self-end">  
@@ -112,15 +122,88 @@
 </ion-row>
 
 
-
-
-
-
-
   </ion-card>
+
+  </ng-container>
+
+
+
+  <ng-container *ngIf="habilitado === 2">
+
+      <ion-card *ngFor="let offer of aux_offer_list" (click)="goToOfferDetails(offer)" >
+  
+          <ion-row>
+              <ion-col size=4>
+                  <ion-thumbnail>
+                      <img  src="{{offer.offer_img}}">
+                   </ion-thumbnail>
+              </ion-col>
+          
+              <ion-col size=8>
+          
+                   <ion-card-title color="primary" >
+                     {{offer.titulo}}
+                     </ion-card-title>
+          
+                  
+                      <ion-card-subtitle color="dark">{{offer.description}}</ion-card-subtitle>
+               
+                        <ion-row justify-content-start >
+                       
+                                <ion-col size=4 class="ion-align-self-end">  
+                                  <ion-chip outline color="primary">
+                                      <ion-icon color="primary" name="md-people">
+                                        </ion-icon>
+                                        <ion-label>
+                                            {{offer.sellers_cuantity}}
+                                        </ion-label>
+                                      </ion-chip>
+                                        </ion-col>
+                                           
+                                  <ion-col size=4 class="ion-align-self-end"> 
+                                      <ion-chip outline color="primary"> 
+                                  <ion-icon color="primary" name="md-cash">
+                                    </ion-icon>
+                                    <ion-label>
+                                        {{offer.commission | currency:offer.currency_commission}}
+                                    </ion-label>
+                                  </ion-chip>
+                                    </ion-col>
+                                            
+                                    <ion-col size=4 class="ion-align-self-end">   
+                                        <ion-chip outline color="primary">
+                                        <ion-icon color="primary" name="md-briefcase"></ion-icon>
+                                        
+                                          <ion-label>
+                                              {{offer.commission * offer.sellers_cuantity * offer.stock | currency:offer.currency_commission}}
+                                          </ion-label>
+                                        </ion-chip>
+                                          </ion-col>
+          
+                        </ion-row>
+          
+              </ion-col>
+          </ion-row>
+          
+          
+            </ion-card>
+
+    </ng-container>
+
+
 </ion-list>
 
-  
+  </ng-container>
+
+
+
+  <ion-infinite-scroll [disabled]="habilitado !== 1 " threshold="100px" (ionInfinite)="getAllOffers($event)">
+    <ion-infinite-scroll-content> </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+
+  <ion-infinite-scroll [disabled]="habilitado !== 2 " threshold="100px" (ionInfinite)="loadPageOffer($event)">
+    <ion-infinite-scroll-content> </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
 
 
 

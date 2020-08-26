@@ -136,13 +136,51 @@ export class DbService {
       return this.http.delete(USER_URL);
     }
 
+      //views SERVICES
+      setView(data){
+        let INFL_URL = this.URL_SERVER.concat('views/');
+
+        return this.http.post(INFL_URL, data);
+      }
+
+      setViewVendor(data){
+        let INFL_URL = this.URL_SERVER.concat('views/vendor');
+
+        return this.http.post(INFL_URL, data);
+      }
+    
+
     //INFLUENCER SERVICES
+
+    getAllOffersInf(pull: boolean = false) {
+      let url = 'offers/';
+
+      if (pull) {
+        this.pagina = 0;
+      }
+  
+      this.pagina++;
+      
+      let OFFER_URL = this.URL_SERVER.concat(url);
+      return this.http.get(OFFER_URL+ `/?pagina=${this.pagina}`);
+    }
 
     getInfByCode(code: string){
       let INFL_URL = this.URL_SERVER.concat('influencers/getinfbycode');
       let data = {'code': code}
 
       return this.http.post(INFL_URL, data);
+    }
+
+    getOfferInf(offer_id: string, influencer_id:string ){
+      let INFL_URL = this.URL_SERVER.concat('influencers/getoffer');
+      let data = {'offer_id': offer_id,
+                  'influencer_id': influencer_id}
+      const headers = new HttpHeaders({
+        'x-token': localStorage.getItem('token')
+      });
+
+      return this.http.post(INFL_URL, data, {headers});
     }
 
     createInfluencer(data){
@@ -155,7 +193,7 @@ export class DbService {
     }
 
     getInfluencerByUser(user_id: string){
-      let INFL_URL = this.URL_SERVER.concat('influencers/getinf');
+      let INFL_URL = this.URL_SERVER.concat('influencers/getinf'); // Trae solo el influencer
       let data = {'user_id': user_id}
       const headers = new HttpHeaders({
         'x-token': localStorage.getItem('token')
@@ -163,7 +201,17 @@ export class DbService {
       return this.http.post(INFL_URL, data,
         {headers});
     }
+    
 
+    getInfluencerByUserTotales(){
+      let INFL_URL = this.URL_SERVER.concat('influencers/getinftotales'); // Traer el influencer con los totales del panel de influencer.
+      let data = {'user_id': ""}
+      const headers = new HttpHeaders({
+        'x-token': localStorage.getItem('token')
+      });
+      return this.http.post(INFL_URL, data,
+        {headers});
+    }
     getInfluencersByOffer(offer_id: string){
       let INFL_URL = this.URL_SERVER.concat('influencers/getfromoffer');
       let data = {'offer_id': offer_id}
@@ -188,12 +236,34 @@ export class DbService {
         {headers: new HttpHeaders({"Content-Type": "application/json"})});
     }
 
+    removePromete(influencer_id: string, offer_id: string)
+    {
+      let INFL_URL = this.URL_SERVER.concat('influencers/removepromote');
+      let data = {
+        "influencer_id": influencer_id,
+        "offer_id": offer_id
+      }
+      return this.http.post(INFL_URL, data,
+        {headers: new HttpHeaders({"Content-Type": "application/json"})});
+    }
+
     //OFFER SERVICES
 
     createOffer(form) {
       let url = 'offers/';
       let OFFER_URL = this.URL_SERVER.concat(url);
       return this.http.post(OFFER_URL, form);
+    }
+
+    getOfferVend(offer_id: string, vendor_id:string ){
+      let INFL_URL = this.URL_SERVER.concat('offers/getoffer');
+      let data = {'offer_id': offer_id,
+                  'vendor_id': vendor_id}
+      const headers = new HttpHeaders({
+        'x-token': localStorage.getItem('token')
+      });
+
+      return this.http.post(INFL_URL, data, {headers});
     }
 
 
@@ -296,12 +366,26 @@ export class DbService {
         return this.http.post(OFFER_URL, data);
     }
 
-    dropOffer(user_id: string, offer_id: string){
+    reserveOffer(data)
+    {
+      let url = 'transaction/offerreserve';
+      let OFFER_URL = this.URL_SERVER.concat(url);
+      const headers = new HttpHeaders({
+        'x-token':localStorage.getItem('token')
+      });
+
+      return this.http.post(OFFER_URL, data, {headers});
+
+    }
+
+    dropOffer(vendor_id: string, offer_id: string){
       let url = 'offers/dropoffer';
       let data = {
-        "user_id": user_id,
+        "vendor_id": vendor_id,
         "offer_id": offer_id 
       }
+
+      console.log(data);
       let OFFER_URL = this.URL_SERVER.concat(url);
       return this.http.post(OFFER_URL, data,
         {headers: new HttpHeaders({"Content-Type": "application/json"})});
@@ -395,9 +479,12 @@ export class DbService {
 
     saveLocation(location_data: Location) {
       let url = 'locations/';
+      const headers = new HttpHeaders({
+        'x-token': localStorage.getItem('token')
+      });
       var LOC_URL = this.URL_SERVER.concat(url.toString());
       return this.http.post(LOC_URL, location_data,
-        {headers: new HttpHeaders({"Content-Type": "application/json"})});
+        {headers});
     }
 
     getLocation(vendor_id: string) {
@@ -478,6 +565,46 @@ export class DbService {
       let VEND_URL = this.URL_SERVER.concat(url);
       return this.http.put(VEND_URL, seller,
         {headers: new HttpHeaders({"Content-Type": "application/json"})});
+    }
+
+
+    getTransactionVendor(vendor_id: string) {
+      let url = 'transaction/vtransactions';
+      const headers = new HttpHeaders({
+        'x-token': localStorage.getItem('token')
+      });
+      let data = {"vendor_id": vendor_id}
+
+      var PROD_URL = this.URL_SERVER.concat(url.toString());
+      return this.http.post(PROD_URL, data,
+        {headers});
+    }
+
+    changeStatusOrderVendor(transaction_id, vendor_id)
+    {
+      let url = 'transaction/vchecktransaction';
+      const headers = new HttpHeaders({
+        'x-token': localStorage.getItem('token')
+      });
+      let data = {"transaction_id": transaction_id, "vendor_id": vendor_id}
+
+      var PROD_URL = this.URL_SERVER.concat(url.toString());
+      return this.http.post(PROD_URL, data,
+        {headers});
+    }
+
+    
+    closeTransaction(transaction_id, vendor_id)
+    {
+      let url = 'transaction/vendorct';
+      const headers = new HttpHeaders({
+        'x-token': localStorage.getItem('token')
+      });
+      let data = {"transaction_id": transaction_id, "vendor_id": vendor_id}
+
+      var PROD_URL = this.URL_SERVER.concat(url.toString());
+      return this.http.post(PROD_URL, data,
+        {headers});
     }
 
     getProdOfVendor(vendor_id: string) {

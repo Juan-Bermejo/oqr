@@ -19,6 +19,8 @@ import { SelectRelatedProductsPage } from '../modals/select-related-products/sel
 import { Token } from '@angular/compiler';
 import { TokenService } from '../services/token.service';
 import { AsociateOfferModalComponent } from '../componentes/asociate-offer-modal/asociate-offer-modal.component';
+import { MensajeComponent } from '../componentes/mensaje/mensaje.component';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -85,6 +87,7 @@ export class NewOfferPage implements OnInit {
     private alertCtrl: AlertController,
     private zbar: ZBar,
     private dbService: DbService,
+    private router: Router,
   private token: TokenService )
      {
        this.prod_subcribe= new Subscription()
@@ -277,8 +280,6 @@ export class NewOfferPage implements OnInit {
   }
 
 
-
-
   back()
   {
     this.slides.slidePrev()
@@ -333,9 +334,7 @@ export class NewOfferPage implements OnInit {
         this.products[0]=data.data.result.product;
         this.product =data.data.result.product;
       }
-      /*data.data.products ? 
-      this.products = data.data.result.products :
-      this.products.push(data.data.result.product) ;*/
+
       console.log(this.products)
      
       
@@ -355,42 +354,6 @@ export class NewOfferPage implements OnInit {
 
     setTimeout( () => {
 
-/*
-          const alert = await this.alertCtrl.create({
-
-            backdropDismiss:true,
-            header: "Ya existe una oferta de este producto.",
-            subHeader:  "Puedes adherirte a la oferta existente o crear una nueva.",
-            message: "Si creas una nueva oferta quedará en revisión hasta que se establezca el precio promedio entre todos los vendedores.",
-            
-    
-            buttons: [
-              {
-                text: 'Cancelar',
-                role: 'cancel',
-                cssClass: 'parimary',
-                
-                handler: () => {
-    
-                }
-              }, {
-                text: 'Ver oferta existente.',
-                handler: () => {
-                  this.ParamSrv.param=
-                  {
-                    
-                    seller: this.seller
-                  }
-                   this.navCtrl.navigateRoot("asociate-offer");
-                }
-              }
-            ]
-          });
-      
-          await alert.present();
-            */
-    
-
 
   let offer = new Offer()
   this.check_time_discount ? offer.time_discount = Date.now() : offer.time_discount=0;
@@ -401,7 +364,6 @@ export class NewOfferPage implements OnInit {
     offer.titulo = this.product.product_ref.name + " a " + this.prod_currency + this.price;
 
     offer.category = this.category;
-   // offer.products.push(this.product);
     offer.kind = this.kind;
     offer.currency_commission = this.currency_commission;
     offer.commission = this.commission;
@@ -411,14 +373,11 @@ export class NewOfferPage implements OnInit {
     offer.offer_name = this.type_offer;
     offer.products = this.products;
     offer.products[0].product_ref.name = this.products[0].product_ref.name.toLowerCase();
-
-    //offer.sellers.push(this.seller._id);
     offer.stock=this.stock;
     offer.views=0;
-   // offer.sellers_cuantity= offer.sellers.length;
     offer.offer_name= "Precio"
     offer.is_active=false;
-    //offer.products_id.push(this.product._id);
+
   }
   if(this.type_offer=='Descuento')
   {
@@ -466,18 +425,9 @@ export class NewOfferPage implements OnInit {
 
   }
 
-  console.log(offer)
-
- 
-
     this.saveOfferDB(offer);
 
 
-    
-      
-
-
-    
     }, 1000);
   }
 
@@ -499,13 +449,23 @@ export class NewOfferPage implements OnInit {
         console.log(data);
         if(data.ok && !data.data) {
 
-          this.dbService.offer_id = data.id;
-          const toast = document.createElement('ion-toast');
-          toast.message = 'Oferta creada con exito';
-          toast.duration = 2000;
-          document.body.appendChild(toast);
-          this.spinner=false;
-          return toast.present();
+            const obj = {
+              mensaje: "Creaste la oferta existosamente!",
+              url: "my-offers",
+            
+            }
+  
+            this.ParamSrv.SetParam = obj;
+            
+            const mejsModal = await this.modalController.create({
+              component: MensajeComponent,
+            })
+  
+           return await mejsModal.present().then(()=>
+          {
+            this.slides.slideTo(0);
+          });
+          
 
         }
 
@@ -515,61 +475,11 @@ export class NewOfferPage implements OnInit {
           fd.append("vendor_stock", offer.stock);
           fd.append("offer_id", data.data._id);
 
-          this.ParamSrv.SetParam = 
-          {
-            "ofertaExistente": data.data,
-            "fd": fd
-          }
+          this.router.navigateByUrl("asociate-offer/"+data.data._id ).then(()=>
+        {
+          this.slides.slideTo(0);
+        })
 
-          const asociateModal = await this.modalController.create({
-            component: AsociateOfferModalComponent,
-            cssClass: "modal-rango",
-            componentProps: {
-              "ofertaExistente":data.data,
-              fd: fd
-            }
-          })
-
-          asociateModal.present();
-
-          // const alert = await this.alertCtrl.create({
-
-          //   backdropDismiss:true,
-          //   header: "Ya exíste una oferta similar.",
-          //   subHeader:  "Esta oferta esta en proceso, tomaremos su comision para generar la comision promedio." + this.currency_commission + this.commission,
-          //   message: "¿Quieres unirte a la oferta?.",
-            
-    
-          //   buttons: [
-          //     {
-          //       text: 'Cancelar',
-          //       role: 'cancel',
-          //       cssClass: 'parimary',
-                
-          //       handler: () => {
-    
-          //       }
-          //     }, {
-          //       text: 'Unirse.',
-          //       handler: () => {
-          //
-          //         fd.delete("image");
-          //         fd.append("offer_id", data.data._id);
-
-          //          console.log(fd);
-
-          //          this.dbService.joinToOffer(fd)
-          //          .toPromise()
-          //          .then((dataJoin:any)=>
-          //         {
-          //           console.log(dataJoin)
-          //         })
-          //       }
-          //     }
-          //   ]
-          // });
-      
-          // await alert.present();
         }
         this.spinner=false;
       })

@@ -34,7 +34,7 @@
                                                   <ion-label>Fecha de publicacion</ion-label>
                                                   <ion-note slot="end">
                                       
-                                                        {{offer.date}} 
+                                                        {{offer.fecha | date: ' d/M/y h:mm a' }} 
                                           
                                                   </ion-note>
                                               </ion-item>
@@ -42,7 +42,7 @@
                                                   <ion-label>Cantidad de vendedores</ion-label>
                                                   <ion-note slot="end">              
                                                     <ion-badge>
-                                                      {{offer.sellers_cuantity}} 
+                                                      {{total_vendors}} 
                                                   </ion-badge>
                                                      </ion-note>
                                               </ion-item>
@@ -58,20 +58,31 @@
                                                     <ion-label>Comision total</ion-label>
                                                     <ion-note slot="end"> 
                                                         <ion-badge>
-                                                              {{offer.commission * offer.sellers_cuantity * offer.stock}}
+                                                              {{offer.commission * total_vendors}}
                                                         </ion-badge>
                                                     </ion-note>
                                                   </ion-item>
                                                   </ion-list>
+                                                  
+                                                  <ion-row class="ion-justify-content-center" >
+
+                                                        <ion-button *ngIf="!spinner && !join" expand="block" color="success" shape="round" (click)="promoteOffer()" >
+                                                                <ion-icon name="md-megaphone" slot="start" ></ion-icon>
+                                                                Promocionar
+                                                            </ion-button>
+
+                                                            <ion-button *ngIf="!spinner && join" expand="block" shape="round" color="danger" (click)="removePromote()" >
+                                                                    <ion-icon name="md-megaphone" slot="start" ></ion-icon>
+                                                              Dejar de promocionar
+                                                                </ion-button>
+
+                                                            <ion-spinner *ngIf="spinner" >
               
-                                                  <ion-button *ngIf="!spinner" expand="block" shape="round" (click)="promoteOffer()" >
-                                                          <ion-icon name="md-megaphone" slot="start" ></ion-icon>
-                                                    Quiero patrocinar esta oferta
-                                                      </ion-button>
+                                                                </ion-spinner>
+                                                  </ion-row>
+
               
-                                                      <ion-spinner *ngIf="spinner" >
-              
-                                                      </ion-spinner>
+
                           
                         </ion-col>
                     </ion-row>

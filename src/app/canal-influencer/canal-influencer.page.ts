@@ -55,7 +55,7 @@ export class CanalInfluencerPage implements OnInit {
     }
     console.log(params);
 
-     this.navCtrl.navigateRoot("offer-details/" + params );
+     this.navCtrl.navigateRoot("offer/" + params );
   
     
    }
@@ -74,8 +74,16 @@ export class CanalInfluencerPage implements OnInit {
 
     this.dbService.getOffersInf(this.influencerCode).toPromise().then((data:any)=>
     {
-      this.aux_offer_list=data.ofertas;
-      this.influencer = data.ofertas[0].influencer;
+      if(data.ok)
+      {
+        this.influencer = data.influencer;
+
+        if(data.ofertas)
+        {
+          this.aux_offer_list=data.ofertas;
+        }
+      }
+
       console.log(data)
     })
    }

@@ -35,30 +35,30 @@
 
 <div *ngFor="let order of orders_list"  >
 
-  <ion-item *ngIf="order.checked" >
+  <ion-item *ngIf="order.check_vendor" >
       <ion-col size=1>
           <ion-checkbox></ion-checkbox> 
       </ion-col>
       <ion-col size=8 (click)="clicked(order)">
-          <ion-label color="primary">{{order.user.name}}</ion-label>
+          <ion-label color="primary">{{order.user_id.name}}</ion-label>
           
       </ion-col>
       <ion-col size=3>
-          <ion-label>{{order.cart.total | currency}}</ion-label>
+          <ion-label>{{order.quantity | currency}}</ion-label>
       </ion-col>
 
     </ion-item>
 
-    <ion-item *ngIf="!order.checked" class="checked">
+    <ion-item *ngIf="!order.check_vendor" class="checked">
         <ion-col size=1>
             <ion-checkbox></ion-checkbox> 
         </ion-col>
         <ion-col size=8 (click)="clicked(order)">
-            <ion-label color="light">{{order.user.name}}</ion-label>
+            <ion-label color="light">{{order.user_id.name}}</ion-label>
             
         </ion-col>
         <ion-col size=3>
-            <ion-label>{{order.cart.total | currency}}</ion-label>
+            <ion-label>{{order.quantity | currency}}</ion-label>
         </ion-col>
 
       </ion-item>

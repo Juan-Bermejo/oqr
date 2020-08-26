@@ -1,0 +1,33 @@
+
+      
+
+        <ion-row class="ion-justify-content-center" style="margin-top:150px;" >
+        <ion-icon color="success" size="large" name="md-checkmark-circle"></ion-icon>
+      </ion-row>
+
+      <ion-row *ngIf="!spinner" class="ion-justify-content-center" >
+          <ion-text color="primary">Reservaste la Oferta con exito </ion-text>                
+        </ion-row>
+        <ion-row *ngIf="!spinner" class="ion-justify-content-center" >
+            <ion-text color="primary">Se descargo el boucher. </ion-text>                
+          </ion-row>
+        <ion-row *ngIf="!spinner" class="ion-justify-content-center">
+          <ion-button shape="round" color="primary" (click)="volver()" >Volver al home</ion-button>
+        </ion-row>
+
+        <ion-row *ngIf="spinner" class="ion-justify-content-center" style="margin-top:150px; ">
+            <ion-spinner color="primary" size="large">
+        
+              </ion-spinner>
+        </ion-row>
+        <ion-row *ngIf="spinner" class="ion-justify-content-center">
+           <ion-text>Generando boucher...</ion-text>
+        </ion-row>
+
+   
+
+
+
+
+
+
