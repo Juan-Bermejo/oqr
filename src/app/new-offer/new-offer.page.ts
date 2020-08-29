@@ -78,6 +78,7 @@ export class NewOfferPage implements OnInit {
   searchText:string;
   product_list:Array<Product>;
   aux_product_list:Array<Product>;
+  time_quantity:number;
 
 
   constructor(private countrySrv:CountriesService,
@@ -356,7 +357,15 @@ export class NewOfferPage implements OnInit {
 
 
   let offer = new Offer()
-  this.check_time_discount ? offer.time_discount = Date.now() : offer.time_discount=0;
+  
+  if(this.check_time_discount )
+  {
+    offer.time_discount = this.time_quantity
+    offer.time_type = this.time_type;
+  }
+  else{
+    offer.time_discount=0;
+  }
 
   if(this.type_offer=='Precio')
   {

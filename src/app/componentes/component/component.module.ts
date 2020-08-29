@@ -23,6 +23,7 @@ import { RegistroComponent } from '../registro/registro.component';
 import { LoadingComponent } from '../loading/loading.component';
 import { MensajeComponent } from '../mensaje/mensaje.component';
 import { RespuestaReservaComponent } from '../respuesta-reserva/respuesta-reserva.component';
+import { DeliveryAddressComponent } from '../delivery-address/delivery-address.component';
 
 
 
@@ -45,7 +46,8 @@ import { RespuestaReservaComponent } from '../respuesta-reserva/respuesta-reserv
     RegistroComponent,
     LoadingComponent,
     MensajeComponent,
-    RespuestaReservaComponent
+    RespuestaReservaComponent,
+    DeliveryAddressComponent
     
   ],
   exports:[
@@ -66,7 +68,8 @@ import { RespuestaReservaComponent } from '../respuesta-reserva/respuesta-reserv
     RegistroComponent,
     LoadingComponent,
     MensajeComponent,
-    RespuestaReservaComponent
+    RespuestaReservaComponent,
+    DeliveryAddressComponent
   ],
   imports: [
     CommonModule,

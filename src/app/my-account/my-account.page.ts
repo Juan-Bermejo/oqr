@@ -6,6 +6,7 @@ import { NewSellerComponent } from '../componentes/new-seller/new-seller.compone
 import { tokenGetter } from '../app.module';
 import { TokenService } from '../services/token.service';
 import { GenerateCodeInfluencerComponent } from '../componentes/generate-code-influencer/generate-code-influencer.component';
+import { DeliveryAddressComponent } from '../componentes/delivery-address/delivery-address.component';
 
 @Component({
   selector: 'app-my-account',
@@ -117,6 +118,14 @@ export class MyAccountPage implements OnInit {
   }
 
 
+  async toDeliveryAddress()
+  {
+    const addr = await this.modalctrl.create({
+      component: DeliveryAddressComponent
+    })
+
+    addr.present();
+  }
 
    toSeller()
    {

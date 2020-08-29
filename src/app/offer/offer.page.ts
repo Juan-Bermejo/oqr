@@ -36,6 +36,7 @@ export class OfferPage implements OnInit {
 
 
 
+  qr_data: any;
   saldo: any;
   loading: boolean;
   influencer: any;
@@ -193,7 +194,7 @@ export class OfferPage implements OnInit {
     const billeteraModal = await this.modalController.create(
       {
         component: BilleteraComponent,
-        cssClass: "modal-offer-products"
+        cssClass: "modal-billetera"
 
       }
     )
@@ -222,7 +223,6 @@ export class OfferPage implements OnInit {
     if (this.influencer) {
       json.influencer_id = this.influencer._id;
       json.influencer_code = this.influencer.code;
-
     }
 
     console.log(json);
@@ -557,6 +557,12 @@ export class OfferPage implements OnInit {
 
 
         { text: "Codigo de reserva: "+ data.codigo_op , style: 'codigo', alignment: 'center' },
+
+        {
+          qr: this.qr_data,
+          margin: [46, 130, 0, 0],
+          fit: 75,
+        },
  
  
   

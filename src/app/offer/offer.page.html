@@ -11,7 +11,7 @@
                 <p class="right">
                 <ion-button (click)="toRegistro()" fill="clear" color="light" *ngIf="!is_logged"><img src="../../assets/images/icon1.png" alt="" > Registration</ion-button>
                 <ion-button (click)="toLogin()" fill="clear" color="light" *ngIf="!is_logged"><img src="../../assets/images/icon2.png" alt="" > log In</ion-button>
-                <ion-button  fill="clear" color="light" *ngIf="is_logged"><img src="../../assets/images/icon3.png" alt="" > Checkout </ion-button>
+                <ion-button (click)="toBilletera()"  fill="clear" color="light" *ngIf="is_logged"><ion-icon slot="start" src="../../assets/iconos/billetera/wallet (2).svg" ></ion-icon> Mi Billetera </ion-button>
                 <ion-button (click)="goTo()" fill="clear" color="light" *ngIf="is_logged"><img src="../../assets/images/icon4.png" alt="" > My Account</ion-button>
                 </p>
             </div>

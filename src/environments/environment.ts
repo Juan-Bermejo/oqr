@@ -9,6 +9,7 @@ export const environment = {
   production: false,
 
   mapBoxKey: 'pk.eyJ1IjoiYW1vcmVsbGkiLCJhIjoiY2s5a2JtbTNtMDloczNwcW5nbWRvdHBzZCJ9.jEm7Rp2mqcCPtyEnC4-VOw',
+  mpKey: "TEST-0da93049-3fef-407b-a35a-b32b68086ea0",
 
   firebaseConfig: {
 
@@ -23,6 +24,10 @@ export const environment = {
   }
   
 };
+
+
+
+
 
 
 

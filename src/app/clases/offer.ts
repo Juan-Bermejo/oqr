@@ -29,6 +29,7 @@ export class Offer {
     time_discount:number;
     is_active:boolean;
     fecha;
+    time_type;
 
     constructor()
     {

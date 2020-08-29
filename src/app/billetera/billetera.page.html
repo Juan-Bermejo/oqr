@@ -73,36 +73,52 @@
 
 
     <div *ngSwitchCase="'carga'">
-        <ion-row class="ion-justify-content-end">
-          <ion-icon name="md-close" color="primary" size="large" (click)="carga = false"></ion-icon>
-        </ion-row>
-    
-        <ion-item lines="inset">
-          <ion-label position="floating" color="tertiary" class="text_floating font_seis">Cantidad:
-          </ion-label>
-    
-    
-          <ion-input type="number" [(ngModel)]="quantity" placeholder="Cantidad"> </ion-input>
-        </ion-item>
-    
-    
-        <ion-item lines="none">
-          <ion-label position="floating" color="tertiary" class="text_floating font_seis">Metodos de pago:
-          </ion-label>
-          <ion-select [(ngModel)]="method" multiple="false" cancelText="Cancelar" interface="alert">
-            <ion-select-option *ngFor="let metodo of metodosPago" value="{{metodo.source.name}}">
-              <ion-thumbnail>
-                <img src="{{metodo.view.subgroup_logo}}" alt="">
-              </ion-thumbnail>
-    
-              {{metodo.source.name}}
-            </ion-select-option>
-          </ion-select>
-        </ion-item>
-    
-        <ion-button (click)="cargar()">
-          Cargar
-        </ion-button>
+
+<div *ngIf="globalId">
+
+        </div>
+
+          <ion-row class="ion-justify-content-center">
+              <ion-col size=10>
+                  <ion-label>
+                    ¿Cuanto queres cargar?
+                  </ion-label>
+                  <ion-input #tot  type="number" [(ngModel)]="quantity" placeholder="Cantidad"> </ion-input>
+                  </ion-col>
+          </ion-row>
+
+
+          
+
+          <!-- <ion-row class="ion-justify-content-center">
+            <ion-col size=10>
+                <ion-label>Elije un metodo de pago.
+                  </ion-label>
+                  <ion-select [(ngModel)]="method" multiple="false" cancelText="Cancelar" interface="alert">
+                    <ion-select-option *ngFor="let metodo of metodosPago" value="{{metodo.source.name}}">
+                      <ion-thumbnail>
+                        <img src="{{metodo.view.subgroup_logo}}" alt="">
+                      </ion-thumbnail>
+            
+                      {{metodo.source.name}}
+                    </ion-select-option>
+                  </ion-select>
+            </ion-col>
+            </ion-row> -->
+
+            <!-- <ion-row>
+                <ion-card>
+                  <p>*Si seleccionas el metodo de pago en "Efectivo", deberas subir la foto del ticket.
+                    La transaccion quedará como "Pendiente" hasta que se verifique el pago. </p>
+                </ion-card>
+              </ion-row> -->
+
+    <ion-row class="ion-justify-content-center">
+        <ion-button [disabled]="tot.value <= 0" shape="round" (click)="goToLinkE()">
+             <b>Cargar</b>
+          </ion-button>
+    </ion-row> 
+
     
       </div>
       
@@ -110,10 +126,13 @@
 
       <div *ngSwitchCase="'ticket'">
 
-          <ion-button expand="block"  fill="outline" id="loadFileXml" value="loadXml" onclick="document.getElementById('seleccionArchivos').click();">
-              <ion-icon  name="create" size="large" slot="start" ></ion-icon>
-              Subir foto de ticket
-            </ion-button>
+        <ion-row class="ion-justify-content-center">
+            <ion-button fill="outline" id="loadFileXml" value="loadXml" onclick="document.getElementById('seleccionArchivos').click();">
+                <ion-icon  name="create" size="large" slot="start" ></ion-icon>
+                Subir foto de ticket
+              </ion-button>
+        </ion-row>
+ 
 
             <input type="file" id="seleccionArchivos" accept="image/*" style="display:none;"  (change)="fileUpl($event.target.files)" />
 
@@ -122,45 +141,20 @@
                 <img *ngIf="fotoSeleccionada" src="{{fotoSeleccionada}}" class="foto" alt="">
               </div>
 
-              <ion-footer>
-                  <ion-button expand="block" (click)="Guardar()" [disabled]="!foto" >
-                    Cambiar
-                  </ion-button>
-                </ion-footer>
         
-        </div>
-
-        
+        </div>      
 
   </div> 
   
 
-  
-  
-
-
-
-
-
-
-
-
-  <!-- <ion-row style="height: 20%; background-color: rgba(255, 246, 246, 0.459)" align-items-center justify-content-center>
-    <ion-title style="text-align: center"> Saldo: </ion-title>
-</ion-row>
-
-<ion-row style="height: 40%; background-color: rgba(255, 246, 246, 0.459)" align-items-center justify-content-center>
-    <h1 style="color: rgba(84, 236, 70, 0.938); font-size:100px; text-align: center;">{{saldo | currency}}</h1>
-</ion-row> -->
-
-
-
-
 
 </ion-content>
 
-<!-- <ion-footer>
-    <ion-button *ngIf="!carga" (click)="carga = true" expand="block" size="large">
-        Cargar saldo
-      </ion-button>
-</ion-footer> -->
+<ion-footer *ngIf="view==='ticket'">
+    <ion-row class="ion-justify-content-center">
+        <ion-button (click)="enviarTicket()" [disabled]="!foto" >
+            <ion-icon slot="start" color="light" name="md-cloud-upload"></ion-icon>
+            Enviar
+          </ion-button>
+    </ion-row>
+    </ion-footer>

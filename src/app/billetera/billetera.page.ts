@@ -1,15 +1,21 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { DbService } from '../services/db.service';
 import { TokenService } from '../services/token.service';
+import { setInterval } from 'timers';
+
 
 @Component({
   selector: 'app-billetera',
   templateUrl: './billetera.page.html',
   styleUrls: ['./billetera.page.scss'],
 })
+
+
 export class BilleteraPage implements OnInit {
 
-
+  @ViewChild('mpForm',{static:false}) mpForm: ElementRef;
+  
+  globalId: string;
   total: number =0;
   metodosPago: Object;
   saldo:number =10;
@@ -28,8 +34,35 @@ export class BilleteraPage implements OnInit {
 
   constructor(private dbService: DbService, private token: TokenService) {
 
+
     this.user=this.token.GetPayLoad().usuario;
    }
+
+   // Link externo
+  goToLinkE() {
+
+    let data = {
+
+      "quantity": this.quantity
+    }
+
+    this.dbService.pago(data).toPromise().then((data:any)=>
+    {
+      console.log(data);
+  
+      if(data.ok)
+      {
+        this.globalId = data.pago.init_point;
+        window.open(this.globalId, '_system');
+      }
+    })
+
+    
+  }
+// Link interno
+  goToLink(url: string) {
+    window.open(url, '_blank');
+  }
 
 
    fileUpl(files: FileList)
@@ -43,15 +76,15 @@ export class BilleteraPage implements OnInit {
  
    }
 
-   
 
-  pagar()
-  {
-    this.dbService.pago().subscribe(data=>
-      {
-        console.log(data);
-      })
-  }
+
+  // pagar()
+  // {
+  //   this.dbService.pago().subscribe(data=>
+  //     {
+  //       console.log(data);
+  //     })
+  // }
 
   cargar()
   {
@@ -68,18 +101,18 @@ export class BilleteraPage implements OnInit {
   }
 
 
-  TraerMetodosPago()
-  {
-    this.dbService.apipagos().subscribe((data:any)=>
-  {
-    console.log(data)
-    if(data.result)
-    {
-      this.metodosPago = data.data;
-    }
+  // TraerMetodosPago()
+  // {
+  //   this.dbService.apipagos().subscribe((data:any)=>
+  // {
+  //   console.log(data)
+  //   if(data.result)
+  //   {
+  //     this.metodosPago = data.data;
+  //   }
     
-  })
-  }
+  // })
+  // }
 
   TraerTransaction()
   {
@@ -99,8 +132,25 @@ export class BilleteraPage implements OnInit {
   // https://mobbex.com/p/payment_code/gen/dGzJ9O3P8
   ngOnInit() {
 
+    //this.TraerTransaction();
+   // this.TraerMetodosPago();
+  //  setInterval(()=>
+  //  {
+  //   this.TraerTransaction();
+  //  }, 10000)
+
+  }
+
+  ionViewWillEnter()
+  {
     this.TraerTransaction();
-    this.TraerMetodosPago();
+    
+  }
+
+
+  enviarTicket()
+  {
+
   }
 
 }

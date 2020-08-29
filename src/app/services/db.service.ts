@@ -77,12 +77,15 @@ export class DbService {
    }
 
 
-   pago()
+   pago(data)
    {
-    let url = 'pagos/checkout';
+    let url = 'pagos/mercadopago';
+    const headers = new HttpHeaders({
+      'x-token': localStorage.getItem('token')
+    });
     let USER_URL = this.URL_SERVER.concat(url);
-    return this.http.post(USER_URL, {"user_id":"hola mundis!"},
-      {headers: new HttpHeaders({"Content-Type": "application/json"})});
+    return this.http.post(USER_URL,data,
+      {headers});
    }
 
 

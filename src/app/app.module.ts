@@ -63,6 +63,7 @@ import { RegistroComponent } from './componentes/registro/registro.component';
 import { LoadingComponent } from './componentes/loading/loading.component';
 import { MensajeComponent } from './componentes/mensaje/mensaje.component';
 import { RespuestaReservaComponent } from './componentes/respuesta-reserva/respuesta-reserva.component';
+import { DeliveryAddressComponent } from './componentes/delivery-address/delivery-address.component';
 
 
 export function tokenGetter() {
@@ -89,6 +90,7 @@ export function tokenGetter() {
      LoadingComponent,
      MensajeComponent,
      RespuestaReservaComponent,
+     DeliveryAddressComponent,
      OfferViewComponent],
 
   imports: [BrowserModule,
