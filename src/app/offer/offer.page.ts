@@ -131,11 +131,17 @@ export class OfferPage implements OnInit {
 
     this.dbService.getOfferLocations(this.offerId, this.locations_data.town, this.locations_data.suburb).toPromise().then((dataLoc: any) => {
 
+      console.log(dataLoc);
       for (let i = 0; i < dataLoc.vendors.length; i++) {
 
         this.addMarker(dataLoc.vendors[i]);
+
+        
       }
     })
+
+ 
+      
     this.getCurrentPosition();
 
     this.dbService.getLogged$().subscribe((logged_check) => {
@@ -278,6 +284,11 @@ export class OfferPage implements OnInit {
 
   addMarker(data: any) {
 
+    this.dbService.getOfferVendorProducts(this.offerId, data.vendedor._id).toPromise()
+    .then((datal:any)=>
+  {
+    console.log(datal);
+  })
     this.markers.push(
       {
         vendor_data: data.vendedor,
@@ -409,7 +420,7 @@ export class OfferPage implements OnInit {
 
 
 
-
+  
     await this.map.on('load', async () => {
 
 

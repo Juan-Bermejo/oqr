@@ -130,10 +130,29 @@ export class AsociateOfferPage implements OnInit {
 
     await alert.present();
   }
+  
 
   async desAssociate() {
 
     this.dbServ.dropOffer(this.seller._id, this.offer._id).subscribe((data: any) => {
+
+      console.log(data)
+
+
+      if(data.ok)
+      {      
+
+        this.dbServ.getOfferVend(this.offerId, this.seller._id).toPromise().then((offerData: any) => {
+          console.log(offerData)
+    
+          if (offerData) {
+            this.offer = offerData.offer;
+            this.total_vendors = offerData.total_vendors;
+            this.is_my_offer = offerData.join;
+          }
+    
+        })
+        
       const toast = document.createElement('ion-toast');
       toast.message = 'Ya no eres socio de esta oferta';
       toast.duration = 2000;
@@ -141,7 +160,13 @@ export class AsociateOfferPage implements OnInit {
       toast.position = "top";
       document.body.appendChild(toast);
       return toast.present();
+
+
+      
+      }
+
     })
+
 
   }
 
